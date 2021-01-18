@@ -1,8 +1,8 @@
-package com.ssafy.iwc.service;
+package com.ssafy.iwc.services;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.iwc.dto.UserDto;
+import com.ssafy.iwc.models.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {

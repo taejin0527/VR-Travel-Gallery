@@ -1,11 +1,11 @@
-package com.ssafy.iwc.controller;
+package com.ssafy.iwc.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.iwc.dto.UserDto;
+import com.ssafy.iwc.models.UserDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

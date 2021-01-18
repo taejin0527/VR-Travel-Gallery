@@ -1,4 +1,4 @@
-package com.ssafy.iwc.dto;
+package com.ssafy.iwc.models;
 
 import lombok.Data;
 
