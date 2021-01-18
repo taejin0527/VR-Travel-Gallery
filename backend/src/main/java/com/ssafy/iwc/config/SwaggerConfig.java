@@ -16,13 +16,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 	
 //	Swagger 설정 확인
-//	http://localhost:8000/{your-app-root}/v2/api-docs
 //	http://localhost:8080/iwc/v2/api-docs?group=V1
 //	Swagger-UI 확인
-//	http://localhost:8080/{your-app-root}/swagger-ui.html
-//	http://localhost:8080/iwc/swagger-ui.html
+//	http://localhost:8080/swagger-ui.html
 	
-	private String version = "V0.1.0";
+	private String version = "v0.1.0";
 	private String title = "SSAFY API " + version;
 	
 	@Bean
