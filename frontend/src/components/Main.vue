@@ -1,123 +1,72 @@
-// 메인 페이지
-
 <template>
-  <v-container>
-    <v-row class="text-center">
-
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
+  <!-- 월드맵 배경 추가 -->
+  <v-container
+    fluid
+    ma-0
+    pa-0
+    fill-height
+    :style="{'background-image': 'url(' + require('../assets/mainWorldMap.png') + ')', 'background-position': 'center'}"
+  >
+    <v-row
+      align="center" justify="center"
+      
+    >
+      <!-- 타이틀 문구 -->
+      <v-col
+        cols="12"
+      >
+        <div class="d-flex justify-center mb-6">
+          <h1 style="font-family:arial"> Travel </h1>
+        </div>
       </v-col>
-
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
+      <!-- 내용 문구 -->
+      <v-col
+        cols="12"
+        v-for="(item, idx) in mainPageWords"
+        :key = idx
+      >
+        <div class="d-flex justify-center mb-6">
+          <span class="font-change-tmoneyroundwindregular"> {{item}} </span>
+        </div>
       </v-col>
-
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
+      <!-- 월드 맵으로 가는 버튼 -->
+      <v-col>
+        <br>
+        <div class="d-flex justify-center mb-6">
+          <v-btn
+            elevation="2"
+            class="font-change-tmoneyroundwindregular"
+            @click="gotoWorldMap"
+          >지금 시작하기</v-btn>
+        </div>
+        <br>
+        <br>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "HelloWorld",
-
-  data: () => ({
-    ecosystem: [
-      {
-        text: "vuetify-loader",
-        href: "https://github.com/vuetifyjs/vuetify-loader"
-      },
-      {
-        text: "github",
-        href: "https://github.com/vuetifyjs/vuetify"
-      },
-      {
-        text: "awesome-vuetify",
-        href: "https://github.com/vuetifyjs/awesome-vuetify"
-      }
-    ],
-    importantLinks: [
-      {
-        text: "Documentation",
-        href: "https://vuetifyjs.com"
-      },
-      {
-        text: "Chat",
-        href: "https://community.vuetifyjs.com"
-      },
-      {
-        text: "Made with Vuetify",
-        href: "https://madewithvuejs.com/vuetify"
-      },
-      {
-        text: "Twitter",
-        href: "https://twitter.com/vuetifyjs"
-      },
-      {
-        text: "Articles",
-        href: "https://medium.com/vuetify"
-      }
-    ],
-    whatsNext: [
-      {
-        text: "Explore components",
-        href: "https://vuetifyjs.com/components/api-explorer"
-      },
-      {
-        text: "Select a layout",
-        href: "https://vuetifyjs.com/getting-started/pre-made-layouts"
-      },
-      {
-        text: "Frequently Asked Questions",
-        href: "https://vuetifyjs.com/getting-started/frequently-asked-questions"
-      }
-    ]
-  })
-});
+<script>
+export default {
+  name: 'Main',
+  data: function () {
+    return {
+      // 배경 문구 내용
+      mainPageWords: ["추억을 쌓는 여행, 직접 가야만 여행일까요?", "가지 못 하더라도 지금까지 쌓은 추억을 즐기세요!"]
+    }
+  },
+  methods:{
+    // 월드 맵으로 가는 버튼 액션
+    gotoWorldMap: function () {
+      this.$router.push({name:'WorldMap'})
+    }
+  }
+}
 </script>
+
+<style scoped>
+/* 티머니 폰트체인지 CSS */
+.font-change-tmoneyroundwindregular {
+  font-family: 'TmoneyRoundWindRegular'; 
+} 
+</style>
