@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import WorldMap from "../views/WorldContinents/WorldMap.vue";
+import EachContinent from "../views/WorldContinents/EachContinent.vue";
 
 Vue.use(VueRouter);
 
@@ -19,6 +21,16 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/Login.vue")
+  },
+  {
+    path: "/worldmap/",
+    name: "WorldMap",
+    component: WorldMap
+  },
+  {
+    path: "/eachcontinent/",
+    name: "EachContinent",
+    component: EachContinent
   }
 ];
 
