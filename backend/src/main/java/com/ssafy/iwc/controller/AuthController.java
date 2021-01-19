@@ -32,6 +32,8 @@ import com.ssafy.iwc.repository.UserRepository;
 import com.ssafy.iwc.security.jwt.JwtUtils;
 import com.ssafy.iwc.security.services.UserDetailsImpl;
 
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -51,29 +53,21 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
-	}
-
+	/**
+	 * @author	김태진
+	 * @desc 	아이디, 이메일 중복체크
+	 */
+	
+	
+	/**
+	 * @author	김태진
+	 * @desc 	회원가입
+	 */
+	@ApiOperation(value="회원가입 (이메일, 비밀번호, 이름 등), 반환은 그냥 성공 메세지")
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+		// 아이디, 이메일 중복체크 (나중에 위로 빼자)
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
@@ -86,7 +80,7 @@ public class AuthController {
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-		// Create new user's account
+		// 새로운 유저 생성
 		User user = new User(signUpRequest.getUsername(), 
 				 signUpRequest.getEmail(),
 				 encoder.encode(signUpRequest.getPassword()));
@@ -126,4 +120,46 @@ public class AuthController {
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+	
+	/**
+	 * @author	김태진
+	 * @desc 	일반 로그인
+	 */
+	@ApiOperation(value="(이메일, 비밀번호)로 로그인, 성공시 jwt와 기본 정보 반환")
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
+		// 요청으로 받은 아이디와 비밀번호를 통해 인증용 객체 생성
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+		// JWT 생성
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
+		List<String> roles = userDetails.getAuthorities().stream()
+				.map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+
+		// 반환으로 jwt와 (고유 아이디, 이름, 이메일)을 보낸다
+		return ResponseEntity.ok(new JwtResponse(jwt, 
+												 userDetails.getId(), 
+												 userDetails.getUsername(), 
+												 userDetails.getEmail(), 
+												 roles));
+	}
+
+	
+
+	/**
+	 * @author	김태진
+	 * @desc 	소셜 로그인(구글, 카카오)
+	 */
+	
+	
+	/**
+	 * @author	김태진
+	 * @desc 	로그아웃
+	 */
 }
