@@ -17,7 +17,7 @@
           @mouseover="changeContinentColor"
           src="../assets/europe.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoEuropeContinent"
           class="hoverevent-Continent continent-opacity"
           id="europe-setting-location"
         >
@@ -29,7 +29,7 @@
           @mouseover="changeContinentColor"
           src="../assets/africa.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoAfricaContinent"
           class="hoverevent-Continent continent-opacity"
           id="africa-setting-location"
         >
@@ -41,7 +41,7 @@
           @mouseover="changeContinentColor"
           src="../assets/north_america.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoNorthAmericaContinent"
           class="hoverevent-Continent continent-opacity"
           id="north_america-setting-location"
         >
@@ -53,7 +53,7 @@
           @mouseover="changeContinentColor"
           src="../assets/oceania.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoOceaniaContinent"
           class="hoverevent-Continent continent-opacity"
           id="oceania-setting-location"
         >
@@ -65,7 +65,7 @@
           @mouseover="changeContinentColor"
           src="../assets/south_america.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoSouthAmericaContinent"
           class="hoverevent-Continent continent-opacity"
           id="south_america-setting-location"
         >
@@ -77,7 +77,7 @@
           @mouseover="changeContinentColor"
           src="../assets/asia.png"
           alt="image error"
-          @click="gotoEachContinent"
+          @click="gotoAsiaContinent"
           class="hoverevent-Continent continent-opacity boxes"
           id="asia-setting-location"
         >
@@ -91,9 +91,32 @@
 export default {
   name: "WorldMapDivision",
   methods:{
-    gotoEachContinent: function () {
+    // 각 대륙별로 가기, Refactoring 필요
+    gotoEuropeContinent: function () {
+      localStorage.setItem('continent', 'europe')
       this.$router.push({name:"EachContinent"})
     },
+    gotoAsiaContinent: function () {
+      localStorage.setItem('continent', 'asia')
+      this.$router.push({name:"EachContinent"})
+    },
+    gotoAfricaContinent: function () {
+      localStorage.setItem('continent', 'africa')
+      this.$router.push({name:"EachContinent"})
+    },
+    gotoNorthAmericaContinent: function () {
+      localStorage.setItem('continent', 'northAmerica')
+      this.$router.push({name:"EachContinent"})
+    },
+    gotoSouthAmericaContinent: function () {
+      localStorage.setItem('continent', 'southAmerica')
+      this.$router.push({name:"EachContinent"})
+    },
+    gotoOceaniaContinent: function () {
+      localStorage.setItem('continent', 'oceania')
+      this.$router.push({name:"EachContinent"})
+    },
+    // jquery로 짠 대륙별 색 바꾸기
     changeContinentColor: function () {
       this.$refs.eachContinent.removeChild("continent-opacity")
     }
@@ -102,10 +125,12 @@ export default {
 </script>
 
 <style scoped>
+/* 각 대륙은 먼저 보이지 않는 상태여야 함 */
 .continent-opacity {
   opacity: 0;
 }
 
+/* 마우스를 올리면 보이는 상태로 바꿈 */
 .hoverevent-Continent:hover {
   opacity: 1;
   transform:scale(1.1);
@@ -113,7 +138,7 @@ export default {
   cursor: pointer;
 }
 
-/* 960px부터 클릭 가능 밑으로는 새로 더 작성해야 된다. */
+/* 960px부터 클릭 가능 960px 밑으로는 새로 더 작성해야 된다. */
 #oceania-setting-location {
   position: relative;
   bottom: 308px;
