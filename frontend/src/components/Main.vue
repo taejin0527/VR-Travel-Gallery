@@ -5,7 +5,7 @@
     ma-0
     pa-0
     fill-height
-    :style="{'background-image': 'url(' + require('../assets/mainWorldMap.png') + ')', 'background-position': 'center'}"
+    :style="{'background-image': 'url(' + require('../assets/worldmap_change_color.png') + ')', 'background-position': 'center'}"
   >
     <v-row
       align="center" justify="center"
@@ -16,7 +16,7 @@
         cols="12"
       >
         <div class="d-flex justify-center mb-6">
-          <h1 style="font-family:arial"> Travel </h1>
+          <h1 style="font-family:arial; color:#cccccc"> Travel </h1>
         </div>
       </v-col>
       <!-- 내용 문구 -->
@@ -26,7 +26,7 @@
         :key = idx
       >
         <div class="d-flex justify-center mb-6">
-          <span class="font-change-tmoneyroundwindregular"> {{item}} </span>
+          <span class="font-change-tmoneyroundwindregular" style="color:#cccccc"> {{item}} </span>
         </div>
       </v-col>
       <!-- 월드 맵으로 가는 버튼 -->
