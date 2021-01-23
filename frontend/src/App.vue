@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar app style = "box-shadow: none;" color="#ffffff">
+  <v-app style="background-color: #5b5656;">
+    <v-app-bar app style = "box-shadow: none;" color="#5b5656">
       <!-- 여기 로고를 박으면 됩니다. -->
       <div class="d-flex align-center">
         <v-icon
