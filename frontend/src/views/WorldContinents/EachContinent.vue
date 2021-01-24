@@ -1,18 +1,50 @@
 <template>
   <v-main>
-    <h1>대륙별 페이지입니다.</h1>
-    <h1>유럽페이지만 만들어 볼 예정입니다.</h1>
-    <h1>모든 페이지를 만들기엔 시간이 좀 많이 걸릴 것 같더라구요.</h1>
-    <h1>노가다 같이 합시다 여러분 ^^</h1>
-    <h1>아니면 디비에 각 나라이름과 사진을 담을 수 있다면 좋은데</h1>
-    <h1>이러면 로딩시간이 너무 길어지지 않을까 걱정입니다.</h1>
+    <!-- Refactoring 해야 됨 -->
+    <div v-if="this.getContinentName == 'oceania'">
+      <Oceania/>
+    </div>
+    <div v-else-if="this.getContinentName == 'asia'">
+      <Asia/>
+    </div>
+    <div v-else-if="this.getContinentName == 'northAmerica'">
+      <NorthAmerica/>
+    </div>
+    <div v-else-if="this.getContinentName == 'southAmerica'">
+      <SouthAmerica/>
+    </div>
+    <div v-else-if="this.getContinentName == 'europe'">
+      <Europe/>
+    </div>
+    <div v-else>
+      <Africa/>
+    </div>
   </v-main>
 </template>
 
 <script>
+import Oceania from "@/components/Continents/Oceania.vue";
+import SouthAmerica from "@/components/Continents/SouthAmerica.vue";
+import NorthAmerica from "@/components/Continents/NorthAmerica.vue";
+import Asia from "@/components/Continents/Asia.vue";
+import Africa from "@/components/Continents/Africa.vue";
+import Europe from "@/components/Continents/Europe.vue";
+
 export default {
   name: 'EachContinent',
-
+  data: function () {
+    return {
+      "getContinentName": localStorage.getItem('continent')
+    }
+  },
+  components: {
+    Oceania,
+    SouthAmerica,
+    NorthAmerica,
+    Asia,
+    Africa,
+    Europe
+  }
 
 }
 </script>
