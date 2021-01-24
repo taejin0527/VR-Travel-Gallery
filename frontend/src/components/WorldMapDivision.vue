@@ -8,6 +8,7 @@
         <img
           src="../assets/worldmap_change_color.png"
           alt="image error"
+          id="worldmap-setting-location"
         >
       </v-col>
       <v-col
@@ -127,7 +128,7 @@ export default {
 <style scoped>
 /* 각 대륙은 먼저 보이지 않는 상태여야 함 */
 .continent-opacity {
-  opacity: 0;
+  opacity: 1;
 }
 
 /* 마우스를 올리면 보이는 상태로 바꿈 */
@@ -139,6 +140,10 @@ export default {
 }
 
 /* 960px부터 클릭 가능 960px 밑으로는 새로 더 작성해야 된다. */
+#worldmap-setting-location {
+  width: 960px;
+}
+
 #oceania-setting-location {
   position: relative;
   bottom: 308px;
@@ -174,6 +179,10 @@ export default {
 
 /* 1264px 부터 css코드 */
 @media (min-width: 1264px) {
+  #worldmap-setting-location {
+    width: 1264px;
+  }
+
   #oceania-setting-location {
     position: relative;
     bottom: 308px;
@@ -210,6 +219,9 @@ export default {
 
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
+  #worldmap-setting-location {
+    width: 1904px;
+  }
   #oceania-setting-location {
     position: relative;
     bottom: 308px;

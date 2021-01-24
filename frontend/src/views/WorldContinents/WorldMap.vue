@@ -1,7 +1,6 @@
 <template>
   <!-- App.vue -->
-  <v-main>
-    <br>
+  <div>
     <v-container>
       <v-row>
         <v-col
@@ -12,7 +11,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-main>
+  </div>
 </template>
 
 <script>
@@ -22,7 +21,10 @@ export default {
   name:"WorldMap",
   components: {
     WorldMapDivision
-  } 
+  },
+  created: function () {
+    this.$refs.navigationAppVar.appeChild("continent-opacity")
+  }
 }
 </script>
 
