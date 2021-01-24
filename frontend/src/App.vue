@@ -1,37 +1,35 @@
 <template>
-  <v-app>
-    <v-app-bar app style = "box-shadow: none;" color="#ffffff">
-      <!-- 여기 로고를 박으면 됩니다. -->
-      <div class="d-flex align-center">
-        <v-icon
-          large
-          color="#8b00ff"
-        >
-          mdi-leaf
-        </v-icon>
-        <v-icon
-          large
-          color="#8b00ff"
-        >
-          mdi-leaf
-        </v-icon>
-        <v-icon
-          large
-          color="#8b00ff"
-        >
-          mdi-leaf
-        </v-icon>
+  <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
+  <v-app style="background-color: #5b5656;">
+    <!-- 왼쪽 상단 로고 픽스 -->
+    <div
+      style="position: fixed; height:10%;
+            margin: 0; padding: 0; width: 100px;
+            top: 30px; left: 40px; z-index:100"
+    >
+      <span style="color:#eeeeee; cursor:default;">N U </span>
+      <br>
+      <span style="color:#eeeeee; cursor:default;">V O</span>
+    </div>
+    <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
+    <div
+      style="position: fixed; height:80px;
+            margin: 0; padding: 0; width: 80px;
+            top: 44%; left: 30px; z-index:100;"
+    >
+      <div style="width=100%; text-align:center;">
+        <div class="navi-button" @click="gotoMenuPage">
+          N U V O
+          A to Z
+        </div>
       </div>
-      <v-spacer></v-spacer>
-      <!-- 로그인 페이지 이동 버튼 -->
-      <img
-        src="./assets/loginButton.png"
-        alt="image_error"
-        style="height:90%;"
-        @click="gotoLoginPage"
-        class="hoverevent-Button"
-      >
-    </v-app-bar>
+    </div>
+    <!-- 랩핑하는 방식으로 A to Z (menu) 화면 렌더링 -->
+    <Menu
+      v-if="isMenuPageOpen"
+      :isMenuPageOpen="isMenuPageOpen"
+      @closeMenuPage="closeMenuPage"
+    />
     <router-view/>
   </v-app>
   
@@ -39,18 +37,26 @@
 
 <script lang="ts">
 import Vue from "vue"
+import Menu from "@/components/Menu.vue";
 
 
 export default Vue.extend({
   name: "App",
   components: {
+    Menu
   },
-  data: () => ({
-  }),
+  data: function () {
+    return {
+      isMenuPageOpen: false
+    }
+  },
   methods: {
-    // 로그인 페이지로 이동
-    gotoLoginPage: function() {
-      this.$router.push({name:"Login"})
+    // 메뉴 페이지 이동
+    gotoMenuPage: function() {
+      this.isMenuPageOpen = true
+    },
+    closeMenuPage: function () {
+      this.isMenuPageOpen = false
     }
   }
 });
@@ -76,5 +82,60 @@ export default Vue.extend({
   transition: 150ms;
   cursor: pointer;
 }
+
+/* 네비게이션 버튼 후버 처리 및 3D 형식 */
+.navi-button {
+  display: inline-block;
+  padding: 1.5em 1.5em;
+  border-radius: 0;
+  color: #b2876f;
+  margin-top:0.51rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 300ms ease;
+  z-index: 200;
+}
+
+.navi-button:before,
+.navi-button:after{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid;
+  transition: .3s;
+}
+.navi-button:before{
+  transform: translateX(-.25em) translateY(.25em);
+}
+.navi-button:after{
+  transform: translateX(.25em) translateY(-.25em);
+}
+
+.navi-button:hover:before,
+.navi-button:hover:after{
+  transform: translateX(0) translateY(0);
+  color: #ffffff;
+}
+
+.navi-button:hover{
+  transition-delay: .1s;
+  transition-duration: .4s;
+  color: #ffffff;
+}
+
+.navi-button:not(:hover){
+  transition-delay: .2s;
+  transition-duration: .4s;
+  color: #b2876f;
+}
+
+
 
 </style>
