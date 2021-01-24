@@ -3,6 +3,15 @@
         <div class="navi">
             <div style="width=100%; text-align:center;">
                 <div class="navi-button" @click="toggle">N U V O A to Z</div>
+                <router-link
+                    style="margin: 20px 0; background: transparent"
+                    @click.native="toggle"
+                    to="login"
+                >
+                    <v-icon large color="white darken-2">
+                        mdi-account-key
+                    </v-icon></router-link
+                >
             </div>
         </div>
         <!-- 랩핑하는 방식으로 A to Z (menu) 화면 렌더링 -->
