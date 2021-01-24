@@ -9,7 +9,6 @@
   >
     <v-row
       align="center" justify="center"
-      
     >
       <!-- 타이틀 문구 -->
       <v-col
