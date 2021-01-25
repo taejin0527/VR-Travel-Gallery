@@ -5,7 +5,7 @@
     ma-0
     pa-0
     fill-height
-    :style="{'background-image': 'url(' + require('../assets/worldmap_change_color.png') + ')', 'background-position': 'center'}"
+    :style="{'background-image': 'url(' + require('../assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
   >
     <v-row
       align="center" justify="center"
@@ -15,31 +15,38 @@
         cols="12"
       >
         <div class="d-flex justify-center mb-6">
-          <h1 style="font-family:arial; color:#cccccc"> Travel </h1>
-        </div>
-      </v-col>
-      <!-- 내용 문구 -->
-      <v-col
-        cols="12"
-        v-for="(item, idx) in mainPageWords"
-        :key = idx
-      >
-        <div class="d-flex justify-center mb-6">
-          <span class="font-change-tmoneyroundwindregular" style="color:#cccccc"> {{item}} </span>
+          <h1
+            style="font-family:arial; color:#cccccc; font-size: 100px"
+          > N U V O </h1>
         </div>
       </v-col>
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col>
-        <br>
-        <div class="d-flex justify-center mb-6">
-          <v-btn
-            elevation="2"
-            class="font-change-tmoneyroundwindregular"
-            @click="gotoWorldMap"
-          >지금 시작하기</v-btn>
-        </div>
-        <br>
-        <br>
+      <v-col
+        offset="2"
+        cols='4'
+      >
+        <img
+          src="@/assets/main/earth_globe_icon.png"
+          alt="image error"
+          style="height: 200px; width: 200px; z-index: 100;"
+          ref="earthGlobeIcon"
+          @mouseover="disappearEarthIcon"
+        >
+        <img
+          src="@/assets/main/earth_spinning.gif"
+          alt="image error"
+          style="height: 200px; width: 200px; position: relative; right: 200px"
+          class="disappeared-earth-spinning"
+          ref="earthGlobeSpinning"
+        >
+        
+      </v-col>
+      <v-col
+        cols='4'
+      >
+        <h1
+          style="font-family:arial; color:#000000; font-size: 100px"
+        > VR </h1>
       </v-col>
     </v-row>
   </v-container>
@@ -50,14 +57,18 @@ export default {
   name: 'Main',
   data: function () {
     return {
-      // 배경 문구 내용
-      mainPageWords: ["추억을 쌓는 여행, 직접 가야만 여행일까요?", "가지 못 하더라도 지금까지 쌓은 추억을 즐기세요!"]
     }
   },
   methods:{
     // 월드 맵으로 가는 버튼 액션
     gotoWorldMap: function () {
       this.$router.push({name:'WorldMap'})
+    },
+    disappearEarthIcon: function () {
+      this.$refs.earthGlobeIcon.setAttribute("class", "disappeared-earth-icon")
+      this.$refs.earthGlobeSpinning.setAttribute("class", "show-earth-spinning")
+      this.$refs.earthGlobeSpinning.removeAttribute("class", "disappeared-earth-spinning")
+      
     }
   }
 }
@@ -68,4 +79,25 @@ export default {
 .font-change-tmoneyroundwindregular {
   font-family: 'TmoneyRoundWindRegular'; 
 } 
+
+.disappeared-earth-spinning {
+  opacity: 0;
+  z-index: -3;
+  cursor: pointer;
+}
+
+.show-earth-spinning {
+  opacity: 0.9;
+  transition-delay: 0.3s;
+  transition-duration: 0.5s;
+  scale: 2;
+  cursor: pointer;
+}
+
+.disappeared-earth-icon {
+  opacity: 0;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
 </style>

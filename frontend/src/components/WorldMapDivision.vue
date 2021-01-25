@@ -6,7 +6,7 @@
         cols="12"
       >
         <img
-          src="../assets/worldmap_change_color.png"
+          src="../assets/worldmap/dot_worldmap.png"
           alt="image error"
           id="worldmap-setting-location"
         >
