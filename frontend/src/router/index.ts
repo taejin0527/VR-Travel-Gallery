@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+
 import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
+import Login from "../views/member/Login.vue";
 import WorldMap from "../views/WorldContinents/WorldMap.vue";
 import EachContinent from "../views/WorldContinents/EachContinent.vue";
 
@@ -16,11 +17,17 @@ const routes: Array<RouteConfig> = [
   {
     path: "/login",
     name: "Login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Login.vue")
+    component: Login
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: () => import(/* webpackChunkName: "about" */ "@/views/member/Signup.vue")
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import(/* webpackChunkName: "about" */ "@/views/member/Profile.vue")
   },
   {
     path: "/worldmap/",
