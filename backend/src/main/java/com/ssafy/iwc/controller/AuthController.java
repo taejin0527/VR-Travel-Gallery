@@ -153,13 +153,13 @@ public class AuthController {
 	
 
 	/**
-	 * @author	김태진
+	 * @author	김동걸
 	 * @desc 	소셜 로그인(구글, 카카오)
 	 */
 	
 	
 	/**
-	 * @author	김태진
+	 * @author	김동걸
 	 * @desc 	로그아웃
 	 */
 }
