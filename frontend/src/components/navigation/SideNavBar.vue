@@ -3,15 +3,17 @@
         <div class="navi">
             <div style="width=100%; text-align:center;">
                 <div class="navi-button" @click="toggle">N U V O A to Z</div>
-                <router-link
-                    style="margin: 20px 0; background: transparent"
-                    @click.native="toggle"
-                    to="login"
-                >
-                    <v-icon large color="white darken-2">
-                        mdi-account-key
-                    </v-icon></router-link
-                >
+
+                <div class="social" v-show="isMenuPageOpen">
+                    <router-link
+                        tag="li"
+                        @click.native="isMenuPageOpen = !isMenuPageOpen"
+                        to="login"
+                    >
+                        <v-icon large color="white"> mdi-account-key </v-icon>
+                        Login</router-link
+                    >
+                </div>
             </div>
         </div>
         <!-- 랩핑하는 방식으로 A to Z (menu) 화면 렌더링 -->
@@ -87,7 +89,7 @@ export default Vue.extend({
     width: 100%;
     height: 100%;
     border: 2px solid;
-    transition: 0.3s;
+    transition: 0.6s;
 }
 .navi-button:before {
     transform: translateX(-0.25em) translateY(0.25em);
@@ -124,5 +126,15 @@ export default Vue.extend({
 }
 .slide-leave-to {
     transform: translateX(-100%);
+}
+
+.social {
+    padding: 10px;
+}
+.social li {
+    text-decoration: none;
+    list-style: none;
+    margin: 20px 0;
+    background: transparent;
 }
 </style>
