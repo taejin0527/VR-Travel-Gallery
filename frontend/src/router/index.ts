@@ -5,6 +5,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
 import WorldMap from "../views/WorldContinents/WorldMap.vue";
 import EachContinent from "../views/WorldContinents/EachContinent.vue";
+import Post from "@/views/photo/Post.vue";
 
 Vue.use(VueRouter);
 
@@ -38,9 +39,17 @@ const routes: Array<RouteConfig> = [
     path: "/eachcontinent/",
     name: "EachContinent",
     component: EachContinent
+  },
+  {
+    path: "/post/",
+    name: "Post",
+    component: Post
   }
 ];
 
+const userRoutes: Array<RouteConfig> = [
+
+];
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
