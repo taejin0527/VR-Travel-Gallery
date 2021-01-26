@@ -16,38 +16,85 @@
       >
         <div class="d-flex justify-center mb-6">
           <h1
-            style="font-family:arial; color:#cccccc; font-size: 100px"
-          > N U V O </h1>
+            style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
+          > . N U V O </h1>
         </div>
       </v-col>
+
       <!-- 월드 맵으로 가는 버튼 -->
       <v-col
         offset="2"
-        cols='4'
+        cols="4"
       >
-        <img
-          src="@/assets/main/earth_globe_icon.png"
-          alt="image error"
-          style="height: 200px; width: 200px; z-index: 100;"
-          ref="earthGlobeIcon"
-          @mouseover="disappearEarthIcon"
+        <div
+          style="text-align:center"
         >
-        <img
-          src="@/assets/main/earth_spinning.gif"
-          alt="image error"
-          style="height: 200px; width: 200px; position: relative; right: 200px"
-          class="disappeared-earth-spinning"
-          ref="earthGlobeSpinning"
+          <v-icon
+            size="150px"
+            :class="{ 'disappeared-hidden-map-icon' : !isShowMapIcon }"
+          >
+            mdi-map-outline
+          </v-icon>
+          <v-icon
+            :class="{ 'disappeared-airplane-icon' : !isShowMapIcon, 'show-airplane-icon': isShowMapIcon }"
+          >
+            mdi-airplane
+          </v-icon>
+        </div>
+        <div
+          style="text-align:center;"
         >
-        
+          <v-icon
+            size="150px"
+            style="border:solid; border-radius:10px;"
+            :class="{ 'disappeared-map-icon' : isShowMapIcon }"
+            @mouseover="disappearMapIcon"
+            @mouseleave="showMapIcon"
+            @click="gotoWorldMap"
+          >
+            mdi-map-search-outline
+          </v-icon>
+          <v-icon
+            style="opacity:0;"
+          >
+            mdi-airplane
+          </v-icon>
+        </div>
       </v-col>
+
+      <!-- VR로 가는 버튼 -->
       <v-col
-        cols='4'
+        cols="4"
       >
-        <h1
-          style="font-family:arial; color:#000000; font-size: 100px"
-        > VR </h1>
+        <div
+          style="text-align:center"  
+        >
+          <v-icon
+            size="150px"
+            :class="{ 'disappeared-hidden-VR-icon' : !isShowVRIcon, 'show-hidden-VR-icon-bg' : isShowVRIcon,  'show-hidden-VR-icon' : isShowVRIcon }"
+          >
+            mdi-safety-goggles
+          </v-icon>
+        </div>
+        <div
+          style="text-align:center;"
+        >
+          <v-icon
+            size="150px"
+            style="border:solid; border-radius:10px;"
+            :class="{ 'disappeared-VR-icon' : isShowVRIcon }"
+            @mouseover="disappearVRIcon"
+            @mouseleave="showVRIcon"
+            @click="gotoVRContents"
+          >
+            mdi-safety-goggles
+          </v-icon>
+          
+        </div>
       </v-col>
+
+      <!-- 남는 공간 offset -->
+      <v-col cols="2"></v-col>
     </v-row>
   </v-container>
 </template>
@@ -57,6 +104,8 @@ export default {
   name: 'Main',
   data: function () {
     return {
+      isShowMapIcon:false,
+      isShowVRIcon:false,
     }
   },
   methods:{
@@ -64,11 +113,26 @@ export default {
     gotoWorldMap: function () {
       this.$router.push({name:'WorldMap'})
     },
-    disappearEarthIcon: function () {
-      this.$refs.earthGlobeIcon.setAttribute("class", "disappeared-earth-icon")
-      this.$refs.earthGlobeSpinning.setAttribute("class", "show-earth-spinning")
-      this.$refs.earthGlobeSpinning.removeAttribute("class", "disappeared-earth-spinning")
-      
+
+    // VR로 가는 버튼 액션 / 아직 구현 못함
+    gotoVRContents: function () {
+      console.log('아직 구현 못 함')
+    },
+
+    // 맵 아이콘 애니메이션
+    disappearMapIcon: function () {
+      this.isShowMapIcon = true
+    },
+    showMapIcon: function () {
+      this.isShowMapIcon = false
+    },
+
+    // VR 아이콘 애니메이션
+    disappearVRIcon: function () {
+      this.isShowVRIcon = true
+    },
+    showVRIcon: function () {
+      this.isShowVRIcon = false
     }
   }
 }
@@ -80,24 +144,85 @@ export default {
   font-family: 'TmoneyRoundWindRegular'; 
 } 
 
-.disappeared-earth-spinning {
-  opacity: 0;
-  z-index: -3;
-  cursor: pointer;
-}
-
-.show-earth-spinning {
-  opacity: 0.9;
-  transition-delay: 0.3s;
+/* 월드맵 아이콘 트랜지션 */
+.disappeared-map-icon {
+  opacity: 0.5;
+  color: white;
+  transition-delay: 0;
   transition-duration: 0.5s;
-  scale: 2;
+  transform: scale(1.05);
   cursor: pointer;
 }
 
-.disappeared-earth-icon {
+.disappeared-hidden-map-icon {
   opacity: 0;
   transition-delay: 0;
   transition-duration: 0.5s;
+  transform: translateY(100px) rotate3d(0, 1, 0, 70deg);
   cursor: pointer;
 }
+
+/* 비행기 이동 트랜지션 */
+.disappeared-airplane-icon {
+  opacity: 0;
+  transition-duration: 2s;
+  transform: translateX(-400px) rotate(90deg);
+  cursor: pointer;
+}
+
+.show-airplane-icon {
+  opacity: 1;
+  transition-duration: 5s;
+  transform: translateX(20px) rotate(90deg) scale(1.3);
+}
+
+/* VR 아이콘 트랜지션 */
+.disappeared-VR-icon {
+  opacity: 0.5;
+  color: white;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.disappeared-hidden-VR-icon {
+  opacity: 0;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: translateY(100px) rotate3d(0, 1, 0, 90deg);
+
+  cursor: pointer;
+}
+
+.show-hidden-VR-icon {
+  opacity: 1;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  color: #333333;
+  cursor: pointer;
+}
+
+/* VR 불빛 애니메이션 */
+@keyframes lightparty {
+  from {
+    background-image: url('../assets/main/goggle_light.png');
+    background-position: center 53%;
+    background-size: 125px;
+  }
+
+  to {
+    background-image: url('../assets/main/goggle_light_bg.png');
+    background-position: center 53%;
+    background-size: 125px;
+  }
+}
+
+.show-hidden-VR-icon-bg {
+  animation-duration: 0.8s;
+  animation-name: lightparty;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
 </style>
