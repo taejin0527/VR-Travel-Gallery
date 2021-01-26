@@ -1,8 +1,11 @@
 package com.ssafy.iwc.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
+@Table(	name = "file"
+)
 @Getter
 @Setter
 //@NoArgsConstructor, @AllArgsConstructor, @RequiredArgsConstructor - 클래스의 생성자를 만들어줌

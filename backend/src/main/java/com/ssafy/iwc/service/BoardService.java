@@ -2,10 +2,12 @@ package com.ssafy.iwc.service;
 
 import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Service;
+
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.repository.BoardRepository;
-
+@Service
 public class BoardService {
 
 	private BoardRepository boardRepository;
