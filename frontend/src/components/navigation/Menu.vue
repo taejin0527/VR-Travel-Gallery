@@ -1,17 +1,26 @@
 <template>
-    <div id="menu">
-        <!-- 추가할 메뉴는 추후에 수정-->
-        <router-link tag="li" @click.native="closeMenuPage" to="/"
-            >Home</router-link
-        >
-        <router-link tag="li" @click.native="closeMenuPage" to="/worldmap"
-            >Main Page</router-link
-        >
+    <div class="menu">
+        <div class="msg">
+            <p>I'm looking for:</p>
+        </div>
 
-        <div
-            class="cursor"
-            :style="{ left: cursor.left, top: cursor.top }"
-        ></div>
+        <div class="router-ul">
+            <router-link tag="li" @click.native="closeMenuPage" to="/"
+                ><span class="router-a" data-text="Home"
+                    >Home</span
+                ></router-link
+            >
+            <router-link tag="li" @click.native="closeMenuPage" to="/worldmap"
+                ><span class="router-a" data-text="Worldmap"
+                    >Worldmap</span
+                ></router-link
+            >
+            <router-link tag="li" @click.native="closeMenuPage" to="/post"
+                ><span class="router-a" data-text="Post"
+                    >Post</span
+                ></router-link
+            >
+        </div>
     </div>
 </template>
 
@@ -24,12 +33,7 @@ export default Vue.extend({
         isMenuPageOpen: Boolean,
     },
     data() {
-        return {
-            cursor: {
-                left: "",
-                top: "",
-            },
-        };
+        return {};
     },
     methods: {
         // 메뉴 끄기
@@ -38,52 +42,74 @@ export default Vue.extend({
             this.$emit("closeMenuPage");
         },
     },
-    mounted() {
-        document.addEventListener("mousemove", (e) => {
-            this.cursor.left = e.pageX + "px";
-            this.cursor.top = e.pageY + "px";
-        });
-    },
 });
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Lobster");
+
 /* 화면 전체 랩핑 */
-#menu {
+.menu {
+    font-family: "Lobster", cursive;
     position: absolute;
-    margin: 0;
-    padding: 0;
     z-index: 1;
-    background-color: #b2876f;
-    height: 100vh;
-    width: 100vw;
+    background-color: #000000;
+    min-height: 100vh;
+    width: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+}
+.menu .msg {
+    color: #ffffff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-li {
-    list-style: none;
-    text-decoration: none;
-    margin: 10px 0;
+.router-ul {
     position: relative;
-    display: inline-block;
+}
+.router-ul li {
+    list-style: none;
+    text-align: center;
+}
+.router-ul li .router-a {
+    color: #b2876f;
+    text-decoration: none;
     font-size: 4em;
-    color: #ffffff;
+    padding: 5px 20px;
+    display: inline-flex;
+    font-weight: 300;
+    transition: 0.3s;
+    z-index: 100;
 }
-.cursor {
-    position: fixed;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #ffffff;
+.router-ul li:hover .router-a {
+    color: #999;
+}
+.router-ul li .router-a:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);
-    pointer-events: none;
-    mix-blend-mode: difference;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    color: rgb(0, 0, 0, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 500px;
+    transition: letter-spacing 0.5s, left 0.5s;
 }
-li:hover ~ .cursor {
-    transform: scale(4);
+.router-ul li .router-a:hover:before {
+    content: attr(data-text);
+    left: 50%;
+    color: #999;
+    opacity: 1;
+    letter-spacing: 30px;
 }
 </style>

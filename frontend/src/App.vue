@@ -48,6 +48,9 @@ export default Vue.extend({
     font-weight: normal;
     font-style: normal;
 }
+* {
+    box-sizing: border-box;
+}
 
 /* 버튼 후버 처리 */
 /* 쓰실 후버가 있다면 쓰시면 됩니다. */
