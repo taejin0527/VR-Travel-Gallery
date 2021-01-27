@@ -3,8 +3,9 @@ package com.ssafy.iwc.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.iwc.model.PostImage;
+import com.ssafy.iwc.model.MainImage;
+
 @Repository
-public interface PostImageRepository extends JpaRepository<PostImage, Long>{
+public interface MainImageRepository extends JpaRepository<MainImage, Long>{
 
 }

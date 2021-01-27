@@ -15,10 +15,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class BoardDto {
-	private int id;
+	private long id;
 	private String author;
-	private String content;
-	private int postImageId;
+	
+	private long good;
+	private long views;
+	private String location;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
 	
@@ -26,22 +28,28 @@ public class BoardDto {
 		Board build = Board.builder()
 				.id(id)
 				.author(author)
-				.content(content)
-				.postImageId(postImageId)
+				.good(good)
+				.views(views)
+				.createdDate(createdDate)
+				.location(location)
 				.build();
 		return build;
 	}
-	
 	@Builder
-	public BoardDto(int id, String author, String content, int postImageId, LocalDateTime createdDate,
+	public BoardDto(long id, String author, long good, long views, String location, LocalDateTime createdDate,
 			LocalDateTime modifiedDate) {
+		
 		this.id = id;
 		this.author = author;
-		this.content = content;
-		this.postImageId = postImageId;
+		this.good = good;
+		this.views = views;
+		this.location = location;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
 	}
+	
+
+	
 	
 
 	
