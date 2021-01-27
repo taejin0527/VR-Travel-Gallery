@@ -3,8 +3,8 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
-import WorldMap from "../views/WorldContinents/WorldMap.vue";
-import EachContinent from "../views/WorldContinents/EachContinent.vue";
+import WorldMap from "../views/worldContinents/WorldMap.vue";
+import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Post from "@/views/photo/Post.vue";
 
 Vue.use(VueRouter);
