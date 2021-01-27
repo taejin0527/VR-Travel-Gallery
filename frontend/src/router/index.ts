@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
 import Home from "../views/Home.vue";
-import Login from "../views/User/Login.vue";
+import Login from "../views/member/Login.vue";
 import WorldMap from "../views/WorldContinents/WorldMap.vue";
 import EachContinent from "../views/WorldContinents/EachContinent.vue";
 import Post from "@/views/photo/Post.vue";
@@ -57,7 +57,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register", "/"];
+  const publicPages = ["/login", "/signup", "/"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 
