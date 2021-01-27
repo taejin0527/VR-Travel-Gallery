@@ -5,7 +5,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
 import WorldMap from "../views/WorldContinents/WorldMap.vue";
 import EachContinent from "../views/WorldContinents/EachContinent.vue";
-
+import Create from "@/views/post/Create.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -38,6 +38,11 @@ const routes: Array<RouteConfig> = [
     path: "/eachcontinent/",
     name: "EachContinent",
     component: EachContinent
+  },
+  {
+    path: "/create/",
+    name: "Create",
+    component: Create
   }
 ];
 
