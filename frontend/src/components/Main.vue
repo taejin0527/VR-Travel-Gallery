@@ -5,7 +5,7 @@
     ma-0
     pa-0
     fill-height
-    :style="{'background-image': 'url(' + require('../assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
+    :style="{'background-image': 'url(' + require('@/assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
   >
     <v-row
       align="center" justify="center"

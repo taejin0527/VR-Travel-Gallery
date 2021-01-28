@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <!-- Refactoring 해야 됨 -->
+    <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
       <Oceania/>
     </div>

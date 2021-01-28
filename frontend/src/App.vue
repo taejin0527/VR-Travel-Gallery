@@ -1,6 +1,6 @@
 <template>
     <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
-    <v-app style="background-color: #5b5656">
+    <v-app style="background-color: #5A4E4D">
         <!-- 왼쪽 상단 로고 픽스 -->
         <div
             style="
