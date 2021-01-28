@@ -1,12 +1,13 @@
 <template>
   <div class="wrapper">
     <transition name="slide">
-      <div v-if="active" class="ticket">
+      <form v-if="active" @submit.prevent="logInSubmit" class="ticket">
         <p class="title">Welcome to NUVO</p>
         <div class="ticket__content">
           <input
             v-model="user.username"
             v-validate="'required'"
+            data-vv-name="User ID"
             type="email"
             placeholder="ID"
             autofocus
@@ -22,6 +23,7 @@
           <input
             v-model="user.password"
             v-validate="'required'"
+            data-vv-name="Password"
             type="password"
             placeholder="password"
             autofocus
@@ -35,15 +37,13 @@
           </div>
           <v-icon> mdi-key </v-icon>
         </div>
-      </div>
+        <span>Doesn't have an account?</span>
+        <span class="state" @click="signUpPage">Sign-up</span>
+        <button>
+          <span class="state">Log-in</span>
+        </button>
+      </form>
     </transition>
-    <p>Doesn't have an account?</p>
-    <button @click="signUpPage">
-      <span class="state">Sign-up</span>
-    </button>
-    <button @click="logInSubmit">
-      <span class="state">Log-in</span>
-    </button>
   </div>
 </template>
 
@@ -76,10 +76,15 @@ export default class Login extends Vue {
   }
 
   logInSubmit() {
+    this.active = !this.active;
+
     this.loading = true;
     this.$validator.validateAll().then((isValid: boolean) => {
       if (!isValid) {
         this.loading = false;
+        setTimeout(() => {
+          this.active = !this.active;
+        }, 1000);
         return;
       }
 
@@ -91,6 +96,9 @@ export default class Login extends Vue {
           },
           (error) => {
             this.loading = false;
+            setTimeout(() => {
+              this.active = !this.active;
+            }, 1000);
             this.message = error;
           }
         );
@@ -153,7 +161,7 @@ export default class Login extends Vue {
 }
 .ticket__content {
   box-sizing: border-box;
-  height: 80%;
+  height: 70%;
   width: 100%;
   border: 6px solid #d8d8d8;
 }

@@ -1,118 +1,96 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="username"
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >
-              {{ errors.first("username") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
-              type="email"
-              class="form-control"
-              name="email"
-            />
-            <div v-if="submitted && errors.has('email')" class="alert-danger">
-              {{ errors.first("email") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              type="password"
-              class="form-control"
-              name="password"
-            />
-            <div
-              v-if="submitted && errors.has('password')"
-              class="alert-danger"
-            >
-              {{ errors.first("password") }}
-            </div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
-          </div>
-        </div>
-      </form>
-
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >
-        {{ message }}
-      </div>
-    </div>
-  </div>
+  <v-container class="signup" fill-height>
+    <v-row class="text-center" align="center" justify="center">
+      <v-col cols="12">
+        <SignupForm
+          v-if="page == 1"
+          @toEmailVerification="setSignupData"
+          :signupData2="signupData"
+        />
+        <SignupEmail
+          v-if="page == 2"
+          @toEmailVerification="emailVerification"
+          @pageDown="(page = '1'), setPage(1)"
+        />
+        <SignupEmailVerification
+          v-if="page == 3"
+          @finishSignup="doSignup"
+          @pageDown="(page = '2'), setPage(2)"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
+import Swal from "sweetalert2";
+
+import SignupForm from "@/components/member/signup/SignupForm.vue";
+import SignupEmail from "@/components/member/signup/SignupEmail.vue";
+import SignupEmailVerification from "@/components/member/signup/SignupEmailVerification.vue";
+
 import { Component, Vue } from "vue-property-decorator";
 import { namespace } from "vuex-class";
-const Auth = namespace("Auth");
 
-@Component
-export default class Register extends Vue {
-  private user: any = { username: "", email: "", password: "" };
+const Form = namespace("Signup");
 
-  private submitted = false;
-  private successful = false;
-  private message = "";
+@Component({
+  components: {
+    SignupForm,
+    SignupEmail,
+    SignupEmailVerification,
+  },
+})
+export default class Signup extends Vue {
+  private signupData: any;
+  private page = localStorage.getItem("page")
+    ? localStorage.getItem("page")
+    : 1;
 
-  @Auth.Getter
-  private isLoggedIn!: boolean;
+  @Form.Action
+  private signup!: (data: any) => Promise<any>;
+  @Form.Action
+  private saveSignupData!: (data: any) => void;
+  @Form.Action
+  private setPage!: (no: any) => void;
 
-  @Auth.Action
-  private register!: (data: any) => Promise<any>;
+  created() {
+    console.log("hi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    this.signupData = this.$store.state.Signup.signupData;
 
-  mounted() {
-    if (this.isLoggedIn) {
-      this.$router.push("/profile");
-    }
+    console.log(this.signupData);
   }
 
-  handleRegister() {
-    this.message = "";
-    this.submitted = true;
+  setSignupData(signupData: any) {
+    this.saveSignupData(signupData);
+    this.signupData = this.$store.state.Signup.signupData;
 
-    this.$validator.validate().then((isValid) => {
-      if (isValid) {
-        this.register(this.user).then(
-          (data) => {
-            this.message = data.message;
-            this.successful = true;
-          },
-          (error) => {
-            this.message = error;
-            this.successful = false;
-          }
-        );
-      }
+    this.page = "2";
+    this.setPage(this.page);
+  }
+  emailVerification(userEmailData: any) {
+    this.signupData = this.$store.state.Signup.signupData;
+    this.signupData.uemail = userEmailData.userEmail;
+    this.saveSignupData(this.signupData);
+    this.page = "3";
+    this.setPage(this.page);
+  }
+  doSignup() {
+    this.signup(this.signupData);
+    Swal.fire({
+      title: "가입되었습니다!",
+      text: `${this.signupData.uname} 님\n허니콤보에 오신 것을 환영합니다.`,
+      background: "#fff url(/images/trees.png)",
+      backdrop: `
+    rgba(0,0,123,0.4)
+    url("/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `,
     });
+    this.saveSignupData({});
+    this.setPage(1);
+    this.$router.push({ name: "Home" });
   }
 }
 </script>
