@@ -6,13 +6,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Setter;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "mainimg")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainImage {
 
 	@Id

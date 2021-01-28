@@ -28,19 +28,20 @@ public class PostImageService {
 	
 	@Transactional
 	public List<PostImageDto> getFile(long id) {
-		List<PostImage> postImage = (List<PostImage>) postImageRepository.findById(id).get();
+		System.out.println("¿©±âµé¾î¿È");
+		List<PostImage> postImage = postImageRepository.findPostImageById(id);
 		List<PostImageDto> postImageDto = new LinkedList<PostImageDto>();
-		for(int i=0;i<postImage.size();i++) {
+		for(PostImage p : postImage) {
+			
 			PostImageDto dto = PostImageDto.builder()
-					
 					.id(id)
-					.origFilename(postImage.get(i).getOrigFilename())
-					.filename(postImage.get(i).getFilename())
-					.filePath(postImage.get(i).getFilePath())
+					.origFilename(p.getOrigFilename())
+					.filename(p.getFilename())
+					.filePath(p.getFilePath())
 					.build();
 			postImageDto.add(dto);
-			
-		}
+		};
+
 		
 		return postImageDto;
 				

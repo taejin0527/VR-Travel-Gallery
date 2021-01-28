@@ -3,14 +3,20 @@ package com.ssafy.iwc.controller;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
@@ -18,6 +24,7 @@ import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
 import com.ssafy.iwc.util.MD5Generator;
+
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,17 +35,31 @@ public class BoardController {
 	private PostImageService postImageService;
 	private MainImageService mainImageService;
 	
-	public BoardController(BoardService boardService, PostImageService postImageService) {
+	public BoardController(BoardService boardService, PostImageService postImageService,MainImageService mainImageService) {
 		this.boardService = boardService;
 		this.postImageService = postImageService;
+		this.mainImageService = mainImageService;
 	}
-	@PostMapping("/getposts")
-	public String getpost() {
+	@GetMapping("/getposts")
+	
+	public ResponseEntity<List<PostImageDto>> getpost() {
 		System.out.println("들어옴");
-		List<PostImageDto> dto = postImageService.getFile(38);
-		System.out.println(dto.size());
+//		MainImageDto mainImageDto = mainImageService.getFile(45);
+//		
+//		model.addAttribute("files", mainImageDto);
 		
-		return "redirect:/";
+//		System.out.println(mainImageDto.toString());
+		try {
+			List<PostImageDto> dto = postImageService.getFile(38);
+			return new ResponseEntity(dto,HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+//		System.out.println(mainImageDto.);
+		
+
+		
 	}
 	
 	@PostMapping("/requestupload")
@@ -73,7 +94,6 @@ public class BoardController {
 			mainImageDto.setFilename(fname);
 			mainImageDto.setFilePath(fPath);
 			
-			
 			mainImageService.saveFile(mainImageDto);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -83,7 +103,7 @@ public class BoardController {
 		for(MultipartFile mf : files) {
 			try {
 			
-				
+//				파일명 명명을 다시해야함 -> 해쉬값
 				String origFilename = mf.getOriginalFilename();
 				String filename = new MD5Generator(origFilename).toString();
 //				실행되는 위치의 'files' 폴더에 파일이 저장
