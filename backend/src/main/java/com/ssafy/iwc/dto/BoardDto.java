@@ -47,6 +47,13 @@ public class BoardDto {
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
 	}
+	@Override
+	public String toString() {
+		return "BoardDto [id=" + id + ", author=" + author + ", good=" + good + ", views=" + views + ", location="
+				+ location + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + "]";
+	}
+	
+	
 	
 
 	
