@@ -4,26 +4,36 @@ import AuthService from "@/apis/AuthService";
 const storedUser = localStorage.getItem("user");
 
 @Module({ namespaced: true })
-class User extends VuexModule {
+class UserAuth extends VuexModule {
+  /*********************************************************************
+   * States
+   *********************************************************************/
   public status = storedUser ? { loggedIn: true } : { loggedIn: false };
-  public user = storedUser ? JSON.parse(storedUser) : null;
+  public authToken = storedUser ? JSON.parse(storedUser) : null;
 
+  get isLoggedIn(): boolean {
+    return this.status.loggedIn;
+  }
+
+  /*********************************************************************
+   * Mutations
+   *********************************************************************/
   @Mutation
   public loginSuccess(user: any): void {
     this.status.loggedIn = true;
-    this.user = user;
+    this.authToken = user;
   }
 
   @Mutation
   public loginFailure(): void {
     this.status.loggedIn = false;
-    this.user = null;
+    this.authToken = null;
   }
 
   @Mutation
   public logout(): void {
     this.status.loggedIn = false;
-    this.user = null;
+    this.authToken = null;
   }
 
   @Mutation
@@ -36,6 +46,9 @@ class User extends VuexModule {
     this.status.loggedIn = false;
   }
 
+  /*********************************************************************
+   * Actions
+   *********************************************************************/
   @Action({ rawError: true })
   login(data: any): Promise<any> {
     return AuthService.login(data.username, data.password).then(
@@ -81,10 +94,6 @@ class User extends VuexModule {
       }
     );
   }
-
-  get isLoggedIn(): boolean {
-    return this.status.loggedIn;
-  }
 }
 
-export default User;
+export default UserAuth;
