@@ -5,44 +5,92 @@
     ma-0
     pa-0
     fill-height
-    :style="{
-      'background-image':
-        'url(' + require('../assets/worldmap_change_color.png') + ')',
-      'background-position': 'center',
-    }"
+    :style="{'background-image': 'url(' + require('@/assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
   >
     <v-row align="center" justify="center">
       <!-- 타이틀 문구 -->
       <v-col cols="12">
         <div class="d-flex justify-center mb-6">
-          <h1 style="font-family:arial; color:#cccccc">Travel</h1>
+          <h1
+            style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
+          > . N U V O </h1>
         </div>
       </v-col>
-      <!-- 내용 문구 -->
-      <v-col cols="12" v-for="(item, idx) in mainPageWords" :key="idx">
-        <div class="d-flex justify-center mb-6">
-          <span
-            class="font-change-tmoneyroundwindregular"
-            style="color:#cccccc"
-          >
-            {{ item }}
-          </span>
-        </div>
-      </v-col>
+
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col>
-        <br />
-        <div class="d-flex justify-center mb-6">
-          <v-btn
-            elevation="2"
-            class="font-change-tmoneyroundwindregular"
-            @click="gotoWorldMap"
-            >지금 시작하기</v-btn
+      <v-col
+        offset="2"
+        cols="4"
+      >
+        <div
+          style="text-align:center"
+        >
+          <v-icon
+            size="150px"
+            :class="{ 'disappeared-hidden-map-icon' : !isShowMapIcon }"
           >
+            mdi-map-outline
+          </v-icon>
+          <v-icon
+            :class="{ 'disappeared-airplane-icon' : !isShowMapIcon, 'show-airplane-icon': isShowMapIcon }"
+          >
+            mdi-airplane
+          </v-icon>
         </div>
-        <br />
-        <br />
+        <div
+          style="text-align:center;"
+        >
+          <v-icon
+            size="150px"
+            style="border:solid; border-radius:10px;"
+            :class="{ 'disappeared-map-icon' : isShowMapIcon }"
+            @mouseover="disappearMapIcon"
+            @mouseleave="showMapIcon"
+            @click="gotoWorldMap"
+          >
+            mdi-map-search-outline
+          </v-icon>
+          <v-icon
+            style="opacity:0;"
+          >
+            mdi-airplane
+          </v-icon>
+        </div>
       </v-col>
+
+      <!-- VR로 가는 버튼 -->
+      <v-col
+        cols="4"
+      >
+        <div
+          style="text-align:center"  
+        >
+          <v-icon
+            size="150px"
+            :class="{ 'disappeared-hidden-VR-icon' : !isShowVRIcon, 'show-hidden-VR-icon-bg' : isShowVRIcon,  'show-hidden-VR-icon' : isShowVRIcon }"
+          >
+            mdi-safety-goggles
+          </v-icon>
+        </div>
+        <div
+          style="text-align:center;"
+        >
+          <v-icon
+            size="150px"
+            style="border:solid; border-radius:10px;"
+            :class="{ 'disappeared-VR-icon' : isShowVRIcon }"
+            @mouseover="disappearVRIcon"
+            @mouseleave="showVRIcon"
+            @click="gotoVRContents"
+          >
+            mdi-safety-goggles
+          </v-icon>
+          
+        </div>
+      </v-col>
+
+      <!-- 남는 공간 offset -->
+      <v-col cols="2"></v-col>
     </v-row>
   </v-container>
 </template>
@@ -52,25 +100,125 @@ export default {
   name: "Main",
   data: function() {
     return {
-      // 배경 문구 내용
-      mainPageWords: [
-        "추억을 쌓는 여행, 직접 가야만 여행일까요?",
-        "가지 못 하더라도 지금까지 쌓은 추억을 즐기세요!",
-      ],
-    };
+      isShowMapIcon:false,
+      isShowVRIcon:false,
+    }
   },
   methods: {
     // 월드 맵으로 가는 버튼 액션
-    gotoWorldMap: function() {
-      this.$router.push({ name: "WorldMap" });
+    gotoWorldMap: function () {
+      this.$router.push({name:'WorldMap'})
     },
-  },
-};
+
+    // VR로 가는 버튼 액션 / 아직 구현 못함
+    gotoVRContents: function () {
+      console.log('아직 구현 못 함')
+    },
+
+    // 맵 아이콘 애니메이션
+    disappearMapIcon: function () {
+      this.isShowMapIcon = true
+    },
+    showMapIcon: function () {
+      this.isShowMapIcon = false
+    },
+
+    // VR 아이콘 애니메이션
+    disappearVRIcon: function () {
+      this.isShowVRIcon = true
+    },
+    showVRIcon: function () {
+      this.isShowVRIcon = false
+    }
+  }
+}
 </script>
 
 <style scoped>
 /* 티머니 폰트체인지 CSS */
 .font-change-tmoneyroundwindregular {
-  font-family: "TmoneyRoundWindRegular";
+  font-family: 'TmoneyRoundWindRegular'; 
+} 
+
+/* 월드맵 아이콘 트랜지션 */
+.disappeared-map-icon {
+  opacity: 0.5;
+  color: white;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: scale(1.05);
+  cursor: pointer;
 }
+
+.disappeared-hidden-map-icon {
+  opacity: 0;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: translateY(100px) rotate3d(0, 1, 0, 70deg);
+  cursor: pointer;
+}
+
+/* 비행기 이동 트랜지션 */
+.disappeared-airplane-icon {
+  opacity: 0;
+  transition-duration: 2s;
+  transform: translateX(-400px) rotate(90deg);
+  cursor: pointer;
+}
+
+.show-airplane-icon {
+  opacity: 1;
+  transition-duration: 5s;
+  transform: translateX(20px) rotate(90deg) scale(1.3);
+}
+
+/* VR 아이콘 트랜지션 */
+.disappeared-VR-icon {
+  opacity: 0.5;
+  color: white;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.disappeared-hidden-VR-icon {
+  opacity: 0;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transform: translateY(100px) rotate3d(0, 1, 0, 90deg);
+
+  cursor: pointer;
+}
+
+.show-hidden-VR-icon {
+  opacity: 1;
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  color: #333333;
+  cursor: pointer;
+}
+
+/* VR 불빛 애니메이션 */
+@keyframes lightparty {
+  from {
+    background-image: url('../assets/main/goggle_light.png');
+    background-position: center 53%;
+    background-size: 125px;
+  }
+
+  to {
+    background-image: url('../assets/main/goggle_light_bg.png');
+    background-position: center 53%;
+    background-size: 125px;
+  }
+}
+
+.show-hidden-VR-icon-bg {
+  animation-duration: 0.8s;
+  animation-name: lightparty;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
 </style>

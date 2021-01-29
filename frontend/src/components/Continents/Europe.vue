@@ -8,7 +8,7 @@
       >
         <div class="d-flex justify-center mb-6">
           <img
-            src="../../assets/europe.png"
+            src="@/assets/continents/europe.png"
             alt="image error"
             height = "600px"
           >
