@@ -3,94 +3,93 @@
     <v-row class="text-center" align="center" justify="center">
       <v-col cols="12">
         <SignupForm
-          v-if="page == 1"
+          v-if="page === 1"
           @toEmailVerification="setSignupData"
           :signupData2="signupData"
         />
         <SignupEmail
-          v-if="page == 2"
+          v-if="page === 2"
           @toEmailVerification="emailVerification"
-          @pageDown="(page = '1'), setPage(1)"
+          @pageDown="(page = 1), setPage(1)"
         />
         <SignupEmailVerification
-          v-if="page == 3"
+          v-if="page === 3"
           @finishSignup="doSignup"
-          @pageDown="(page = '2'), setPage(2)"
+          @pageDown="(page = 2), setPage(2)"
         />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import Swal from "sweetalert2";
+
+import { mapActions } from "vuex";
 
 import SignupForm from "@/components/member/signup/SignupForm.vue";
 import SignupEmail from "@/components/member/signup/SignupEmail.vue";
 import SignupEmailVerification from "@/components/member/signup/SignupEmailVerification.vue";
 
-import { Component, Vue } from "vue-property-decorator";
-import { namespace } from "vuex-class";
-
-const Form = namespace("Signup");
-
-@Component({
+export default {
   components: {
     SignupForm,
     SignupEmail,
     SignupEmailVerification,
   },
-})
-export default class Signup extends Vue {
-  private signupData: any;
-  private page = localStorage.getItem("page")
-    ? localStorage.getItem("page")
-    : 1;
+  data: function() {
+    return {
+      signupData: {},
+      page: Number(localStorage.getItem("page"))
+        ? Number(localStorage.getItem("page"))
+        : 1,
+    };
+  },
+  methods: {
+    ...mapActions("Signup", ["signup", "saveSignupData", "setPage"]),
+    setSignupData(signupData) {
+      console.log("저장 before");
+      console.log(this.$store.state.Signup.page);
 
-  @Form.Action
-  private signup!: (data: any) => Promise<any>;
-  @Form.Action
-  private saveSignupData!: (data: any) => void;
-  @Form.Action
-  private setPage!: (no: any) => void;
+      this.saveSignupData(signupData);
+      this.signupData = this.$store.state.Signup.signupData;
+      this.page = 2;
+      this.setPage(this.page);
 
-  created() {
-    console.log("hi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    this.signupData = this.$store.state.Signup.signupData;
-
-    console.log(this.signupData);
-  }
-
-  setSignupData(signupData: any) {
-    this.saveSignupData(signupData);
-    this.signupData = this.$store.state.Signup.signupData;
-
-    this.page = "2";
-    this.setPage(this.page);
-  }
-  emailVerification(userEmailData: any) {
-    this.signupData = this.$store.state.Signup.signupData;
-    this.signupData.uemail = userEmailData.userEmail;
-    this.saveSignupData(this.signupData);
-    this.page = "3";
-    this.setPage(this.page);
-  }
-  doSignup() {
-    this.signup(this.signupData);
-    Swal.fire({
-      title: "가입되었습니다!",
-      text: `${this.signupData.uname} 님\n허니콤보에 오신 것을 환영합니다.`,
-      background: "#fff url(/images/trees.png)",
-      backdrop: `
+      console.log("저장 after");
+      console.log(this.$store.state.Signup.page);
+    },
+    emailVerification(userEmailData) {
+      this.signupData = this.$store.state.Signup.signupData;
+      this.signupData.uemail = userEmailData.userEmail;
+      this.saveSignupData(this.signupData);
+      this.page = 3;
+      this.setPage(this.page);
+    },
+    doSignup() {
+      this.signup(this.signupData);
+      Swal.fire({
+        title: "가입되었습니다!",
+        text: `${this.signupData.uname} 님\n NUVO에 오신 것을 환영합니다.`,
+        background: "#fff url(/images/trees.png)",
+        backdrop: `
     rgba(0,0,123,0.4)
     url("/images/nyan-cat.gif")
     left top
     no-repeat
   `,
-    });
-    this.saveSignupData({});
-    this.setPage(1);
-    this.$router.push({ name: "Home" });
-  }
-}
+      });
+      this.saveSignupData({});
+      this.setPage(1);
+      this.$router.push({ name: "Home" });
+    },
+  },
+  created() {
+    console.log("Signup Component Created!");
+    this.setPage("1");
+    this.signupData = this.$store.state.Signup.signupData;
+  },
+};
 </script>
+
+<style scoped></style>

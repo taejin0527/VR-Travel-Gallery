@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 import Auth from "./modules/auth";
 import Signup from "./modules/signup";
@@ -14,4 +15,9 @@ export default new Vuex.Store({
     Auth,
     Signup,
   },
+  plugins: [
+    createPersistedState({
+      paths: ["Auth", "Signup"],
+    }),
+  ],
 });

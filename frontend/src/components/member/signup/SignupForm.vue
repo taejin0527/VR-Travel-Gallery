@@ -61,7 +61,7 @@
       <v-btn
         color="grey"
         class="white--text"
-        @click="$router.push({ name: 'Login' }), setSignupData2({})"
+        @click="$router.push({ name: 'Login' }), saveSignupData({})"
         >뒤로가기</v-btn
       >
       <v-divider class="mr-5" vertical></v-divider>
@@ -83,81 +83,79 @@
   </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import swal from "sweetalert2";
+import { mapActions } from "vuex";
 
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { namespace } from "vuex-class";
-
-const Signup = namespace("Signup");
-
-@Component
-export default class SignupForm extends Vue {
-  @Prop() private signupData2!: any;
-
-  signupData = {
-    uid: "",
-    uname: "",
-    upw: "",
-    upw2: "",
-    uemail: "",
-  };
-  show1 = false;
-  show2 = false;
-  idcheck = true;
-
-  @Signup.Action
-  private saveSignupData!: (data: any) => void;
-  @Signup.Action
-  private idCheck!: (uid: any) => Promise<any>;
-
+export default {
+  name: "SignupForm",
+  props: {
+    signupData2: Object,
+  },
   mounted() {
+    console.log("signupform mounted!");
     if (this.signupData2 != {}) {
       this.signupData = this.signupData2;
     }
-  }
-
-  toEmailVerification() {
-    for (const [key, value] of Object.entries(this.signupData)) {
-      if (key === "uemail") continue;
-      if (value === "") {
-        const key2 = this.signupData2[key];
-        swal.fire({
-          icon: "error",
-          text: `${key2} 확인해주세요.`,
-        });
-        return;
+  },
+  data: function() {
+    return {
+      signupData: {
+        uid: "",
+        uname: "",
+        upw: "",
+        upw2: "",
+        uemail: "",
+      },
+      show1: false,
+      show2: false,
+      idcheck: true,
+    };
+  },
+  methods: {
+    ...mapActions("Signup", ["idCheck", "saveSignupData"]),
+    toEmailVerification() {
+      for (const [key, value] of Object.entries(this.signupData)) {
+        if (key === "uemail") continue;
+        if (value === "") {
+          const key2 = this.signupData2[key];
+          swal.fire({
+            icon: "error",
+            text: `${key2} 확인해주세요.`,
+          });
+          return;
+        }
       }
-    }
-    // 다른 방식 고려
-    this.signupData.upw2 = "";
-    this.$emit("toEmailVerification", this.signupData);
-  }
-  pwdCheck(upw: string) {
-    const pattern1 = /[0-9]/;
-    const pattern2 = /[A-Za-z]/;
-    //특수문자 확인
-    if (pattern1.test(upw) == false) {
-      return false;
-    }
-    if (pattern2.test(upw) == false) {
-      return false;
-    }
-    // if(pattern3.test(pwd) == false){
-    //     return false;
-    // }
-    if (upw.length < 8) return false;
-    return true;
-  }
-  pwdCheck2(upw: string, upw2: string) {
-    if (!this.pwdCheck(upw2)) return false;
-    if (upw !== upw2) return false;
-    return true;
-  }
-  idCheck2(uid: string) {
-    this.idCheck(uid).then((res) =>
-      res ? (this.idcheck = true) : (this.idcheck = false)
-    );
-  }
-}
+      // 다른 방식 고려
+      this.signupData.upw2 = "";
+      this.$emit("toEmailVerification", this.signupData);
+    },
+    pwdCheck(upw) {
+      const pattern1 = /[0-9]/;
+      const pattern2 = /[A-Za-z]/;
+      //특수문자 확인
+      if (pattern1.test(upw) == false) {
+        return false;
+      }
+      if (pattern2.test(upw) == false) {
+        return false;
+      }
+      // if(pattern3.test(pwd) == false){
+      //     return false;
+      // }
+      if (upw.length < 8) return false;
+      return true;
+    },
+    pwdCheck2(upw, upw2) {
+      if (!this.pwdCheck(upw2)) return false;
+      if (upw !== upw2) return false;
+      return true;
+    },
+    idCheck2(uid) {
+      this.idCheck(uid).then((res) =>
+        res ? (this.idcheck = true) : (this.idcheck = false)
+      );
+    },
+  },
+};
 </script>

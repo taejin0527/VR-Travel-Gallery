@@ -38,7 +38,7 @@
           <v-icon> mdi-key </v-icon>
         </div>
         <span>Doesn't have an account?</span>
-        <span class="state" @click="signUpPage">Sign-up</span>
+        <a @click="signUpPage">Sign-up</a>
         <button>
           <span class="state">Log-in</span>
         </button>
