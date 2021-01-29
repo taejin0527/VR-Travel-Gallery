@@ -1,15 +1,5 @@
 <template>
   <v-card class="mx-auto" flat max-width="350">
-    <v-spacer>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </v-spacer>
     <v-text-field
       v-model="confirm"
       :messages="error.confirm"
@@ -20,15 +10,6 @@
       color="#424242"
       autocomplete="off"
     ></v-text-field>
-    <v-spacer>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </v-spacer>
     <div>
       <v-btn color="grey" class="white--text" @click="$emit('pageDown')"
         >뒤로가기</v-btn
@@ -42,16 +23,64 @@
         >회원가입 완료</v-btn
       >
     </div>
-    <v-spacer>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </v-spacer>
   </v-card>
 </template>
 
+<script>
+import swal from "sweetalert2";
+import { mapState } from "vuex";
+
+export default {
+  name: "SignupEmailVerification",
+  data: function() {
+    return {
+      confirm: "",
+      error: {
+        confirm: "",
+      },
+      isSubmit: false,
+      component: this,
+    };
+  },
+  created() {
+    this.component = this;
+  },
+  watch: {
+    confirm: function() {
+      this.checkForm();
+    },
+  },
+  computed: {
+    ...mapState("Signup", ["confirmCode2"]),
+  },
+  methods: {
+    checkForm() {
+      if (this.confirm.length != 6)
+        this.error.confirm = "확인 코드는 6자리 입니다.";
+      else this.error.confirm = "";
+
+      let isSubmit = true;
+
+      Object.values(this.error).map((v) => {
+        if (v) isSubmit = false;
+      });
+      this.isSubmit = isSubmit;
+    },
+    verify() {
+      // axios 보내고
+      // 인증 완료 되서 넘어 오면
+
+      const num = Number(this.confirm);
+      // num === this.confirmCode.data ||
+      if (num === this.confirmCode2) {
+        this.$emit("finishSignup");
+      } else {
+        swal.fire({
+          icon: "error",
+          text: "인증번호를 확인해주세요",
+        });
+      }
+    },
+  },
+};
+</script>
