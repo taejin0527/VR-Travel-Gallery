@@ -1,89 +1,112 @@
 <template>
-    <div id="menu">
-        <!-- 추가할 메뉴는 추후에 수정-->
-        <router-link tag="li" @click.native="closeMenuPage" to="/"
-            >Home</router-link
-        >
-        <router-link tag="li" @click.native="closeMenuPage" to="/worldmap"
-            >Main Page</router-link
-        >
-
-        <div
-            class="cursor"
-            :style="{ left: cursor.left, top: cursor.top }"
-        ></div>
+  <div class="menu">
+    <div class="msg">
+      <p style="color:#dda288">I'm looking for:</p>
     </div>
+
+    <div class="router-ul">
+      <router-link tag="li" @click.native="closeMenuPage" to="/"
+        ><span class="router-a" data-text="Home">Home</span></router-link
+      >
+      <router-link tag="li" @click.native="closeMenuPage" to="/worldmap"
+        ><span class="router-a" data-text="Worldmap"
+          >Worldmap</span
+        ></router-link
+      >
+      <router-link tag="li" @click.native="closeMenuPage" to="/post"
+        ><span class="router-a" data-text="Post">Post</span></router-link
+      >
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
 export default Vue.extend({
-    name: "Menu",
-    props: {
-        isMenuPageOpen: Boolean,
+  name: "Menu",
+  props: {
+    isMenuPageOpen: Boolean,
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    // 메뉴 끄기
+    closeMenuPage: function() {
+      console.log("hey!!!");
+      this.$emit("closeMenuPage");
     },
-    data() {
-        return {
-            cursor: {
-                left: "",
-                top: "",
-            },
-        };
-    },
-    methods: {
-        // 메뉴 끄기
-        closeMenuPage: function () {
-            console.log("hey!!!");
-            this.$emit("closeMenuPage");
-        },
-    },
-    mounted() {
-        document.addEventListener("mousemove", (e) => {
-            this.cursor.left = e.pageX + "px";
-            this.cursor.top = e.pageY + "px";
-        });
-    },
+  },
 });
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Lobster");
+
 /* 화면 전체 랩핑 */
-#menu {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-    background-color: #b2876f;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.menu {
+  font-family: "Lobster", cursive;
+  position: absolute;
+  z-index: 1;
+  background-color: #7e675e;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.menu .msg {
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-li {
-    list-style: none;
-    text-decoration: none;
-    margin: 10px 0;
-    position: relative;
-    display: inline-block;
-    font-size: 4em;
-    color: #ffffff;
+.router-ul {
+  position: relative;
 }
-.cursor {
-    position: fixed;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #ffffff;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    mix-blend-mode: difference;
+.router-ul li {
+  list-style: none;
+  text-align: center;
 }
-li:hover ~ .cursor {
-    transform: scale(4);
+.router-ul li .router-a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 4em;
+  padding: 5px 20px;
+  display: inline-flex;
+  font-weight: 300;
+  transition: 0.3s;
+  z-index: 100;
+}
+.router-ul li:hover .router-a {
+  color: #dda288;
+  cursor: pointer;
+}
+.router-ul li .router-a:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  color: #dda288;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 500px;
+  transition: letter-spacing 0.5s, left 0.5s;
+}
+.router-ul li .router-a:hover:before {
+  content: attr(data-text);
+  left: 50%;
+  color: #dddddd;
+  opacity: 1;
+  letter-spacing: 30px;
 }
 </style>
