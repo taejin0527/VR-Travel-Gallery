@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open --port 8000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -62,7 +62,11 @@
       "ecmaVersion": 2020
     },
     "rules": {
+<<<<<<< HEAD
+      "no-undef" : "off"
+=======
       "@typescript-eslint/no-this-alias": "off"
+>>>>>>> 597fb237f5051e392c6542ffc3776872fb644049
     }
   },
   "browserslist": [

@@ -17,17 +17,23 @@ public class BoardService {
 	}
 	
 	  
-	@Transactional public int savePost(BoardDto boardDto) { 
+	@Transactional public long savePost(BoardDto boardDto) { 
 		return boardRepository.save(boardDto.toEntity()).getId(); 
 	}
 	 
 
 	@Transactional
-	public BoardDto getPost(int id) {
+	public BoardDto getPost(long id) {
 		Board board = boardRepository.findById(id).get();
 
-		BoardDto boardDto = BoardDto.builder().id(board.getId()).author(board.getAuthor()).content(board.getContent())
-				.postImageId(board.getPostImageId()).createdDate(board.getCreatedDate()).build();
+		BoardDto boardDto = BoardDto.builder()
+				.id(id)
+				.author(board.getAuthor())
+				.good(board.getGood())
+				.views(board.getViews())
+				.location(board.getLocation())
+				.createdDate(board.getCreatedDate())
+				.build();
 		return boardDto;
 
 	}
