@@ -1,6 +1,10 @@
 
 package com.ssafy.iwc.service;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -18,20 +22,27 @@ public class PostImageService {
 	}
 	
 	@Transactional
-	public int saveFile(PostImageDto postImageDto) {
+	public long saveFile(PostImageDto postImageDto) {
 		return postImageRepository.save(postImageDto.toEntity()).getId();
 	}
 	
 	@Transactional
-	public PostImageDto getFile(int id) {
-		PostImage postImage = postImageRepository.findById(id).get();
+	public List<PostImageDto> getFile(long id) {
+		System.out.println("¿©±âµé¾î¿È");
+		List<PostImage> postImage = postImageRepository.findPostImageById(id);
+		List<PostImageDto> postImageDto = new LinkedList<PostImageDto>();
+		for(PostImage p : postImage) {
+			
+			PostImageDto dto = PostImageDto.builder()
+					.id(id)
+					.origFilename(p.getOrigFilename())
+					.filename(p.getFilename())
+					.filePath(p.getFilePath())
+					.build();
+			postImageDto.add(dto);
+		};
+
 		
-		PostImageDto postImageDto = PostImageDto.builder()
-				.id(id)
-				.origFilename(postImage.getOrigFilename())
-				.filename(postImage.getFilename())
-				.filePath(postImage.getFilePath())
-				.build();
 		return postImageDto;
 				
 	}
