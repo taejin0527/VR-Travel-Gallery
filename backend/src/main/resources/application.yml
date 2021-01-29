@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -18,3 +18,5 @@ yacht:
   app:
     jwtSecret: yachtSecretKey
     jwtExpirationMs: 86400000
+ # jwtExpirationMs 만료시간
+ # jwtSecret : 비번
