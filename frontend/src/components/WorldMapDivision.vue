@@ -6,17 +6,22 @@
         cols="12"
       >
         <img
-          src="../assets/worldmap_change_color.png"
+          src="@/assets/worldmap/dot_worldmap.png"
           alt="image error"
           id="worldmap-setting-location"
+          style="width:20%; margin-top:5%; margin-right:5%;
+                margin-left:5%; transform:scale(4.2);
+                position:relative; top:100%"
         >
+
+        
       </v-col>
       <v-col
         cols="2"
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/europe.png"
+          src="@/assets/continents/europe.png"
           alt="image error"
           @click="gotoEuropeContinent"
           class="hoverevent-Continent continent-opacity"
@@ -28,7 +33,7 @@
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/africa.png"
+          src="@/assets/continents/africa.png"
           alt="image error"
           @click="gotoAfricaContinent"
           class="hoverevent-Continent continent-opacity"
@@ -40,7 +45,7 @@
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/north_america.png"
+          src="@/assets/continents/north_america.png"
           alt="image error"
           @click="gotoNorthAmericaContinent"
           class="hoverevent-Continent continent-opacity"
@@ -52,7 +57,7 @@
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/oceania.png"
+          src="@/assets/continents/oceania.png"
           alt="image error"
           @click="gotoOceaniaContinent"
           class="hoverevent-Continent continent-opacity"
@@ -64,7 +69,7 @@
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/south_america.png"
+          src="@/assets/continents/south_america.png"
           alt="image error"
           @click="gotoSouthAmericaContinent"
           class="hoverevent-Continent continent-opacity"
@@ -76,7 +81,7 @@
       >
         <img
           @mouseover="changeContinentColor"
-          src="../assets/asia.png"
+          src="@/assets/continents/asia.png"
           alt="image error"
           @click="gotoAsiaContinent"
           class="hoverevent-Continent continent-opacity boxes"
