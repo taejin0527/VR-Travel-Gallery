@@ -1,0 +1,117 @@
+import axios from "axios";
+import swal from "sweetalert2";
+
+import SERVER from "@/apis/UrlMapper";
+import ROUTER from "@/router";
+
+export default {
+  namespaced: true,
+  state: {
+    signupData: {},
+    page: Number(localStorage.getItem("page"))
+      ? Number(localStorage.getItem("page"))
+      : 1,
+    confirmCode2: "",
+  },
+  mutations: {
+    SET_PAGE(state: any, page: any) {
+      state.page = Number(page);
+      localStorage.setItem("page", page);
+    },
+    SET_CODE(state: any, code: any) {
+      state.confirmCode2 = code;
+    },
+    SET_SIGNUPDATA(state: any, signupData: any) {
+      state.signupData = signupData;
+    },
+  },
+  /************************** Action ***********************************/
+  actions: {
+    saveSignupData({ commit }: any, signupData: any) {
+      commit("SET_SIGNUPDATA", signupData);
+    },
+    setPage({ commit }: any, page: any) {
+      commit("SET_PAGE", page);
+    },
+    signup({ dispatch }: any, signupData: any): void {
+      const info = {
+        data: signupData,
+        route: SERVER.ROUTES.auth.signup,
+      };
+      dispatch("postAuthData", info);
+    },
+    postAuthData({ commit }: any, info: any): Promise<any> {
+      return axios
+        .post(SERVER.BASE_URL + info.route, info.data, {
+          headers: {
+            "content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          ROUTER.push({
+            name: "Login",
+          });
+        })
+        .catch((err) => {
+          swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "로그인 정보를 확인해주세요.",
+          });
+        });
+    },
+    idCheck(uid: any) {
+      if (uid === "") {
+        swal.fire("아이디를 입력하세요.");
+        return false;
+      }
+      return axios
+        .get(SERVER.BASE_URL + SERVER.ROUTES.auth.idCheck + "/" + uid)
+        .then((res) => {
+          if (res.data === "success") {
+            swal.fire("사용 가능한 아이디입니다.");
+            return true;
+          } else {
+            swal.fire({
+              icon: "error",
+              text: "이미 사용 중인 아이디입니다.",
+            });
+            return false;
+          }
+        })
+        .catch((err) => console.log(err.response));
+    },
+    emailCheck(context: any, email: string) {
+      return axios
+        .post(SERVER.BASE_URL + SERVER.ROUTES.auth.emailCheck, {
+          userEmail: email,
+        })
+        .then((res) => {
+          if (res.data === "success") {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    getConfirmCode({ commit }: any, email: any) {
+      return axios
+        .post(SERVER.BASE_URL + SERVER.ROUTES.auth.emailValidate, {
+          userEmail: email,
+        })
+        .then((confirmCode: any) => {
+          if (confirmCode === "fail") {
+            swal.fire("이메일을 확인해주세요.");
+            return "";
+          } else {
+            commit("SET_CODE", confirmCode.data);
+            return confirmCode;
+          }
+        })
+        .catch((err) => {
+          return err.response;
+        });
+    },
+  },
+};

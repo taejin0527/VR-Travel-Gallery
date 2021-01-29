@@ -7,13 +7,9 @@
     fill-height
     :style="{'background-image': 'url(' + require('@/assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
   >
-    <v-row
-      align="center" justify="center"
-    >
+    <v-row align="center" justify="center">
       <!-- 타이틀 문구 -->
-      <v-col
-        cols="12"
-      >
+      <v-col cols="12">
         <div class="d-flex justify-center mb-6">
           <h1
             style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
@@ -101,14 +97,14 @@
 
 <script>
 export default {
-  name: 'Main',
-  data: function () {
+  name: "Main",
+  data: function() {
     return {
       isShowMapIcon:false,
       isShowVRIcon:false,
     }
   },
-  methods:{
+  methods: {
     // 월드 맵으로 가는 버튼 액션
     gotoWorldMap: function () {
       this.$router.push({name:'WorldMap'})

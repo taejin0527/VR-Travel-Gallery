@@ -13,47 +13,60 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import(/* webpackChunkName: "about" */ "@/views/member/Signup.vue")
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/member/Signup.vue"),
   },
   {
     path: "/profile",
     name: "Profile",
-    component: () => import(/* webpackChunkName: "about" */ "@/views/member/Profile.vue")
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/User/Profile.vue"),
   },
   {
     path: "/worldmap/",
     name: "WorldMap",
-    component: WorldMap
+    component: WorldMap,
   },
   {
     path: "/eachcontinent/",
     name: "EachContinent",
-    component: EachContinent
+    component: EachContinent,
   },
   {
     path: "/post/",
     name: "Post",
-    component: Post
-  }
+    component: Post,
+  },
 ];
 
-const userRoutes: Array<RouteConfig> = [
-
-];
+const userRoutes: Array<RouteConfig> = [];
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/login", "/signup", "/"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("user");
+
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;
