@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <!-- Refactoring 해야 됨 -->
+    <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
       <Oceania/>
     </div>
@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import Oceania from "@/components/Continents/Oceania.vue";
-import SouthAmerica from "@/components/Continents/SouthAmerica.vue";
-import NorthAmerica from "@/components/Continents/NorthAmerica.vue";
-import Asia from "@/components/Continents/Asia.vue";
-import Africa from "@/components/Continents/Africa.vue";
-import Europe from "@/components/Continents/Europe.vue";
+import Oceania from "@/components/continents/Oceania.vue";
+import SouthAmerica from "@/components/continents/SouthAmerica.vue";
+import NorthAmerica from "@/components/continents/NorthAmerica.vue";
+import Asia from "@/components/continents/Asia.vue";
+import Africa from "@/components/continents/Africa.vue";
+import Europe from "@/components/continents/Europe.vue";
 
 export default {
   name: 'EachContinent',

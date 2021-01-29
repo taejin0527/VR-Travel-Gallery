@@ -10,12 +10,19 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "sweetalert2": "^10.13.3",
+    "swiper": "^5.3.7",
+    "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-class": "^0.3.2",
+    "vuex-module-decorators": "^1.0.1",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -55,7 +62,11 @@
       "ecmaVersion": 2020
     },
     "rules": {
+<<<<<<< HEAD
       "no-undef" : "off"
+=======
+      "@typescript-eslint/no-this-alias": "off"
+>>>>>>> 597fb237f5051e392c6542ffc3776872fb644049
     }
   },
   "browserslist": [

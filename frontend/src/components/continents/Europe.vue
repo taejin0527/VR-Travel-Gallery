@@ -8,7 +8,7 @@
       >
         <div class="d-flex justify-center mb-6">
           <img
-            src="../../assets/south_america.png"
+            src="@/assets/continents/europe.png"
             alt="image error"
             height = "600px"
           >
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "SouthAmerica",
+  name: "Europe",
 
 }
 </script>

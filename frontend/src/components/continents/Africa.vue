@@ -8,7 +8,7 @@
       >
         <div class="d-flex justify-center mb-6">
           <img
-            src="../../assets/africa.png"
+            src="@/assets/continents/africa.png"
             alt="image error"
             height = "600px"
           >
