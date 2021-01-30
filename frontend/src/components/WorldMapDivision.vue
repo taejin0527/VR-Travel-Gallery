@@ -296,7 +296,7 @@ export default {
 .disappeared-north-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-40px) translateY(140px) rotate(100deg);
+  transform: translateX(-40px) translateY(140px) rotate(100deg) scale(4);
   cursor: pointer;
 }
 .show-north-airplane-icon {
@@ -332,7 +332,7 @@ export default {
 .disappeared-south-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-130px) translateY(270px) rotate(100deg);
+  transform: translateX(-130px) translateY(270px) rotate(100deg) scale(4);
 }
 .show-south-airplane-icon {
   opacity: 1;
@@ -367,7 +367,7 @@ export default {
 .disappeared-europe-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-150px) translateY(140px) rotate(100deg);
+  transform: translateX(-150px) translateY(140px) rotate(100deg) scale(4);
 }
 .show-europe-airplane-icon {
   opacity: 1;
@@ -402,7 +402,7 @@ export default {
 .disappeared-africa-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-295px) translateY(230px) rotate(100deg);
+  transform: translateX(-295px) translateY(230px) rotate(100deg) scale(4);
 }
 .show-africa-airplane-icon {
   opacity: 1;
@@ -437,7 +437,7 @@ export default {
 .disappeared-asia-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-320px) translateY(130px) rotate(100deg);
+  transform: translateX(-320px) translateY(130px) rotate(100deg) scale(4);
 }
 .show-asia-airplane-icon {
   opacity: 1;
@@ -472,7 +472,7 @@ export default {
 .disappeared-oceania-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-425px) translateY(280px) rotate(100deg);
+  transform: translateX(-425px) translateY(280px) rotate(100deg) scale(4);
 }
 .show-oceania-airplane-icon {
   opacity: 1;
@@ -525,7 +525,7 @@ export default {
   .disappeared-north-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-150px) translateY(160px) rotate(100deg);
+    transform: translateX(-150px) translateY(160px) rotate(100deg) scale(4);
     cursor: pointer;
   }
   .show-north-airplane-icon {
@@ -546,7 +546,7 @@ export default {
   .disappeared-south-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-340px) translateY(340px) rotate(100deg);
+    transform: translateX(-340px) translateY(340px) rotate(100deg) scale(4);
   }
   .show-south-airplane-icon {
     opacity: 1;
@@ -566,7 +566,7 @@ export default {
   .disappeared-europe-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-250px) translateY(150px) rotate(100deg);
+    transform: translateX(-250px) translateY(150px) rotate(100deg) scale(4);
   }
   .show-europe-airplane-icon {
     opacity: 1;
@@ -586,7 +586,7 @@ export default {
   .disappeared-africa-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-460px) translateY(280px) rotate(100deg);
+    transform: translateX(-460px) translateY(280px) rotate(100deg) scale(4);
   }
   .show-africa-airplane-icon {
     opacity: 1;
@@ -606,7 +606,7 @@ export default {
   .disappeared-asia-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-480px) translateY(150px) rotate(100deg);
+    transform: translateX(-480px) translateY(150px) rotate(100deg) scale(4);
   }
   .show-asia-airplane-icon {
     opacity: 1;
@@ -626,7 +626,7 @@ export default {
   .disappeared-oceania-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-600px) translateY(360px) rotate(100deg);
+    transform: translateX(-600px) translateY(360px) rotate(100deg) scale(4);
   }
   .show-oceania-airplane-icon {
     opacity: 1;
@@ -663,7 +663,7 @@ export default {
   .disappeared-north-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(0px) translateY(200px) rotate(100deg);
+    transform: translateX(0px) translateY(200px) rotate(100deg) scale(4);
     cursor: pointer;
   }
   .show-north-airplane-icon {
@@ -684,7 +684,7 @@ export default {
   .disappeared-south-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-170px) translateY(410px) rotate(100deg);
+    transform: translateX(-170px) translateY(410px) rotate(100deg) scale(4);
   }
   .show-south-airplane-icon {
     opacity: 1;
@@ -704,7 +704,7 @@ export default {
   .disappeared-europe-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-230px) translateY(195px) rotate(100deg);
+    transform: translateX(-230px) translateY(195px) rotate(100deg) scale(4);
   }
   .show-europe-airplane-icon {
     opacity: 1;
@@ -724,7 +724,7 @@ export default {
   .disappeared-africa-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-540px) translateY(340px) rotate(100deg);
+    transform: translateX(-540px) translateY(340px) rotate(100deg) scale(4);
   }
   .show-africa-airplane-icon {
     opacity: 1;
@@ -744,7 +744,7 @@ export default {
   .disappeared-asia-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-600px) translateY(170px) rotate(100deg);
+    transform: translateX(-600px) translateY(170px) rotate(100deg) scale(4);
   }
   .show-asia-airplane-icon {
     opacity: 1;
@@ -764,7 +764,7 @@ export default {
   .disappeared-oceania-airplane-icon {
     opacity: 0;
     transition-duration: 2s;
-    transform: translateX(-800px) translateY(450px) rotate(100deg);
+    transform: translateX(-800px) translateY(450px) rotate(100deg) scale(4);
   }
   .show-oceania-airplane-icon {
     opacity: 1;
