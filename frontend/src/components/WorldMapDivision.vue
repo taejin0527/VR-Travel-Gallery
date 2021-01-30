@@ -282,7 +282,7 @@ export default {
 /* 마우스를 올리면 보이는 상태로 바꿈 */
 .hoverevent-Continent:hover {
   opacity: 1;
-  transform:scale(8) !important;
+  transform:scale(7.5) !important;
   transition: 250ms;
   cursor: pointer;
 }
