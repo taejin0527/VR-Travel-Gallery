@@ -1,0 +1,104 @@
+package com.ssafy.iwc.service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.iwc.model.ERole;
+import com.ssafy.iwc.model.Role;
+import com.ssafy.iwc.model.User;
+import com.ssafy.iwc.model.request.SignupRequest;
+import com.ssafy.iwc.repository.RoleRepository;
+import com.ssafy.iwc.repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
+	
+
+	@Override
+	public boolean signUpUser(SignupRequest signUpRequest) {
+		User user = new User(signUpRequest.getUsername(), 
+				 signUpRequest.getEmail(),
+				 encoder.encode(signUpRequest.getPassword()));
+
+		Set<String> strRoles = signUpRequest.getRole();
+		Set<Role> roles = new HashSet<>();
+
+		if (strRoles == null) {
+			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(userRole);
+		} else {
+			strRoles.forEach(role -> {
+				switch (role) {
+				case "admin":
+					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(adminRole);
+
+					break;
+				case "mod":
+					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(modRole);
+
+					break;
+				default:
+					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					roles.add(userRole);
+				}
+			});
+		}
+		user.setRoles(roles);
+		userRepository.save(user);
+		
+		return true;
+	}
+	
+	@Override
+	public boolean checkIdDuplication(String username) {
+		System.out.println("service " + username);
+		if (userRepository.existsByUsername(username)) {
+			System.out.println("here");
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkEmailDuplication(String uemail) {
+		if (userRepository.existsByEmail(uemail)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean send(String subject, String text, String to) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(text);
+		javaMailSender.send(message);
+		
+		return true;
+	}
+
+}

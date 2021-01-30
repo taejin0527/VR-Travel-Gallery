@@ -7,7 +7,11 @@ import ROUTER from "@/router";
 export default {
   namespaced: true,
   state: {
-    signupData: {},
+    signupData: {
+      username: "",
+      password: "",
+      email: "",
+    },
     page: Number(localStorage.getItem("page"))
       ? Number(localStorage.getItem("page"))
       : 1,
@@ -33,9 +37,9 @@ export default {
     setPage({ commit }: any, page: any) {
       commit("SET_PAGE", page);
     },
-    signup({ dispatch }: any, signupData: any): void {
+    signup({ dispatch }: any, obj: any): void {
       const info = {
-        data: signupData,
+        data: obj,
         route: SERVER.ROUTES.auth.signup,
       };
       dispatch("postAuthData", info);
@@ -60,9 +64,9 @@ export default {
           });
         });
     },
-    idCheck(uid: any) {
-      if (uid === "") {
-        swal.fire("아이디를 입력하세요.");
+    idCheck(obj: any, uid: string) {
+      if (uid === "" || uid === undefined) {
+        swal.fire({ icon: "error", text: "아이디를 입력하세요." });
         return false;
       }
       return axios

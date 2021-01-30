@@ -1,10 +1,9 @@
-spring:
+spring:      
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/yacht?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: ssafy
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,6 +11,29 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  # email 인증
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: taejin0323@gmail.com
+    password: aywnfrboyfiazcpn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true       
+   # 소셜 로그인(google)
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 995943247986-pv1vngmuqeelfuehe8pinbo9brlurc91.apps.googleusercontent.com
+            client-secret: 3LeJfOF-5YwUXODhEvN86s0U
+            scope: profile, email
+
 
 # JWT 속성
 yacht:

@@ -5,10 +5,10 @@
       name="signup"
       prepend-icon="mdi-account"
       type="text"
-      v-model="signupData.uid"
+      v-model="signupData.username"
       color="#424242"
       :messages="idcheck ? '' : '오른쪽의 체크를 눌러 중복확인해주세요'"
-      @input="idcheck = true"
+      @input="idcheck = false"
       autofocus
       autocapitalize="off"
       autocorrect="off"
@@ -17,7 +17,7 @@
       <v-icon
         slot="append"
         :color="idcheck ? '' : '#ea907a'"
-        @click="idCheck2(signupData.uid)"
+        @click="idCheck2(signupData.username)"
         >mdi-check</v-icon
       >
     </v-text-field>
@@ -29,10 +29,10 @@
       label="비밀번호"
       name="password"
       prepend-icon="mdi-lock-outline"
-      v-model="signupData.upw"
+      v-model="signupData.password"
       color="#424242"
       :messages="
-        pwdCheck(signupData.upw)
+        pwdCheck(signupData.password)
           ? ''
           : '비밀번호는 영문과 숫자를 섞어서 8자 이상 되어야 합니다'
       "
@@ -46,10 +46,10 @@
       label="비밀번호 확인"
       name="password confirm"
       prepend-icon="mdi-lock-outline"
-      v-model="signupData.upw2"
+      v-model="signupData.password2"
       color="#424242"
       :messages="
-        pwdCheck2(signupData.upw, signupData.upw2)
+        pwdCheck2(signupData.password, signupData.password2)
           ? ''
           : '비밀번호와 동일하게 입력해주세요'
       "
@@ -67,12 +67,12 @@
       <v-divider class="mr-5" vertical></v-divider>
       <v-btn
         :disabled="
-          !signupData.uid ||
-            !signupData.upw ||
-            !signupData.upw2 ||
+          !signupData.username ||
+            !signupData.password ||
+            !signupData.password2 ||
             !idcheck ||
-            !pwdCheck(signupData.upw) ||
-            !pwdCheck2(signupData.upw, signupData.upw2)
+            !pwdCheck(signupData.password) ||
+            !pwdCheck2(signupData.password, signupData.password2)
         "
         @click="toEmailVerification()"
         color="#ea907a"
@@ -101,58 +101,40 @@ export default {
   data: function() {
     return {
       signupData: {
-        uid: "",
-        uname: "",
-        upw: "",
-        upw2: "",
-        uemail: "",
+        username: "",
+        password: "",
+        password2: "",
       },
       show1: false,
       show2: false,
-      idcheck: true,
+      idcheck: false,
     };
   },
   methods: {
     ...mapActions("Signup", ["idCheck", "saveSignupData"]),
     toEmailVerification() {
-      for (const [key, value] of Object.entries(this.signupData)) {
-        if (key === "uemail") continue;
-        if (value === "") {
-          const key2 = this.signupData2[key];
-          swal.fire({
-            icon: "error",
-            text: `${key2} 확인해주세요.`,
-          });
-          return;
-        }
-      }
-      // 다른 방식 고려
-      this.signupData.upw2 = "";
       this.$emit("toEmailVerification", this.signupData);
     },
-    pwdCheck(upw) {
+    pwdCheck(password) {
       const pattern1 = /[0-9]/;
       const pattern2 = /[A-Za-z]/;
       //특수문자 확인
-      if (pattern1.test(upw) == false) {
+      if (pattern1.test(password) == false) {
         return false;
       }
-      if (pattern2.test(upw) == false) {
+      if (pattern2.test(password) == false) {
         return false;
       }
-      // if(pattern3.test(pwd) == false){
-      //     return false;
-      // }
-      if (upw.length < 8) return false;
+      if (password.length < 8) return false;
       return true;
     },
-    pwdCheck2(upw, upw2) {
-      if (!this.pwdCheck(upw2)) return false;
-      if (upw !== upw2) return false;
+    pwdCheck2(password, password2) {
+      if (!this.pwdCheck(password2)) return false;
+      if (password !== password2) return false;
       return true;
     },
-    idCheck2(uid) {
-      this.idCheck(uid).then((res) =>
+    idCheck2(username) {
+      this.idCheck(username).then((res) =>
         res ? (this.idcheck = true) : (this.idcheck = false)
       );
     },
