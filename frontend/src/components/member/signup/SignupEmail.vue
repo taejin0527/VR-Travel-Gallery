@@ -3,7 +3,7 @@
     <v-text-field
       v-model="email"
       v-validate="'required|email'"
-      data-vv-as="email"
+      data-vv-name="email"
       :messages="error.msg"
       label="E-mail."
       @input="emailChecked = false"
@@ -74,7 +74,6 @@ export default {
     checkForm() {
       this.$validator.validateAll().then((result) => {
         if (this.email.length >= 0 && !result) {
-          console.log("hey");
           this.error.msg = "이메일 형식이 아닙니다.";
         } else if (!this.emailChecked) {
           this.error.msg = "오른쪽 체크를 눌러서 이메일 중복 확인해주세요.";
