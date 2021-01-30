@@ -6,13 +6,23 @@
 
         <div class="social" v-show="isMenuPageOpen">
           <router-link
+            v-if="!isLoggedIn"
             tag="li"
             @click.native="isMenuPageOpen = !isMenuPageOpen"
-            to="login"
+            to="/login"
           >
             <v-icon large color="white"> mdi-account-key </v-icon>
             <p style="color:#fff">Login</p></router-link
           >
+          <a
+            v-if="isLoggedIn"
+            tag="li"
+            @click="[(isMenuPageOpen = !isMenuPageOpen), signOut()]"
+            to="/"
+          >
+            <v-icon large color="white"> mdi-exit-to-app </v-icon>
+            <p style="color:#fff">Logout</p>
+          </a>
         </div>
       </div>
     </div>
@@ -29,6 +39,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapActions, mapGetters } from "vuex";
+
 import Menu from "@/components/navigation/Menu.vue";
 
 export default Vue.extend({
@@ -40,7 +52,12 @@ export default Vue.extend({
       isMenuPageOpen: false,
     };
   },
+  computed: {
+    ...mapGetters("Auth", ["isLoggedIn"]),
+  },
   methods: {
+    ...mapActions("Auth", ["signOut"]),
+
     // 메뉴 페이지 이동
     toggle: function() {
       this.isMenuPageOpen = !this.isMenuPageOpen;

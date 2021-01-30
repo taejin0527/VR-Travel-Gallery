@@ -71,7 +71,7 @@ export default {
       // 인증 완료 되서 넘어 오면
 
       const num = Number(this.confirm);
-      // num === this.confirmCode.data ||
+
       if (num === this.confirmCode2) {
         this.$emit("finishSignup");
       } else {
