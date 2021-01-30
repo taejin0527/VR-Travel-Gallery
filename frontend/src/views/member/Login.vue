@@ -8,7 +8,7 @@
             v-model="user.username"
             v-validate="'required'"
             data-vv-name="User ID"
-            type="email"
+            type="text"
             placeholder="ID"
             autofocus
           />
@@ -81,6 +81,7 @@ export default class Login extends Vue {
     this.loading = true;
     this.$validator.validateAll().then((isValid: boolean) => {
       if (!isValid) {
+        console.log("validate 오류");
         this.loading = false;
         setTimeout(() => {
           this.active = !this.active;
@@ -92,7 +93,7 @@ export default class Login extends Vue {
         this.login(this.user).then(
           (data) => {
             console.log("success!");
-            this.$router.push("/profile");
+            this.$router.push("/worldmap");
           },
           (error) => {
             this.loading = false;
@@ -122,8 +123,8 @@ export default class Login extends Vue {
 
 .ticket {
   position: relative;
-  width: 20%;
-  height: 60%;
+  width: 25%;
+  height: 500px;
   box-sizing: border-box;
   margin: 10px auto 0;
   padding: 20px;

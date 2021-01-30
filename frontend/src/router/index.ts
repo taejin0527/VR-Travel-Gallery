@@ -4,8 +4,8 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
 
-import WorldMap from "../views/WorldContinents/WorldMap.vue";
-import EachContinent from "../views/WorldContinents/EachContinent.vue";
+import WorldMap from "../views/worldContinents/WorldMap.vue";
+import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Create from "@/views/post/Create.vue";
 import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
@@ -26,14 +26,12 @@ const routes: Array<RouteConfig> = [
   {
     path: "/signup",
     name: "Signup",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/member/Signup.vue"),
+    component: () => import("@/views/member/Signup.vue"),
   },
   {
     path: "/profile",
     name: "Profile",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/User/Profile.vue"),
+    component: () => import("@/views/member/Profile.vue"),
   },
   {
     path: "/worldmap/",
@@ -43,24 +41,23 @@ const routes: Array<RouteConfig> = [
   {
     path: "/eachcontinent/",
     name: "EachContinent",
-    component: EachContinent
+    component: EachContinent,
   },
   {
     path: "/create/",
     name: "Create",
-    component: Create
+    component: Create,
   },
   {
-    path : "/view/",
-    name : "View",
-    component: View
+    path: "/view/",
+    name: "View",
+    component: View,
   },
   {
     path: "/post/",
     name: "Post",
     component: Post,
   },
-
 ];
 
 const userRoutes: Array<RouteConfig> = [];
