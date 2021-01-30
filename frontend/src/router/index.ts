@@ -4,8 +4,8 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
 
-import WorldMap from "../views/WorldContinents/WorldMap.vue";
-import EachContinent from "../views/WorldContinents/EachContinent.vue";
+import WorldMap from "../views/worldContinents/WorldMap.vue";
+import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Create from "@/views/post/Create.vue";
 import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
@@ -71,7 +71,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/signup", "/"];
+  const publicPages = ["/login", "/signup", "/", "/worldmap"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 
