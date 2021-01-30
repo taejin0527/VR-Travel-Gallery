@@ -61,9 +61,6 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	private Date joinDate;
 	
-	@Column
-	private int sex;
-	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
