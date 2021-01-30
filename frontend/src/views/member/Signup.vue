@@ -40,37 +40,36 @@ export default {
   data: function() {
     return {
       signupData: {},
-      page: Number(localStorage.getItem("page"))
-        ? Number(localStorage.getItem("page"))
-        : 1,
+      page: 1,
     };
   },
   methods: {
     ...mapActions("Signup", ["signup", "saveSignupData", "setPage"]),
     setSignupData(signupData) {
-      console.log("저장 before");
-      console.log(this.$store.state.Signup.page);
-
       this.saveSignupData(signupData);
       this.signupData = this.$store.state.Signup.signupData;
       this.page = 2;
       this.setPage(this.page);
 
-      console.log("저장 after");
-      console.log(this.$store.state.Signup.page);
+      console.log("기본 정보 저장 after");
+      console.log(this.$store.state.Signup.signupData);
     },
     emailVerification(userEmailData) {
       this.signupData = this.$store.state.Signup.signupData;
-      this.signupData.uemail = userEmailData.userEmail;
+      this.signupData.email = userEmailData.userEmail;
       this.saveSignupData(this.signupData);
       this.page = 3;
       this.setPage(this.page);
+
+      console.log("이메일 저장 after");
+      console.log(this.$store.state.Signup.signupData);
     },
     doSignup() {
+      console.log(this.signupData);
       this.signup(this.signupData);
       Swal.fire({
         title: "가입되었습니다!",
-        text: `${this.signupData.uname} 님\n NUVO에 오신 것을 환영합니다.`,
+        text: `${this.signupData.username} 님\n NUVO에 오신 것을 환영합니다.`,
         background: "#fff url(/images/trees.png)",
         backdrop: `
     rgba(0,0,123,0.4)
@@ -83,11 +82,6 @@ export default {
       this.setPage(1);
       this.$router.push({ name: "Home" });
     },
-  },
-  created() {
-    console.log("Signup Component Created!");
-    this.setPage("1");
-    this.signupData = this.$store.state.Signup.signupData;
   },
 };
 </script>
