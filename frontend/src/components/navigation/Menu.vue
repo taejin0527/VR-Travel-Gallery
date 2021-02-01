@@ -48,7 +48,6 @@ export default Vue.extend({
 .menu {
   font-family: "Lobster", cursive;
   position: absolute;
-  z-index: 1;
   background-color: #7e675e;
   min-height: 100vh;
   width: 100%;
@@ -56,6 +55,7 @@ export default Vue.extend({
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  z-index: 9;
 }
 .menu .msg {
   color: #ffffff;
@@ -77,7 +77,7 @@ export default Vue.extend({
   display: inline-flex;
   font-weight: 300;
   transition: 0.3s;
-  z-index: 100;
+  z-index: 9;
 }
 .router-ul li:hover .router-a {
   color: #dda288;
