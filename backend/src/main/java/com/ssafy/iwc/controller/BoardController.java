@@ -52,6 +52,7 @@ public class BoardController {
 		}catch(Exception e){
 			System.out.println("에러");
 //			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
+//			ㄴㄴ
 		}
 		
 		
