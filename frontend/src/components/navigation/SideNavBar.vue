@@ -4,7 +4,18 @@
       <div style="width=100%; text-align:center;">
         <div class="navi-button" @click="toggle">N U V O A to Z</div>
 
-        <div class="social" v-show="isMenuPageOpen">
+        <div class="navi-bottom" v-show="isMenuPageOpen">
+          <!-- 메뉴 (알림) -->
+          <router-link
+            v-if="isLoggedIn"
+            tag="li"
+            @click.native="isMenuPageOpen = !isMenuPageOpen"
+            to="/profile"
+          >
+            <v-icon large color="white"> mdi-view-dashboard </v-icon>
+            <p style="color:#fff">Profile</p></router-link
+          >
+          <!-- 메뉴 (로그인,로그아웃) -->
           <router-link
             v-if="!isLoggedIn"
             tag="li"
@@ -78,7 +89,7 @@ export default Vue.extend({
   width: 80px;
   top: 44%;
   left: 30px;
-  z-index: 100;
+  z-index: 10;
 }
 /* 네비게이션 버튼 후버 처리 및 3D 형식 */
 .navi-button {
@@ -94,7 +105,7 @@ export default Vue.extend({
   text-transform: uppercase;
   text-decoration: none;
   transition: all 300ms ease;
-  z-index: 2;
+  z-index: 10;
 }
 
 .navi-button:before,
@@ -145,10 +156,10 @@ export default Vue.extend({
   transform: translateX(-100%);
 }
 
-.social {
+.navi-bottom {
   padding: 10px;
 }
-.social li {
+.navi-bottom li {
   text-decoration: none;
   list-style: none;
   margin: 20px 0;

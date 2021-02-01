@@ -1,9 +1,9 @@
 <template>
-    <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
-    <v-app style="background-color: #5A4E4D">
-        <!-- 왼쪽 상단 로고 픽스 -->
-        <div
-            style="
+  <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
+  <v-app style="background-color: #5A4E4D">
+    <!-- 왼쪽 상단 로고 픽스 -->
+    <div
+      style="
                 position: fixed;
                 height: 10%;
                 margin: 0;
@@ -13,15 +13,15 @@
                 left: 40px;
                 z-index: 100;
             "
-        >
-            <span style="color: #eeeeee; cursor: default">N U </span>
-            <br />
-            <span style="color: #eeeeee; cursor: default">V O</span>
-        </div>
-        <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
-        <side-nav-bar />
-        <router-view />
-    </v-app>
+    >
+      <span style="color: #eeeeee; cursor: default">N U </span>
+      <br />
+      <span style="color: #eeeeee; cursor: default">V O</span>
+    </div>
+    <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
+    <side-nav-bar />
+    <router-view />
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -29,10 +29,10 @@ import Vue from "vue";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default Vue.extend({
-    name: "App",
-    components: {
-        SideNavBar,
-    },
+  name: "App",
+  components: {
+    SideNavBar,
+  },
 });
 </script>
 
@@ -42,22 +42,22 @@ export default Vue.extend({
 
 /* 눈누에서 폰트 가져옴 */
 @font-face {
-    font-family: "TmoneyRoundWindRegular";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff")
-        format("woff");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "TmoneyRoundWindRegular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* 버튼 후버 처리 */
 /* 쓰실 후버가 있다면 쓰시면 됩니다. */
 .hoverevent-Button:hover {
-    opacity: 0.5;
-    transform: scale(1.07);
-    transition: 150ms;
-    cursor: pointer;
+  opacity: 0.5;
+  transform: scale(1.07);
+  transition: 150ms;
+  cursor: pointer;
 }
 </style>

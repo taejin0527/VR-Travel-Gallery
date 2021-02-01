@@ -1,129 +1,146 @@
-
 <template>
-    <div class="thumb-example">
-        <!-- swiper1 -->
-        <swiper
-            class="swiper gallery-top"
-            :options="swiperOptionTop"
-            ref="swiperTop"
-        >
-            <swiper-slide class="slide-1"></swiper-slide>
-            <swiper-slide class="slide-2"></swiper-slide>
-            <swiper-slide class="slide-3"></swiper-slide>
-            <swiper-slide class="slide-4"></swiper-slide>
-            <swiper-slide class="slide-5"></swiper-slide>
-            <div
-                class="swiper-button-next swiper-button-white"
-                slot="button-next"
-            ></div>
-            <div
-                class="swiper-button-prev swiper-button-white"
-                slot="button-prev"
-            ></div>
-        </swiper>
-        <!-- swiper2 Thumbs -->
-        <swiper
-            class="swiper gallery-thumbs"
-            :options="swiperOptionThumbs"
-            ref="swiperThumbs"
-        >
-            <swiper-slide class="slide-1"></swiper-slide>
-            <swiper-slide class="slide-2"></swiper-slide>
-            <swiper-slide class="slide-3"></swiper-slide>
-            <swiper-slide class="slide-4"></swiper-slide>
-            <swiper-slide class="slide-5"></swiper-slide>
-        </swiper>
+  <div class="container">
+    <div class="container-center">
+      <carousel @prev="prev" @next="next">
+        <transition-group name="slide-list">
+          <carousel-slide
+            v-for="(slide, idx) in slides"
+            :key="slide"
+            :idx="idx"
+            :visibleSlide="visibleSlide"
+            class="slide-list"
+          >
+            <img :src="slides[idx - 2]" />
+            <img :src="slides[idx - 1]" />
+            <img :src="slides[idx]" />
+            <img :src="slides[idx + 1]" />
+            <img :src="slides[idx + 2]" />
+          </carousel-slide>
+        </transition-group>
+      </carousel>
     </div>
+  </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import Carousel from "@/components/photo/Carousel.vue";
+import CarouselSlide from "@/components/photo/CarouselSlide.vue";
 
 export default {
-    name: "swiper-example-thumbs-gallery",
-    title: "Thumbs gallery with Two-way control",
-    components: {
-        Swiper,
-        SwiperSlide,
+  components: {
+    Carousel,
+    CarouselSlide,
+  },
+  data: function() {
+    return {
+      slides: [
+        require("@/assets/images/example/1.jpg"),
+        require("@/assets/images/example/2.jpg"),
+        require("@/assets/images/example/3.jpg"),
+        require("@/assets/images/example/4.jpg"),
+        require("@/assets/images/example/5.jpg"),
+      ],
+      visibleSlide: 0,
+    };
+  },
+  computed: {
+    slidesLen() {
+      return this.slides.length;
     },
-    data() {
-        return {
-            swiperOptionTop: {
-                loop: true,
-                loopedSlides: 5, // looped slides should be the same
-                spaceBetween: 10,
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-            },
-            swiperOptionThumbs: {
-                loop: true,
-                loopedSlides: 5, // looped slides should be the same
-                spaceBetween: 10,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                touchRatio: 0.2,
-                slideToClickedSlide: true,
-            },
-        };
+  },
+  methods: {
+    prev() {
+      const sound = new Audio(require("@/assets/audio/paper_flip.mp3"));
+      sound.play();
+      if (this.visibleSlide <= 0) {
+        this.visibleSlide = this.slidesLen - 1;
+      } else {
+        this.visibleSlide--;
+      }
     },
-    mounted() {
-        this.$nextTick(() => {
-            const swiperTop = this.$refs.swiperTop.$swiper;
-            const swiperThumbs = this.$refs.swiperThumbs.$swiper;
-            swiperTop.controller.control = swiperThumbs;
-            swiperThumbs.controller.control = swiperTop;
-        });
+    next() {
+      const sound = new Audio(require("@/assets/audio/paper_flip.mp3"));
+      sound.play();
+      if (this.visibleSlide >= this.slidesLen - 1) {
+        this.visibleSlide = 0;
+      } else {
+        this.visibleSlide++;
+      }
     },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-.thumb-example {
-    height: 100%;
-    background-color: #000000;
+<style scoped>
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  max-width: none;
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
 }
 
-.swiper {
-    .swiper-slide {
-        background-size: cover;
-        background-position: center;
+.container-center {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 
-        &.slide-1 {
-            background-image: url("~@/assets/images/example/1.jpg");
-        }
-        &.slide-2 {
-            background-image: url("~@/assets/images/example/2.jpg");
-        }
-        &.slide-3 {
-            background-image: url("~@/assets/images/example/4.jpg");
-        }
-        &.slide-4 {
-            background-image: url("~@/assets/images/example/5.jpg");
-        }
-        &.slide-5 {
-            background-image: url("~@/assets/images/example/6.jpg");
-        }
-    }
+/* Animation */
+.slide-list {
+  margin: 0;
+}
+.slide-list-enter-active,
+.slide-list-leave-active {
+  transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-list-enter,
+.slide-list-leave-to {
+  opacity: 0;
+  transform: translate(-300px, -300px);
+}
+.slide-list-enter-to,
+.slide-list-leave {
+  opacity: 1;
+  transform: translateX(0px);
+}
 
-    &.gallery-top {
-        height: 90%;
-        width: 100%;
-    }
-    &.gallery-thumbs {
-        height: 10%;
-        box-sizing: border-box;
-        padding: 0;
-    }
-    &.gallery-thumbs .swiper-slide {
-        width: 25%;
-        height: 100%;
-        opacity: 0.4;
-    }
-    &.gallery-thumbs .swiper-slide-active {
-        opacity: 1;
-    }
+/* Animation end */
+
+.carousel-slide img {
+  height: 40vh;
+  position: absolute;
+}
+.carousel-slide img:hover {
+  transform: scale(1.6);
+}
+.carousel-slide img:nth-child(1) {
+  transform: rotate(58deg) translate(-330px, -750px);
+  opacity: 0.8;
+  z-index: 5;
+}
+.carousel-slide img:nth-child(2) {
+  transform: rotate(25deg) translate(-70px, -400px);
+  opacity: 0.8;
+  z-index: 6;
+}
+.carousel-slide img:nth-child(3) {
+  opacity: 1;
+  z-index: 7;
+}
+.carousel-slide img:nth-child(4) {
+  transform: rotate(-25deg) translate(-70px, 400px);
+  opacity: 0.8;
+  z-index: 6;
+}
+.carousel-slide img:nth-child(5) {
+  transform: rotate(-58deg) translate(-330px, 750px);
+  opacity: 0.8;
+  z-index: 5;
 }
 </style>
