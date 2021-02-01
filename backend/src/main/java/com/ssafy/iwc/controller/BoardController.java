@@ -88,17 +88,16 @@ public class BoardController {
 	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location) {
 		long id =0;
 		try {
-			//占쌉시깍옙 占쌜쇽옙
+			//게시글 작성
 			boardDto.setAuthor(writer);
 			boardDto.setLocation(location);
 			id = boardService.savePost(boardDto);
-			//占쏙옙占쏙옙 占싱뱄옙占쏙옙 占쌜쇽옙
+			//메인 이미지 작성
 			String origname = main.getOriginalFilename();
 			String fname = new MD5Generator(origname).toString();
-//			占쏙옙占쏙옙풔占� 占쏙옙치占쏙옙 'files' 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+//			실행되는 위치의 'files' 폴더에 저장
 			String sPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\files";
-//			占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙풔占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-
+//			파일이 저장되는 폴더가 없으면 폴더를 생성
 			if(!new File(sPath).exists()) {
 				try {
 					new File(sPath).mkdir();
@@ -125,12 +124,12 @@ public class BoardController {
 		for(MultipartFile mf : files) {
 			try {
 			
-//				占쏙옙占싹몌옙 占쏙옙占쏙옙占쏙옙 占쌕쏙옙占쌔억옙占쏙옙 -> 占쌔쏙옙占쏙옙
+//				파일명 명명을 다시해야함 -> 해쉬값
 				String origFilename = mf.getOriginalFilename();
 				String filename = new MD5Generator(origFilename).toString();
-//				占쏙옙占쏙옙풔占� 占쏙옙치占쏙옙 'files' 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+//				실행되는 위치의 'files' 폴더에 파일이 저장
 				String savePath = System.getProperty("user.dir")+"\\files";
-//				占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙풔占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+//				파일이 저장되는 폴더가 없으면 폴더를 생성	
 
 				if(!new File(savePath).exists()) {
 					try {

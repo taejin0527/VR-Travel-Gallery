@@ -47,10 +47,10 @@ public class AuthController {
 	private UserService userService;
 	
 	/**
-	 * @author	±èÅÂÁø
-	 * @desc 	È¸¿ø°¡ÀÔ
+	 * @author	ê¹€íƒœì§„
+	 * @desc 	íšŒì›ê°€ì…
 	 */
-	@ApiOperation(value="È¸¿ø°¡ÀÔ (ÀÌ¸ŞÀÏ, ºñ¹Ğ¹øÈ£, ÀÌ¸§ µî), ¹İÈ¯Àº ±×³É ¼º°ø ¸Ş¼¼Áö")
+	@ApiOperation(value="íšŒì›ê°€ì… (ì´ë©”ì¼, ë¹„ë°€ë²ˆí˜¸, ì´ë¦„ ë“±), ë°˜í™˜ì€ ê·¸ëƒ¥ ì„±ê³µ ë©”ì„¸ì§€")
 	@PostMapping("/signup")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if(userService.signUpUser(signUpRequest)) {
@@ -59,7 +59,7 @@ public class AuthController {
 		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "¾ÆÀÌµğ Áßº¹ Ã¼Å©. ÀÌ¹Ì ÀÖ´Â ¾ÆÀÌµğÀÎ °æ¿ì failÀ» ¹İÈ¯ÇÑ´Ù.", response = String.class)
+	@ApiOperation(value = "ì•„ì´ë”” ì¤‘ë³µ ì²´í¬. ì´ë¯¸ ìˆëŠ” ì•„ì´ë””ì¸ ê²½ìš° failì„ ë°˜í™˜í•œë‹¤.", response = String.class)
 	@GetMapping("/idcheck/{username}")
 	public ResponseEntity<String> idCheck(@PathVariable String username) {
 		System.out.println("controller " + username);
@@ -68,7 +68,7 @@ public class AuthController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}	
 	
-	@ApiOperation(value = "ÀÌ¸ŞÀÏ Áßº¹ Ã¼Å©. ÀÌ¹Ì ÀÖ´Â ÀÌ¸ŞÀÏÀÎ °æ¿ì failÀ» ¹İÈ¯ÇÑ´Ù.", response = String.class)
+	@ApiOperation(value = "ì´ë©”ì¼ ì¤‘ë³µ ì²´í¬. ì´ë¯¸ ìˆëŠ” ì´ë©”ì¼ì¸ ê²½ìš° failì„ ë°˜í™˜í•œë‹¤.", response = String.class)
 	@PostMapping(value = "/emailcheck")
 	public ResponseEntity<String> edcheck(@RequestBody HashMap<String, String> userEmailData) {	
 		if(userService.checkEmailDuplication(userEmailData.get("userEmail"))) 
@@ -76,7 +76,7 @@ public class AuthController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "ÀÎÁõ ÄÚµå¸¦ »ç¿ëÀÚÀÇ ÀÌ¸ŞÀÏ·Î º¸³»±â. ¸ŞÀÏÀÌ Àü¼ÛµÇ¸é ÀÎÁõ ÄÚµå¸¦ ¹İÈ¯ÇÑ´Ù.", response = String.class)
+	@ApiOperation(value = "ì¸ì¦ ì½”ë“œë¥¼ ì‚¬ìš©ìì˜ ì´ë©”ì¼ë¡œ ë³´ë‚´ê¸°. ë©”ì¼ì´ ì „ì†¡ë˜ë©´ ì¸ì¦ ì½”ë“œë¥¼ ë°˜í™˜í•œë‹¤.", response = String.class)
 	@PostMapping(value = "/emailvalidate")
 	public ResponseEntity<String> createEmailCheck(@RequestBody HashMap<String, String> userEmailData) {
 		String userEmail = userEmailData.get("userEmail");
@@ -84,30 +84,30 @@ public class AuthController {
 		int random = new Random().nextInt(900000) + 100000;
 		String authCode = String.valueOf(random);
 
-		String subject = "È¸¿ø°¡ÀÔ ÀÎÁõ ÄÚµå ¹ß±Ş ¾È³» ÀÔ´Ï´Ù.";
+		String subject = "íšŒì›ê°€ì… ì¸ì¦ ì½”ë“œ ë°œê¸‰ ì•ˆë‚´ ì…ë‹ˆë‹¤.";
 		StringBuilder sb = new StringBuilder();
-		sb.append("±ÍÇÏÀÇ ÀÎÁõ ÄÚµå´Â " + authCode + "ÀÔ´Ï´Ù.");
+		sb.append("ê·€í•˜ì˜ ì¸ì¦ ì½”ë“œëŠ” " + authCode + "ì…ë‹ˆë‹¤.");
 
 		if (userService.send(subject, sb.toString(), userEmail)) {
-			return new ResponseEntity<String>(authCode, HttpStatus.OK); // vue¿¡¼­ authCode·Î ÀÏÄ¡ ¿©ºÎ È®ÀÎ ÈÄ °èÁ¤»ı¼º ¹öÆ° È°¼ºÈ­
+			return new ResponseEntity<String>(authCode, HttpStatus.OK); // vueì—ì„œ authCodeë¡œ ì¼ì¹˜ ì—¬ë¶€ í™•ì¸ í›„ ê³„ì •ìƒì„± ë²„íŠ¼ í™œì„±í™”
 		} else {
-			return new ResponseEntity<String>("Error: ÀÎÁõ ÀÌ¸ŞÀÏ Àü¼Û ½ÇÆĞ", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("Error: ì¸ì¦ ì´ë©”ì¼ ì „ì†¡ ì‹¤íŒ¨", HttpStatus.NO_CONTENT);
 		}
 	}
 
 	/**
-	 * @author	±èÅÂÁø
-	 * @desc 	ÀÏ¹İ ·Î±×ÀÎ
+	 * @author	ê¹€íƒœì§„
+	 * @desc 	ì¼ë°˜ ë¡œê·¸ì¸
 	 */
-	@ApiOperation(value="(ÀÌ¸ŞÀÏ, ºñ¹Ğ¹øÈ£)·Î ·Î±×ÀÎ, ¼º°ø½Ã jwt¿Í ±âº» Á¤º¸ ¹İÈ¯")
+	@ApiOperation(value="(ì´ë©”ì¼, ë¹„ë°€ë²ˆí˜¸)ë¡œ ë¡œê·¸ì¸, ì„±ê³µì‹œ jwtì™€ ê¸°ë³¸ ì •ë³´ ë°˜í™˜")
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-		// ¿äÃ»À¸·Î ¹ŞÀº ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ ÅëÇØ ÀÎÁõ¿ë °´Ã¼ »ı¼º
+		// ìš”ì²­ìœ¼ë¡œ ë°›ì€ ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ë¥¼ í†µí•´ ì¸ì¦ìš© ê°ì²´ ìƒì„±
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-		// JWT »ı¼º
+		// JWT ìƒì„±
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
@@ -116,7 +116,7 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		// ¹İÈ¯À¸·Î jwt¿Í (°íÀ¯ ¾ÆÀÌµğ, ÀÌ¸§, ÀÌ¸ŞÀÏ)À» º¸³½´Ù
+		// ë°˜í™˜ìœ¼ë¡œ jwtì™€ (ê³ ìœ  ì•„ì´ë””, ì´ë¦„, ì´ë©”ì¼)ì„ ë³´ë‚¸ë‹¤
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
@@ -127,13 +127,14 @@ public class AuthController {
 	
 
 	/**
-	 * @author	±èµ¿°É
-	 * @desc 	¼Ò¼È ·Î±×ÀÎ(±¸±Û, Ä«Ä«¿À)
+	 * @author	ê¹€ë™ê±¸
+	 * @desc 	ì†Œì…œ ë¡œê·¸ì¸(êµ¬ê¸€, ì¹´ì¹´ì˜¤)
 	 */
 	
 	
 	/**
-	 * @author	±èµ¿°É
-	 * @desc 	·Î±×¾Æ¿ô
+	 * @author	ê¹€ë™ê±¸
+	 * @desc 	ë¡œê·¸ì•„ì›ƒ
 	 */
 }
+	

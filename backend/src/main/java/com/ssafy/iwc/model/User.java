@@ -38,11 +38,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class User {
+
 	
-	// @GeneratedValue: ¿øÇÏ´Â Å° »ı¼º
-	// @Temporal: DB ³»Àå µ¥ÀÌÅÍ Å¸ÀÔ¿¡ ¸Âµµ·Ï ¸ÅÇÎ
-	// @JsonProperty: µ¥ÀÌÅÍ ¾î¶²½ÄÀ¸·Î Á¢±ÙÇÒÁö / Access.WRITE_ONLY ÀĞ¾î¿Ã ¶§ Á¦¿ÜµÊ
-	
+	// @GeneratedValue: ì›í•˜ëŠ” í‚¤ ìƒì„±
+	// @Temporal: DB ë‚´ì¥ ë°ì´í„° íƒ€ì…ì— ë§ë„ë¡ ë§¤í•‘
+	// @JsonProperty: ë°ì´í„° ì–´ë–¤ì‹ìœ¼ë¡œ ì ‘ê·¼í• ì§€ / Access.WRITE_ONLY ì½ì–´ì˜¬ ë•Œ ì œì™¸ë¨
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

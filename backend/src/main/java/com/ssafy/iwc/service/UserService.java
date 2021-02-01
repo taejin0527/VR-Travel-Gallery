@@ -9,31 +9,32 @@ import com.ssafy.iwc.model.request.SignupRequest;
 public interface UserService {
 	
 	/**
-	 * »õ·Î¿î À¯Àú ±ÇÇÑ ¼³Á¤
-	 * @param User user - »ç¿ëÀÚ Á¤º¸(¾ÆÀÌµğ, ÀÌ¸ŞÀÏ, ºñ¹ø)
+	 * ìƒˆë¡œìš´ ìœ ì € ê¶Œí•œ ì„¤ì •
+	 * @param User user - ì‚¬ìš©ì ì •ë³´(ì•„ì´ë””, ì´ë©”ì¼, ë¹„ë²ˆ)
 	 * @return boolean
 	 */
 	public boolean signUpUser(SignupRequest signUpRequest);
 	
 	/**
-	 * ¾ÆÀÌµğ Áßº¹Ã¼Å©
-	 * @param String username - À¯ÀúÀÇ ¾ÆÀÌµğ
+	 * ì•„ì´ë”” ì¤‘ë³µì²´í¬
+	 * @param String username - ìœ ì €ì˜ ì•„ì´ë””
 	 * @return boolean
 	 */
 	public boolean checkIdDuplication(String username);
 	/**
-	 * ÀÌ¸ŞÀÏ Áßº¹Ã¼Å©
-	 * @param String uemail - À¯ÀúÀÇ ÀÌ¸ŞÀÏ
+	 * ì´ë©”ì¼ ì¤‘ë³µì²´í¬
+	 * @param String uemail - ìœ ì €ì˜ ì´ë©”ì¼
 	 * @return boolean
 	 */
 	public boolean checkEmailDuplication(String uemail);
 	
 	/**
-	 * ÀÎÁõ¹øÈ£ ¸ŞÀÏ ¹ß¼Û
-	 * @param String subject - ¹ß½Å ¸ŞÀÏ Á¦¸ñ
-	 * @param String text - ¹ß½Å ¸ŞÀÏ ³»¿ë
-	 * @param String to - ¼ö½Å ¸ŞÀÏ ÁÖ¼Ò
+	 * ì¸ì¦ë²ˆí˜¸ ë©”ì¼ ë°œì†¡
+	 * @param String subject - ë°œì‹  ë©”ì¼ ì œëª©
+	 * @param String text - ë°œì‹  ë©”ì¼ ë‚´ìš©
+	 * @param String to - ìˆ˜ì‹  ë©”ì¼ ì£¼ì†Œ
 	 * @return boolean
 	 */
+
 	public boolean send(String subject, String text, String to);
 }
