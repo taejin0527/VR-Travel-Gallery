@@ -62,7 +62,7 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "no-undef" : "off",
+      "no-undef": "off",
       "@typescript-eslint/no-this-alias": "off"
     }
   },

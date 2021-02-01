@@ -1,6 +1,10 @@
 <template>
   <div>
-      ㅎㅇ
+       <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
+            
+            <img :src="file.filePath"/>
+
+        </div>
   </div>
 </template>
 
@@ -10,20 +14,17 @@ export default {
     data(){
         return{
             files: [],
-            listNum : 0
+            listNum : 0,
+            index : 0
         }
     },
     created:function(){
          
-         axios.get('http://localhost:8080/board/getposts',
-            {
-              headers:{
-                      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FmeSIsImlhdCI6MTYxMTgzNTY2MCwiZXhwIjoxNjExOTIyMDYwfQ.Fx55z-74k_YM1S-MhGEHeIXNSkCWvzRO25DYvOKSjFxhBl3iY7_3mSnj_a8Yokur8dSJpLSi92H-1oij4bP5MA'
-              
-                  }
-            }).then(response => {
+         axios.get('http://localhost:8080/board/getposts').then(response => {
                 this.files = response.data;
-                console.log(this.files[0].filename);
+                this.index = response.data.length;
+                console.log(this.files);
+                console.log(this.index);
         }).catch(function(){
              console.log("안됨");
          });

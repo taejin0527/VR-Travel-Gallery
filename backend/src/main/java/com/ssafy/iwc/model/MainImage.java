@@ -1,8 +1,11 @@
 package com.ssafy.iwc.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Setter;
@@ -30,6 +33,10 @@ public class MainImage {
 	@Column(nullable = false)
 	private String filePath;
 
+//	@OneToOne(mappedBy = "id")
+//	private Board board;
+	
+	
 	@Builder
 	public MainImage(long id, String origFilename, String filename, String filePath) {
 		

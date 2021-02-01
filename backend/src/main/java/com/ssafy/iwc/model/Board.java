@@ -1,12 +1,19 @@
 package com.ssafy.iwc.model;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -27,7 +34,7 @@ import lombok.Setter;
 @Entity
 @Table(name="posts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@EntityListeners(AuditingEntityListener.class) //JPA¿¡°Ô ÇØ´ç Entity´Â Auditing±â´ÉÀ» »ç¿ëÇÔÀ» ¾Ë¸²
+//@EntityListeners(AuditingEntityListener.class) //JPAï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ Entityï¿½ï¿½ Auditingï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½
 public class Board {
 
 	@Id
@@ -58,7 +65,14 @@ public class Board {
 	private LocalDateTime modifiedDate;
 
 	
-
+//	@OneToOne(cascade = {CascadeType.REMOVE})
+//	@JoinColumn(name="id")
+//	private MainImage mainImage;
+//
+//	
+//	@OneToMany(fetch = FetchType.LAZY)
+//	@JoinColumn(name="id")
+//	private List<PostImage> postImage = new LinkedList<>();
 
 	@Builder
 	public Board(long id, String author, long good, long views, String location, 
