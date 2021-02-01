@@ -20,6 +20,7 @@ import com.mysql.cj.xdevapi.JsonArray;
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
+import com.ssafy.iwc.model.AllView;
 import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
@@ -40,10 +41,28 @@ public class BoardController {
 		this.postImageService = postImageService;
 		this.mainImageService = mainImageService;
 	}
-	@GetMapping("/getposts")
+	@GetMapping("allview")
+	public void allview(){
+		try {
+			List<AllView> dto = mainImageService.getAllBoard();
+			for(int i=0;i<dto.size();i++) {
+				System.out.println(dto.get(i).toString());
+			}
+//			return new ResponseEntity(dto,HttpStatus.OK);
+		}catch(Exception e){
+			System.out.println("ì—ëŸ¬");
+//			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+		
+		
+	}
 	
+	
+	
+	@GetMapping("/getposts")
 	public ResponseEntity<List<PostImageDto>> getpost() {
-		System.out.println("µé¾î¿È");
+		System.out.println("");
 //		MainImageDto mainImageDto = mainImageService.getFile(45);
 //		
 //		model.addAttribute("files", mainImageDto);
@@ -51,6 +70,9 @@ public class BoardController {
 //		System.out.println(mainImageDto.toString());
 		try {
 			List<PostImageDto> dto = postImageService.getFile(38);
+			for(PostImageDto d : dto) {
+				d.setFilePath("http://localhost:8080/static/files/"+d.getFilename()+".jpg");
+			}
 			return new ResponseEntity(dto,HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
@@ -66,16 +88,16 @@ public class BoardController {
 	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location) {
 		long id =0;
 		try {
-			//°Ô½Ã±Û ÀÛ¼º
+			//å ìŒ‰ì‹œê¹ì˜™ å ìŒœì‡½ì˜™
 			boardDto.setAuthor(writer);
 			boardDto.setLocation(location);
 			id = boardService.savePost(boardDto);
-			//¸ŞÀÎ ÀÌ¹ÌÁö ÀÛ¼º
+			//å ì™ì˜™å ì™ì˜™ å ì‹±ë±„ì˜™å ì™ì˜™ å ìŒœì‡½ì˜™
 			String origname = main.getOriginalFilename();
 			String fname = new MD5Generator(origname).toString();
-//			½ÇÇàµÇ´Â À§Ä¡ÀÇ 'files' Æú´õ¿¡ ÆÄÀÏÀÌ ÀúÀå
-			String sPath = System.getProperty("user.dir")+"\\mains";
-//			ÆÄÀÏÀÌ ÀúÀåµÇ´Â Æú´õ°¡ ¾øÀ¸¸é Æú´õ¸¦ »ı¼º
+//			å ì™ì˜™å ì™ì˜™í’”å ï¿½ å ì™ì˜™ì¹˜å ì™ì˜™ 'files' å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+			String sPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\files";
+//			å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™í’”å ï¿½ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 
 			if(!new File(sPath).exists()) {
 				try {
@@ -103,12 +125,12 @@ public class BoardController {
 		for(MultipartFile mf : files) {
 			try {
 			
-//				ÆÄÀÏ¸í ¸í¸íÀ» ´Ù½ÃÇØ¾ßÇÔ -> ÇØ½¬°ª
+//				å ì™ì˜™å ì‹¹ëªŒì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ìŒ•ì™ì˜™å ìŒ”ì–µì˜™å ì™ì˜™ -> å ìŒ”ì™ì˜™å ì™ì˜™
 				String origFilename = mf.getOriginalFilename();
 				String filename = new MD5Generator(origFilename).toString();
-//				½ÇÇàµÇ´Â À§Ä¡ÀÇ 'files' Æú´õ¿¡ ÆÄÀÏÀÌ ÀúÀå
+//				å ì™ì˜™å ì™ì˜™í’”å ï¿½ å ì™ì˜™ì¹˜å ì™ì˜™ 'files' å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 				String savePath = System.getProperty("user.dir")+"\\files";
-//				ÆÄÀÏÀÌ ÀúÀåµÇ´Â Æú´õ°¡ ¾øÀ¸¸é Æú´õ¸¦ »ı¼º
+//				å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™í’”å ï¿½ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 
 				if(!new File(savePath).exists()) {
 					try {

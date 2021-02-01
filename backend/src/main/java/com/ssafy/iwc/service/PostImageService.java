@@ -28,7 +28,7 @@ public class PostImageService {
 	
 	@Transactional
 	public List<PostImageDto> getFile(long id) {
-		System.out.println("¿©±âµé¾î¿È");
+		
 		List<PostImage> postImage = postImageRepository.findPostImageById(id);
 		List<PostImageDto> postImageDto = new LinkedList<PostImageDto>();
 		for(PostImage p : postImage) {
