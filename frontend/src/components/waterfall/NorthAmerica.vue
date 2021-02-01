@@ -1,0 +1,47 @@
+<template>
+  
+  <v-container
+    style="padding: 100px 100px 100px 100px;"
+  >
+    <v-row>
+      <v-col
+        v-for="n in 9"
+        :key="n"
+        class=""
+        cols="4"
+      >
+        <img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`" alt="image error">
+        
+        <br>
+        <v-chip-group
+          class="accent-4 white--text"
+          column
+        >
+          <v-chip
+            v-for="(item, idx) in exhibitionContent"
+            :key="idx"
+            style="background-color:#DD6288; color:white;"
+          >
+            {{item}}
+          </v-chip>
+        </v-chip-group>        
+      </v-col>
+    </v-row>
+  </v-container>
+  
+</template>
+
+<script>
+export default {
+  name:"NorthAmerica",
+  data: function () {
+    return {
+      exhibitionContent: ['뉴욕', 'hi']
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
