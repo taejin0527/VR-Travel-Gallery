@@ -8,4 +8,5 @@ import com.ssafy.iwc.dto.BoardDto;
 public interface BoardService {
 	public long savePost(BoardDto boardDto);
 	public BoardDto getPost(long id);
+	public void delPost(Long no);
 }

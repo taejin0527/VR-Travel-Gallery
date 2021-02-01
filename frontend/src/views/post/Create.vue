@@ -179,11 +179,11 @@ export default {
           axios.post('http://localhost:8080/board/requestupload',
               formData,{
                   headers:{
-                      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FmeSIsImlhdCI6MTYxMjAwNTY0OCwiZXhwIjoxNjEyMDkyMDQ4fQ.SsNVjmT7ry5o3vpjTI4Yh38eWW0_wOPhDwS0cjx6hHM4TlGnPq-ds_df-KxtYySTz9x_AE0lcwxjkegWDt7law',
+                      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlaGRyamYiLCJpYXQiOjE2MTIwODEwNTMsImV4cCI6MTYxMjE2NzQ1M30.YipqqNrw_PpswmLAKXP7IAj9a20FPXOaWIcqhAB2JPZkiCq8X2Uth1gc_3l-CplTK3TEzOV3IHNZdfiW0mrn7w',
                       'Content-Type' : 'multipart/form-data'
                   }
-              }).then(function(){
-                  console.log("SUCCESS");
+              }).then(response=>{
+                  this.$router.push("/view");
               }).catch(function(){
                   console.log("FAILURE");
               });

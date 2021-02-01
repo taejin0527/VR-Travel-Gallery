@@ -7,8 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,9 +17,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -65,14 +60,14 @@ public class Board {
 	private LocalDateTime modifiedDate;
 
 	
-//	@OneToOne(cascade = {CascadeType.REMOVE})
+//	@OneToOne(cascade = CascadeType.REMOVE)
 //	@JoinColumn(name="id")
-//	private MainImage mainImage;
-//
+//	private AllView allView;
+
 //	
-//	@OneToMany(fetch = FetchType.LAZY)
+//	@OneToMany(cascade = CascadeType.REMOVE)
 //	@JoinColumn(name="id")
-//	private List<PostImage> postImage = new LinkedList<>();
+//	private List<AllView> postImage = new LinkedList<>();
 
 	@Builder
 	public Board(long id, String author, long good, long views, String location, 

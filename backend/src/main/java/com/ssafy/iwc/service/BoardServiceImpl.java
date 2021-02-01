@@ -41,4 +41,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDto;
 
 	}
+
+
+	@Transactional
+	public void delPost(Long no) {
+		// TODO Auto-generated method stub
+		boardRepository.deleteById(no);
+	}
 }
