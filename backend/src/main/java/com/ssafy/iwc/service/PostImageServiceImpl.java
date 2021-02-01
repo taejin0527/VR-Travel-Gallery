@@ -7,24 +7,35 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.iwc.dto.PostImageDto;
+import com.ssafy.iwc.model.AllView;
 import com.ssafy.iwc.model.PostImage;
+import com.ssafy.iwc.repository.GetAllPostsRepository;
 import com.ssafy.iwc.repository.PostImageRepository;
 
 @Service
-public class PostImageService {
+public class PostImageServiceImpl implements PostImageService{
+	@Autowired
 	private PostImageRepository postImageRepository;
+	@Autowired
+	private GetAllPostsRepository getAllPostsRepository;
 	
-	public PostImageService(PostImageRepository postImageRepository) {
-		this.postImageRepository = postImageRepository;
-	}
 	
 	@Transactional
 	public long saveFile(PostImageDto postImageDto) {
 		return postImageRepository.save(postImageDto.toEntity()).getId();
 	}
+	
+	@Transactional
+	public List<AllView> findSubImg(Long no) {
+		
+		
+		return getAllPostsRepository.findSubImg(no);
+	}
+	
 	
 	@Transactional
 	public List<PostImageDto> getFile(long id) {
@@ -45,6 +56,12 @@ public class PostImageService {
 		
 		return postImageDto;
 				
+	}
+
+	@Transactional
+	public void delPost(Long no) {
+		// TODO Auto-generated method stub
+		postImageRepository.deletePostImage(no);
 	}
 	
 }
