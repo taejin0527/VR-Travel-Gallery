@@ -1,12 +1,16 @@
 package com.ssafy.iwc.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,10 +23,10 @@ import lombok.Setter;
 )
 @Getter
 @Setter
-//@NoArgsConstructor, @AllArgsConstructor, @RequiredArgsConstructor - Å¬·¡½ºÀÇ »ý¼ºÀÚ¸¦ ¸¸µé¾îÁÜ
+//@NoArgsConstructor, @AllArgsConstructor, @RequiredArgsConstructor - Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostImage {
-//	@Id -> DBÀÇ PkÀÇ °ªÀ» ÁöÁ¤
+//	@Id -> DBï¿½ï¿½ Pkï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,8 +37,8 @@ public class PostImage {
 	private long id;
 	
 	
-//	@Column -> DBÅ×ÀÌºí ³»ÀÇ ÄÃ·³À» °áÁ¤, name¼Ó¼º : ÄÃ·³¸íÀ» ÁöÁ¤, length¼Ó¼º : µ¥ÀÌÅ¸°¡ °¡Áö´Â ±æÀÌ(±âº» 255 - ¹®ÀÚ)
-//	¼ýÀÚ´Â precision°ú scale·Î Á¶Á¤, nullable¼Ó¼º : null°ªÀÌ °¡´ÉÇÑÁö ÆÇ´Ü
+//	@Column -> DBï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, nameï¿½Ó¼ï¿½ : ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, lengthï¿½Ó¼ï¿½ : ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½âº» 255 - ï¿½ï¿½ï¿½ï¿½)
+//	ï¿½ï¿½ï¿½Ú´ï¿½ precisionï¿½ï¿½ scaleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, nullableï¿½Ó¼ï¿½ : nullï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
  	@Column(nullable = false)
 	private String origFilename;
 	
@@ -44,9 +48,13 @@ public class PostImage {
 	@Column(nullable = false)
 	private String filePath;
 
+	@ManyToOne(cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JsonIgnore
+	private Board board=null;
 
 
-//	ºô´õ ÆÐÅÏÀ» ÀÌ¿ëÇÑ °´Ã¼ »ý¼º ¸Þ¼Òµå/Å¬·¡½º¸¦ ¸¸µé¾îÁÜ
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½/Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Builder
 	public PostImage(long no, long id, String origFilename, String filename, String filePath) {
 	

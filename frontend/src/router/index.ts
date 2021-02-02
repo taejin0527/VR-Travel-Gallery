@@ -7,9 +7,11 @@ import Login from "../views/member/Login.vue";
 import WorldMap from "../views/worldContinents/WorldMap.vue";
 import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Create from "@/views/post/Create.vue";
+import Detail from "@/views/post/Detail.vue";
 import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
+
 
 Vue.use(VueRouter);
 
@@ -53,6 +55,11 @@ const routes: Array<RouteConfig> = [
     path: "/view/",
     name: "View",
     component: View,
+  },
+  {
+    path: "/detail/",
+    name: "Detail",
+    component: Detail,
   },
   {
     path: "/post/",
