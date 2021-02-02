@@ -166,7 +166,8 @@ export default {
           const formData = new FormData();
           formData.append('main',this.main[0].file);
           formData.append('writer',"ssafy");
-          formData.append('location',"서울");
+          formData.append('location',"northAmerica");
+          formData.append('nation',"서울");
           for(let i =0;i< this.files.length;i++){
               
               console.log(this.files[i].file);

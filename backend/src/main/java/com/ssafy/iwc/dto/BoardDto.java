@@ -21,6 +21,7 @@ public class BoardDto {
 	private long good;
 	private long views;
 	private String location;
+	private String nation;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
 	
@@ -32,11 +33,12 @@ public class BoardDto {
 				.views(views)
 				.createdDate(createdDate)
 				.location(location)
+				.nation(nation)
 				.build();
 		return build;
 	}
 	@Builder
-	public BoardDto(long id, String author, long good, long views, String location, LocalDateTime createdDate,
+	public BoardDto(long id, String author, long good, long views, String location,String nation, LocalDateTime createdDate,
 			LocalDateTime modifiedDate) {
 		
 		this.id = id;
@@ -44,14 +46,17 @@ public class BoardDto {
 		this.good = good;
 		this.views = views;
 		this.location = location;
+		this.nation = nation;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
 	}
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", author=" + author + ", good=" + good + ", views=" + views + ", location="
-				+ location + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + "]";
+				+ location + ", nation=" + nation + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
+				+ "]";
 	}
+	
 	
 	
 	

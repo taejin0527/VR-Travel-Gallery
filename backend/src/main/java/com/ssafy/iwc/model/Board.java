@@ -4,14 +4,11 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -49,7 +46,8 @@ public class Board {
 	
 	@Column(nullable = false, length=100)
 	private String location;
-	
+	@Column(nullable = false, length=20)
+	private String nation;
 	
 	@CreationTimestamp
 	@Column(updatable = false)
@@ -70,7 +68,7 @@ public class Board {
 //	private List<AllView> postImage = new LinkedList<>();
 
 	@Builder
-	public Board(long id, String author, long good, long views, String location, 
+	public Board(long id, String author, long good, long views, String location, String nation,
 			LocalDateTime createdDate, LocalDateTime modifiedDate) {
 		
 		this.id = id;
@@ -78,8 +76,17 @@ public class Board {
 		this.good = good;
 		this.views = views;
 		this.location = location;
+		this.nation = nation;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Board [id=" + id + ", author=" + author + ", good=" + good + ", views=" + views + ", location="
+				+ location + ", nation=" + nation + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
+				+ "]";
 	}
 
 	
