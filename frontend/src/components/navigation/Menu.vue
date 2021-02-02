@@ -34,7 +34,10 @@ export default Vue.extend({
   methods: {
     // 메뉴 끄기
     closeMenuPage: function() {
-      console.log("hey!!!");
+      const sound = new Audio(
+        require("@/assets/audio/fasten_your_seatbelt.mp3")
+      );
+      sound.play();
       this.$emit("closeMenuPage");
     },
   },

@@ -94,6 +94,7 @@ export default {
 /* Animation */
 .slide-list {
   margin: 0;
+  transition: linear 1s;
 }
 .slide-list-enter,
 .slide-list-leave-to {
