@@ -61,21 +61,43 @@
       offset="1"
       cols="3"
     >
+      <!-- selectContinent가 대륙 선택이야 처음 선택은 선택한 로컬 스토리지의 데이터를 따라서 만들어져. -->
+      <v-select
+        :items="continentsNames"
+        label="Solo field"
+        v-model="selectContinent"
+        solo
+      ></v-select>
+
+      <!-- 장소(국가) 선택 : nation -->
       <v-text-field
           label="장소(국가)"
           prepend-icon="mdi-map-marker"
           v-model="nation"
       ></v-text-field>
-      <v-text-field
-          label="장소(국가)"
-          prepend-icon="mdi-map-marker"
-          v-model="nation"
-      ></v-text-field>
-      <v-text-field
-          label="장소(국가)"
-          prepend-icon="mdi-map-marker"
-          v-model="nation"
-      ></v-text-field>
+
+      <!-- tags는 리스트로 되어 있슴 -->
+      <v-row>
+        <v-col
+          cols="6"
+          v-for="(item, idx) in tags"
+            :key="idx"
+        >
+          <v-text-field
+            label="#Tag입력"
+            v-model="tags[idx]"
+          ></v-text-field>
+        </v-col>
+        <v-col
+          cols="6"
+        >
+          <v-btn class="btn" color="#dda288" style="color:white;" @click="addOneTagMore">
+            태그 추가
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <!-- submit 버튼 별로긴한데 담에 바꿀게 -->
       <v-btn
         color="blue-grey"
         class="ma-2 white--text"
@@ -170,15 +192,20 @@ export default {
 
   data(){
     return{
+      continentsNames: ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa'],
+      selectContinent: localStorage.getItem('continent'), // 선택된 대륙
       main: [],
       files: [], //업로드용 파일
       filesPreview : [], //보여줄 파일
       uploadImageIndex:0, //이미지 업로드를 위한 변수
-      tags:[],
-      nation:"",
+      tags:[""], // 태그들
+      nation:"", // 장소(국가)
     }
   },
   methods:{
+    addOneTagMore() {
+      this.tags.push("")
+    },
     mainUpload(){
         console.log(this.$refs.mains.files[0]);
         this.main = [
@@ -248,8 +275,8 @@ export default {
       const formData = new FormData();
       formData.append('main',this.main[0].file);
       formData.append('writer',"ssafy");
-      formData.append('location',"northAmerica");
-      formData.append('nation',"서울");
+      formData.append('location', this.selectContinent);
+      formData.append('nation', this.nation);
       for(let i =0;i< this.files.length;i++){
           console.log(this.files[i].file);
           formData.append('file',this.files[i].file);
