@@ -85,7 +85,7 @@ export default Vue.extend({
   display: inline-block;
   padding: 1.5em 1.5em;
   border-radius: 0;
-  color: #7e675e;
+  color: #DDA288;
   margin-top: 0.51rem;
   cursor: pointer;
   font-weight: bold;
@@ -130,7 +130,7 @@ export default Vue.extend({
 .navi-button:not(:hover) {
   transition-delay: 0.2s;
   transition-duration: 0.4s;
-  color: #7e675e;
+  color: #DDA288;
 }
 
 /* transition slide 효과 */

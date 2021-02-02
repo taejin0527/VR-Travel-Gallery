@@ -22,9 +22,6 @@ export default {
   components: {
     WorldMapDivision
   },
-  created: function () {
-    this.$refs.navigationAppVar.appeChild("continent-opacity")
-  }
 }
 </script>
 

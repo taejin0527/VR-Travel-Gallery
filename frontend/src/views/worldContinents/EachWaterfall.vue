@@ -35,19 +35,19 @@
 </template>
 
 <script>
-import Oceania from "@/components/continents/Oceania.vue";
-import SouthAmerica from "@/components/continents/SouthAmerica.vue";
-import NorthAmerica from "@/components/continents/NorthAmerica.vue";
-import Asia from "@/components/continents/Asia.vue";
-import Africa from "@/components/continents/Africa.vue";
-import Europe from "@/components/continents/Europe.vue";
+import Oceania from "@/components/waterfall/Oceania.vue";
+import SouthAmerica from "@/components/waterfall/SouthAmerica.vue";
+import NorthAmerica from "@/components/waterfall/NorthAmerica.vue";
+import Asia from "@/components/waterfall/Asia.vue";
+import Africa from "@/components/waterfall/Africa.vue";
+import Europe from "@/components/waterfall/Europe.vue";
 
 export default {
-  name: 'EachContinent',
+  name:"EachWaterfall",
   data: function () {
     return {
       "getContinentName": localStorage.getItem('continent'),
-      "popularExhibition": true,
+      "popularExhibition": false,
     }
   },
   components: {
@@ -61,13 +61,12 @@ export default {
   methods: {
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
-      this.$router.push({name:"EachWaterfall"})
+      this.$router.push({name:"EachContinent"})
     }
   }
-
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
