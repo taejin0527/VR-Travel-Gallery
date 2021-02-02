@@ -22,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
+import com.ssafy.iwc.dto.TagDto;
 import com.ssafy.iwc.model.AllMainView;
 import com.ssafy.iwc.model.AllView;
 import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.model.LocationInfo;
 import com.ssafy.iwc.model.MainImage;
+import com.ssafy.iwc.model.Tag;
 import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
@@ -166,8 +168,10 @@ public class BoardController {
 	}
 	
 	@PostMapping("/requestupload")
-	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location,@RequestParam("nation") String nation) {
+	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location,@RequestParam("nation") String nation,
+			@RequestParam("tags") List<String> tags) {
 		long id =0;
+		
 		try {
 			//게시글 작성
 			boardDto.setAuthor(writer);
@@ -208,13 +212,26 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+		for(String s : tags) {
+			try {
+				if(s.equals(""))break;
+				TagDto tagDto = new TagDto();
+				
+				tagDto.setNo(id);
+				tagDto.setTag(s);
+				tagService.saveFile(tagDto);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("서브이미지");
+		System.out.println(files.size());
 		for(MultipartFile mf : files) {
 			try {
-			
+				
 //				파일명 명명을 다시해야함 -> 해쉬값
 				String origFilename = mf.getOriginalFilename();
+				System.out.println(origFilename);
 				String expend="";
 				for(int i=0;i<origFilename.length();i++) {
 					if(origFilename.charAt(i)=='.') {
@@ -245,13 +262,13 @@ public class BoardController {
 				postImageDto.setFilePath(filePath);
 				
 				postImageService.saveFile(postImageDto);
-				return "OK";
+				
 			} catch(Exception e) {
 				e.printStackTrace();
 				
 			}
 		}
-		return "false";
+		return "ok";
 		
 		
 		

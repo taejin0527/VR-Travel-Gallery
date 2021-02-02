@@ -29,7 +29,7 @@ public class TagDto {
 				
 	}
 	@Builder
-	public TagDto(long id, String tag) {
+	public TagDto(long id, String tag,long no) {
 		this.id = id;
 		this.tag = tag;
 		this.no = no;
