@@ -7,7 +7,9 @@ import VeeValidate from "vee-validate";
 
 Vue.config.productionTip = false;
 
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+  fieldsBagName: "veeFields",
+});
 
 new Vue({
   router,

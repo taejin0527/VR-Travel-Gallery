@@ -36,7 +36,9 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style lang="scss">
+@import "../src/assets/style.scss";
+
 /* scoped를 쓰지 않은 이유는 폰트를 여기서 저장하고 모든 곳에서 쓰기 위해서 */
 /* 다른 곳은 scoped를 쓰셔야 합니다. 아니면 CSS 이름 중복 에러날 수 있습니다.. */
 

@@ -2,7 +2,7 @@
   <div>
     <div class="navi">
       <div style="width=100%; text-align:center;">
-        <div class="navi-button" @click="toggle">N U V O A to Z</div>
+        <div class="navi-button" @click="toggleNav">N U V O A to Z</div>
 
         <div class="navi-bottom" v-show="isMenuPageOpen">
           <!-- 메뉴 (알림) -->
@@ -12,9 +12,14 @@
             @click.native="isMenuPageOpen = !isMenuPageOpen"
             to="/profile"
           >
-            <v-icon large color="white"> mdi-view-dashboard </v-icon>
-            <p style="color:#fff">Profile</p></router-link
-          >
+            <div class="icon">
+              <v-icon large class="icon">
+                mdi-view-dashboard
+              </v-icon>
+              <p>Profile</p>
+            </div>
+          </router-link>
+
           <!-- 메뉴 (로그인,로그아웃) -->
           <router-link
             v-if="!isLoggedIn"
@@ -22,17 +27,22 @@
             @click.native="isMenuPageOpen = !isMenuPageOpen"
             to="/login"
           >
-            <v-icon large color="white"> mdi-account-key </v-icon>
-            <p style="color:#fff">Login</p></router-link
-          >
+            <div class="icon">
+              <v-icon large class="icon"> mdi-account-key </v-icon>
+              <p>Login</p>
+            </div>
+          </router-link>
+
           <a
             v-if="isLoggedIn"
             tag="li"
             @click="[(isMenuPageOpen = !isMenuPageOpen), signOut()]"
             to="/"
           >
-            <v-icon large color="white"> mdi-exit-to-app </v-icon>
-            <p style="color:#fff">Logout</p>
+            <div class="icon">
+              <v-icon large class="icon"> mdi-exit-to-app </v-icon>
+              <p>Logout</p>
+            </div>
           </a>
         </div>
       </div>
@@ -48,13 +58,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script>
 import { mapActions, mapGetters } from "vuex";
 
 import Menu from "@/components/navigation/Menu.vue";
 
-export default Vue.extend({
+export default {
   components: {
     Menu,
   },
@@ -70,14 +79,16 @@ export default Vue.extend({
     ...mapActions("Auth", ["signOut"]),
 
     // 메뉴 페이지 이동
-    toggle: function() {
+    toggleNav: function() {
+      const sound = new Audio(require("@/assets/audio/navSound.wav"));
+      sound.play();
       this.isMenuPageOpen = !this.isMenuPageOpen;
     },
     closeMenuPage: function() {
       this.isMenuPageOpen = false;
     },
   },
-});
+};
 </script>
 
 <style scoped>
@@ -164,5 +175,11 @@ export default Vue.extend({
   list-style: none;
   margin: 20px 0;
   background: transparent;
+}
+.icon {
+  color: #000;
+}
+.icon:hover {
+  color: #dda288;
 }
 </style>
