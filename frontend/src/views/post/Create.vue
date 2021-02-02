@@ -86,6 +86,7 @@
           <v-text-field
             label="#Tag입력"
             v-model="tags[idx]"
+            
           ></v-text-field>
         </v-col>
         <v-col
@@ -175,7 +176,7 @@
                       mdi-plus
                     </v-icon>
                   </label>
-                  <input type="file" id = "file" ref="files" @change="imageUpload" multiple/>
+                  <input type="file" id = "file" ref="files" @change="imageAddUpload" multiple/>
                 </v-btn>
               </div>
             </div>
@@ -198,13 +199,15 @@ export default {
       files: [], //업로드용 파일
       filesPreview : [], //보여줄 파일
       uploadImageIndex:0, //이미지 업로드를 위한 변수
-      tags:[""], // 태그들
+      tags:[], // 태그들
       nation:"", // 장소(국가)
+      num: 0,
     }
   },
   methods:{
-    addOneTagMore() {
-      this.tags.push("")
+    addOneTagMore(e) {
+      this.tags.push("");
+      console.log(this.tags);
     },
     mainUpload(){
         console.log(this.$refs.mains.files[0]);
@@ -238,28 +241,30 @@ export default {
         }
         this.uploadImageIndex = num +1; //이미지 index의 마지막 값 +1
         console.log(this.files);
+        console.log(this.uploadImageIndex);
     },
     imageAddUpload(){
-      console.log(this.$refs.files.files);
-      //하나의 배열로 넣기
-      let num =-1;
-      for(let i =0; i< this.$refs.files.files.length;i++){
-        console.log(this.uploadImageIndex);
-        this.files = [
-            ...this.files,
-          //이미지 업로드
-          {
-            //실제 파일
-            file : this.$refs.files.files[i],
-            preview: URL.createObjectURL(this.$refs.files.files[i]),
-            // 삭제 및 관리를 위한 number
-            number : i + this.uploadImageIndex
-          }
-        ];
-        num = i;
-      }
+        console.log(this.$refs.files.files);
+        //하나의 배열로 넣기
+        let num =-1;
+        for(let i =0; i< this.$refs.files.files.length;i++){
+            console.log(this.uploadImageIndex);
+            this.files = [
+                ...this.files,
+            //이미지 업로드
+            {
+                //실제 파일
+                file : this.$refs.files.files[i],
+                preview: URL.createObjectURL(this.$refs.files.files[i]),
+                // 삭제 및 관리를 위한 number
+                number : i + this.uploadImageIndex
+            }
+            ];
+            num = i;
+        }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
       console.log(this.files);
+      console.log(this.uploadImageIndex);
     },
     mainDeleteButton(e){
       const name = e.target.getAttribute("name");
@@ -277,6 +282,7 @@ export default {
       formData.append('writer',"ssafy");
       formData.append('location', this.selectContinent);
       formData.append('nation', this.nation);
+      formData.append('tags',this.tags);
       for(let i =0;i< this.files.length;i++){
           console.log(this.files[i].file);
           formData.append('file',this.files[i].file);
@@ -288,7 +294,8 @@ export default {
                   'Content-Type' : 'multipart/form-data'
               }
           }).then(response=>{
-              this.$router.push("/view");
+            //   this.$router.push("/view");
+            console.log("succes");
           }).catch(function(){
               console.log("FAILURE");
           });
