@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,14 @@ import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
 import com.ssafy.iwc.model.AllMainView;
 import com.ssafy.iwc.model.AllView;
+import com.ssafy.iwc.model.Board;
+import com.ssafy.iwc.model.LocationInfo;
+import com.ssafy.iwc.model.MainImage;
 import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
 import com.ssafy.iwc.service.PostImageServiceImpl;
+import com.ssafy.iwc.service.TagService;
 import com.ssafy.iwc.util.MD5Generator;
 
 
@@ -41,6 +46,8 @@ public class BoardController {
 	private PostImageService postImageService;
 	@Autowired
 	private MainImageService mainImageService;
+	@Autowired
+	private TagService tagService;
 	private String FileMainSrc = "http://localhost:8080/static/mainImg/";
 	private String FileSubSrc = "http://localhost:8080/static/subImg/";
 	
@@ -49,7 +56,27 @@ public class BoardController {
 		Long no = Long.parseLong(id);
 		try {
 //			이미지 정보 가져오기
+			List<PostImageDto> del = postImageService.getFile(no);
+			MainImageDto delMain = mainImageService.getFile(no);
 //			파일삭제
+			for(PostImageDto d : del) {
+				File file = new File(d.getFilePath());
+				if(file.exists()) {
+					if(file.delete()) {
+						System.out.println("서브사진 삭제");
+					}else {
+						System.out.println("사진삭제 실패");
+					}
+				}
+			}
+			File file = new File(delMain.getFilePath());
+			if(file.exists()) {
+				if(file.delete()) {
+					System.out.println("메인사진 삭제");
+				}else {
+					System.out.println("사진삭제 실패");
+				}
+			}
 //			DB삭제
 			postImageService.delPost(no);
 			mainImageService.delPost(no);
@@ -63,21 +90,27 @@ public class BoardController {
 	}
 	
 	@GetMapping("/allview")
-	public ResponseEntity<List<AllMainView>> allview(){
-		
+	public ResponseEntity<List<AllMainView>> allview(@RequestParam("location") String location){
+		System.out.println(location);
 		try {
-			List<AllMainView> dto = mainImageService.getAllBoard();
-			List<Map<String, String>> result = new LinkedList<Map<String,String>>();
+//			List<AllMainView> dto = mainImageService.getAllBoard();
+			List<LocationInfo> result = new LinkedList<>();
+			List<Board> dto = boardService.getLocationBoard(location);
+			System.out.println(dto.get(0).toString());
+//			List<Map<String, String>> result = new LinkedList<Map<String,String>>();
 			System.out.println("Main Image : ");
-			for(AllMainView a : dto) {
-				Map<String,String> m = new HashMap<String, String>();
-				System.out.println("아이디 "+a.getId());
-				System.out.println("작성자 : " +a.getAuthor());
-				System.out.println("파일 : " +a.getFilename());
-				m.put("id",Long.toString(a.getId()));
-				m.put("author",a.getAuthor());
-				m.put("filepath",FileMainSrc+a.getFilename());
-				result.add(m);
+			for(Board a : dto) {
+				LocationInfo data = new LocationInfo();
+//				data에 Board값 넣기
+				data.setBoard(a);
+//				메인 이미지 경로 가져와서 넣기
+				Optional<MainImage> d = mainImageService.findById(a.getId());
+				data.setFilePath(FileMainSrc+d.get().getFilename());
+//				tag가져와서 넣기
+				data.setTags(tagService.findTagId(a.getId()));
+				System.out.println(data.getTags());
+
+				result.add(data);
 			}
 			return new ResponseEntity(result,HttpStatus.OK);
 		}catch(Exception e){
@@ -99,6 +132,7 @@ public class BoardController {
 		
 		try {
 			List<AllView> dto = postImageService.findSubImg(no);
+			
 			List<Map<String, String>> result = new LinkedList<Map<String,String>>();
 			
 
@@ -132,12 +166,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/requestupload")
-	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location) {
+	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location,@RequestParam("nation") String nation) {
 		long id =0;
 		try {
 			//게시글 작성
 			boardDto.setAuthor(writer);
 			boardDto.setLocation(location);
+			boardDto.setNation(nation);
 			id = boardService.savePost(boardDto);
 			//메인 이미지 작성
 			String origname = main.getOriginalFilename();

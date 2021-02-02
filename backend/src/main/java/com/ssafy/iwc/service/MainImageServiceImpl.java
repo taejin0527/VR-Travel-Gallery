@@ -1,6 +1,7 @@
 package com.ssafy.iwc.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -58,5 +59,11 @@ public class MainImageServiceImpl implements MainImageService{
 	public void delPost(Long no) {
 		// TODO Auto-generated method stub
 		mainImageRepository.deleteById(no);
+	}
+
+	@Transactional
+	public Optional<MainImage> findById(long id) {
+		// TODO Auto-generated method stub
+		return mainImageRepository.findById(id);
 	}
 }

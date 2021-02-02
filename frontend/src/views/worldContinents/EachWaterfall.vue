@@ -31,7 +31,14 @@
     <div v-else>
       <Africa/>
     </div>
+    <!-- 이미지 가져와서 사용방법 -->
+    <!-- <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
+            
+            <img :src="file.filepath" :name="file.id" @click="moveToDetail"/> 
+
+        </div> -->
   </v-main>
+  
 </template>
 
 <script>
@@ -41,6 +48,7 @@ import NorthAmerica from "@/components/waterfall/NorthAmerica.vue";
 import Asia from "@/components/waterfall/Asia.vue";
 import Africa from "@/components/waterfall/Africa.vue";
 import Europe from "@/components/waterfall/Europe.vue";
+import axios from "axios";
 
 export default {
   name:"EachWaterfall",
@@ -48,7 +56,20 @@ export default {
     return {
       "getContinentName": localStorage.getItem('continent'),
       "popularExhibition": false,
+       files: []
     }
+  },
+  created:function(){
+    const location = localStorage.getItem('continent');
+    axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
+                this.files = response.data;
+                this.index = response.data.length;
+                // files를 통해서 데이터 접근해야함
+                console.log(this.files[0].board);
+                console.log(this.index);
+        }).catch(function(){
+             console.log("안됨");
+         });
   },
   components: {
     Oceania,
@@ -62,7 +83,13 @@ export default {
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
       this.$router.push({name:"EachContinent"})
-    }
+    },
+     // 해당 페이지로 이동
+        // moveToDetail(e){
+        //     const no = e.target.getAttribute("name");
+        //     console.log(no);
+        //     this.$router.push("/detail?id="+no);
+        // }
   }
 }
 </script>
