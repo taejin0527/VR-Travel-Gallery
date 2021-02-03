@@ -204,6 +204,9 @@ export default {
       num: 0,
     }
   },
+  created: function () {
+    console.log(this.$store.state.Auth.authToken)
+  },
   methods:{
     addOneTagMore(e) {
       this.tags.push("");
@@ -218,7 +221,6 @@ export default {
                 number : 0
             }
         ];
-      
     },
     imageUpload(){
         console.log(this.$refs.files.files);
@@ -229,12 +231,12 @@ export default {
                 ...this.files,
                 //이미지 업로드
                 {
-                    //실제파일
-                    file: this.$refs.files.files[i],
-                    //이미지 프리뷰
-                    preview: URL.createObjectURL(this.$refs.files.files[i]),
-                    //삭제 및 관리를 위한 number
-                    number : i
+                  //실제파일
+                  file: this.$refs.files.files[i],
+                  //이미지 프리뷰
+                  preview: URL.createObjectURL(this.$refs.files.files[i]),
+                  //삭제 및 관리를 위한 number
+                  number : i
                 }
             ];
             num = i;
@@ -279,7 +281,7 @@ export default {
       console.log(this.files.length);
       const formData = new FormData();
       formData.append('main',this.main[0].file);
-      formData.append('writer',"ssafy");
+      formData.append('writer', this.$store.state.Auth.authToken.username);
       formData.append('location', this.selectContinent);
       formData.append('nation', this.nation);
       formData.append('tags',this.tags);
@@ -290,7 +292,7 @@ export default {
       axios.post('http://localhost:8080/board/requestupload',
           formData,{
               headers:{
-                  'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlaGRyamYiLCJpYXQiOjE2MTIwODEwNTMsImV4cCI6MTYxMjE2NzQ1M30.YipqqNrw_PpswmLAKXP7IAj9a20FPXOaWIcqhAB2JPZkiCq8X2Uth1gc_3l-CplTK3TEzOV3IHNZdfiW0mrn7w',
+                  'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
                   'Content-Type' : 'multipart/form-data'
               }
           }).then(response=>{
