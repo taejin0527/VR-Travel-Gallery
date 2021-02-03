@@ -25,22 +25,22 @@
     </v-btn>
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
-      <Oceania/>
+      <Oceania />
     </div>
     <div v-else-if="this.getContinentName == 'asia'">
-      <Asia/>
+      <Asia />
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
-      <NorthAmerica/>
+      <NorthAmerica />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
-      <SouthAmerica/>
+      <SouthAmerica />
     </div>
     <div v-else-if="this.getContinentName == 'europe'">
-      <Europe/>
+      <Europe />
     </div>
     <div v-else>
-      <Africa/>
+      <Africa />
     </div>
     <!-- 이미지 가져와서 사용방법 -->
     <!-- <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
@@ -60,8 +60,8 @@ import Africa from "@/components/continents/Africa.vue";
 import Europe from "@/components/continents/Europe.vue";
 import axios from "axios";
 export default {
-  name: 'EachContinent',
-  data: function () {
+  name: "EachContinent",
+  data: function() {
     return {
       "getContinentName": localStorage.getItem('continent'),
       "popularExhibition": true,
@@ -107,6 +107,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

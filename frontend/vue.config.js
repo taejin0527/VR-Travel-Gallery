@@ -1,3 +1,12 @@
+const webpack = require('webpack');
+
 module.exports = {
-  transpileDependencies: ["vuetify"]
+  transpileDependencies: ["vuetify"],
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        'introJs': ['intro.js']
+      })
+    ]
+  },
 };

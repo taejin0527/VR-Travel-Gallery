@@ -91,11 +91,11 @@ export default class Login extends Vue {
 
       if (this.user.username && this.user.password) {
         this.login(this.user).then(
-          (data) => {
+          data => {
             console.log("success!");
             this.$router.push("/worldmap");
           },
-          (error) => {
+          error => {
             this.loading = false;
             setTimeout(() => {
               this.active = !this.active;

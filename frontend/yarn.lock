@@ -3282,13 +3282,6 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
-dom7@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.1.5.tgz#a79411017800b31d8400070cdaebbfc92c1f6377"
-  integrity sha512-xnhwVgyOh3eD++/XGtH+5qBwYTgCm0aW91GFgPJ3XG+jlsRLyJivnbP0QmUBFhI+Oaz9FV0s7cxgXHezwOEBYA==
-  dependencies:
-    ssr-window "^2.0.0"
-
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -4028,6 +4021,13 @@ flatted@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
+
+flipbook-vue@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/flipbook-vue/-/flipbook-vue-0.10.1.tgz#a1a2f0b4e66b0e3287da661b7cf1263fa00eab74"
+  integrity sha512-n7vqBq5IY/HLOI6DQpQVvi+Vn/FRsIoHZmeS5FLGuan9V8M8JAl/oQgInMb8cPu6QwLz+0uXATF7f5HVnYYQqA==
+  dependencies:
+    rematrix "^0.4.1"
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -4783,6 +4783,11 @@ interpret@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
+
+intro.js@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/intro.js/-/intro.js-3.2.1.tgz#fb13f03c13d54aab8485d538a719fe4af0b7bf36"
+  integrity sha512-empgAlW/vlIEAZWw19rLMR+1J75sw6bvjqrQd9fhgXJnV/ds0bzASil3k5fCWSJeVBKXFbLlWJ3nvtimDmTIFw==
 
 ip-regex@^2.1.0:
   version "2.1.0"
@@ -7086,6 +7091,11 @@ relateurl@0.2.x:
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
 
+rematrix@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/rematrix/-/rematrix-0.4.1.tgz#496d40b48c79dd3820bc40352b8d7bec44b32887"
+  integrity sha512-nH4OjL09zw4yhdBClK4B93kRWbHu+std7ZV6ljS2Zsgy2YrPcayL67axKLfMxoFool8mPyVY614m8SFE7sJQLw==
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -7712,11 +7722,6 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
-ssr-window@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-2.0.0.tgz#98c301aef99523317f8d69618f0010791096efc4"
-  integrity sha512-NXzN+/HPObKAx191H3zKlYomE5WrVIkoCB5IaSdvKokxTpjBdWfr0RaP+1Z5KOfDT0ZVz+2tdtiBkhsEQ9p+0A==
-
 ssri@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
@@ -7959,14 +7964,6 @@ sweetalert2@^10.13.3:
   version "10.13.3"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.13.3.tgz#04be73d497ae2041dca276f3cb724ec20db4bb56"
   integrity sha512-kSvTkXvc59+vPf9CfZ/wc/uvFkccxoOMLK1aUibN0mXU4hbYg/NylBTlmfvuUjJQ5SWL3X6s8w7AG5croH8U1w==
-
-swiper@^5.3.7:
-  version "5.4.5"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-5.4.5.tgz#a350f654bf68426dbb651793824925512d223c0f"
-  integrity sha512-7QjA0XpdOmiMoClfaZ2lYN6ICHcMm72LXiY+NF4fQLFidigameaofvpjEEiTQuw3xm5eksG5hzkaRsjQX57vtA==
-  dependencies:
-    dom7 "^2.1.5"
-    ssr-window "^2.0.0"
 
 table@^5.2.3:
   version "5.4.6"
@@ -8507,11 +8504,6 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-awesome-swiper@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/vue-awesome-swiper/-/vue-awesome-swiper-4.1.1.tgz#8f7ab221ad003021d756b86aa618f429924900fe"
-  integrity sha512-50um10t6N+lJaORkpwSi1wWuMmBI1sgFc9Znsi5oUykw2cO5DzLaBHcO2JNX21R+Ue4TGoIJDhhxjBHtkFrTEQ==
-
 vue-class-component@^7.2.3:
   version "7.2.6"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
@@ -8538,10 +8530,20 @@ vue-eslint-parser@^7.0.0:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
+vue-flux@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/vue-flux/-/vue-flux-6.4.0.tgz#74aa82e00601a62fd5de0aec604bdd24467b1814"
+  integrity sha512-JMYDkNS4Ul1yugYzrabDnHdjM+wtHYo04AirFoko2mLp20BTpFnCpI2sselj4t6JT7xDnRXOr61n02ZSCb6h0g==
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-introjs@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/vue-introjs/-/vue-introjs-1.3.2.tgz#ff2e3628adaab6c54cae47c12234cce00dd1db34"
+  integrity sha512-Bj27iGimO6VKr/Ngxs5hr/Fh8ONSHmvTUj2gh1f5CGZC5vfF1Vb5VyetjXiDdMXhLsqeGSIhac6SbVNHwUh9yQ==
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":
   version "16.1.2"
