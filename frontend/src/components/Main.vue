@@ -5,7 +5,11 @@
     ma-0
     pa-0
     fill-height
-    :style="{'background-image': 'url(' + require('@/assets/main/worldmap_change_color.png') + ')', 'background-position': 'center'}"
+    :style="{
+      'background-image':
+        'url(' + require('@/assets/main/worldmap_change_color.png') + ')',
+      'background-position': 'center',
+    }"
   >
     <v-row align="center" justify="center">
       <!-- 타이틀 문구 -->
@@ -13,84 +17,87 @@
         <div class="d-flex justify-center mb-6">
           <h1
             style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
-          > . N U V O </h1>
+          >
+            . N U V O
+          </h1>
         </div>
       </v-col>
 
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col
-        offset="2"
-        cols="4"
-      >
-        <div
-          style="text-align:center"
-        >
+      <v-col offset="2" cols="4">
+        <div style="text-align:center">
           <v-icon
             size="150px"
-            :class="{ 'disappeared-hidden-map-icon' : !isShowMapIcon }"
+            :class="{ 'disappeared-hidden-map-icon': !isShowMapIcon }"
           >
             mdi-map-outline
           </v-icon>
           <v-icon
-            :class="{ 'disappeared-airplane-icon' : !isShowMapIcon, 'show-airplane-icon': isShowMapIcon }"
+            :class="{
+              'disappeared-airplane-icon': !isShowMapIcon,
+              'show-airplane-icon': isShowMapIcon,
+            }"
           >
             mdi-airplane
           </v-icon>
         </div>
         <div
           style="text-align:center;"
+          v-intro="'NUVO 지도로 보기'"
+          v-intro-tooltip-class="'red-bg'"
+          v-intro-position="'left'"
         >
           <v-icon
             size="150px"
             style="border:solid; border-radius:10px;"
-            :class="{ 'disappeared-map-icon' : isShowMapIcon }"
+            :class="{ 'disappeared-map-icon': isShowMapIcon }"
             @mouseover="disappearMapIcon"
             @mouseleave="showMapIcon"
             @click="gotoWorldMap"
           >
             mdi-map-search-outline
           </v-icon>
-          <v-icon
-            style="opacity:0;"
-          >
+          <v-icon style="opacity:0;">
             mdi-airplane
           </v-icon>
         </div>
       </v-col>
 
       <!-- VR로 가는 버튼 -->
-      <v-col
-        cols="4"
-      >
-        <div
-          style="text-align:center"  
-        >
+      <v-col cols="4">
+        <div style="text-align:center">
           <v-icon
             size="150px"
-            :class="{ 'disappeared-hidden-VR-icon' : !isShowVRIcon, 'show-hidden-VR-icon-bg' : isShowVRIcon,  'show-hidden-VR-icon' : isShowVRIcon }"
+            :class="{
+              'disappeared-hidden-VR-icon': !isShowVRIcon,
+              'show-hidden-VR-icon-bg': isShowVRIcon,
+              'show-hidden-VR-icon': isShowVRIcon,
+            }"
           >
             mdi-safety-goggles
           </v-icon>
         </div>
         <div
           style="text-align:center;"
+          v-intro="'VR 전시관으로 이동'"
+          v-intro-step="1"
         >
           <v-icon
             size="150px"
             style="border:solid; border-radius:10px;"
-            :class="{ 'disappeared-VR-icon' : isShowVRIcon }"
+            :class="{ 'disappeared-VR-icon': isShowVRIcon }"
             @mouseover="disappearVRIcon"
             @mouseleave="showVRIcon"
             @click="gotoVRContents"
           >
             mdi-safety-goggles
           </v-icon>
-          
         </div>
       </v-col>
 
       <!-- 남는 공간 offset -->
       <v-col cols="2"></v-col>
+      <div></div>
     </v-row>
   </v-container>
 </template>
@@ -100,45 +107,49 @@ export default {
   name: "Main",
   data: function() {
     return {
-      isShowMapIcon:false,
-      isShowVRIcon:false,
-    }
+      isShowMapIcon: false,
+      isShowVRIcon: false,
+    };
+  },
+  mounted() {
+    this.$intro().start(); // start the guide
+    this.$intro().showHints(); // show hints
   },
   methods: {
     // 월드 맵으로 가는 버튼 액션
-    gotoWorldMap: function () {
-      this.$router.push({name:'WorldMap'})
+    gotoWorldMap: function() {
+      this.$router.push({ name: "WorldMap" });
     },
 
     // VR로 가는 버튼 액션 / 아직 구현 못함
-    gotoVRContents: function () {
-      console.log('아직 구현 못 함')
+    gotoVRContents: function() {
+      console.log("아직 구현 못 함");
     },
 
     // 맵 아이콘 애니메이션
-    disappearMapIcon: function () {
-      this.isShowMapIcon = true
+    disappearMapIcon: function() {
+      this.isShowMapIcon = true;
     },
-    showMapIcon: function () {
-      this.isShowMapIcon = false
+    showMapIcon: function() {
+      this.isShowMapIcon = false;
     },
 
     // VR 아이콘 애니메이션
-    disappearVRIcon: function () {
-      this.isShowVRIcon = true
+    disappearVRIcon: function() {
+      this.isShowVRIcon = true;
     },
-    showVRIcon: function () {
-      this.isShowVRIcon = false
-    }
-  }
-}
+    showVRIcon: function() {
+      this.isShowVRIcon = false;
+    },
+  },
+};
 </script>
 
 <style scoped>
 /* 티머니 폰트체인지 CSS */
 .font-change-tmoneyroundwindregular {
-  font-family: 'TmoneyRoundWindRegular'; 
-} 
+  font-family: "TmoneyRoundWindRegular";
+}
 
 /* 월드맵 아이콘 트랜지션 */
 .disappeared-map-icon {
@@ -202,13 +213,13 @@ export default {
 /* VR 불빛 애니메이션 */
 @keyframes lightparty {
   from {
-    background-image: url('../assets/main/goggle_light.png');
+    background-image: url("../assets/main/goggle_light.png");
     background-position: center 53%;
     background-size: 125px;
   }
 
   to {
-    background-image: url('../assets/main/goggle_light_bg.png');
+    background-image: url("../assets/main/goggle_light_bg.png");
     background-position: center 53%;
     background-size: 125px;
   }
@@ -220,5 +231,4 @@ export default {
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
-
 </style>

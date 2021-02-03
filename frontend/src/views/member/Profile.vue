@@ -2,14 +2,7 @@
   <div class="wrapper">
     <div class="wrapper-center">
       <!-- Header -->
-      <CardForm
-        :form-data="formData"
-        @input-card-number="updateCardNumber"
-        @input-card-name="updateCardName"
-        @input-card-month="updateCardMonth"
-        @input-card-year="updateCardYear"
-        @input-card-cvv="updateCardCvv"
-      />
+      <ProfileForm />
 
       <!-- Follower -->
     </div>
@@ -17,47 +10,21 @@
 </template>
 
 <script>
-import CardForm from "@/components/member/profile/CardForm";
+import ProfileForm from "@/components/member/profile/ProfileForm";
 
 export default {
   name: "scale",
   components: {
-    CardForm,
+    ProfileForm
   },
   data() {
-    return {
-      focused: null,
-      colors: ["#ff4f66", "#7971ea", "#5900d8"],
-      formData: {
-        cardName: "",
-        cardNumber: "",
-        cardMonth: "",
-        cardYear: "",
-        cardCvv: "",
-      },
-    };
+    return {};
   },
-  methods: {
-    updateCardNumber(val) {
-      this.formData.cardNumber = val;
-    },
-    updateCardName(val) {
-      this.formData.cardName = val;
-    },
-    updateCardMonth(val) {
-      this.formData.cardMonth = val;
-    },
-    updateCardYear(val) {
-      this.formData.cardYear = val;
-    },
-    updateCardCvv(val) {
-      this.formData.cardCvv = val;
-    },
-  },
+  methods: {}
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .wrapper {
   display: flex;
   align-items: center;

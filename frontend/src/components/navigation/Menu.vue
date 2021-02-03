@@ -13,8 +13,8 @@
           >Worldmap</span
         ></router-link
       >
-      <router-link tag="li" @click.native="closeMenuPage" to="/post"
-        ><span class="router-a" data-text="Post">Post</span></router-link
+      <router-link tag="li" @click.native="closeMenuPage" to="/photoview"
+        ><span class="router-a" data-text="PhotoView">Post</span></router-link
       >
     </div>
   </div>
@@ -34,10 +34,6 @@ export default Vue.extend({
   methods: {
     // 메뉴 끄기
     closeMenuPage: function() {
-      const sound = new Audio(
-        require("@/assets/audio/fasten_your_seatbelt.mp3")
-      );
-      sound.play();
       this.$emit("closeMenuPage");
     },
   },
