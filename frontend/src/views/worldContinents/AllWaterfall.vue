@@ -81,7 +81,7 @@ export default {
                 this.files = response.data;
                 this.index = response.data.length;
                 // files를 통해서 데이터 접근해야함
-                console.log(this.files[0].board);
+                console.log(this.files);
                 console.log(this.index);
         }).catch(function(){
              console.log("안됨");

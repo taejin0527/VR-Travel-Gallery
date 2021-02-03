@@ -198,9 +198,12 @@ export default {
       files: [], //업로드용 파일
       filesPreview : [], //보여줄 파일
       uploadImageIndex:0, //이미지 업로드를 위한 변수
-      tags:[""], // 태그들
+      tags:[], // 태그들
       nation:"", // 장소(국가)
     }
+  },
+  created: function () {
+    console.log(this.$store.state.Auth.authToken)
   },
   methods:{
     addOneTagMore() {
@@ -273,9 +276,11 @@ export default {
       console.log(this.files.length);
       const formData = new FormData();
       formData.append('main',this.main[0].file);
-      formData.append('writer',"ssafy");
+      formData.append('writer', this.$store.state.Auth.authToken.username);
       formData.append('location', this.selectContinent);
       formData.append('nation', this.nation);
+      formData.append('tags', this.tags)
+
       for(let i =0;i< this.files.length;i++){
           console.log(this.files[i].file);
           formData.append('file',this.files[i].file);
@@ -283,7 +288,7 @@ export default {
       axios.post('http://localhost:8080/board/requestupload',
           formData,{
               headers:{
-                  'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlaGRyamYiLCJpYXQiOjE2MTIwODEwNTMsImV4cCI6MTYxMjE2NzQ1M30.YipqqNrw_PpswmLAKXP7IAj9a20FPXOaWIcqhAB2JPZkiCq8X2Uth1gc_3l-CplTK3TEzOV3IHNZdfiW0mrn7w',
+                  'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
                   'Content-Type' : 'multipart/form-data'
               }
           }).then(response=>{

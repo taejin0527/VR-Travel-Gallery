@@ -6,6 +6,7 @@
       <v-col
         cols="12"
       >
+        <h1> 현재 North America만 개발되었습니다.</h1>
         <div class="d-flex justify-center mb-6">
           <img
             src="@/assets/continents/south_america.png"
