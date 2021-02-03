@@ -11,6 +11,7 @@ import Detail from "@/views/post/Detail.vue";
 import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
+import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
 
 
 Vue.use(VueRouter);
@@ -70,6 +71,11 @@ const routes: Array<RouteConfig> = [
     path: "/eachwaterfall/",
     name: "EachWaterfall",
     component: EachWaterfall,
+  },
+  {
+    path: "/allwaterfall/",
+    name: "AllWaterfall",
+    component: AllWaterfall,
   },
 ];
 

@@ -215,7 +215,6 @@ export default {
                 number : 0
             }
         ];
-      
     },
     imageUpload(){
         console.log(this.$refs.files.files);
@@ -226,12 +225,12 @@ export default {
                 ...this.files,
                 //이미지 업로드
                 {
-                    //실제파일
-                    file: this.$refs.files.files[i],
-                    //이미지 프리뷰
-                    preview: URL.createObjectURL(this.$refs.files.files[i]),
-                    //삭제 및 관리를 위한 number
-                    number : i
+                  //실제파일
+                  file: this.$refs.files.files[i],
+                  //이미지 프리뷰
+                  preview: URL.createObjectURL(this.$refs.files.files[i]),
+                  //삭제 및 관리를 위한 number
+                  number : i
                 }
             ];
             num = i;
