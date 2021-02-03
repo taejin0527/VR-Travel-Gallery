@@ -36,10 +36,10 @@ export default {
     return {
       confirm: "",
       error: {
-        confirm: "",
+        confirm: ""
       },
       isSubmit: false,
-      component: this,
+      component: this
     };
   },
   created() {
@@ -48,10 +48,10 @@ export default {
   watch: {
     confirm: function() {
       this.checkForm();
-    },
+    }
   },
   computed: {
-    ...mapState("Signup", ["confirmCode2"]),
+    ...mapState("Signup", ["confirmCode2"])
   },
   methods: {
     checkForm() {
@@ -61,7 +61,7 @@ export default {
 
       let isSubmit = true;
 
-      Object.values(this.error).map((v) => {
+      Object.values(this.error).map(v => {
         if (v) isSubmit = false;
       });
       this.isSubmit = isSubmit;
@@ -77,10 +77,10 @@ export default {
       } else {
         swal.fire({
           icon: "error",
-          text: "인증번호를 확인해주세요",
+          text: "인증번호를 확인해주세요"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>

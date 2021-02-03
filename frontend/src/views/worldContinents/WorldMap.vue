@@ -3,11 +3,9 @@
   <div>
     <v-container>
       <v-row>
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <!-- 월드 맵 나누기 -->
-          <WorldMapDivision/>
+          <WorldMapDivision />
         </v-col>
       </v-row>
     </v-container>
@@ -18,16 +16,14 @@
 import WorldMapDivision from "@/components/WorldMapDivision.vue";
 
 export default {
-  name:"WorldMap",
+  name: "WorldMap",
   components: {
     WorldMapDivision
   },
-  created: function () {
-    this.$refs.navigationAppVar.appeChild("continent-opacity")
+  created: function() {
+    this.$refs.navigationAppVar.appeChild("continent-opacity");
   }
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

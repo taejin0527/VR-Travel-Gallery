@@ -9,7 +9,7 @@ export default {
   props: ["visibleSlide", "idx"],
   data: function() {
     return {};
-  },
+  }
 };
 </script>
 

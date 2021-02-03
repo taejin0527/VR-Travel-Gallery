@@ -31,8 +31,8 @@ import SideNavBar from "@/components/navigation/SideNavBar.vue";
 export default Vue.extend({
   name: "App",
   components: {
-    SideNavBar,
-  },
+    SideNavBar
+  }
 });
 </script>
 

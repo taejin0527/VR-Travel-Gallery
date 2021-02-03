@@ -1,23 +1,30 @@
 <template>
   <div class="container">
     <div class="container-center">
-      <carousel @prev="prev" @next="next">
-        <transition-group name="slide-list">
-          <carousel-slide
-            v-for="(slide, idx) in slides"
-            :key="slide"
-            :idx="idx"
-            :visibleSlide="visibleSlide"
-            class="slide-list"
-          >
-            <img :src="slides[idx - 2]" />
-            <img :src="slides[idx - 1]" />
-            <img :src="slides[idx]" />
-            <img :src="slides[idx + 1]" />
-            <img :src="slides[idx + 2]" />
-          </carousel-slide>
-        </transition-group>
-      </carousel>
+      <Carousel @prev="prev" @next="next">
+        <CarouselSlide
+          v-for="(slide, idx) in slides"
+          :key="slide"
+          :idx="idx"
+          :visibleSlide="visibleSlide"
+        >
+          <img :src="slides[idx - 2]" />
+          <img :src="slides[idx - 1]" />
+          <img :src="slides[idx]" />
+          <img :src="slides[idx + 1]" />
+          <img :src="slides[idx + 2]" />
+        </CarouselSlide>
+      </Carousel>
+    </div>
+    <div class="profile">
+      <MetaCard
+        :exhibitionImage="exhibitionImage"
+        :exhibitionTitle="exhibitionTitle"
+        :exhibitionContent="exhibitionContent"
+        :exhibitionLocation="exhibitionLocation"
+        :exhibitionAuthor="exhibitionAuthor"
+        :likeCount="likeCount"
+      />
     </div>
   </div>
 </template>
@@ -25,11 +32,13 @@
 <script>
 import Carousel from "@/components/photo/Carousel.vue";
 import CarouselSlide from "@/components/photo/CarouselSlide.vue";
+import MetaCard from "@/components/photo/MetaCard.vue";
 
 export default {
   components: {
     Carousel,
     CarouselSlide,
+    MetaCard,
   },
   data: function() {
     return {
@@ -41,6 +50,12 @@ export default {
         require("@/assets/images/example/5.jpg"),
       ],
       visibleSlide: 0,
+      exhibitionImage: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+      exhibitionTitle: "Test용",
+      exhibitionContent: ["태그 1", "태그 2"],
+      exhibitionLocation: "",
+      exhibitionAuthor: "ssafy",
+      likeCount: 168,
     };
   },
   computed: {
@@ -72,6 +87,7 @@ export default {
 </script>
 
 <style scoped>
+/* Flex */
 .container {
   display: flex;
   height: 100vh;
@@ -81,7 +97,6 @@ export default {
   overflow: hidden;
   z-index: 1;
 }
-
 .container-center {
   display: flex;
   margin: 0;
@@ -90,25 +105,16 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-/* Animation */
-.slide-list {
+.profile {
+  display: flex;
   margin: 0;
-}
-.slide-list-enter,
-.slide-list-leave-to {
-  opacity: 0;
-  transform: translateX(0px);
-}
-.slide-list-enter-to,
-.slide-list-leave {
-  opacity: 1;
-  transform: translateX(300px);
+  justify-content: center;
+  align-items: center;
 }
 
-/* Animation end */
-
+/* (left) img */
 .carousel-slide img {
+  left: 30%;
   height: 40vh;
   position: absolute;
 }

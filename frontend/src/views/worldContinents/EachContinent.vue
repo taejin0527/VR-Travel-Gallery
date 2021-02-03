@@ -2,22 +2,22 @@
   <v-main>
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
-      <Oceania/>
+      <Oceania />
     </div>
     <div v-else-if="this.getContinentName == 'asia'">
-      <Asia/>
+      <Asia />
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
-      <NorthAmerica/>
+      <NorthAmerica />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
-      <SouthAmerica/>
+      <SouthAmerica />
     </div>
     <div v-else-if="this.getContinentName == 'europe'">
-      <Europe/>
+      <Europe />
     </div>
     <div v-else>
-      <Africa/>
+      <Africa />
     </div>
   </v-main>
 </template>
@@ -31,11 +31,11 @@ import Africa from "@/components/continents/Africa.vue";
 import Europe from "@/components/continents/Europe.vue";
 
 export default {
-  name: 'EachContinent',
-  data: function () {
+  name: "EachContinent",
+  data: function() {
     return {
-      "getContinentName": localStorage.getItem('continent')
-    }
+      getContinentName: localStorage.getItem("continent")
+    };
   },
   components: {
     Oceania,
@@ -45,10 +45,7 @@ export default {
     Africa,
     Europe
   }
-
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

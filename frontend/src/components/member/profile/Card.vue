@@ -164,9 +164,9 @@ export default {
     isCardNumberMasked: Boolean,
     randomBackgrounds: {
       type: Boolean,
-      default: true,
+      default: true
     },
-    backgroundImage: [String, Object],
+    backgroundImage: [String, Object]
   },
   data() {
     return {
@@ -177,7 +177,7 @@ export default {
       amexCardPlaceholder: "#### ###### #####",
       dinersCardPlaceholder: "#### ###### ####",
       defaultCardPlaceholder: "#### #### #### ####",
-      currentPlaceholder: "",
+      currentPlaceholder: ""
     };
   },
   watch: {
@@ -190,14 +190,14 @@ export default {
     },
     cardType() {
       this.changePlaceholder();
-    },
+    }
   },
   mounted() {
     this.changePlaceholder();
 
     const self = this;
     const fields = document.querySelectorAll("[data-card-field]");
-    fields.forEach((element) => {
+    fields.forEach(element => {
       element.addEventListener("focus", () => {
         this.isFocused = true;
         if (
@@ -260,7 +260,7 @@ export default {
       } else {
         return null;
       }
-    },
+    }
   },
   methods: {
     changeFocus() {
@@ -269,7 +269,7 @@ export default {
         ? {
             width: `${target.offsetWidth}px`,
             height: `${target.offsetHeight}px`,
-            transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`,
+            transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
           }
         : null;
     },
@@ -293,7 +293,7 @@ export default {
       this.$nextTick(() => {
         this.changeFocus();
       });
-    },
-  },
+    }
+  }
 };
 </script>
