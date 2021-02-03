@@ -4,6 +4,17 @@
       elevation="3"
       fab
       color="#DDA288"
+      style="position:fixed; right:95px; top:20px; color:white;"
+      @click="clickGotoCreate"
+    >
+      <v-icon>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
       style="position:fixed; right:20px; top:20px; color:white;"
       @click="clickChangeContinentViewButton"
     >
@@ -83,6 +94,9 @@ export default {
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
       this.$router.push({name:"EachContinent"})
+    },
+    clickGotoCreate: function () {
+      this.$router.push({name:"Create"})
     },
      // 해당 페이지로 이동
         // moveToDetail(e){
