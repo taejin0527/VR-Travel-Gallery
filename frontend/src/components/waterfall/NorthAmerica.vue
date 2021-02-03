@@ -5,12 +5,12 @@
   >
     <v-row>
       <v-col
-        v-for="n in 9"
-        :key="n"
+        v-for="(image, idx) in images"
+        :key="idx"
         class=""
         cols="4"
       >
-        <img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`" alt="image error">
+        <img :src="`${image}`" alt="image error">
         
         <br>
         <v-chip-group
@@ -38,6 +38,10 @@ export default {
     return {
       exhibitionContent: ['뉴욕', 'hi']
     }
+  },
+  props: {
+    images:[Array],
+    tags:[Array],
   }
 }
 </script>

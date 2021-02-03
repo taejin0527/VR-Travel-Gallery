@@ -11,6 +11,7 @@
         mdi-plus
       </v-icon>
     </v-btn>
+
     <v-btn
       elevation="3"
       fab
@@ -23,25 +24,34 @@
         mdi-star
       </v-icon>
     </v-btn>
-    <!-- 각 대륙별로 이미지 가져오기 -->
-    <div v-if="this.getContinentName == 'oceania'">
-      <Oceania/>
-    </div>
-    <div v-else-if="this.getContinentName == 'asia'">
-      <Asia/>
-    </div>
-    <div v-else-if="this.getContinentName == 'northAmerica'">
-      <NorthAmerica/>
-    </div>
-    <div v-else-if="this.getContinentName == 'southAmerica'">
-      <SouthAmerica/>
-    </div>
-    <div v-else-if="this.getContinentName == 'europe'">
-      <Europe/>
-    </div>
-    <div v-else>
-      <Africa/>
-    </div>
+    <v-container
+      style="padding: 100px 100px 100px 100px;"
+    >
+      <v-row>
+        <v-col
+          v-for="n in 9"
+          :key="n"
+          class=""
+          cols="4"
+        >
+          <img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`" alt="image error">
+          
+          <br>
+          <v-chip-group
+            class="accent-4 white--text"
+            column
+          >
+            <v-chip
+              v-for="(item, idx) in exhibitionContent"
+              :key="idx"
+              style="background-color:#DD6288; color:white;"
+            >
+              {{item}}
+            </v-chip>
+          </v-chip-group>        
+        </v-col>
+      </v-row>
+    </v-container>
     <!-- 이미지 가져와서 사용방법 -->
     <!-- <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
             
@@ -49,23 +59,20 @@
 
         </div> -->
   </v-main>
+  
 </template>
 
 <script>
-import Oceania from "@/components/continents/Oceania.vue";
-import SouthAmerica from "@/components/continents/SouthAmerica.vue";
-import NorthAmerica from "@/components/continents/NorthAmerica.vue";
-import Asia from "@/components/continents/Asia.vue";
-import Africa from "@/components/continents/Africa.vue";
-import Europe from "@/components/continents/Europe.vue";
 import axios from "axios";
+
 export default {
-  name: 'EachContinent',
+  name:"EachWaterfall",
   data: function () {
     return {
-      "getContinentName": localStorage.getItem('continent'),
-      "popularExhibition": true,
-      files: []
+      exhibitionContent: ['뉴욕', 'hi'],
+      getContinentName: localStorage.getItem('continent'),
+      popularExhibition: false,
+       files: []
     }
   },
   created:function(){
@@ -73,40 +80,31 @@ export default {
     axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
                 this.files = response.data;
                 this.index = response.data.length;
-                // 
-                console.log(this.files[0].board);
+                // files를 통해서 데이터 접근해야함
+                console.log(this.files);
                 console.log(this.index);
         }).catch(function(){
              console.log("안됨");
          });
   },
-  components: {
-    Oceania,
-    SouthAmerica,
-    NorthAmerica,
-    Asia,
-    Africa,
-    Europe
-  },
   methods: {
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
-      this.$router.push({name:"EachWaterfall"})
+      this.$router.push({name:"WorldMap"})
     },
     clickGotoCreate: function () {
       this.$router.push({name:"Create"})
     }
-  },
-  // 해당 페이지로 이동
+     // 해당 페이지로 이동
         // moveToDetail(e){
         //     const no = e.target.getAttribute("name");
         //     console.log(no);
         //     this.$router.push("/detail?id="+no);
         // }
-
+  }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
