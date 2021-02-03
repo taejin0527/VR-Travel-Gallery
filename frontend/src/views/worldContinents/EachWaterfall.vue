@@ -4,6 +4,17 @@
       elevation="3"
       fab
       color="#DDA288"
+      style="position:fixed; right:95px; top:20px; color:white;"
+      @click="clickGotoCreate"
+    >
+      <v-icon>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
       style="position:fixed; right:20px; top:20px; color:white;"
       @click="clickChangeContinentViewButton"
     >
@@ -20,7 +31,10 @@
       <Asia/>
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
-      <NorthAmerica/>
+      <NorthAmerica
+        :images = "images"
+        :tags = "tags"
+      />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
       <SouthAmerica/>
@@ -31,6 +45,8 @@
     <div v-else>
       <Africa/>
     </div>
+
+    
     <!-- 이미지 가져와서 사용방법 -->
     <!-- <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
             
@@ -56,20 +72,24 @@ export default {
     return {
       "getContinentName": localStorage.getItem('continent'),
       "popularExhibition": false,
-       files: []
+       images: [],
+       tags: [],
     }
   },
   created:function(){
     const location = localStorage.getItem('continent');
     axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
-                this.files = response.data;
-                this.index = response.data.length;
-                // files를 통해서 데이터 접근해야함
-                console.log(this.files[0].board);
-                console.log(this.index);
+          this.files = []
+          this.tags = []
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            // 동걸 이거 보니까 태그가 있는데 데이터가 안들어간다. 수정해야될듯함돵.
+            this.tags.push(response.data[index].tags)
+          }
+          console.log(this.tags)
         }).catch(function(){
-             console.log("안됨");
-         });
+          console.log("안됨");
+        });
   },
   components: {
     Oceania,
@@ -83,6 +103,9 @@ export default {
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
       this.$router.push({name:"EachContinent"})
+    },
+    clickGotoCreate: function () {
+      this.$router.push({name:"Create"})
     },
      // 해당 페이지로 이동
         // moveToDetail(e){

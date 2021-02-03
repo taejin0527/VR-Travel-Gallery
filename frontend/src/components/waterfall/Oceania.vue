@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1> 현재 North America만 개발되었습니다.</h1>
+  </div>
 </template>
 
 <script>
