@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <br>
-    <br>
+    <br />
+    <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
       <v-col

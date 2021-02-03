@@ -38,6 +38,16 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/member/Profile.vue"),
   },
   {
+    path: "/card",
+    name: "Paycard",
+    component: () => import("@/views/member/Paycard.vue"),
+  },
+  {
+    path: "/photoview",
+    name: "PhotoView",
+    component: () => import("@/views/photo/PhotoView.vue"),
+  },
+  {
     path: "/worldmap/",
     name: "WorldMap",
     component: WorldMap,
@@ -87,7 +97,14 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/signup", "/", "/worldmap","/create","/view"];
+  const publicPages = [
+    "/login",
+    "/signup",
+    "/",
+    "/worldmap",
+    "/create",
+    "/view",
+  ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
 

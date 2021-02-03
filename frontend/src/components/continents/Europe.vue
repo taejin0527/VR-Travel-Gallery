@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <br>
-    <br>
+    <br />
+    <br />
     <v-row>
       <v-col
         cols="12"
@@ -11,8 +11,8 @@
           <img
             src="@/assets/continents/europe.png"
             alt="image error"
-            height = "600px"
-          >
+            height="600px"
+          />
         </div>
       </v-col>
     </v-row>
@@ -21,11 +21,8 @@
 
 <script>
 export default {
-  name: "Europe",
-
-}
+  name: "Europe"
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

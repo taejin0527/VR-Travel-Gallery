@@ -27,11 +27,9 @@
     <v-container>
 
       <v-row>
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <!-- 월드 맵 나누기 -->
-          <WorldMapDivision/>
+          <WorldMapDivision />
         </v-col>
       </v-row>
     </v-container>
@@ -60,9 +58,7 @@ export default {
       this.$router.push({name:"Create"})
     }
   }
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -52,11 +52,11 @@ class UserAuth extends VuexModule {
   @Action({ rawError: true })
   login(data: any): Promise<any> {
     return AuthService.login(data.username, data.password).then(
-      (user) => {
+      user => {
         this.context.commit("loginSuccess", user);
         return Promise.resolve(user);
       },
-      (error) => {
+      error => {
         this.context.commit("loginFailure");
         const message =
           (error.response &&
@@ -78,11 +78,11 @@ class UserAuth extends VuexModule {
   @Action({ rawError: true })
   register(data: any): Promise<any> {
     return AuthService.register(data.username, data.email, data.password).then(
-      (response) => {
+      response => {
         this.context.commit("registerSuccess");
         return Promise.resolve(response.data);
       },
-      (error) => {
+      error => {
         this.context.commit("registerFailure");
         const message =
           (error.response &&
