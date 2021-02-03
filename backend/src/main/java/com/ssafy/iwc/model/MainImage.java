@@ -1,18 +1,21 @@
 package com.ssafy.iwc.model;
 
-import java.util.Collection;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "mainimg")
@@ -35,7 +38,11 @@ public class MainImage {
 
 //	@OneToOne(mappedBy = "id")
 //	private Board board;
-	
+
+	@OneToOne(cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JsonIgnore
+	private Board board;
 	
 	@Builder
 	public MainImage(long id, String origFilename, String filename, String filePath) {
