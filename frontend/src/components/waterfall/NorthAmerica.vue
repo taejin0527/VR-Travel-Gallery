@@ -10,7 +10,7 @@
         class=""
         cols="4"
       >
-        <img :src="`${image}`" alt="image error">
+        <img :src="`${image}`" alt="image error" width="500px">
         
         <br>
         <v-chip-group

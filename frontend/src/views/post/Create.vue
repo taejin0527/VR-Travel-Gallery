@@ -296,7 +296,8 @@ export default {
                   'Content-Type' : 'multipart/form-data'
               }
           }).then(response=>{
-            //   this.$router.push("/view");
+            localStorage.setItem('continent', this.selectContinent)
+            this.$router.push({name:'EachWaterfall'});
             console.log("succes");
           }).catch(function(){
               console.log("FAILURE");
