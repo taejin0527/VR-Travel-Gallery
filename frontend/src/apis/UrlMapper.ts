@@ -1,6 +1,6 @@
 export default {
-  BASE_URL: "http://i4d110.p.ssafy.io:8080/api/",
-  BOARD_BASE_URL:"http://i4d110.p.ssafy.io:8080/board/",
+  BASE_URL: "http://i4d110.p.ssafy.io/apis/api/",
+  BOARD_BASE_URL:"http://i4d110.p.ssafy.io/apis/board/",
   ROUTES: {
     auth: {
       URL: "auth/",
