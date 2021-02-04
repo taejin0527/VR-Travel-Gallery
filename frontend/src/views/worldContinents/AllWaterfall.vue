@@ -64,6 +64,7 @@
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   name:"EachWaterfall",
@@ -77,7 +78,8 @@ export default {
   },
   created:function(){
     const location = localStorage.getItem('continent');
-    axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
+    
+    axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
                 this.files = response.data;
                 this.index = response.data.length;
                 // files를 통해서 데이터 접근해야함

@@ -38,6 +38,7 @@ import {
   FluxPreloader,
 } from "vue-flux";
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   components: {
@@ -61,7 +62,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8080/board/getposts?id=" + 2)
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=2`)
       .then((response) => {
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
