@@ -55,7 +55,7 @@ import RightIcon from 'vue-material-design-icons/ChevronRightCircle'
 import PlusIcon from 'vue-material-design-icons/PlusCircle'
 import MinusIcon from 'vue-material-design-icons/MinusCircle'
 import Flipbook from './Flipbook'
-export default
+export default {
   name: 'app'
   components: { Flipbook, LeftIcon, RightIcon, PlusIcon, MinusIcon, Ribbon }
   data: ->
@@ -106,6 +106,7 @@ export default
     ), 1
     window.addEventListener 'hashchange', @setPageFromHash
     @setPageFromHash()
+}
 </script>
 
 <style>
