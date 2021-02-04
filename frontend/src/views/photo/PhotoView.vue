@@ -37,6 +37,7 @@ import {
   FluxPagination,
   FluxPreloader,
 } from "vue-flux";
+import axios from "axios";
 
 export default {
   components: {
@@ -46,11 +47,6 @@ export default {
     FluxPagination,
     FluxPreloader,
   },
-  computed: {
-    user() {
-      return this.$store.state.Auth.authToken;
-    },
-  },
   data: () => ({
     vfOptions: {
       autoplay: false,
@@ -58,15 +54,23 @@ export default {
     vfImages: [],
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
   }),
+  computed: {
+    user() {
+      return this.$store.state.Auth.authToken;
+    },
+  },
   mounted() {
-    this.vfImages = [
-      require("@/assets/images/example/1.jpg"),
-      require("@/assets/images/example/2.jpg"),
-      require("@/assets/images/example/3.jpg"),
-      require("@/assets/images/example/4.jpg"),
-      require("@/assets/images/example/5.jpg"),
-      require("@/assets/images/example/6.jpg"),
-    ];
+    axios
+      .get("http://localhost:8080/board/getposts?id=" + 2)
+      .then((response) => {
+        response.data.forEach((e) => {
+          this.vfImages.push(e.filepath);
+          console.log(e.filepath);
+        });
+      })
+      .catch(() => {
+        console.log("subImg 불러오기 실패");
+      });
   },
 };
 </script>
