@@ -59,6 +59,8 @@ import Asia from "@/components/continents/Asia.vue";
 import Africa from "@/components/continents/Africa.vue";
 import Europe from "@/components/continents/Europe.vue";
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
+
 export default {
   name: "EachContinent",
   data: function() {
@@ -70,7 +72,7 @@ export default {
   },
   created:function(){
     const location = localStorage.getItem('continent');
-    axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
+    axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
                 this.files = response.data;
                 this.index = response.data.length;
                 // 

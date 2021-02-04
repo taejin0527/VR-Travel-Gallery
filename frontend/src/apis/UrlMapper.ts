@@ -1,5 +1,6 @@
 export default {
   BASE_URL: "http://localhost:8080/api/",
+  BOARD_BASE_URL:"http://localhost:8080/board/",
   ROUTES: {
     auth: {
       URL: "auth/",

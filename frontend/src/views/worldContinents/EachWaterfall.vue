@@ -65,6 +65,7 @@ import Asia from "@/components/waterfall/Asia.vue";
 import Africa from "@/components/waterfall/Africa.vue";
 import Europe from "@/components/waterfall/Europe.vue";
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   name:"EachWaterfall",
@@ -78,7 +79,7 @@ export default {
   },
   created:function(){
     const location = localStorage.getItem('continent');
-    axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
+    axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
           this.files = []
           this.tags = []
           for (let index = 0; index < response.data.length; index++) {
