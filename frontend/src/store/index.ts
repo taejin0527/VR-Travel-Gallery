@@ -13,11 +13,11 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     Auth,
-    Signup,
+    Signup
   },
   plugins: [
     createPersistedState({
-      paths: ["Auth", "Signup"],
-    }),
-  ],
+      paths: ["Auth", "Signup"]
+    })
+  ]
 });

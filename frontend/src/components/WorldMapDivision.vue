@@ -2,34 +2,37 @@
   <v-containter>
     <v-row>
       <!-- 북미 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           @mouseover="overNorthAmerica"
           @mouseleave="leaveNorthAmerica"
           src="@/assets/worldmap/direction.svg"
           alt="image error"
           @click="gotoNorthAmericaContinent"
-          :class="{ 'hoverevent-Continent':true, 'continent-opacity':true}"
+          :class="{ 'hoverevent-Continent': true, 'continent-opacity': true }"
           id="north_america-setting-location"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-north-airplane-icon' : !isShowNorthIcon, 'show-north-airplane-icon': isShowNorthIcon }"
+          :class="{
+            'disappeared-north-airplane-icon': !isShowNorthIcon,
+            'show-north-airplane-icon': isShowNorthIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-north-america-text' : !isShowNorthIcon, 'show-north-america-text': isShowNorthIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-north-america-text': !isShowNorthIcon,
+            'show-north-america-text': isShowNorthIcon
+          }"
           id="north_america-setting-location"
         >
           North America
         </span>
       </v-col>
       <!-- 남미 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           src="@/assets/worldmap/direction.svg"
           alt="image error"
@@ -38,23 +41,28 @@
           id="south_america-setting-location"
           @mouseover="overSouthAmerica"
           @mouseleave="leaveSouthAmerica"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-south-airplane-icon' : !isShowSouthIcon, 'show-south-airplane-icon': isShowSouthIcon }"
+          :class="{
+            'disappeared-south-airplane-icon': !isShowSouthIcon,
+            'show-south-airplane-icon': isShowSouthIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-south-america-text' : !isShowSouthIcon, 'show-south-america-text': isShowSouthIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-south-america-text': !isShowSouthIcon,
+            'show-south-america-text': isShowSouthIcon
+          }"
           id="south_america-setting-location"
         >
           South America
         </span>
       </v-col>
       <!-- 유럽 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           src="@/assets/worldmap/direction.svg"
           alt="image error"
@@ -63,23 +71,28 @@
           id="europe-setting-location"
           @mouseover="overEurope"
           @mouseleave="leaveEurope"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-europe-airplane-icon' : !isShowEuropeIcon, 'show-europe-airplane-icon': isShowEuropeIcon }"
+          :class="{
+            'disappeared-europe-airplane-icon': !isShowEuropeIcon,
+            'show-europe-airplane-icon': isShowEuropeIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-europe-text' : !isShowEuropeIcon, 'show-europe-text': isShowEuropeIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-europe-text': !isShowEuropeIcon,
+            'show-europe-text': isShowEuropeIcon
+          }"
           id="europe-setting-location"
         >
           Europe
         </span>
       </v-col>
       <!-- 아프리카 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           src="@/assets/worldmap/direction.svg"
           alt="image error"
@@ -88,23 +101,28 @@
           id="africa-setting-location"
           @mouseover="overAfrica"
           @mouseleave="leaveAfrica"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-africa-airplane-icon' : !isShowAfricaIcon, 'show-africa-airplane-icon': isShowAfricaIcon }"
+          :class="{
+            'disappeared-africa-airplane-icon': !isShowAfricaIcon,
+            'show-africa-airplane-icon': isShowAfricaIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-africa-text' : !isShowAfricaIcon, 'show-africa-text': isShowAfricaIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-africa-text': !isShowAfricaIcon,
+            'show-africa-text': isShowAfricaIcon
+          }"
           id="africa-setting-location"
         >
           Africa
         </span>
       </v-col>
       <!-- 아시아 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           src="@/assets/worldmap/direction.svg"
           alt="image error"
@@ -113,23 +131,28 @@
           id="asia-setting-location"
           @mouseover="overAsia"
           @mouseleave="leaveAsia"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-asia-airplane-icon' : !isShowAsiaIcon, 'show-asia-airplane-icon': isShowAsiaIcon }"
+          :class="{
+            'disappeared-asia-airplane-icon': !isShowAsiaIcon,
+            'show-asia-airplane-icon': isShowAsiaIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-asia-text' : !isShowAsiaIcon, 'show-asia-text': isShowAsiaIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-asia-text': !isShowAsiaIcon,
+            'show-asia-text': isShowAsiaIcon
+          }"
           id="asia-setting-location"
         >
           Asia
         </span>
       </v-col>
       <!-- 오세아니아 -->
-      <v-col
-        cols="2"
-      >
+      <v-col cols="2">
         <img
           src="@/assets/worldmap/direction.svg"
           alt="image error"
@@ -138,123 +161,125 @@
           id="oceania-setting-location"
           @mouseover="overOceania"
           @mouseleave="leaveOceania"
-        >
+        />
         <v-icon
-          :class="{ 'disappeared-oceania-airplane-icon' : !isShowOceaniaIcon, 'show-oceania-airplane-icon': isShowOceaniaIcon }"
+          :class="{
+            'disappeared-oceania-airplane-icon': !isShowOceaniaIcon,
+            'show-oceania-airplane-icon': isShowOceaniaIcon
+          }"
         >
           mdi-airplane
         </v-icon>
         <span
-          :class="{'font-change-continent':true, 'disappeared-oceania-text' : !isShowOceaniaIcon, 'show-oceania-text': isShowOceaniaIcon}"
+          :class="{
+            'font-change-continent': true,
+            'disappeared-oceania-text': !isShowOceaniaIcon,
+            'show-oceania-text': isShowOceaniaIcon
+          }"
           id="oceania-setting-location"
         >
           Oceania
         </span>
       </v-col>
       <!-- 세계지도 -->
-      <v-col
-        class="d-flex justify-center"
-        cols="12"
-      >
-        <img  
+      <v-col class="d-flex justify-center" cols="12">
+        <img
           src="@/assets/worldmap/worldmap.svg"
           alt="image error"
           id="worldmap-setting-location"
-        >
-      </v-col>    
+        />
+      </v-col>
     </v-row>
   </v-containter>
-  
 </template>
 
 <script>
 export default {
   name: "WorldMapDivision",
-  data: function () {
+  data: function() {
     return {
-      isShowNorthIcon:false,
-      isShowSouthIcon:false,
-      isShowEuropeIcon:false,
-      isShowAfricaIcon:false,
-      isShowAsiaIcon:false,
-      isShowOceaniaIcon:false,
-    }
+      isShowNorthIcon: false,
+      isShowSouthIcon: false,
+      isShowEuropeIcon: false,
+      isShowAfricaIcon: false,
+      isShowAsiaIcon: false,
+      isShowOceaniaIcon: false
+    };
   },
-  methods:{
+  methods: {
     // 각 대륙별로 가기, Refactoring 필요
-    gotoEuropeContinent: function () {
-      localStorage.setItem('continent', 'europe')
-      this.$router.push({name:"EachContinent"})
+    gotoEuropeContinent: function() {
+      localStorage.setItem("continent", "europe");
+      this.$router.push({ name: "EachContinent" });
     },
-    gotoAsiaContinent: function () {
-      localStorage.setItem('continent', 'asia')
-      this.$router.push({name:"EachContinent"})
+    gotoAsiaContinent: function() {
+      localStorage.setItem("continent", "asia");
+      this.$router.push({ name: "EachContinent" });
     },
-    gotoAfricaContinent: function () {
-      localStorage.setItem('continent', 'africa')
-      this.$router.push({name:"EachContinent"})
+    gotoAfricaContinent: function() {
+      localStorage.setItem("continent", "africa");
+      this.$router.push({ name: "EachContinent" });
     },
-    gotoNorthAmericaContinent: function () {
-      localStorage.setItem('continent', 'northAmerica')
-      this.$router.push({name:"EachContinent"})
+    gotoNorthAmericaContinent: function() {
+      localStorage.setItem("continent", "northAmerica");
+      this.$router.push({ name: "EachContinent" });
     },
-    gotoSouthAmericaContinent: function () {
-      localStorage.setItem('continent', 'southAmerica')
-      this.$router.push({name:"EachContinent"})
+    gotoSouthAmericaContinent: function() {
+      localStorage.setItem("continent", "southAmerica");
+      this.$router.push({ name: "EachContinent" });
     },
-    gotoOceaniaContinent: function () {
-      localStorage.setItem('continent', 'oceania')
-      this.$router.push({name:"EachContinent"})
+    gotoOceaniaContinent: function() {
+      localStorage.setItem("continent", "oceania");
+      this.$router.push({ name: "EachContinent" });
     },
     // 대륙별 아이콘 후버
     // 북미
-    overNorthAmerica: function () {
-      this.isShowNorthIcon = true
+    overNorthAmerica: function() {
+      this.isShowNorthIcon = true;
     },
-    leaveNorthAmerica: function () {
-      this.isShowNorthIcon = false
+    leaveNorthAmerica: function() {
+      this.isShowNorthIcon = false;
     },
     // 남미
-    overSouthAmerica: function () {
-      this.isShowSouthIcon = true
+    overSouthAmerica: function() {
+      this.isShowSouthIcon = true;
     },
-    leaveSouthAmerica: function () {
-      this.isShowSouthIcon = false
+    leaveSouthAmerica: function() {
+      this.isShowSouthIcon = false;
     },
     // 유럽
-    overEurope: function () {
-      this.isShowEuropeIcon = true
+    overEurope: function() {
+      this.isShowEuropeIcon = true;
     },
-    leaveEurope: function () {
-      this.isShowEuropeIcon = false
+    leaveEurope: function() {
+      this.isShowEuropeIcon = false;
     },
     // 아프리카
-    overAfrica: function () {
-      this.isShowAfricaIcon = true
+    overAfrica: function() {
+      this.isShowAfricaIcon = true;
     },
-    leaveAfrica: function () {
-      this.isShowAfricaIcon = false
+    leaveAfrica: function() {
+      this.isShowAfricaIcon = false;
     },
     // 아시아
-    overAsia: function () {
-      this.isShowAsiaIcon = true
+    overAsia: function() {
+      this.isShowAsiaIcon = true;
     },
-    leaveAsia: function () {
-      this.isShowAsiaIcon = false
+    leaveAsia: function() {
+      this.isShowAsiaIcon = false;
     },
     // 오세아니아
-    overOceania: function () {
-      this.isShowOceaniaIcon = true
+    overOceania: function() {
+      this.isShowOceaniaIcon = true;
     },
-    leaveOceania: function () {
-      this.isShowOceaniaIcon = false
+    leaveOceania: function() {
+      this.isShowOceaniaIcon = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
 /* 텍스트 색 바뀌는 애니메이션 */
 @keyframes lighttextparty {
   from {
@@ -282,7 +307,7 @@ export default {
 /* 마우스를 올리면 보이는 상태로 바꿈 */
 .hoverevent-Continent:hover {
   opacity: 1;
-  transform:scale(7.5) !important;
+  transform: scale(7.5) !important;
   transition: 250ms;
   cursor: pointer;
 }
@@ -323,7 +348,7 @@ export default {
 /* 북미: 위치 */
 #north_america-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 205px;
   right: -260px;
 }
@@ -358,7 +383,7 @@ export default {
 /* 남미: 위치 */
 #south_america-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 325px;
   right: -170px;
 }
@@ -393,7 +418,7 @@ export default {
 /* 유럽: 위치 */
 #europe-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 200px;
   right: -150px;
 }
@@ -428,7 +453,7 @@ export default {
 /* 아프리카: 위치 */
 #africa-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 290px;
   right: -5px;
 }
@@ -463,7 +488,7 @@ export default {
 /* 아시아: 위치 */
 #asia-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 190px;
   right: 20px;
 }
@@ -498,7 +523,7 @@ export default {
 /* 오세아니아: 위치 */
 #oceania-setting-location {
   position: relative;
-  transform:scale(5);
+  transform: scale(5);
   top: 340px;
   right: 120px;
 }
@@ -520,7 +545,7 @@ export default {
     width: 10px;
     margin-top: 20%;
   }
-  
+
   /* 북미: 비행기 애니메이션 */
   .disappeared-north-airplane-icon {
     opacity: 0;
@@ -537,7 +562,7 @@ export default {
   /* 북미: 위치 */
   #north_america-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 280px;
     right: -320px;
   }
@@ -557,7 +582,7 @@ export default {
   /* 남미: 위치 */
   #south_america-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 460px;
     right: -210px;
   }
@@ -577,7 +602,7 @@ export default {
   /* 유럽: 위치 */
   #europe-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 270px;
     right: -220px;
   }
@@ -597,11 +622,11 @@ export default {
   /* 아프리카: 위치 */
   #africa-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 400px;
     right: -10px;
   }
-  
+
   /* 아시아: 비행기 애니메이션 */
   .disappeared-asia-airplane-icon {
     opacity: 0;
@@ -617,7 +642,7 @@ export default {
   /* 아시아: 위치 */
   #asia-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 270px;
     right: 10px;
   }
@@ -637,7 +662,7 @@ export default {
   /* 오세아니아: 위치 */
   #oceania-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 485px;
     right: 125px;
   }
@@ -675,7 +700,7 @@ export default {
   /* 북미: 위치 */
   #north_america-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 350px;
     right: -550px;
   }
@@ -695,7 +720,7 @@ export default {
   /* 남미: 위치 */
   #south_america-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 560px;
     right: -380px;
   }
@@ -715,7 +740,7 @@ export default {
   /* 유럽: 위치 */
   #europe-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 345px;
     right: -320px;
   }
@@ -735,7 +760,7 @@ export default {
   /* 아프리카: 위치 */
   #africa-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 490px;
     right: -10px;
   }
@@ -755,7 +780,7 @@ export default {
   /* 아시아: 위치 */
   #asia-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 320px;
     right: 50px;
   }
@@ -775,12 +800,9 @@ export default {
   /* 오세아니아: 위치 */
   #oceania-setting-location {
     position: relative;
-    transform:scale(6);
+    transform: scale(6);
     top: 600px;
     right: 250px;
   }
 }
-
-
-
 </style>
