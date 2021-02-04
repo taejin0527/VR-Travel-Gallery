@@ -1,8 +1,10 @@
 package com.ssafy.iwc.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.iwc.dto.BoardDto;
@@ -12,12 +14,10 @@ import com.ssafy.iwc.repository.BoardRepository;
 
 @Service
 public class BoardServiceImpl implements BoardService{
-
+	@Autowired
 	private BoardRepository boardRepository;
 
-	public BoardServiceImpl(BoardRepository boardRepository) {
-		this.boardRepository = boardRepository;
-	}
+	
 	
 	  
 	@Transactional 
@@ -36,9 +36,25 @@ public class BoardServiceImpl implements BoardService{
 				.good(board.getGood())
 				.views(board.getViews())
 				.location(board.getLocation())
+				
 				.createdDate(board.getCreatedDate())
 				.build();
 		return boardDto;
 
+	}
+
+
+	@Transactional
+	public void delPost(Long no) {
+		// TODO Auto-generated method stub
+		boardRepository.deleteById(no);
+	}
+
+
+
+	@Transactional
+	public List<Board> getLocationBoard(String location) {
+		// TODO Auto-generated method stub
+		return boardRepository.findByLocation(location);
 	}
 }

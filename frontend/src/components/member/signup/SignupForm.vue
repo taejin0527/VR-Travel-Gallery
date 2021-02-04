@@ -90,7 +90,7 @@ import { mapActions } from "vuex";
 export default {
   name: "SignupForm",
   props: {
-    signupData2: Object,
+    signupData2: Object
   },
   mounted() {
     console.log("signupform mounted!");
@@ -103,11 +103,11 @@ export default {
       signupData: {
         username: "",
         password: "",
-        password2: "",
+        password2: ""
       },
       show1: false,
       show2: false,
-      idcheck: false,
+      idcheck: false
     };
   },
   methods: {
@@ -134,10 +134,10 @@ export default {
       return true;
     },
     idCheck2(username) {
-      this.idCheck(username).then((res) =>
+      this.idCheck(username).then(res =>
         res ? (this.idcheck = true) : (this.idcheck = false)
       );
-    },
-  },
+    }
+  }
 };
 </script>
