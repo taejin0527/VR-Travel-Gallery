@@ -189,7 +189,7 @@ public class BoardController {
 			}
 			String fname = new MD5Generator(origname).toString()+expend;
 //			실행되는 위치의 'files' 폴더에 저장
-			String sPath = System.getProperty("user.dir")+"/src/main/resources/static/mainImg";
+			String sPath = System.getProperty("user.dir")+"/build/resources/main/static/mainImg";
 //			파일이 저장되는 폴더가 없으면 폴더를 생성
 			if(!new File(sPath).exists()) {
 				try {
@@ -241,7 +241,7 @@ public class BoardController {
 				}
 				String filename = new MD5Generator(origFilename).toString()+expend;
 //				실행되는 위치의 'files' 폴더에 파일이 저장
-				String savePath = System.getProperty("user.dir")+"/src/main/resources/static/subImg";
+				String savePath = System.getProperty("user.dir")+"/build/resources/main/static/subImg";
 //				파일이 저장되는 폴더가 없으면 폴더를 생성	
 
 				if(!new File(savePath).exists()) {

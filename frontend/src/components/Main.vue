@@ -123,7 +123,7 @@ export default {
 
     // VR로 가는 버튼 액션 / 아직 구현 못함
     gotoVRContents: function() {
-      console.log("아직 구현 못 함");
+      open('https://hubs.mozilla.com/77RVBiW/wry-olive-exploration')
     },
 
     // 맵 아이콘 애니메이션
