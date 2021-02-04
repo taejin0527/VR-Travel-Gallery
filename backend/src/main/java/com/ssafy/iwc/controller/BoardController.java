@@ -50,7 +50,7 @@ public class BoardController {
 	private MainImageService mainImageService;
 	@Autowired
 	private TagService tagService;
-	private String FileMainSrc = "http://i4d110.p.ssafy.io/apis/mainImg/";
+	private String FileMainSrc = "http://i4d110.p.ssafy.io/apis/static/mainImg/";
 	private String FileSubSrc = "http://i4d110.p.ssafy.io/apis/static/subImg/";
 	
 	@DeleteMapping("/delpost")
