@@ -13,7 +13,6 @@ import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
 import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
 
-
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -36,6 +35,11 @@ const routes: Array<RouteConfig> = [
     path: "/profile",
     name: "Profile",
     component: () => import("@/views/member/Profile.vue"),
+  },
+  {
+    path: "/profileedit",
+    name: "ProfileEdit",
+    component: () => import("@/views/member/ProfileEdit.vue"),
   },
   {
     path: "/card",
