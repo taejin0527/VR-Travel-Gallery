@@ -204,6 +204,7 @@ export default {
       tags:[], // 태그들
       nation:"", // 장소(국가)
       num: 0,
+      mainImageData: null,
     }
   },
   created: function () {
