@@ -84,14 +84,15 @@ export default {
     return {
       getContinentName: localStorage.getItem('continent'), // 대륙별로 나누는 변수
       popularExhibition: false, // 버튼 바꾸기 변수
-       images: [], // 이미지 데이터 리스트
-       tags: [], // 태그 데이터 리스트
+      images: [], // 이미지 데이터 리스트
+      tags: [], // 태그 데이터 리스트
     }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
   created:function(){
     const location = localStorage.getItem('continent');
+    console.log(location)
     axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
