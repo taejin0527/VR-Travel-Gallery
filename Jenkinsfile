@@ -20,7 +20,7 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'cd backend && gradle build'
+              //  sh 'cd backend && gradle build'
             }
         }
         stage('Docker build') {
