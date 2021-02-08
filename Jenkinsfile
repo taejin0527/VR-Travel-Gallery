@@ -20,7 +20,7 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'gradle -B -DskipTests -f ./backend clean package'
+                sh 'gradle -b -DskipTests -f ./backend clean package'
             }
         }
         stage('Docker build') {
