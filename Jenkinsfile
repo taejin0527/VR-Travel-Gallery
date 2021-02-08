@@ -27,8 +27,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-            sh 'sudo docker build -t frontend:latest /var/jenkins_home/workspace/NUVO/frontend'
-            sh 'sudo docker build -t backend:latest /var/jenkins_home/workspace/NUVO/backend'
+            sh 'sudo docker build -t frontend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/frontend'
+            sh 'sudo docker build -t backend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/backend'
             }
         }
         stage('Docker run') {
