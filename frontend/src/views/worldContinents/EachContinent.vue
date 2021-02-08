@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <SideNavBar/>
     <v-btn
       elevation="3"
       fab
@@ -84,6 +85,7 @@ import Africa from "@/components/continents/Africa.vue";
 import Europe from "@/components/continents/Europe.vue";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts"
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   name: "EachContinent",
@@ -102,6 +104,7 @@ export default {
   // 이거는 좋아요 수를 통해서 5개만 가져오게 만들건데, 이걸... 어떻게 해야될까?
   // 일주일마다 바꿔서 나오게끔 만드는게 제일인듯 한데. 일단 5개만 가져오게끔 했슴당.
   created:function(){
+    localStorage.setItem('page', "EachContinent")
     const location = localStorage.getItem('continent');
     axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
           for (let index = 0; index < Math.min(5, response.data.length); index++) {
@@ -121,7 +124,8 @@ export default {
     NorthAmerica,
     Asia,
     Africa,
-    Europe
+    Europe,
+    SideNavBar
   },
   methods: {
     // 각 대륙으로 이동

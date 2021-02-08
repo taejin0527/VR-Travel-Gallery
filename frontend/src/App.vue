@@ -18,21 +18,18 @@
       <br />
       <span style="color: #eeeeee; cursor: default">V O</span>
     </div>
-    <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
-    <side-nav-bar />
-    <router-view />
+
+    
+    <router-view/>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import SideNavBar from "@/components/navigation/SideNavBar.vue";
+
 
 export default Vue.extend({
   name: "App",
-  components: {
-    SideNavBar
-  }
 });
 </script>
 
