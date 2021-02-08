@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios';
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
     data(){
@@ -25,7 +26,7 @@ export default {
     created(){
         // 해당 게시물에 대한 정보 가져오기
         const id = this.$route.query.id;
-        axios.get('http://localhost:8080/board/getposts?id='+id).then(response =>{
+        axios.get(`${SERVER.BOARD_BASE_URL}getposts?id=${id}`).then(response =>{
             this.files =response.data;
             console.log(this.files);
         }).catch(function(){
@@ -34,7 +35,7 @@ export default {
     },methods : {
         deletePost(){
             if(confirm("정말로 삭제")){
-                axios.delete('http://localhost:8080/board/delpost?id='+this.$route.query.id,{
+                axios.delete(`${SERVER.BOARD_BASE_URL}/delpost?id=${this.$route.query.id}`,{
                     headers:{
                       'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlaGRyamYiLCJpYXQiOjE2MTIwODEwNTMsImV4cCI6MTYxMjE2NzQ1M30.YipqqNrw_PpswmLAKXP7IAj9a20FPXOaWIcqhAB2JPZkiCq8X2Uth1gc_3l-CplTK3TEzOV3IHNZdfiW0mrn7w',
                     }
