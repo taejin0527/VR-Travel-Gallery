@@ -97,8 +97,15 @@
       </v-col>
 
       <!-- 남는 공간 offset -->
-      <v-col cols="2"></v-col>
-      <div></div>
+      <v-col cols="2"> </v-col>
+      <div>
+        <v-btn @click="activeIntro" class="mx-2" dark small color="pink">
+          <v-icon dark>
+            mdi-heart
+          </v-icon>
+          Help
+        </v-btn>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -111,10 +118,6 @@ export default {
       isShowMapIcon: false,
       isShowVRIcon: false,
     };
-  },
-  mounted() {
-    this.$intro().start(); // start the guide
-    this.$intro().showHints(); // show hints
   },
   methods: {
     // 월드 맵으로 가는 버튼 액션
@@ -141,6 +144,10 @@ export default {
     },
     showVRIcon: function() {
       this.isShowVRIcon = false;
+    },
+    activeIntro() {
+      this.$intro().start(); // start the guide
+      this.$intro().showHints(); // show hints
     },
   },
 };
