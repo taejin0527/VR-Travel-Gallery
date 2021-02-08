@@ -56,7 +56,7 @@ pipeline {
             sh 'docker run -d --name frontend \
             -p 80:80 \
             -p 443:443 \
-            -v /etc/letsencrypt/live/i4d110.p.ssafy.io/:/var/jenkins_home/workspace/NUNO/sslkey \
+            -v /etc/letsencrypt/live/i4d110.p.ssafy.io/:/var/jenkins_home/workspace/NUNO/sslkey/ \
             --network nuvonet \
             frontend:latest'
             sh 'docker run -d --name backend \
