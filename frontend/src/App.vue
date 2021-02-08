@@ -1,6 +1,6 @@
 <template>
   <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
-  <v-app style="background-color: #5A4E4D;">
+  <v-app style="background-color: #5a4e4d; width:100%; min-height:100%">
     <!-- 왼쪽 상단 로고 픽스 -->
     <div
       style="
@@ -35,7 +35,6 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "../src/assets/style.scss";
-
 
 /* 눈누에서 폰트 가져옴 */
 @font-face {
