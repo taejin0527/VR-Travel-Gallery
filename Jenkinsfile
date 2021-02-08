@@ -20,14 +20,15 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'gradle -b ./backend/build.gradle clean package'
+                // sh 'cd backend && gradle build --warning-mode all && cd ..'
+                sh ''
             }
         }
         stage('Docker build') {
             agent any
             steps {
-            sh 'docker build -t frontend:latest ./frontend'
-            sh 'docker build -t backend:latest ./backend'
+            sh 'docker build -t frontend:latest /var/jenkins_home/workspace/NUVO/frontend'
+            sh 'docker build -t backend:latest /var/jenkins_home/workspace/NUVO/backend'
             }
         }
         stage('Docker run') {
@@ -51,9 +52,17 @@ pipeline {
             // dangling 상태가 되기 때문에 이미지를 일괄 삭제
             sh 'docker images -f dangling=true && \
             docker rmi $(docker images -f "dangling=true" -q)'
+
             // docker container 실행
-            sh 'docker run -d --name frontend -p 80:80 frontend:latest'
-            sh 'docker run -d --name backend -p 8080:8080 backend:latest'
+            sh 'docker run -d --name frontend \
+            -p 80:80 \
+            -p 443:443 \
+            -v /home/ubuntu/sslkey/:/var/jenkins_home/workspace/NUNO/sslkey/ \
+            --network nuvonet \
+            frontend:latest'
+            sh 'docker run -d --name backend \
+            --network nuvonet \
+            backend:latest'
             }
         }
     }

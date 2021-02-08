@@ -132,7 +132,7 @@ export default {
           event.preventDefault();
         }
         el.addEventListener("keypress", checkValue);
-      }
+      },
     },
     "letter-only": {
       bind(el) {
@@ -143,8 +143,8 @@ export default {
           return true;
         }
         el.addEventListener("keypress", checkValue);
-      }
-    }
+      },
+    },
   },
   props: {
     formData: {
@@ -156,18 +156,18 @@ export default {
           cardNumberNotMask: "",
           cardMonth: "",
           cardYear: "",
-          cardCvv: ""
+          cardCvv: "",
         };
-      }
+      },
     },
     backgroundImage: [String, Object],
     randomBackgrounds: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   components: {
-    Card
+    Card,
   },
   data() {
     return {
@@ -176,12 +176,12 @@ export default {
         cardName: "v-card-name",
         cardMonth: "v-card-month",
         cardYear: "v-card-year",
-        cardCvv: "v-card-cvv"
+        cardCvv: "v-card-cvv",
       },
       minCardYear: new Date().getFullYear(),
       isCardNumberMasked: true,
       mainCardNumber: this.cardNumber,
-      cardNumberMaxLength: 19
+      cardNumberMaxLength: 19,
     };
   },
   computed: {
@@ -189,14 +189,14 @@ export default {
       if (this.formData.cardYear === this.minCardYear)
         return new Date().getMonth() + 1;
       return 1;
-    }
+    },
   },
   watch: {
     cardYear() {
       if (this.formData.cardMonth < this.minCardMonth) {
         this.formData.cardMonth = "";
       }
-    }
+    },
   },
   mounted() {
     this.maskCardNumber();
@@ -304,7 +304,7 @@ export default {
       } else {
         this.unMaskCardNumber();
       }
-    }
-  }
+    },
+  },
 };
 </script>
