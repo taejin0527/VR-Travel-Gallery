@@ -10,6 +10,8 @@
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
+
 export default {
     data(){
         return{
@@ -20,7 +22,7 @@ export default {
     },
     created:function(){
          
-         axios.get('http://localhost:8080/board/allview').then(response => {
+         axios.get(`${SERVER.BOARD_BASE_URL}allview`).then(response => {
                 this.files = response.data;
                 this.index = response.data.length;
                 console.log(this.files);

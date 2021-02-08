@@ -10,7 +10,7 @@
 
     <v-img height="250" :src="exhibitionImage"></v-img>
 
-    <v-card-title>{{ exhibitionTitle }}</v-card-title>
+    <v-card-title>{{ exhibitionLocation }}</v-card-title>
 
     <v-card-text>
       <v-row align="center" class="mx-0">
@@ -24,7 +24,6 @@
       </v-row>
 
       <div class="my-4 subtitle-1">
-        {{ exhibitionLocation }}
       </div>
     </v-card-text>
 

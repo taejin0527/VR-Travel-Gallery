@@ -189,6 +189,8 @@
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
+
 export default {
 
   data(){
@@ -202,6 +204,7 @@ export default {
       tags:[], // 태그들
       nation:"", // 장소(국가)
       num: 0,
+      mainImageData: null,
     }
   },
   created: function () {
@@ -289,7 +292,7 @@ export default {
           console.log(this.files[i].file);
           formData.append('file',this.files[i].file);
       }
-      axios.post('http://localhost:8080/board/requestupload',
+      axios.post(`${SERVER.BOARD_BASE_URL}requestupload`,
           formData,{
               headers:{
                   'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
