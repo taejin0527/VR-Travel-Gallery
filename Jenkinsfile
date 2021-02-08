@@ -52,12 +52,12 @@ pipeline {
             // dangling 상태가 되기 때문에 이미지를 일괄 삭제
             sh 'docker images -f dangling=true && \
             docker rmi $(docker images -f "dangling=true" -q)'
-            
+
             // docker container 실행
             sh 'docker run -d --name frontend \
             -p 80:80 \
             -p 443:443 \
-            -v /etc/letsencrypt/live/i4d110.p.ssafy.io/:/var/jenkins_home/workspace/NUNO/sslkey/ \
+            -v /home/ubuntu/sslkey/:/var/jenkins_home/workspace/NUNO/sslkey/ \
             --network nuvonet \
             frontend:latest'
             sh 'docker run -d --name backend \
