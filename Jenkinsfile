@@ -21,7 +21,7 @@ pipeline {
             options { skipDefaultCheckout(false) }
             steps {
                 // sh 'cd backend && gradle build --warning-mode all && cd ..'
-                sh ''
+                sh 'gradle -b ./backend/build.gradle'
             }
         }
         stage('Docker build') {
