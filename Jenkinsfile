@@ -20,8 +20,8 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'cd backend && gradle build --warning-mode all && cd ..'
-                // sh ''
+                // sh 'cd backend && gradle build --warning-mode all && cd ..'
+                sh ''
             }
         }
         stage('Docker build') {
