@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <SideNavBar/>
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
@@ -77,6 +78,7 @@ import Africa from "@/components/waterfall/Africa.vue";
 import Europe from "@/components/waterfall/Europe.vue";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts"
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   name:"EachWaterfall",
@@ -91,6 +93,7 @@ export default {
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
   created:function(){
+    localStorage.setItem('page', "EachWaterfall")
     const location = localStorage.getItem('continent');
     console.log(location)
     axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
@@ -110,7 +113,8 @@ export default {
     NorthAmerica,
     Asia,
     Africa,
-    Europe
+    Europe,
+    SideNavBar
   },
   methods: {
     // 각 대륙으로 이동

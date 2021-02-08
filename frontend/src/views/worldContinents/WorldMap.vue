@@ -1,6 +1,7 @@
 <template>
   <!-- App.vue -->
   <div>
+    <SideNavBar/>
     <v-btn
       elevation="3"
       fab
@@ -38,6 +39,7 @@
 
 <script>
 import WorldMapDivision from "@/components/WorldMapDivision.vue";
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   name:"WorldMap",
@@ -47,7 +49,11 @@ export default {
     }
   },
   components: {
-    WorldMapDivision
+    WorldMapDivision,
+    SideNavBar
+  },
+  created: function () {
+    localStorage.setItem('page', "WorldMap")
   },
   methods: {
     clickChangeContinentViewButton: function () {

@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <SideNavBar/>
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
@@ -69,9 +70,13 @@
 <script>
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts"
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   name:"EachWaterfall",
+  components: {
+    SideNavBar,
+  },
   data: function () {
     return {
       exhibitionContent: ['뉴욕', 'hi'], // 샘플 데이터, 태그가 정상적으로 동작하면 이 데이터는 지울 예정
@@ -83,6 +88,7 @@ export default {
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
   created:function(){
+    localStorage.setItem('page', "AllWaterfall")
     const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
     for (let index = 0; index < locations.length; index++) {
       axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${locations[index]}`).then(response => {

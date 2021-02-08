@@ -180,14 +180,14 @@ export default {
 /* 비행기 이동 트랜지션 */
 .disappeared-airplane-icon {
   opacity: 0;
-  transition-duration: 2s;
+  transition-duration: 2s !important;
   transform: translateX(-400px) translateY(-80px) rotate(90deg);
   cursor: pointer;
 }
 
 .show-airplane-icon {
   opacity: 1;
-  transition-duration: 5s;
+  transition-duration: 3s !important;
   transform: translateX(20px) translateY(-80px) rotate(90deg) scale(1.3);
 }
 
