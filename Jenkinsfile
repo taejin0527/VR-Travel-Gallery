@@ -27,8 +27,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-            sh 'sudo docker build -t frontend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/frontend'
-            sh 'sudo docker build -t backend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/backend'
+            sh 'docker build -t frontend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/frontend'
+            sh 'docker build -t backend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/backend'
             }
         }
         stage('Docker run') {
@@ -36,31 +36,31 @@ pipeline {
             steps {
             // 현재 동작중인 컨테이너 중 <front-image-name>의 이름을 가진
             // 컨테이너를 stop 한다
-            sh 'sudo docker ps -f name=frontend -q \
+            sh 'docker ps -f name=frontend -q \
             | xargs --no-run-if-empty docker container stop'
             // 현재 동작중인 컨테이너 중 <back-image-name>의 이름을 가진
             // 컨테이너를 stop 한다
-            sh 'sudo docker ps -f name=backend -q \
+            sh 'docker ps -f name=backend -q \
             | xargs --no-run-if-empty docker container stop'
             // <front-image-name>의 이름을 가진 컨테이너를 삭제한다.
-            sh 'sudo docker container ls -a -f name=frontend -q \
+            sh 'docker container ls -a -f name=frontend -q \
             | xargs -r docker container rm'
             // <back-image-name>의 이름을 가진 컨테이너를 삭제한다.
-            sh 'sudo docker container ls -a -f name=backend -q \
+            sh 'docker container ls -a -f name=backend -q \
             | xargs -r docker container rm'
             // docker image build 시 기존에 존재하던 이미지는
             // dangling 상태가 되기 때문에 이미지를 일괄 삭제
-            sh 'sudo docker images -f dangling=true && \
-            sudo docker rmi $(docker images -f "dangling=true" -q)'
+            sh 'docker images -f dangling=true && \
+            docker rmi $(docker images -f "dangling=true" -q)'
 
             // docker container 실행
-            sh 'sudo docker run -d --name frontend \
+            sh 'docker run -d --name frontend \
             -p 80:80 \
             -p 443:443 \
             -v /etc/letsencrypt/live/i4d110.p.ssafy.io/:/var/jenkins_home/workspace/NUNO/sslkey/ \
             --network nuvonet \
             frontend:latest'
-            sh 'sudo docker run -d --name backend \
+            sh 'docker run -d --name backend \
             --network nuvonet \
             backend:latest'
             }
