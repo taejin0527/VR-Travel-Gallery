@@ -7,7 +7,7 @@
     fill-height
     :style="{
       'background-image':
-        'url(' + require('@/assets/main/worldmap_change_color.png') + ')',
+        'url(' + require('@/assets/main/NUVO.png') + ')',
       'background-position': 'center',
     }"
   >
@@ -18,7 +18,7 @@
           <h1
             style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
           >
-            . N U V O
+            N U V O
           </h1>
         </div>
       </v-col>
@@ -26,12 +26,12 @@
       <!-- 월드 맵으로 가는 버튼 -->
       <v-col offset="2" cols="4">
         <div style="text-align:center">
-          <v-icon
-            size="150px"
-            :class="{ 'disappeared-hidden-map-icon': !isShowMapIcon }"
+          <img 
+            src="@/assets/worldmap/worldmap.svg" alt=""
+            :class="{ 'disappeared-hidden-map-icon': !isShowMapIcon, 'show-hidden-map-icon': isShowMapIcon  }"
+            width="170px"
+            height="150px"
           >
-            mdi-map-outline
-          </v-icon>
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
@@ -47,16 +47,17 @@
           v-intro-tooltip-class="'red-bg'"
           v-intro-position="'left'"
         >
-          <v-icon
-            size="150px"
-            style="border:solid; border-radius:10px;"
+          <img
+            src="@/assets/main/world.png" alt=""
+            width="200px"
+            height="200px"
+            style="padding: 10px 24px 5px 24px; border:3px solid; border-radius:10px; color:#7e675e;"
             :class="{ 'disappeared-map-icon': isShowMapIcon }"
             @mouseover="disappearMapIcon"
             @mouseleave="showMapIcon"
             @click="gotoWorldMap"
           >
-            mdi-map-search-outline
-          </v-icon>
+
           <v-icon style="opacity:0;">
             mdi-airplane
           </v-icon>
@@ -66,38 +67,45 @@
       <!-- VR로 가는 버튼 -->
       <v-col cols="4">
         <div style="text-align:center">
-          <v-icon
-            size="150px"
+          <img 
+            src="@/assets/main/VR360Icon.png" alt=""
+            width="150px"
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
               'show-hidden-VR-icon': isShowVRIcon,
             }"
+          
           >
-            mdi-safety-goggles
-          </v-icon>
         </div>
         <div
           style="text-align:center;"
           v-intro="'VR 전시관으로 이동'"
           v-intro-step="1"
         >
-          <v-icon
-            size="150px"
-            style="border:solid; border-radius:10px;"
+          <img
+            src="@/assets/main/VRIcon.png" alt=""
+            width="200px"
+            height="200px"
+            style="padding: 35px 12px 35px 12px; border:3px solid; border-radius:10px; color:#7e675e;"
             :class="{ 'disappeared-VR-icon': isShowVRIcon }"
             @mouseover="disappearVRIcon"
             @mouseleave="showVRIcon"
             @click="gotoVRContents"
           >
-            mdi-safety-goggles
-          </v-icon>
         </div>
       </v-col>
 
       <!-- 남는 공간 offset -->
-      <v-col cols="2"></v-col>
-      <div></div>
+      <v-col cols="2"> </v-col>
+      <div>
+        <v-btn @click="activeIntro" class="mx-2" dark small color="pink">
+          <v-icon dark>
+            mdi-heart
+          </v-icon>
+          Help
+        </v-btn>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -110,10 +118,6 @@ export default {
       isShowMapIcon: false,
       isShowVRIcon: false,
     };
-  },
-  mounted() {
-    this.$intro().start(); // start the guide
-    this.$intro().showHints(); // show hints
   },
   methods: {
     // 월드 맵으로 가는 버튼 액션
@@ -141,6 +145,10 @@ export default {
     showVRIcon: function() {
       this.isShowVRIcon = false;
     },
+    activeIntro() {
+      this.$intro().start(); // start the guide
+      this.$intro().showHints(); // show hints
+    },
   },
 };
 </script>
@@ -164,8 +172,15 @@ export default {
 .disappeared-hidden-map-icon {
   opacity: 0;
   transition-delay: 0;
-  transition-duration: 0.5s;
+  transition-duration: 1s;
   transform: translateY(100px) rotate3d(0, 1, 0, 70deg);
+  cursor: pointer;
+}
+
+.show-hidden-map-icon {
+  opacity: 1;
+  transition-delay: 0;
+  transition-duration: 1s;
   cursor: pointer;
 }
 
@@ -173,14 +188,14 @@ export default {
 .disappeared-airplane-icon {
   opacity: 0;
   transition-duration: 2s;
-  transform: translateX(-400px) rotate(90deg);
+  transform: translateX(-400px) translateY(-80px) rotate(90deg);
   cursor: pointer;
 }
 
 .show-airplane-icon {
   opacity: 1;
   transition-duration: 5s;
-  transform: translateX(20px) rotate(90deg) scale(1.3);
+  transform: translateX(20px) translateY(-80px) rotate(90deg) scale(1.3);
 }
 
 /* VR 아이콘 트랜지션 */
@@ -196,9 +211,8 @@ export default {
 .disappeared-hidden-VR-icon {
   opacity: 0;
   transition-delay: 0;
-  transition-duration: 0.5s;
+  transition-duration: 1s;
   transform: translateY(100px) rotate3d(0, 1, 0, 90deg);
-
   cursor: pointer;
 }
 
@@ -213,15 +227,15 @@ export default {
 /* VR 불빛 애니메이션 */
 @keyframes lightparty {
   from {
-    background-image: url("../assets/main/goggle_light.png");
+    background-image: url("../assets/main/light.png");
     background-position: center 53%;
-    background-size: 125px;
+    background-size: 5px;
   }
 
   to {
-    background-image: url("../assets/main/goggle_light_bg.png");
+    background-image: url("../assets/main/light_bg.png");
     background-position: center 53%;
-    background-size: 125px;
+    background-size: 135px;
   }
 }
 
@@ -230,5 +244,13 @@ export default {
   animation-name: lightparty;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+/* 배경 화면 흐릿하게 */
+.opacity-just-background {
+  width: 100%;
+  height: 100%;
+  content:"";
+  background-position: 'center',
 }
 </style>
