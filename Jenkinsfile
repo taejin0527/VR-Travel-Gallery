@@ -20,7 +20,7 @@ pipeline {
             }
             options { skipDefaultCheckout(false) }
             steps {
-                sh 'cd backend'
+                sh ''
             }
         }
         stage('Docker build') {
