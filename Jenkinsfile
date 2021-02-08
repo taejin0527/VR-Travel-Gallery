@@ -60,7 +60,7 @@ pipeline {
             --network nuvonet \
             frontend:latest'
             sh 'docker run -d --name backend \
-            --network nuvonet \ 
+            --network nuvonet \
             backend:latest'
             }
         }
