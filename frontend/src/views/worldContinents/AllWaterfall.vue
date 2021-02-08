@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
       fab
@@ -12,6 +13,7 @@
       </v-icon>
     </v-btn>
 
+    <!-- 월드맵으로 돌아가는 버튼 -->
     <v-btn
       elevation="3"
       fab
@@ -24,21 +26,29 @@
         mdi-star
       </v-icon>
     </v-btn>
+
+    <!-- 전체 사진 불러오기. -->
+    <!-- 단, 모든 사진을 불러오기 때문에 더 보기 버튼을 만들어서 15개씩 불러오는 방향을 잡아야 할 듯. -->
     <v-container
-      style="padding: 100px 100px 100px 100px;"
+      class="adjust-grid-container"
     >
       <v-row>
         <v-col
-          v-for="n in 9"
-          :key="n"
-          class=""
-          cols="4"
+          v-for="(image, idx) in images"
+          :key="idx"
+          cols="12"
+          sm="6"
+          md="4"
         >
-          <img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`" alt="image error">
-          
+          <!-- 이미지 가져오는 코드 -->
+          <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
+          <img :src="`${image}`" alt="image error" class="adjust-grid-image">
           <br>
+
+          <!-- 태그 보여주는 코드 -->
           <v-chip-group
             class="accent-4 white--text"
+            style="text-algin:center;"
             column
           >
             <v-chip
@@ -52,59 +62,108 @@
         </v-col>
       </v-row>
     </v-container>
-    <!-- 이미지 가져와서 사용방법 -->
-    <!-- <div v-for="(file,index) in files" :key="index" class="file-preview-wrapper">
-            
-            <img :src="file.filepath" :name="file.id" @click="moveToDetail"/> 
-
-        </div> -->
   </v-main>
   
 </template>
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   name:"EachWaterfall",
   data: function () {
     return {
-      exhibitionContent: ['뉴욕', 'hi'],
-      getContinentName: localStorage.getItem('continent'),
-      popularExhibition: false,
-       files: []
+      exhibitionContent: ['뉴욕', 'hi'], // 샘플 데이터, 태그가 정상적으로 동작하면 이 데이터는 지울 예정
+      popularExhibition: false, // 버튼 바꾸기 데이터
+      images: [], // 이미지 데이터 리스트
+      tags: [] // 태그 데이터 리스트
     }
   },
+  // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
+  // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
   created:function(){
-    const location = localStorage.getItem('continent');
-    axios.get('http://localhost:8080/board/allview?location='+location).then(response => {
-                this.files = response.data;
-                this.index = response.data.length;
-                // files를 통해서 데이터 접근해야함
-                console.log(this.files);
-                console.log(this.index);
+    const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
+    for (let index = 0; index < locations.length; index++) {
+      axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${locations[index]}`).then(response => {
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            this.tags.push(response.data[index].tags)
+          }
         }).catch(function(){
-             console.log("안됨");
-         });
+          console.log(`이미지 및 태그 불러오기 실패`);
+        });
+    }
+    
   },
   methods: {
+    // 월드맵 페이지로 이동
     clickChangeContinentViewButton: function () {
       this.popularExhibition = !this.popularExhibition
       this.$router.push({name:"WorldMap"})
     },
+    // 게시물 작성 페이지로 이동
     clickGotoCreate: function () {
       this.$router.push({name:"Create"})
     }
-     // 해당 페이지로 이동
-        // moveToDetail(e){
-        //     const no = e.target.getAttribute("name");
-        //     console.log(no);
-        //     this.$router.push("/detail?id="+no);
-        // }
   }
 }
 </script>
 
-<style>
+
+<style scoped>
+
+/* 이미지 반응형으로 모든 기기에서 사용가능하게 만듬 */
+.adjust-grid-container {
+  padding: 80px 0px 0px 140px;
+}
+.adjust-grid-image {
+  width:250px;
+}
+
+@media (min-width: 600px) {
+  .adjust-grid-image {
+    width:230px;
+  }
+}
+
+@media (min-width: 800px) {
+  .adjust-grid-image {
+    width:270px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .adjust-grid-container {
+    padding: 80px 0px 0px 100px;
+  }
+}
+
+/* 1264px 부터 css코드 */
+@media (min-width: 1264px) {
+  .adjust-grid-image {
+    width:350px;
+  }
+}
+
+/* 1600px 부터 css코드 */
+@media (min-width: 1500px) {
+  .adjust-grid-container {
+    padding: 80px 0px 0px 0px;
+  }
+  .adjust-grid-image {
+    width:400px;
+  }
+}
+
+/* 1904px 부터 css코드 */
+@media (min-width: 1904px) {
+  .adjust-grid-container {
+    padding: 80px 0px 0px 130px;
+  }
+  .adjust-grid-image {
+    width:450px;
+  }
+}
 
 </style>

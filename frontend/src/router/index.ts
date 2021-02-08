@@ -38,6 +38,11 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/member/Profile.vue"),
   },
   {
+    path: "/profileedit",
+    name: "ProfileEdit",
+    component: () => import("@/views/member/ProfileEdit.vue"),
+  },
+  {
     path: "/card",
     name: "Paycard",
     component: () => import("@/views/member/Paycard.vue"),
