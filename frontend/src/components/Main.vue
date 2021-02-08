@@ -98,15 +98,28 @@
 
       <!-- 남는 공간 offset -->
       <v-col cols="2"> </v-col>
-      <div>
-        <v-btn @click="activeIntro" class="mx-2" dark small color="pink">
-          <v-icon dark>
-            mdi-heart
-          </v-icon>
-          Help
-        </v-btn>
-      </div>
     </v-row>
+    <!-- 오른쪽 상단 Tips 픽스 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 100px;
+              top: 15px;
+              right: 50px;
+              z-index: 101;
+            "
+    >
+      <img
+        src="@/assets/3DHelp3.png" alt="" width="120px"
+        :class="{'select-tips-transition': isSelectTips}"
+        @mouseover="isSelectTips = true"
+        @mouseleave="isSelectTips = false"
+        @click="activeIntro"
+      >
+    </div>
   </v-container>
 </template>
 
@@ -117,6 +130,7 @@ export default {
     return {
       isShowMapIcon: false,
       isShowVRIcon: false,
+      isSelectTips: false
     };
   },
   methods: {
@@ -253,4 +267,24 @@ export default {
   content:"";
   background-position: 'center',
 }
+
+/* TIPS 애니메이션 */
+@keyframes tipsbeat {
+  from {
+    transform: scale(0.95);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.select-tips-transition {
+  animation-duration: 0.8s;
+  animation-name: tipsbeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
 </style>
