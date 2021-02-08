@@ -12,6 +12,7 @@ import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
 import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
+import Flipbook from "@/views/photo/Flipbook.vue"
 
 Vue.use(VueRouter);
 
@@ -90,6 +91,11 @@ const routes: Array<RouteConfig> = [
     path: "/allwaterfall/",
     name: "AllWaterfall",
     component: AllWaterfall,
+  },
+  {
+    path: "/flipbook/",
+    name: "Flipbook",
+    component: Flipbook,
   },
 ];
 
