@@ -19,9 +19,9 @@ pipeline {
                 }
             }
             options { skipDefaultCheckout(false) }
-            steps {
-              //  sh 'cd backend && gradle build'
-            }
+            // steps {
+            //    sh 'cd backend && gradle build'
+            // }
         }
         stage('Docker build') {
             agent any
