@@ -27,8 +27,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-            sh 'docker build -t frontend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/frontend'
-            sh 'docker build -t backend:latest /home/ubuntu/docker/jenkins-data/workspace/NUVO/backend'
+            sh 'docker build -t frontend:latest /var/jenkins_home/workspace/NUVO/frontend'
+            sh 'docker build -t backend:latest /var/jenkins_home/workspace/NUVO/backend'
             }
         }
         stage('Docker run') {
@@ -52,7 +52,7 @@ pipeline {
             // dangling 상태가 되기 때문에 이미지를 일괄 삭제
             sh 'docker images -f dangling=true && \
             docker rmi $(docker images -f "dangling=true" -q)'
-
+            
             // docker container 실행
             sh 'docker run -d --name frontend \
             -p 80:80 \
