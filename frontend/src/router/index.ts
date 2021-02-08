@@ -12,7 +12,7 @@ import View from "@/views/post/View.vue";
 import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
 import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
-
+import Pay from "@/views/pay/Pay.vue";
 
 Vue.use(VueRouter);
 
@@ -86,6 +86,11 @@ const routes: Array<RouteConfig> = [
     path: "/allwaterfall/",
     name: "AllWaterfall",
     component: AllWaterfall,
+  },
+  {
+    path: "/pay/",
+    name: "Pay",
+    component: Pay,
   },
 ];
 
