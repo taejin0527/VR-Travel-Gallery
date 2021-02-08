@@ -11,9 +11,8 @@
           class="continent-scale"
           style="position:relative; left:100%; "
         >
-          <v-icon
-            color="#ffffff"
-            size="15px"
+          <img 
+            src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
             :class="{'adjust-location':true, 'transition-circle-icon':overCircleIcon[idx]}"
@@ -21,8 +20,6 @@
             @mouseover="selectLocation(idx)"
             @mouseleave="leaveCircleIcon(idx)"
           >
-            mdi-checkbox-blank-circle
-          </v-icon>
         </div>
       </v-col>
 
@@ -44,7 +41,6 @@
       >
         <ContinentCard
           :exhibitionImage = "exhibitionImage"
-          :exhibitionTitle = "exhibitionTitle"
           :exhibitionContent = "exhibitionContent"
           :exhibitionLocation = "exhibitionLocation"
           :likeCount = "likeCount"
@@ -65,22 +61,28 @@ export default {
   data: function () {
     return {
       sample: 100,
-      popularDistrict: [0, -2, -4, -6, -8],
+      popularDistrict: [0, -2.5, -5, -7.5, -10],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
-      popularLocationX: [90, 50, 50, 65, 10],
-      popularLocationY: [20, 50, 80, 70, 55],
+      popularLocationX: [90, 40, 40, 50, -3],
+      popularLocationY: [15, 45, 75, 65, 50],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      exhibitionTitle: "장소를 선택해주세요",
       exhibitionContent: ["태그 1", "태그 2"],
-      exhibitionLocation: "",
+      exhibitionLocation: "장소",
       likeCount: 168,
       // 고른곳 확인
       locationIdx: 0,
       overCircleIcon: [false, false, false, false, false],
     }
   },
+  props: {
+    images: [Array],
+    tags: [Array],
+    likes: [Array],
+    locations: [Array],
+  },
+
   computed: {
     // Y축 보정하기
     // 재사용을 위한 코드
@@ -95,11 +97,10 @@ export default {
   methods: {
     // 데이터 통신 해야되지만 일단 샘플 넣기.
     selectLocation: function(idx) {
-      this.exhibitionImage= "https://images.unsplash.com/photo-1548182880-8b7b2af2caa2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-      this.exhibitionTitle= "뉴욕의 하루"
-      this.exhibitionLocation= "NewYork"
-      this.exhibitionContent= ["스타벅스", "월가"]
-      this.likeCount= 123
+      this.exhibitionImage= this.images[idx]
+      this.exhibitionLocation= this.locations[idx]
+      this.exhibitionContent= this.tags[idx]
+      this.likeCount= this.likes[idx]
       this.overCircleIcon[idx] = true
     },
     leaveCircleIcon: function (idx) {
@@ -113,13 +114,14 @@ export default {
 <style>
 
 .transition-circle-icon {
-  transform: scale(1.8);
+  transform: scale(1.3);
+  transition: 0.3s;
 }
 
 /* 지도의 크기와 위치 반응형으로 만듬 */
 .adjust-location {
   position:relative;
-  width: 11px;
+  width: 25px;
 }
 .continent-scale {
   height: 500px;
@@ -129,7 +131,7 @@ export default {
 @media (min-width: 1264px) {
   .adjust-location {
     position: relative;
-    width: 13px;
+    width: 30px;
   }
   .continent-scale {
     height: 600px;
@@ -140,7 +142,7 @@ export default {
 @media (min-width: 1904px) {
   .adjust-location {
     position:relative;
-    width: 15px;
+    width: 40px;
   }
   .continent-scale {
     height: 800px;
