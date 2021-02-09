@@ -1,5 +1,6 @@
 <template>
   <v-main>
+    <SideNavBar/>
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
@@ -40,9 +41,13 @@
         >
           <!-- 이미지 가져오는 코드 -->
           <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-          <img :src="`${image}`" alt="image error" class="adjust-grid-image" />
-          <br />
-
+          <img
+            :src="`${image}`" alt="image error"
+            :class="{'adjust-grid-image':true, 'opacity-event-for-waterfall':true}"
+            style="cursor:pointer;"
+            @click="gotoSelectArticle(idx)"
+          >
+          <br>
           <!-- 태그 보여주는 코드 -->
           <v-chip-group
             class="accent-4 white--text"
@@ -65,29 +70,28 @@
 
 <script>
 import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts";
+import SERVER from "@/apis/UrlMapper.ts"
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
-  name: "EachWaterfall",
-  data: function() {
+  name:"EachWaterfall",
+  components: {
+    SideNavBar,
+  },
+  data: function () {
     return {
       exhibitionContent: ["뉴욕", "hi"], // 샘플 데이터, 태그가 정상적으로 동작하면 이 데이터는 지울 예정
       popularExhibition: false, // 버튼 바꾸기 데이터
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
-    };
+      indexs: [], // id 데이터 리스트
+    }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
-  created: function() {
-    const locations = [
-      "northAmerica",
-      "southAmerica",
-      "europe",
-      "asia",
-      "oceania",
-      "africa",
-    ];
+  created:function(){
+    localStorage.setItem('page', "AllWaterfall")
+    const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
     for (let index = 0; index < locations.length; index++) {
       axios
         .get(
@@ -96,7 +100,8 @@ export default {
         .then((response) => {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
-            this.tags.push(response.data[index].tags);
+            this.tags.push(response.data[index].tags)
+            this.indexs.push(response.data[index].board.id)
           }
         })
         .catch(function() {
@@ -111,14 +116,27 @@ export default {
       this.$router.push({ name: "WorldMap" });
     },
     // 게시물 작성 페이지로 이동
-    clickGotoCreate: function() {
-      this.$router.push({ name: "Create" });
+    clickGotoCreate: function () {
+      this.$router.push({name:"Create"})
     },
-  },
-};
+    // 게시물 사진 보기
+    gotoSelectArticle: function (idx) {
+      localStorage.setItem("articleId", this.indexs[idx])
+      this.$router.push({name:"PhotoView"})
+    }
+  }
+}
 </script>
 
 <style scoped>
+
+/* 후버 효과 */
+.opacity-event-for-waterfall:hover {
+  transition: 0.5s;
+  transform: scale(1.03);
+  opacity: 0.4;
+}
+
 /* 이미지 반응형으로 모든 기기에서 사용가능하게 만듬 */
 .adjust-grid-container {
   padding: 80px 0px 0px 140px;
