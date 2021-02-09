@@ -1,6 +1,8 @@
 package com.ssafy.iwc.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jcraft.jsch.Session;
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
@@ -35,8 +38,9 @@ import com.ssafy.iwc.service.PostImageService;
 import com.ssafy.iwc.service.PostImageServiceImpl;
 import com.ssafy.iwc.service.TagService;
 import com.ssafy.iwc.util.MD5Generator;
+import com.ssafy.iwc.util.SFTPsender;
 
-
+import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -50,9 +54,12 @@ public class BoardController {
 	private MainImageService mainImageService;
 	@Autowired
 	private TagService tagService;
-	private String FileMainSrc = "http://localhost:8080/static/mainImg/";
-	private String FileSubSrc = "http://localhost:8080/static/subImg/";
+//	이부분 처리
+	private String FileMainSrc = "http://i4d110.p.ssafy.io:9000/mainImg/";
+	private String FileSubSrc = "http://i4d110.p.ssafy.io:9000/subImg/";
 	
+	
+	@ApiOperation(value = "게시물 id를 보내면 게시물과 관련 모든것 삭제", response = String.class)
 	@DeleteMapping("/delpost")
 	public String delpost(@RequestParam("id") String id) {
 		Long no = Long.parseLong(id);
@@ -61,38 +68,37 @@ public class BoardController {
 			List<PostImageDto> del = postImageService.getFile(no);
 			MainImageDto delMain = mainImageService.getFile(no);
 //			파일삭제
-			for(PostImageDto d : del) {
-				File file = new File(d.getFilePath());
-				if(file.exists()) {
-					if(file.delete()) {
-						System.out.println("서브사진 삭제");
-					}else {
-						System.out.println("사진삭제 실패");
-					}
+			SFTPsender sFTPsender = new SFTPsender();
+			for (PostImageDto d : del) {
+//				File file = new File(d.getFilePath());
+				if(sFTPsender.deleteFile(d.getFilename(), 1)) {
+					System.out.println("성공");
 				}
 			}
-			File file = new File(delMain.getFilePath());
-			if(file.exists()) {
-				if(file.delete()) {
-					System.out.println("메인사진 삭제");
-				}else {
-					System.out.println("사진삭제 실패");
-				}
-			}
+
+			sFTPsender.deleteFile(delMain.getFilename(), 0);
+			
 //			DB삭제
 			postImageService.delPost(no);
 			mainImageService.delPost(no);
+			System.out.println("오케이");
+//			태그삭제
+			tagService.delPost(no);
+//			좋아요 삭제
 			boardService.delPost(no);
+			System.out.println("마지막");
 			return "OK";
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("에러");
 			return "FALSE";
 		}
-		
+
 	}
 	
+	
+	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
-	public ResponseEntity<List<AllMainView>> allview(@RequestParam("location") String location){
+	public ResponseEntity<List<AllMainView>> allview(@RequestParam("location") String location) {
 		System.out.println(location);
 		try {
 //			List<AllMainView> dto = mainImageService.getAllBoard();
@@ -101,76 +107,72 @@ public class BoardController {
 			System.out.println(dto.get(0).toString());
 //			List<Map<String, String>> result = new LinkedList<Map<String,String>>();
 			System.out.println("Main Image : ");
-			for(Board a : dto) {
+			for (Board a : dto) {
 				LocationInfo data = new LocationInfo();
 //				data에 Board값 넣기
 				data.setBoard(a);
 //				메인 이미지 경로 가져와서 넣기
 				Optional<MainImage> d = mainImageService.findById(a.getId());
-				data.setFilePath(FileMainSrc+d.get().getFilename());
+				data.setFilePath(FileMainSrc + d.get().getFilename());
 //				tag가져와서 넣기
 				data.setTags(tagService.findTagId(a.getId()));
 				System.out.println(data.getTags());
 
 				result.add(data);
 			}
-			return new ResponseEntity(result,HttpStatus.OK);
-		}catch(Exception e){
+			return new ResponseEntity(result, HttpStatus.OK);
+		} catch (Exception e) {
 			System.out.println("에러");
-			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
+			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
 
 		}
-		
-		
-		
+
 	}
-	
-	
-	
+
+	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기", response = String.class)
 	@GetMapping("/getposts")
 	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id) {
 		long no = Long.parseLong(id);
+//		조회수 업로드하기
 		
-		
+//		내가 좋아요했는지 확인
 		try {
 			List<AllView> dto = postImageService.findSubImg(no);
-			
-			List<Map<String, String>> result = new LinkedList<Map<String,String>>();
-			
 
-			
-			for(AllView a : dto) {
-				Map<String,String> m = new HashMap<String, String>();
-				System.out.println("아이디 "+a.getId());
-				System.out.println("작성자 : " +a.getAuthor());
-				System.out.println("파일 : " +a.getFilename());
-				m.put("id",Long.toString(a.getId()));
-				m.put("author",a.getAuthor());
-				m.put("filepath",FileSubSrc+a.getFilename());
+			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
+
+			for (AllView a : dto) {
+				Map<String, String> m = new HashMap<String, String>();
+				System.out.println("아이디 " + a.getId());
+				System.out.println("작성자 : " + a.getAuthor());
+				System.out.println("파일 : " + a.getFilename());
+				m.put("id", Long.toString(a.getId()));
+				m.put("author", a.getAuthor());
+				m.put("filepath", FileSubSrc + a.getFilename());
 				result.add(m);
 			}
 			AllMainView all = mainImageService.findMainImg(no);
-			Map<String,String> m = new HashMap<String, String>();
-			
-			m.put("id",Long.toString(all.getId()));
-			m.put("author",all.getAuthor());
-			m.put("filepath",FileMainSrc+all.getFilename());
+			Map<String, String> m = new HashMap<String, String>();
+
+			m.put("id", Long.toString(all.getId()));
+			m.put("author", all.getAuthor());
+			m.put("filepath", FileMainSrc + all.getFilename());
 			result.add(m);
-			
+
 			return new ResponseEntity(result, HttpStatus.OK);
-		}catch(Exception e) {
-			return new ResponseEntity(e,HttpStatus.FAILED_DEPENDENCY);
+		} catch (Exception e) {
+			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
 		}
 
-		
-
-		
 	}
-	
+	@ApiOperation(value = "게시물 업로드", response = String.class)
 	@PostMapping("/requestupload")
-	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,BoardDto boardDto,@RequestParam("writer") String writer,@RequestParam("location") String location,@RequestParam("nation") String nation,
-			@RequestParam("tags") List<String> tags) {
-		long id =0;
+	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,
+			BoardDto boardDto, @RequestParam("writer") String writer, @RequestParam("location") String location,
+			@RequestParam("nation") String nation, @RequestParam("tags") List<String> tags) {
+		long id = 0;
+		
+		
 		
 		try {
 			//게시글 작성
@@ -188,20 +190,22 @@ public class BoardController {
 				}
 			}
 			String fname = new MD5Generator(origname).toString()+expend;
-//			실행되는 위치의 'files' 폴더에 저장
-			String sPath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\mainImg";
-//			파일이 저장되는 폴더가 없으면 폴더를 생성
-			if(!new File(sPath).exists()) {
-				try {
-					new File(sPath).mkdir();
-				}
-				catch(Exception e) {
-					e.getStackTrace();
-				}
+			String fPath = "/home/mainImg/"+ fname;
+			SFTPsender sFTPsender = new SFTPsender();
+			File file = new File(fname);
+	        file.createNewFile();
+	        FileOutputStream fos = new FileOutputStream(file);
+	        fos.write(main.getBytes());
+	        fos.close();
+	        try {
+//	        	파일명, 파일
+	        	sFTPsender.uploadFile(fname, file,0);
+			}catch(Exception e)
+			{			
+				e.printStackTrace();
 			}
-			String fPath = sPath + "\\" + fname;
-			main.transferTo(new File(fPath));
-	
+	        
+	      
 			MainImageDto mainImageDto = new MainImageDto();
 			mainImageDto.setId(id);
 			mainImageDto.setOrigFilename(origname);
@@ -240,20 +244,26 @@ public class BoardController {
 					}
 				}
 				String filename = new MD5Generator(origFilename).toString()+expend;
-//				실행되는 위치의 'files' 폴더에 파일이 저장
-				String savePath = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\subImg";
-//				파일이 저장되는 폴더가 없으면 폴더를 생성	
+				String filePath = "/home/subImg/"+ filename;
+				SFTPsender sFTPsender = new SFTPsender();
 
-				if(!new File(savePath).exists()) {
-					try {
-						new File(savePath).mkdir();
-					}
-					catch(Exception e) {
-						e.getStackTrace();
-					}
+		        File file = new File(filename);
+		        file.createNewFile();
+		        FileOutputStream fos = new FileOutputStream(file);
+		        fos.write(mf.getBytes());
+		        fos.close();
+				try {
+//		        	파일명, 파일
+		        	sFTPsender.uploadFile(filename, file,1);
+				}catch(Exception e)
+				{			
+					e.printStackTrace();
 				}
-				String filePath = savePath + "\\" + filename;
-				mf.transferTo(new File(filePath));
+
+
+				
+			
+				
 		
 				PostImageDto postImageDto = new PostImageDto();
 				postImageDto.setId(id);
@@ -268,10 +278,7 @@ public class BoardController {
 				
 			}
 		}
-		return "ok";
-		
-		
-		
-		
+	return"ok";
+
 	}
 }

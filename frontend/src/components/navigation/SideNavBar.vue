@@ -65,15 +65,15 @@ import Menu from "@/components/navigation/Menu.vue";
 
 export default {
   components: {
-    Menu
+    Menu,
   },
   data: function() {
     return {
-      isMenuPageOpen: false
+      isMenuPageOpen: false,
     };
   },
   computed: {
-    ...mapGetters("Auth", ["isLoggedIn"])
+    ...mapGetters("Auth", ["isLoggedIn"]),
   },
   methods: {
     ...mapActions("Auth", ["signOut"]),
@@ -86,8 +86,8 @@ export default {
     },
     closeMenuPage: function() {
       this.isMenuPageOpen = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -107,7 +107,7 @@ export default {
   display: inline-block;
   padding: 1.5em 1.5em;
   border-radius: 0;
-  color: #DDA288;
+  color: #dda288;
   margin-top: 0.51rem;
   cursor: pointer;
   font-weight: bold;
@@ -152,13 +152,13 @@ export default {
 .navi-button:not(:hover) {
   transition-delay: 0.2s;
   transition-duration: 0.4s;
-  color: #DDA288;
+  color: #dda288;
 }
 
 /* transition slide 효과 */
 .slide-leave-active,
 .slide-enter-active {
-  transition: 0.3s;
+  transition: 0.2s;
 }
 .slide-enter {
   transform: translateX(-100%);

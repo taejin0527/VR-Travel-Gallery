@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
-
+import About from "@/views/About.vue";
 import WorldMap from "../views/worldContinents/WorldMap.vue";
 import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Create from "@/views/post/Create.vue";
@@ -13,6 +13,7 @@ import Post from "@/views/photo/Post.vue";
 import EachWaterfall from "@/views/worldContinents/EachWaterfall.vue";
 import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
 import Flipbook from "@/views/photo/Flipbook.vue"
+import Pay from "@/views/pay/Pay.vue";
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ const routes: Array<RouteConfig> = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/aboutus",
+    name: "Aboutus",
+    component: About,
   },
   {
     path: "/signup",
@@ -97,6 +103,11 @@ const routes: Array<RouteConfig> = [
     name: "Flipbook",
     component: Flipbook,
   },
+  {
+    path: "/pay/",
+    name: "Pay",
+    component: Pay,
+  },
 ];
 
 const userRoutes: Array<RouteConfig> = [];
@@ -112,6 +123,7 @@ router.beforeEach((to, from, next) => {
     "/signup",
     "/",
     "/worldmap",
+    "/aboutus",
     "/create",
     "/view",
   ];

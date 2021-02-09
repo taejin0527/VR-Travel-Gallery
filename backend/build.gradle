@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'war'
 }
 
 group = 'com.ssafy'
@@ -20,12 +19,11 @@ repositories {
 }
 
 dependencies {
-	// ±âº»À¸·Î Ãß°¡ÇÔ(starter-web, web-service, devtools)
+	// ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½(starter-web, web-service, devtools)
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
 	// Lombok
@@ -51,13 +49,19 @@ dependencies {
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	
-	// mail(ÀÌ¸ŞÀÏ ÀÎÁõ)
+	//jschë¼ì´ë¸ŒëŸ¬ë¦¬
+	// https://mvnrepository.com/artifact/com.jcraft/jsch
+	compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
+
+	
+	
+	// mail(ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
    implementation 'org.springframework.boot:spring-boot-starter-mail'
    
    // oauth
    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
    
-   	// ±¸±Û ¼Ò¼È
+   	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¼ï¿½
 	// https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http
 	compile group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.21.1'
 	// https://mvnrepository.com/artifact/com.google.auth/google-auth-library-credentials

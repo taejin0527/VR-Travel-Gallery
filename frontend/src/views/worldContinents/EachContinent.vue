@@ -97,7 +97,7 @@ export default {
   name: "EachContinent",
   data: function() {
     return {
-      getContinentName: localStorage.getItem('continent'),
+      getContinentName: localStorage.getItem("continent"),
       popularExhibition: true,
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
@@ -138,16 +138,16 @@ export default {
   },
   methods: {
     // 각 대륙으로 이동
-    clickChangeContinentViewButton: function () {
-      this.popularExhibition = !this.popularExhibition
-      this.$router.push({name:"EachWaterfall"})
+    clickChangeContinentViewButton: function() {
+      this.popularExhibition = !this.popularExhibition;
+      this.$router.push({ name: "EachWaterfall" });
     },
     // 게시물 작성 페이지로 이동
-    clickGotoCreate: function () {
-      this.$router.push({name:"Create"})
+    clickGotoCreate: function() {
+      this.$router.push({ name: "Create" });
     }
-  },
-}
+  }
+};
 </script>
 
 <style scoped></style>

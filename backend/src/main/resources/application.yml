@@ -1,8 +1,8 @@
 spring:      
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yacht?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
+    url: jdbc:mysql://i4d110.p.ssafy.io:3307/yacht?characterEncoding=UTF-8&serverTimezone=UTC
+    username: ssafy
     password: ssafy
   jpa:
     hibernate:
@@ -12,8 +12,14 @@ spring:
       hibernate:
         format_sql: true
         
-  mvc:
-    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+        
+        
+#  mvc:
+#    static-path-pattern: ../../../bulid/src/main/resources/static/**
   # email 인증
   mail:
     host: smtp.gmail.com

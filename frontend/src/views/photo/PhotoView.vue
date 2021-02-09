@@ -82,10 +82,10 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader,
+  FluxPreloader
 } from "vue-flux";
 import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts"
+import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   components: {
@@ -93,11 +93,11 @@ export default {
     FluxControls,
     FluxIndex,
     FluxPagination,
-    FluxPreloader,
+    FluxPreloader
   },
   data: () => ({
     vfOptions: {
-      autoplay: false,
+      autoplay: false
     },
     vfImages: [],
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
@@ -106,7 +106,7 @@ export default {
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    },
+    }
   },
   mounted() {
     axios

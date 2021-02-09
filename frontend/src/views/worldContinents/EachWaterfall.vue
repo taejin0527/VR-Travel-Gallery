@@ -72,7 +72,6 @@
       />
     </div>
   </v-main>
-  
 </template>
 
 <script>
@@ -87,10 +86,10 @@ import SERVER from "@/apis/UrlMapper.ts"
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
-  name:"EachWaterfall",
-  data: function () {
+  name: "EachWaterfall",
+  data: function() {
     return {
-      getContinentName: localStorage.getItem('continent'), // 대륙별로 나누는 변수
+      getContinentName: localStorage.getItem("continent"), // 대륙별로 나누는 변수
       popularExhibition: false, // 버튼 바꾸기 변수
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
@@ -126,18 +125,16 @@ export default {
   },
   methods: {
     // 각 대륙으로 이동
-    clickChangeContinentViewButton: function () {
-      this.popularExhibition = !this.popularExhibition
-      this.$router.push({name:"EachContinent"})
+    clickChangeContinentViewButton: function() {
+      this.popularExhibition = !this.popularExhibition;
+      this.$router.push({ name: "EachContinent" });
     },
     // 게시물 작성 페이지로 이동
-    clickGotoCreate: function () {
-      this.$router.push({name:"Create"})
-    },
+    clickGotoCreate: function() {
+      this.$router.push({ name: "Create" });
+    }
   }
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
