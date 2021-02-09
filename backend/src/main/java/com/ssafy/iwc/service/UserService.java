@@ -38,5 +38,5 @@ public interface UserService {
 
 	public boolean send(String subject, String text, String to);
 
-	public void updateUserMoney(Integer total);
+	public void updateUserMoney(Integer total,String userid);
 }
