@@ -30,4 +30,11 @@ public class TagServiceImpl implements TagService{
 	public long saveFile(TagDto tagDto) {
 		return tagRepository.save(tagDto.toEntity()).getId();
 	}
+
+
+	@Transactional
+	public void delPost(Long no) {
+		// TODO Auto-generated method stub
+		tagRepository.deleteTags(no);
+	}
 }
