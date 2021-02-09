@@ -59,13 +59,12 @@
         :pagesHiRes="pagesHiRes"
         :startPage="pageNum"
         :singlePage="singlePage"
+        :zooms = "zooms"
         ref="flipbook"
         @flip-left-start="onFlipLeftStart"
         @flip-left-end="onFlipLeftEnd"
         @flip-right-start="onFlipRightStart"
         @flip-right-end="onFlipRightEnd"
-        @zoom-start="onZoomStart"
-        @zoom-end="onZoomEnd"
       >
       </Flipbook>
     </div>
@@ -89,7 +88,8 @@ export default {
       pageNum: null,
       singlePage: true,
       isSelectTips: false,
-      vfImages: [null],
+      vfImages: [null, require('@/assets/photo/flipbookHelp.jpg')],
+      zooms:[1],
     };
   },
   mounted() {
@@ -140,12 +140,6 @@ export default {
       console.log("flip-right-end", page);
       return (window.location.hash = "#" + page);
     },
-    onZoomStart(zoom) {
-      return console.log("zoom-start", zoom);
-    },
-    onZoomEnd(zoom) {
-      return console.log("zoom-end", zoom);
-    },
     setPageFromHash() {
       const n = parseInt(window.location.hash.slice(1), 10);
       if (isFinite(n)) {
@@ -179,18 +173,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.profile {
-  position: absolute;
-  height: 40vh;
-  width: 20vw;
-  left: 0;
-  bottom: 0;
-}
 
 .flipbook {
-  height: 100%;
-  width: 100%;
+  width: 90%;
+  height: 80%;
 }
+
 .flipbook .viewport {
   width: 100%;
   height: 100%;
