@@ -72,11 +72,11 @@ export default {
       popularLocationX: [70, 60, 72, 80, 17],
       popularLocationY: [10, 72, 49, 70, 3],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
-      exhibitionImage: require("@/assets/continents/SA.jpg"),
+      exhibitionImage: require("@/assets/continents/AF.jpg"),
       exhibitionContent: ["이집트", "가자네크로폴리스", "잠비아", "잠바브웨", "빅토리아폭포", "탄자니아", "킬리만자로산", "마다가스카르", "모로코"],
       exhibitionLocation: "마우스를 깃발에 올려보세요",
       exhibitionIndex: -1,
-      likeCount: 178,
+      likeCount: 138,
       // 고른곳 확인
       locationIdx: 0,
       overCircleIcon: [false, false, false, false, false],

@@ -153,7 +153,7 @@ export default {
       }
     },
     clickGoBack: function () {
-      this.$$router.push({name:localStorage.getItem("beforePage")})
+      this.$router.push({name:localStorage.getItem("page")})
     }
   },
 };

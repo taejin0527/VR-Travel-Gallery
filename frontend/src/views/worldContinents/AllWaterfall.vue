@@ -43,9 +43,13 @@
         >
           <!-- 이미지 가져오는 코드 -->
           <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-          <img :src="`${image}`" alt="image error" class="adjust-grid-image">
+          <img
+            :src="`${image}`" alt="image error"
+            :class="{'adjust-grid-image':true, 'opacity-event-for-waterfall':true}"
+            style="cursor:pointer;"
+            @click="gotoSelectArticle(idx)"
+          >
           <br>
-
           <!-- 태그 보여주는 코드 -->
           <v-chip-group
             class="accent-4 white--text"
@@ -82,7 +86,8 @@ export default {
       exhibitionContent: ['뉴욕', 'hi'], // 샘플 데이터, 태그가 정상적으로 동작하면 이 데이터는 지울 예정
       popularExhibition: false, // 버튼 바꾸기 데이터
       images: [], // 이미지 데이터 리스트
-      tags: [] // 태그 데이터 리스트
+      tags: [], // 태그 데이터 리스트
+      indexs: [], // id 데이터 리스트
     }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
@@ -95,6 +100,7 @@ export default {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
             this.tags.push(response.data[index].tags)
+            this.indexs.push(response.data[index].board.id)
           }
         }).catch(function(){
           console.log(`이미지 및 태그 불러오기 실패`);
@@ -111,6 +117,11 @@ export default {
     // 게시물 작성 페이지로 이동
     clickGotoCreate: function () {
       this.$router.push({name:"Create"})
+    },
+    // 게시물 사진 보기
+    gotoSelectArticle: function (idx) {
+      localStorage.setItem("articleId", this.indexs[idx])
+      this.$router.push({name:"PhotoView"})
     }
   }
 }
@@ -118,6 +129,13 @@ export default {
 
 
 <style scoped>
+
+/* 후버 효과 */
+.opacity-event-for-waterfall:hover {
+  transition: 0.5s;
+  transform: scale(1.03);
+  opacity: 0.4;
+}
 
 /* 이미지 반응형으로 모든 기기에서 사용가능하게 만듬 */
 .adjust-grid-container {

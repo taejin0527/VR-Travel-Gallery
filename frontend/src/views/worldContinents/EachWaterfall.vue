@@ -33,36 +33,42 @@
       <Oceania
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'asia'">
       <Asia
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
       <NorthAmerica
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
       <SouthAmerica
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'europe'">
       <Europe
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
     <div v-else>
       <Africa
         :images = "images"
         :tags = "tags"
+        :indexs = "indexs"
       />
     </div>
   </v-main>
@@ -88,6 +94,7 @@ export default {
       popularExhibition: false, // 버튼 바꾸기 변수
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
+      indexs: [], // id 데이터 리스트
     }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
@@ -100,6 +107,7 @@ export default {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
             this.tags.push(response.data[index].tags)
+            this.indexs.push(response.data[index].board.id)
             console.log(response.data)
           }
         }).catch(function(){
