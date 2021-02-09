@@ -1,5 +1,52 @@
 <template>
   <div class="container d-flex justify-center">
+    <!-- 오른쪽 상단 Tips 픽스 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 100px;
+              top: 15px;
+              right: 50px;
+              z-index: 101;
+            "
+    >
+      <img
+        src="@/assets/3DHelp3.png" alt="" width="120px"
+        :class="{'select-tips-transition': isSelectTips}"
+        @mouseover="isSelectTips = true"
+        @mouseleave="isSelectTips = false"
+      >
+    </div>
+
+    <!-- Flipbook 페이지로 가는 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:60px; top:120px; color:white;"
+      @click="clickGotoFlipbook"
+    >
+      <v-icon>
+        mdi-book-open-page-variant
+      </v-icon>
+    </v-btn>
+
+    <!-- 뒤로가기 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:60px; top:200px; color:white;"
+      @click="clickGoBack"
+    >
+      <v-icon size="38px">
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
+
     <div class="flux">
       <vue-flux
         :options="vfOptions"
@@ -54,6 +101,7 @@ export default {
     },
     vfImages: [],
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
+    isSelectTips: false,
   }),
   computed: {
     user() {
@@ -62,7 +110,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=15`)
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
       .then((response) => {
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
@@ -73,6 +121,14 @@ export default {
         console.log("subImg 불러오기 실패");
       });
   },
+  methods: {
+    clickGotoFlipbook: function () {
+      this.$router.push({name:"Flipbook"})
+    },
+    clickGoBack: function () {
+      this.$$router.push({name:localStorage.getItem("beforePage")})
+    }
+  }
 };
 </script>
 
@@ -129,6 +185,25 @@ export default {
     width:1500px;
     height: 800px;
   }
+}
+
+/* TIPS 애니메이션 */
+@keyframes tipsbeat {
+  from {
+    transform: scale(0.95);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.select-tips-transition {
+  animation-duration: 0.8s;
+  animation-name: tipsbeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
 }
 
 </style>

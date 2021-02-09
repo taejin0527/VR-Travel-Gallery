@@ -5,7 +5,8 @@
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
       <v-col
-        cols="2"
+        cols="1"
+        xl="2"
       >
         <div
           class="continent-scale"
@@ -37,13 +38,18 @@
       </v-col>
       <v-col
         offset-md="1"
-        md="3"
+        md="4"
+        offset-xl="0"
+        xl="4"
+        class="d-flex justify-center align-center"
       >
+        <div style="min-width:80px;"></div>
         <ContinentCard
           :exhibitionImage = "exhibitionImage"
           :exhibitionContent = "exhibitionContent"
           :exhibitionLocation = "exhibitionLocation"
           :likeCount = "likeCount"
+          :exhibitionIndex = "exhibitionIndex"
         />
       </v-col>
     </v-row>
@@ -60,17 +66,17 @@ export default {
   },
   data: function () {
     return {
-      sample: 100,
       popularDistrict: [0, -2.5, -5, -7.5, -10],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
-      popularLocationX: [90, 40, 40, 50, -3],
-      popularLocationY: [15, 45, 75, 65, 50],
+      popularLocationX: [54, 44, 50, 80, 70],
+      popularLocationY: [54, 62, 44, 32, 70],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
-      exhibitionImage: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      exhibitionContent: ["태그 1", "태그 2"],
-      exhibitionLocation: "장소",
-      likeCount: 168,
+      exhibitionImage: require("@/assets/continents/SA.jpg"),
+      exhibitionContent: ["오스트레일리아", "시드니", "멜버른", "골드코스트", "피지", "뉴질랜드"],
+      exhibitionLocation: "마우스를 깃발에 올려보세요",
+      exhibitionIndex: -1,
+      likeCount: 103,
       // 고른곳 확인
       locationIdx: 0,
       overCircleIcon: [false, false, false, false, false],
@@ -81,6 +87,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
+    indexs: [Array],
   },
 
   computed: {
@@ -100,6 +107,7 @@ export default {
       this.exhibitionImage= this.images[idx]
       this.exhibitionLocation= this.locations[idx]
       this.exhibitionContent= this.tags[idx]
+      this.exhibitionIndex= this.indexs[idx]
       this.likeCount= this.likes[idx]
       this.overCircleIcon[idx] = true
     },

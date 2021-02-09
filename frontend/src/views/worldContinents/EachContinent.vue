@@ -31,6 +31,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'asia'">
@@ -39,6 +40,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
@@ -47,6 +49,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
@@ -55,6 +58,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'europe'">
@@ -63,6 +67,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
     <div v-else>
@@ -71,6 +76,7 @@
         :tags = "tags"
         :likes = "likes" 
         :locations = "locations"
+        :indexs = "indexs"
       />
     </div>
   </v-main>
@@ -97,6 +103,7 @@ export default {
       tags: [], // 태그 데이터 리스트
       likes: [], // 좋아요 수 데이터 리스트
       locations: [], // 장소 데이터 리스트
+      indexs: [], // 게시물 id 리스트
     }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
@@ -107,8 +114,10 @@ export default {
     localStorage.setItem('page', "EachContinent")
     const location = localStorage.getItem('continent');
     axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
+          
           for (let index = 0; index < Math.min(5, response.data.length); index++) {
-            this.images.push(response.data[index].filePath);
+            this.indexs.push(response.data[index].board.id)
+            this.images.push(response.data[index].filePath)
             this.tags.push(response.data[index].tags)
             this.likes.push(response.data[index].board.good)
             this.locations.push(response.data[index].board.nation)
