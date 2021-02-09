@@ -3,9 +3,12 @@ package com.ssafy.iwc.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -100,5 +103,15 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
+
+	@Transactional
+	public void updateUserMoney(Integer total, String userid) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUsername(userid)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userid));
+		int currMoney = user.getMoney()+total;
+		userRepository.upDateMoney(currMoney,userid);
+	}
+
 
 }
