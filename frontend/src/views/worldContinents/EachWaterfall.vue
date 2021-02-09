@@ -105,7 +105,11 @@ export default {
     axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
-            this.tags.push(response.data[index].tags)
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
             this.indexs.push(response.data[index].board.id)
             console.log(response.data)
           }

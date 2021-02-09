@@ -118,7 +118,11 @@ export default {
           for (let index = 0; index < Math.min(5, response.data.length); index++) {
             this.indexs.push(response.data[index].board.id)
             this.images.push(response.data[index].filePath)
-            this.tags.push(response.data[index].tags)
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
             this.likes.push(response.data[index].board.good)
             this.locations.push(response.data[index].board.nation)
           }

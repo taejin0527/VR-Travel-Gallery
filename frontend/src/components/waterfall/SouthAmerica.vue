@@ -20,8 +20,8 @@
           column
         >
           <v-chip
-            v-for="(item, idx) in exhibitionContent"
-            :key="idx"
+            v-for="(item, i) in tags"
+            :key="i"
             style="background-color:#DD6288; color:white;"
           >
             {{ item }}
@@ -35,11 +35,6 @@
 <script>
 export default {
   name: "SouthAmerica",
-  data: function() {
-    return {
-      exhibitionContent: ["뉴욕", "hi"] // 샘플 태그, 나중에 지울 예정
-    };
-  },
   props: {
     images:[Array], // EachWaterfall.vue router에서 받아온 데이터들
     tags:[Array], // EachWaterfall.vue router에서 받아온 데이터들
