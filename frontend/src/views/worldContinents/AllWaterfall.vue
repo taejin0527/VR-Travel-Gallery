@@ -85,7 +85,7 @@ export default {
   created:function(){
     const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
     for (let index = 0; index < locations.length; index++) {
-      axios.get(`http://localhost:8080/allview?location=${locations[index]}`).then(response => {
+      axios.get(`http://i4d110.p.ssafy.io:8080/allview?location=${locations[index]}`).then(response => {
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
             this.tags.push(response.data[index].tags)
