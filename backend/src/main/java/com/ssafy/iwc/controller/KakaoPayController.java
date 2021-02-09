@@ -137,7 +137,7 @@ public class KakaoPayController {
         	chargeDto.setUsername(kakaoPayApproval.getPartner_user_id());
         	chargeService.save(chargeDto);
 //        	사용자 돈 갱신
-        	userService.updateUserMoney(kakaoPayApproval.getAmount().getTotal());
+        	userService.updateUserMoney(kakaoPayApproval.getAmount().getTotal(),kakaoPayApproval.getPartner_user_id());
         	try {
 				response.sendRedirect("https://localhost:8000/pay");
 			} catch (IOException e) {
