@@ -9,12 +9,14 @@
         ><span class="router-a" data-text="Home">Home</span></router-link
       >
       <router-link tag="li" @click.native="closeMenuPage" to="/worldmap"
-        ><span class="router-a" data-text="Worldmap"
+        ><span class="router-a" data-text="World map"
           >Worldmap</span
         ></router-link
       >
-      <router-link tag="li" @click.native="closeMenuPage" to="/photoview"
-        ><span class="router-a" data-text="PhotoView">Post</span></router-link
+      <router-link tag="li" @click.native="closeMenuPage" to="/aboutus"
+        ><span class="router-a" data-text="About US"
+          >About US</span
+        ></router-link
       >
     </div>
   </div>
@@ -34,6 +36,10 @@ export default Vue.extend({
   methods: {
     // 메뉴 끄기
     closeMenuPage: function() {
+      const sound = new Audio(
+        require("@/assets/audio/fasten_your_seatbelt.mp3")
+      );
+      sound.play();
       this.$emit("closeMenuPage");
     },
   },
@@ -65,18 +71,24 @@ export default Vue.extend({
   position: relative;
 }
 .router-ul li {
+  padding: 10px;
   list-style: none;
   text-align: center;
 }
 .router-ul li .router-a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 4em;
+  font-size: 6em;
   padding: 5px 20px;
   display: inline-flex;
   font-weight: 300;
   transition: 0.3s;
   z-index: 9;
+}
+
+.router-ul:hover li .router-a {
+  color: #7e675e;
+  cursor: pointer;
 }
 .router-ul li:hover .router-a {
   color: #dda288;
@@ -91,7 +103,7 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3em;
+  font-size: 2em;
   color: #dda288;
   border-radius: 50%;
   z-index: -1;

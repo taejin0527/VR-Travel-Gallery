@@ -23,8 +23,7 @@
         </div>
       </v-row>
 
-      <div class="my-4 subtitle-1">
-      </div>
+      <div class="my-4 subtitle-1"></div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -60,23 +59,23 @@ export default {
   name: "ContinentCard",
   data: () => ({
     loading: false,
-    selection: 1,
+    selection: 1
   }),
   props: {
     exhibitionImage: [String],
     exhibitionTitle: [String],
     exhibitionContent: [Array, String],
     exhibitionLocation: [String],
-    likeCount: [Number, String],
+    likeCount: [Number, String]
   },
   methods: {
     goPhotoViewer() {
       this.$router.push({ name: "PhotoView" });
-    },
+    }
   },
   mounted: function() {
     console.log(this.exhibitionImage);
-  },
+  }
 };
 </script>
 

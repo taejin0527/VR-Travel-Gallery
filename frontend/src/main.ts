@@ -12,12 +12,12 @@ Vue.config.productionTip = false;
 
 Vue.use(VueIntro);
 Vue.use(VeeValidate, {
-  fieldsBagName: "veeFields",
+  fieldsBagName: "veeFields"
 });
 
 new Vue({
   router,
   store,
   vuetify,
-  render: (h) => h(App),
+  render: h => h(App)
 }).$mount("#app");

@@ -6,8 +6,7 @@
     pa-0
     fill-height
     :style="{
-      'background-image':
-        'url(' + require('@/assets/main/NUVO.png') + ')',
+      'background-image': 'url(' + require('@/assets/main/NUVO.png') + ')',
       'background-position': 'center',
     }"
   >
@@ -26,12 +25,16 @@
       <!-- 월드 맵으로 가는 버튼 -->
       <v-col offset="2" cols="4">
         <div style="text-align:center">
-          <img 
-            src="@/assets/worldmap/worldmap.svg" alt=""
-            :class="{ 'disappeared-hidden-map-icon': !isShowMapIcon, 'show-hidden-map-icon': isShowMapIcon  }"
+          <img
+            src="@/assets/worldmap/worldmap.svg"
+            alt=""
+            :class="{
+              'disappeared-hidden-map-icon': !isShowMapIcon,
+              'show-hidden-map-icon': isShowMapIcon,
+            }"
             width="170px"
             height="150px"
-          >
+          />
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
@@ -45,10 +48,12 @@
           style="text-align:center;"
           v-intro="'NUVO 지도로 보기'"
           v-intro-tooltip-class="'red-bg'"
-          v-intro-position="'left'"
+          v-intro-position="'top'"
+          v-intro-step="1"
         >
           <img
-            src="@/assets/main/world.png" alt=""
+            src="@/assets/main/world.png"
+            alt=""
             width="200px"
             height="200px"
             style="padding: 10px 24px 5px 24px; border:3px solid; border-radius:10px; color:#7e675e;"
@@ -56,7 +61,7 @@
             @mouseover="disappearMapIcon"
             @mouseleave="showMapIcon"
             @click="gotoWorldMap"
-          >
+          />
 
           <v-icon style="opacity:0;">
             mdi-airplane
@@ -67,24 +72,26 @@
       <!-- VR로 가는 버튼 -->
       <v-col cols="4">
         <div style="text-align:center">
-          <img 
-            src="@/assets/main/VR360Icon.png" alt=""
+          <img
+            src="@/assets/main/VR360Icon.png"
+            alt=""
             width="150px"
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
               'show-hidden-VR-icon': isShowVRIcon,
             }"
-          
-          >
+          />
         </div>
         <div
           style="text-align:center;"
           v-intro="'VR 전시관으로 이동'"
-          v-intro-step="1"
+          v-intro-position="'top'"
+          v-intro-step="2"
         >
           <img
-            src="@/assets/main/VRIcon.png" alt=""
+            src="@/assets/main/VRIcon.png"
+            alt=""
             width="200px"
             height="200px"
             style="padding: 35px 12px 35px 12px; border:3px solid; border-radius:10px; color:#7e675e;"
@@ -92,7 +99,7 @@
             @mouseover="disappearVRIcon"
             @mouseleave="showVRIcon"
             @click="gotoVRContents"
-          >
+          />
         </div>
       </v-col>
 
@@ -122,6 +129,10 @@ export default {
   methods: {
     // 월드 맵으로 가는 버튼 액션
     gotoWorldMap: function() {
+      const sound = new Audio(
+        require("@/assets/audio/fasten_your_seatbelt.mp3")
+      );
+      sound.play();
       this.$router.push({ name: "WorldMap" });
     },
 
@@ -132,6 +143,8 @@ export default {
 
     // 맵 아이콘 애니메이션
     disappearMapIcon: function() {
+      const sound = new Audio(require("@/assets/audio/navSound.wav"));
+      sound.play();
       this.isShowMapIcon = true;
     },
     showMapIcon: function() {
@@ -140,6 +153,8 @@ export default {
 
     // VR 아이콘 애니메이션
     disappearVRIcon: function() {
+      const sound = new Audio(require("@/assets/audio/navSound.wav"));
+      sound.play();
       this.isShowVRIcon = true;
     },
     showVRIcon: function() {
@@ -250,7 +265,7 @@ export default {
 .opacity-just-background {
   width: 100%;
   height: 100%;
-  content:"";
-  background-position: 'center',
+  content: "";
+  background-position: "center";
 }
 </style>
