@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://i4d110.p.ssafy.io:3307/yacht?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
+    username: ssafy
     password: ssafy
   jpa:
     hibernate:
