@@ -21,6 +21,25 @@
       >
     </div>
 
+    <!-- 좋아요 버튼 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              top: 300px;
+              right: 72px;
+              z-index: 101;
+            "
+    >
+      <v-icon size="30px" :class="{'like-hover-event':true, 'select-like-transition':isSelectLike}"
+        @click="likeThisArticle"
+      >
+          mdi-heart
+      </v-icon>
+    </div>
+
     <!-- Flipbook 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
@@ -71,8 +90,22 @@
           <flux-index />
         </template>
       </vue-flux>
+
+      <!-- 이 코드는 사진 밑에 넣는 코드 근데.. 음 왼쪽이 나은 거 같긴함. -->
+      <!-- <div class="d-flex justify-end align-center"> <pre class="profile">snapped by  </pre>
+      <span class="user-hover-event-goto-profile" style="color:#DDA288; font-size:33px; font-family:'SDSamliphopangche_Outline';">{{author}}</span><pre>  </pre></div> -->
     </div>
-    <div class="profile"></div>
+    <div style="position:fixed; left:40px; top:45%;">
+      <div class="profile d-flex justify-center" > snapped by</div>
+      <span
+        class="user-hover-event-goto-profile d-flex justify-center"
+        style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
+        @click="gotoProfilePage"
+      >
+        {{author}}
+      </span>
+    </div>
+    
   </div>
 </template>
 
@@ -100,8 +133,10 @@ export default {
       autoplay: false
     },
     vfImages: [],
+    author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
+    isSelectLike: false, // 좋아요는 손봐야 합니다.
   }),
   computed: {
     user() {
@@ -112,6 +147,7 @@ export default {
     axios
       .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
       .then((response) => {
+        this.author = response.data[0].author
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
           console.log(e.filepath);
@@ -127,12 +163,64 @@ export default {
     },
     clickGoBack: function () {
       this.$router.push({name:localStorage.getItem("page")})
+    },
+    gotoProfilePage: function () {
+      localStorage.setItem('setUserforProfile', this.author)
+      this.$router.push({name:"Profile"})
+    },
+    // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
+    likeThisArticle: function () {
+      this.isSelectLike = !this.isSelectLike
+
     }
   }
 };
 </script>
 
 <style scoped>
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+/* 좋아요 css */
+@keyframes likebeat {
+  from {
+    transform: scale(1);
+    color: #FDA288;
+  }
+
+  to {
+    transform: scale(1.3);
+    color: #FF8288;
+  }
+}
+
+.select-like-transition {
+  animation-duration: 0.8s;
+  animation-name: likebeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
+.like-hover-event:hover {
+  color: #FF8288;
+  transition: 0.5s;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+/* 여기 까지 좋아요 css */
+
 .container {
   position: relative;
   height: 100vh;
@@ -141,6 +229,21 @@ export default {
 .container .flux {
   position: relative;
   top: 80px;
+}
+
+.user-hover-event-goto-profile:hover {
+  color: aliceblue !important;
+  transition: 0.5s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.profile {
+  font-family: 'S-CoreDream-3Light', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #111111;
+  font-weight: bold;
+  cursor: default;
 }
 
 /* 반응형으로 만듬 */
@@ -182,8 +285,8 @@ export default {
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
   .adjust-grid-image {
-    width:1500px;
-    height: 800px;
+    width:1400px;
+    height: 750px;
   }
 }
 
