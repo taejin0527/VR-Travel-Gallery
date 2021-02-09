@@ -1,6 +1,6 @@
 <template>
   <!-- 컬러는 수요일날 회의 후 바꿀 예정 -->
-  <v-app style="background-color: #5A4E4D;">
+  <v-app style="background-color: #5a4e4d; width:100%; min-height:100%">
     <!-- 왼쪽 상단 로고 픽스 -->
     <div
       style="
@@ -18,30 +18,22 @@
       <br />
       <span style="color: #eeeeee; cursor: default">V O</span>
     </div>
-    <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
-    <side-nav-bar />
-    <transition name="component-fade" mode="out-in">
-      <router-view />
-    </transition>
+
+    
+    <router-view/>
   </v-app>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import SideNavBar from "@/components/navigation/SideNavBar.vue";
+
 
 export default Vue.extend({
   name: "App",
-  components: {
-    SideNavBar,
-  },
 });
 </script>
 
 <style lang="scss">
 @import "../src/assets/style.scss";
-
-/* scoped를 쓰지 않은 이유는 폰트를 여기서 저장하고 모든 곳에서 쓰기 위해서 */
-/* 다른 곳은 scoped를 쓰셔야 합니다. 아니면 CSS 이름 중복 에러날 수 있습니다.. */
 
 /* 눈누에서 폰트 가져옴 */
 @font-face {
