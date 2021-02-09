@@ -2,7 +2,11 @@ package com.ssafy.iwc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import lombok.RequiredArgsConstructor;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -13,11 +17,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+@RequiredArgsConstructor
+public class SwaggerConfig{
 	
-//	Swagger ¼³Á¤ È®ÀÎ
+//	Swagger ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 //	http://localhost:8080/iwc/v2/api-docs?group=V1
-//	Swagger-UI È®ÀÎ
+//	Swagger-UI È®ï¿½ï¿½
 //	http://localhost:8080/swagger-ui.html
 	
 	private String version = "v0.1.0";

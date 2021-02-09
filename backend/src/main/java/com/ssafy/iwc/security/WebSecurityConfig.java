@@ -42,12 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		// TODO Auto-generated method stub
-//		web
-//			.ignoring("/board/getposts").notifyAll();
-//	}
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// TODO Auto-generated method stub
+		web
+			.ignoring().antMatchers(
+					"/v2/api-docs","/swagger-resources/**",
+					"/swagger-ui.html","/webjars/**","/swagger/**");
+	}
 	
 	
 	@Bean
@@ -66,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**","/static/**","/board/getposts","/board/allview","/board/delpost","/board/requestupload").permitAll()
+			.authorizeRequests().antMatchers("/api/auth/**","/static/**","/board/getposts","/board/allview","/board/delpost","/board/requestupload","/kakaoPaySuccess").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();
 
