@@ -71,15 +71,15 @@ export default {
       formData.append("cost", money);
       // 수정부분
       axios
-        .post("http://localhost:8080/kakao", formData, {
+        .post("http://id4110.p.ssafy.io:8080/kakao", formData, {
           headers: {
             Authorization:
               "Bearer " +
               "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FmeSIsImlhdCI6MTYxMjYwMDM5NywiZXhwIjoxNjEyNjg2Nzk3fQ.VjY6C_SwlqfzreDrKA_CqHvMhWs65kqQ6xeMNOr7i-lFJgCHqHoKWlRWaYAxAHz53uBX-m3tjodkDyUqsOZjBg",
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           //   this.$router.push("/view");
           console.log("succes");
           console.log(response);
@@ -92,8 +92,8 @@ export default {
         .catch(function() {
           console.log("FAILURE");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

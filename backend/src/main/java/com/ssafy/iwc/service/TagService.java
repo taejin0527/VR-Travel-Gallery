@@ -10,4 +10,5 @@ import com.ssafy.iwc.model.Tag;
 public interface TagService {
 	public long saveFile(TagDto tagDto);
 	public List<Tag> findTagId(Long no);
+	public void delPost(Long no);
 }
