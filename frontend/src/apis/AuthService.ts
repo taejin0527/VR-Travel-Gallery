@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://i4d110.p.ssafy.io:8080/api/auth/";
+const API_URL = "https://i4d110.p.ssafy.io/apis/api/auth/";
 
 class AuthService {
   login(email: string, password: string) {
