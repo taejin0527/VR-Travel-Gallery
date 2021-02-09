@@ -41,7 +41,7 @@ import MetaCard from "@/components/photo/MetaCard.vue";
 export default {
   components: {
     Flipbook,
-    MetaCard,
+    MetaCard
   },
   data: function() {
     return {
@@ -56,11 +56,11 @@ export default {
       exhibitionContent: ["태그 1", "태그 2"],
       exhibitionLocation: "",
       exhibitionAuthor: "ssafy",
-      likeCount: 168,
+      likeCount: 168
     };
   },
   mounted() {
-    window.addEventListener("keydown", (ev) => {
+    window.addEventListener("keydown", ev => {
       const { flipbook } = this.$refs;
       if (!flipbook) {
         return;
@@ -80,7 +80,7 @@ export default {
           require("@/assets/images/example/3.jpg"),
           require("@/assets/images/example/4.jpg"),
           require("@/assets/images/example/5.jpg"),
-          require("@/assets/images/example/6.jpg"),
+          require("@/assets/images/example/6.jpg")
         ]),
           (this.pagesHiRes = [
             null,
@@ -88,7 +88,7 @@ export default {
             require("@/assets/images/example/2.jpg"),
             require("@/assets/images/example/3.jpg"),
             require("@/assets/images/example/4.jpg"),
-            require("@/assets/images/example/5.jpg"),
+            require("@/assets/images/example/5.jpg")
           ]);
       }, 1),
       window.addEventListener("hashchange", this.setPageFromHash);
@@ -120,8 +120,8 @@ export default {
       if (isFinite(n)) {
         return (this.pageNum = n);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

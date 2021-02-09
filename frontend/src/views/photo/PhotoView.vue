@@ -35,10 +35,10 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader,
+  FluxPreloader
 } from "vue-flux";
 import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts"
+import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   components: {
@@ -46,25 +46,25 @@ export default {
     FluxControls,
     FluxIndex,
     FluxPagination,
-    FluxPreloader,
+    FluxPreloader
   },
   data: () => ({
     vfOptions: {
-      autoplay: false,
+      autoplay: false
     },
     vfImages: [],
-    vfTransitions: ["fade", "cube", "book", "wave", "camera"],
+    vfTransitions: ["fade", "cube", "book", "wave", "camera"]
   }),
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    },
+    }
   },
   mounted() {
     axios
       .get(`${SERVER.BOARD_BASE_URL}getposts?id=2`)
-      .then((response) => {
-        response.data.forEach((e) => {
+      .then(response => {
+        response.data.forEach(e => {
           this.vfImages.push(e.filepath);
           console.log(e.filepath);
         });
@@ -72,7 +72,7 @@ export default {
       .catch(() => {
         console.log("subImg 불러오기 실패");
       });
-  },
+  }
 };
 </script>
 

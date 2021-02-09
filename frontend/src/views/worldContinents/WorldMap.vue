@@ -25,7 +25,6 @@
       </v-icon>
     </v-btn>
     <v-container>
-
       <v-row>
         <v-col cols="12">
           <!-- 월드 맵 나누기 -->
@@ -40,22 +39,22 @@
 import WorldMapDivision from "@/components/WorldMapDivision.vue";
 
 export default {
-  name:"WorldMap",
-  data: function () {
+  name: "WorldMap",
+  data: function() {
     return {
-      "popularExhibition": true,
-    }
+      popularExhibition: true
+    };
   },
   components: {
     WorldMapDivision
   },
   methods: {
-    clickChangeContinentViewButton: function () {
-      this.popularExhibition = !this.popularExhibition
-      this.$router.push({name:"AllWaterfall"})
+    clickChangeContinentViewButton: function() {
+      this.popularExhibition = !this.popularExhibition;
+      this.$router.push({ name: "AllWaterfall" });
     },
-    clickGotoCreate: function () {
-      this.$router.push({name:"Create"})
+    clickGotoCreate: function() {
+      this.$router.push({ name: "Create" });
     }
   }
 };
