@@ -1,6 +1,6 @@
 export default {
-  BASE_URL: "http://localhost:8080/api/",
-  BOARD_BASE_URL:"http://localhost:8080/board/",
+  BASE_URL: "http://i4110.p.ssafy.io:8080/api/",
+  BOARD_BASE_URL:"http://i4110.p.ssafy.io:8080/board/",
   ROUTES: {
     auth: {
       URL: "auth/",
