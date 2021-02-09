@@ -1,7 +1,7 @@
 export default {
-  BASE_URL: "https://i4110.p.ssafy.io/apis/api/",
-  BOARD_BASE_URL: "https://i4110.p.ssafy.io/apis/board/",
-  PAY_BASE_URL: "https://i4110.p.ssafy.io/apis/",
+  BASE_URL: "https://i4d110.p.ssafy.io/apis/api/",
+  BOARD_BASE_URL: "https://i4d110.p.ssafy.io/apis/board/",
+  PAY_BASE_URL: "https://i4d110.p.ssafy.io/apis/",
   ROUTES: {
     auth: {
       URL: "auth/",
