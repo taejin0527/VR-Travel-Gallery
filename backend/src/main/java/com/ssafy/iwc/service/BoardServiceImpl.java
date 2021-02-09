@@ -57,4 +57,11 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardRepository.findByLocation(location);
 	}
+
+
+	@Transactional
+	public List<Board> getLocationIdxBoard(String location, int start, int idx) {
+		// TODO Auto-generated method stub
+		return boardRepository.getLocationIdxBoard(location,start,idx);
+	}
 }
