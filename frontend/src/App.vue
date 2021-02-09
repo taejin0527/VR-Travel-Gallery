@@ -20,7 +20,9 @@
     </div>
     <!-- 왼쪽 중간 A to Z (menu) 픽스 -->
     <side-nav-bar />
-    <router-view />
+    <transition name="component-fade" mode="out-in">
+      <router-view />
+    </transition>
   </v-app>
 </template>
 <script lang="ts">
@@ -30,8 +32,8 @@ import SideNavBar from "@/components/navigation/SideNavBar.vue";
 export default Vue.extend({
   name: "App",
   components: {
-    SideNavBar
-  }
+    SideNavBar,
+  },
 });
 </script>
 
@@ -60,5 +62,15 @@ export default Vue.extend({
   transform: scale(1.07);
   transition: 150ms;
   cursor: pointer;
+}
+
+/* 애니메이션 진입 및 진출은 다른 지속 시간 및  */
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

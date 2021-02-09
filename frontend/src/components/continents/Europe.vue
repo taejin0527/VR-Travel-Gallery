@@ -4,46 +4,46 @@
     <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
-      <v-col
-        cols="2"
-      >
-        <div
-          class="continent-scale"
-          style="position:relative; left:100%; "
-        >
-          <img 
+      <v-col cols="2">
+        <div class="continent-scale" style="position:relative; left:100%; ">
+          <img
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
-            :class="{'adjust-location':true, 'transition-circle-icon':overCircleIcon[idx]}"
-            :style="'top:' + popularLocationY[idx] +'%;' + 'left:' + adjustLocationX[idx] + '%; cursor: pointer;'"
+            :class="{
+              'adjust-location': true,
+              'transition-circle-icon': overCircleIcon[idx]
+            }"
+            :style="
+              'top:' +
+                popularLocationY[idx] +
+                '%;' +
+                'left:' +
+                adjustLocationX[idx] +
+                '%; cursor: pointer;'
+            "
             @mouseover="selectLocation(idx)"
             @mouseleave="leaveCircleIcon(idx)"
-          >
+          />
         </div>
       </v-col>
 
       <!-- 지도 보여주기 -->
-      <v-col
-        cols="6"
-      >
+      <v-col cols="6">
         <div>
           <img
             src="@/assets/continents/europe.svg"
             alt="image error"
             class="continent-scale"
-          >
+          />
         </div>
       </v-col>
-      <v-col
-        offset-md="1"
-        md="3"
-      >
+      <v-col offset-md="1" md="3">
         <ContinentCard
-          :exhibitionImage = "exhibitionImage"
-          :exhibitionContent = "exhibitionContent"
-          :exhibitionLocation = "exhibitionLocation"
-          :likeCount = "likeCount"
+          :exhibitionImage="exhibitionImage"
+          :exhibitionContent="exhibitionContent"
+          :exhibitionLocation="exhibitionLocation"
+          :likeCount="likeCount"
         />
       </v-col>
     </v-row>
@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import ContinentCard from "@/components/continents/ContinentCard"
+import ContinentCard from "@/components/continents/ContinentCard";
 
 export default {
   name: "Europe",
   components: {
     ContinentCard
   },
-  data: function () {
+  data: function() {
     return {
       sample: 100,
       popularDistrict: [0, -2.5, -5, -7.5, -10],
@@ -73,46 +73,45 @@ export default {
       likeCount: 168,
       // 고른곳 확인
       locationIdx: 0,
-      overCircleIcon: [false, false, false, false, false],
-    }
+      overCircleIcon: [false, false, false, false, false]
+    };
   },
   props: {
     images: [Array],
     tags: [Array],
     likes: [Array],
-    locations: [Array],
+    locations: [Array]
   },
 
   computed: {
     // Y축 보정하기
     // 재사용을 위한 코드
-    adjustLocationX: function () {
+    adjustLocationX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] = this.popularLocationX[index] + this.popularDistrict[index]
+        array[index] =
+          this.popularLocationX[index] + this.popularDistrict[index];
       }
-      return array
+      return array;
     }
   },
   methods: {
     // 데이터 통신 해야되지만 일단 샘플 넣기.
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.likeCount= this.likes[idx]
-      this.overCircleIcon[idx] = true
+      this.exhibitionImage = this.images[idx];
+      this.exhibitionLocation = this.locations[idx];
+      this.exhibitionContent = this.tags[idx];
+      this.likeCount = this.likes[idx];
+      this.overCircleIcon[idx] = true;
     },
-    leaveCircleIcon: function (idx) {
-      this.overCircleIcon[idx] = false
+    leaveCircleIcon: function(idx) {
+      this.overCircleIcon[idx] = false;
     }
   }
-
-}
+};
 </script>
 
 <style>
-
 .transition-circle-icon {
   transform: scale(1.3);
   transition: 0.3s;
@@ -120,7 +119,7 @@ export default {
 
 /* 지도의 크기와 위치 반응형으로 만듬 */
 .adjust-location {
-  position:relative;
+  position: relative;
   width: 25px;
 }
 .continent-scale {
@@ -141,7 +140,7 @@ export default {
 
 @media (min-width: 1904px) {
   .adjust-location {
-    position:relative;
+    position: relative;
     width: 40px;
   }
   .continent-scale {
@@ -149,5 +148,4 @@ export default {
     width: 800px;
   }
 }
-
 </style>

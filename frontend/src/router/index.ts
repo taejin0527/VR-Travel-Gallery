@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from "vue-router";
 
 import Home from "../views/Home.vue";
 import Login from "../views/member/Login.vue";
-
+import About from "@/views/About.vue";
 import WorldMap from "../views/worldContinents/WorldMap.vue";
 import EachContinent from "../views/worldContinents/EachContinent.vue";
 import Create from "@/views/post/Create.vue";
@@ -26,6 +26,11 @@ const routes: Array<RouteConfig> = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/aboutus",
+    name: "Aboutus",
+    component: About,
   },
   {
     path: "/signup",
@@ -112,6 +117,7 @@ router.beforeEach((to, from, next) => {
     "/signup",
     "/",
     "/worldmap",
+    "/aboutus",
     "/create",
     "/view",
   ];

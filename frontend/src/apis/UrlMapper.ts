@@ -1,7 +1,7 @@
 export default {
-  BASE_URL: "http://i4110.p.ssafy.io:8080/api/",
-  BOARD_BASE_URL:"http://i4110.p.ssafy.io:8080/board/",
-  PAY_BASE_URL:"http://i4110.p.ssafy.io:8080/",
+  BASE_URL: "https://i4110.p.ssafy.io:8080/api/",
+  BOARD_BASE_URL: "https://i4110.p.ssafy.io:8080/board/",
+  PAY_BASE_URL: "https://i4110.p.ssafy.io:8080/",
   ROUTES: {
     auth: {
       URL: "auth/",
@@ -9,11 +9,11 @@ export default {
       signup: "auth/signup",
       idCheck: "auth/idcheck",
       emailCheck: "auth/emailcheck",
-      emailValidate: "auth/emailvalidate"
+      emailValidate: "auth/emailvalidate",
     },
     files: {
       URL: "files/",
-      upload: "upload/multipleFiles"
-    }
-  }
+      upload: "upload/multipleFiles",
+    },
+  },
 };
