@@ -126,7 +126,7 @@ export default {
       this.$router.push({name:"Flipbook"})
     },
     clickGoBack: function () {
-      this.$$router.push({name:localStorage.getItem("beforePage")})
+      this.$router.push({name:localStorage.getItem("page")})
     }
   }
 };

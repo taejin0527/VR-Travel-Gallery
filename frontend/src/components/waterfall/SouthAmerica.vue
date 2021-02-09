@@ -14,7 +14,11 @@
       >
         <!-- 이미지 가져오는 코드 -->
         <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-        <img :src="`${image}`" alt="image error" class="adjust-grid-image">
+        <img :src="`${image}`" alt="image error"
+          class="adjust-grid-image opacity-event-for-waterfall"
+          style="cursor:pointer;"
+          @click="gotoSelectArticle(idx)"
+        >
         <br>
 
         <!-- 태그 보여주는 코드 -->
@@ -48,6 +52,14 @@ export default {
   props: {
     images:[Array], // EachWaterfall.vue router에서 받아온 데이터들
     tags:[Array], // EachWaterfall.vue router에서 받아온 데이터들
+    indexs:[Array], // EachWaterfall.vue router에서 받아온 데이터들
+  },
+  methods: {
+    // 게시물 사진 보기
+    gotoSelectArticle: function (idx) {
+      localStorage.setItem("articleId", this.indexs[idx])
+      this.$router.push({name:"PhotoView"})
+    }
   }
 }
 </script>
@@ -105,6 +117,13 @@ export default {
   .adjust-grid-image {
     width:450px;
   }
+}
+
+/* 후버 효과 */
+.opacity-event-for-waterfall:hover {
+  transition: 0.5s;
+  transform: scale(1.03);
+  opacity: 0.4;
 }
 
 </style>

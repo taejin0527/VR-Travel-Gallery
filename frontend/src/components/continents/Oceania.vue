@@ -72,7 +72,7 @@ export default {
       popularLocationX: [54, 44, 50, 80, 70],
       popularLocationY: [54, 62, 44, 32, 70],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
-      exhibitionImage: require("@/assets/continents/SA.jpg"),
+      exhibitionImage: require("@/assets/continents/O.jpg"),
       exhibitionContent: ["오스트레일리아", "시드니", "멜버른", "골드코스트", "피지", "뉴질랜드"],
       exhibitionLocation: "마우스를 깃발에 올려보세요",
       exhibitionIndex: -1,
