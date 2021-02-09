@@ -12,4 +12,8 @@ import com.ssafy.iwc.model.Board;
 public interface BoardRepository extends JpaRepository<Board, Long>{
 //	@Query(value = "select * from posts where location=?",nativeQuery = true)
 	List<Board> findByLocation(String location);
+
+	
+	@Query(value = "select * from posts where location = ? order by id desc limit ?,?",nativeQuery = true)
+	List<Board> getLocationIdxBoard(String location, int start, int idx);
 }

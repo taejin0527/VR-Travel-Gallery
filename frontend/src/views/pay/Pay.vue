@@ -64,35 +64,47 @@
 <script>
 import axios from "axios";
 export default {
-  methods: {
-    charge() {
-      const money = $('input[name="cp_item"]:checked').val();
-      const formData = new FormData();
-      formData.append("cost", money);
-      // 수정부분
-      axios
-        .post(`${SERVER.PAY_BASE_URL}/kakao`, formData, {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          //   this.$router.push("/view");
-          console.log("succes");
-          console.log(response);
-          try {
-            window.location.href = response.data;
-          } catch {
-            alert("결제 실패");
-          }
-        })
-        .catch(function() {
-          console.log("FAILURE");
-        });
-    },
-  },
-};
+    
+    methods:{
+        charge(){
+            
+            const moneylist = document.getElementsByName('cp_item');
+            let money=0;
+            moneylist.forEach((node)=>{
+                if(node.checked){
+                    money=node.value;
+                    
+                }
+            })
+            console.log(money);
+            const formData = new FormData();
+            formData.append('cost',money);
+            // 수정부분
+            axios.post(`${SERVER.PAY_BASE_URL}/kakao`,
+          formData,{
+              headers:{
+                  
+                  'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
+                  'Content-Type' : 'multipart/form-data'
+              }
+          }).then(response=>{
+            //   this.$router.push("/view");
+            console.log("succes");
+            console.log(response);
+            try{
+                window.location.href = response.data;
+                
+            }catch{
+                alert('결제 실패');
+            }
+            
+            
+          }).catch(function(){
+              console.log("FAILURE");
+          });
+        }
+    }
+}
 </script>
 
 <style></style>
