@@ -27,11 +27,11 @@ export default {
             const formData = new FormData();
             formData.append('cost',money);
             // 수정부분
-            axios.post('http://localhost:8080/kakao',
+            axios.post(`${SERVER.PAY_BASE_URL}/kakao`,
           formData,{
               headers:{
                   
-                  'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FmeSIsImlhdCI6MTYxMjYwMDM5NywiZXhwIjoxNjEyNjg2Nzk3fQ.VjY6C_SwlqfzreDrKA_CqHvMhWs65kqQ6xeMNOr7i-lFJgCHqHoKWlRWaYAxAHz53uBX-m3tjodkDyUqsOZjBg',
+                  'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
                   'Content-Type' : 'multipart/form-data'
               }
           }).then(response=>{
