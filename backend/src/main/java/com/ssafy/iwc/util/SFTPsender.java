@@ -11,6 +11,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 public class SFTPsender {
 	private static final String SESSION_CONFIG_STRICT_HOST_KEY_CHECKING = "StrictHostKeyChecking";
@@ -21,8 +22,8 @@ public class SFTPsender {
 	
 	private static Channel channel = null;
 	private static ChannelSftp channelSftp = null;
-	private String root = "/root/mainImg";
-	private String root1 = "/root/subImg";
+	private String root = "/home/mainImg";
+	private String root1 = "/home/subImg";
 	
 	public ChannelSftp sshAccess() throws Exception{
 		System.out.println("시작");
@@ -54,18 +55,7 @@ public class SFTPsender {
 		session.setConfig(SESSION_CONFIG_STRICT_HOST_KEY_CHECKING,"no");
 		return session;
 	}
-//	public void sendFileToOtherServer(String sourcePath,String destinationPath)throws Exception{
-//		
-//		channel = session.openChannel("sftp");
-//		channel.connect();
-//		System.out.println("채널연결");
-//		channelSftp = (ChannelSftp)channel;
-//		channelSftp.put(sourcePath,destinationPath); //파일 전송 메소드
-//		channelSftp.disconnect();
-//		channel.disconnect();
-//		
-//		
-//	}
+
 //	연결끊기
 	private void disconnect(ChannelSftp sftp) {
         try {
@@ -82,6 +72,25 @@ public class SFTPsender {
             e.printStackTrace();
         }
     }
+//	파일 삭제
+	public boolean deleteFile(String fileName,int flag) throws Exception {
+		ChannelSftp sftp = sshAccess();
+		try {
+			if(flag==0) {
+        		sftp.cd(root);
+        	}else {
+        		sftp.cd(root1);
+        	}
+			sftp.rm(fileName);
+		}catch(SftpException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			disconnect(sftp);
+		}
+		return true;
+	}
+//	파일 업로드
 	public boolean uploadFile(String targetPath, File file,int flag) throws Exception {
         return this.uploadFile(targetPath, new FileInputStream(file), flag);
     }
