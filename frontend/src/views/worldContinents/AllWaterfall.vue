@@ -91,7 +91,7 @@ export default {
     for (let index = 0; index < locations.length; index++) {
       axios
         .get(
-          `http://i4d110.p.ssafy.io:8080/allview?location=${locations[index]}`
+          `https://i4d110.p.ssafy.io:8080/allview?location=${locations[index]}`
         )
         .then((response) => {
           for (let index = 0; index < response.data.length; index++) {
