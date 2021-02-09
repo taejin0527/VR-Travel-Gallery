@@ -20,8 +20,8 @@
           column
         >
           <v-chip
-            v-for="(item, idx) in exhibitionContent"
-            :key="idx"
+            v-for="(item, i) in tags"
+            :key="i"
             style="background-color:#DD6288; color:white;"
           >
             {{ item }}

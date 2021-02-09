@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     goPhotoViewer() {
-      if (this.exhibitionIndex == -1) {
+      if (this.exhibitionIndex == -1 || this.exhibitionIndex == undefined) {
         alert('깃발을 선택하고 <GO>버튼을 눌러주세요.')
       }
       else {

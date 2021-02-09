@@ -55,11 +55,11 @@
             column
           >
             <v-chip
-              v-for="(item, idx) in exhibitionContent"
-              :key="idx"
+              v-for="(item, i) in tags[idx]"
+              :key="i"
               style="background-color:#DD6288; color:white;"
             >
-              {{ item }}
+              {{ item.tag }}
             </v-chip>
           </v-chip-group>
         </v-col>
@@ -80,7 +80,6 @@ export default {
   },
   data: function () {
     return {
-      exhibitionContent: ["뉴욕", "hi"], // 샘플 데이터, 태그가 정상적으로 동작하면 이 데이터는 지울 예정
       popularExhibition: false, // 버튼 바꾸기 데이터
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
@@ -95,7 +94,7 @@ export default {
     for (let index = 0; index < locations.length; index++) {
       axios
         .get(
-          `https://i4d110.p.ssafy.io:8080/allview?location=${locations[index]}`
+          `${SERVER.BOARD_BASE_URL}allview?location=${locations[index]}`
         )
         .then((response) => {
           for (let index = 0; index < response.data.length; index++) {

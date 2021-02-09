@@ -20,6 +20,26 @@
         @mouseleave="isSelectTips = false"
       >
     </div>
+    
+    <!-- 좋아요 버튼 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              top: 300px;
+              right: 72px;
+              z-index: 101;
+            "
+    >
+      <v-icon size="30px" :class="{'like-hover-event':true, 'select-like-transition':isSelectLike}"
+        @click="likeThisArticle"
+      >
+          mdi-heart
+      </v-icon>
+    </div>
+        
 
     <!-- PhotoView 페이지로 가는 버튼 -->
     <v-btn
@@ -59,15 +79,26 @@
         :pagesHiRes="pagesHiRes"
         :startPage="pageNum"
         :singlePage="singlePage"
+        :zooms = "zooms"
         ref="flipbook"
         @flip-left-start="onFlipLeftStart"
         @flip-left-end="onFlipLeftEnd"
         @flip-right-start="onFlipRightStart"
         @flip-right-end="onFlipRightEnd"
-        @zoom-start="onZoomStart"
-        @zoom-end="onZoomEnd"
       >
       </Flipbook>
+      <br>
+      <div style="position:fixed; left:40px; top:45%;">
+        <div class="profile d-flex justify-center" > snapped by</div>
+        <span
+          class="user-hover-event-goto-profile d-flex justify-center"
+          style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
+          @click="gotoProfilePage"
+        >
+        {{author}}
+        </span>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -89,13 +120,17 @@ export default {
       pageNum: null,
       singlePage: true,
       isSelectTips: false,
-      vfImages: [null],
+      author:"",
+      vfImages: [null, require('@/assets/photo/flipbookHelp.jpg')],
+      zooms:[1],
+      isSelectLike:false, // 좋아요는 손봐야 합니다.
     };
   },
   mounted() {
     axios
       .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
       .then((response) => {
+        this.author = response.data[0].author
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
         });
@@ -140,12 +175,6 @@ export default {
       console.log("flip-right-end", page);
       return (window.location.hash = "#" + page);
     },
-    onZoomStart(zoom) {
-      return console.log("zoom-start", zoom);
-    },
-    onZoomEnd(zoom) {
-      return console.log("zoom-end", zoom);
-    },
     setPageFromHash() {
       const n = parseInt(window.location.hash.slice(1), 10);
       if (isFinite(n)) {
@@ -154,12 +183,35 @@ export default {
     },
     clickGoBack: function () {
       this.$router.push({name:localStorage.getItem("page")})
+    },
+    gotoProfilePage: function () {
+      localStorage.setItem('setUserforProfile', this.author)
+      this.$router.push({name:"Profile"})
+    },
+    // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
+    likeThisArticle: function () {
+      this.isSelectLike = !this.isSelectLike
+
     }
   },
 };
 </script>
 
 <style scoped>
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
 /* Flex */
 .container {
   display: flex;
@@ -171,6 +223,7 @@ export default {
   overflow: hidden;
   z-index: 1;
 }
+
 .container-center {
   display: flex;
   margin: 0;
@@ -179,18 +232,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.profile {
-  position: absolute;
-  height: 40vh;
-  width: 20vw;
-  left: 0;
-  bottom: 0;
-}
 
 .flipbook {
-  height: 100%;
-  width: 100%;
+  width: 90%;
+  height: 80%;
 }
+
 .flipbook .viewport {
   width: 100%;
   height: 100%;
@@ -221,6 +268,50 @@ export default {
   animation-iteration-count: infinite;
   animation-direction: alternate;
   cursor: pointer;
+}
+
+/* 좋아요 css */
+@keyframes likebeat {
+  from {
+    transform: scale(1);
+    color: #FDA288;
+  }
+
+  to {
+    transform: scale(1.3);
+    color: #FF8288;
+  }
+}
+
+.select-like-transition {
+  animation-duration: 0.8s;
+  animation-name: likebeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
+.like-hover-event:hover {
+  color: #FF8288;
+  transition: 0.5s;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+/* 여기 까지 좋아요 css*/
+
+.user-hover-event-goto-profile:hover {
+  color: aliceblue !important;
+  transition: 0.5s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.profile {
+  font-family: 'S-CoreDream-3Light', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #111111;
+  font-weight: bold;
+  cursor: default;
 }
 
 </style>
