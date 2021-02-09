@@ -292,7 +292,7 @@ export default {
           console.log(this.files[i].file);
           formData.append('file',this.files[i].file);
       }
-      axios.post(`${SERVER.BOARD_BASE_URL}requestupload`,
+      axios.post(`${SERVER.PAY_BASE_URL}requestupload`,
           formData,{
               headers:{
                   'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
