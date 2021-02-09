@@ -16,24 +16,32 @@
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
-            :class="{'adjust-location':true, 'transition-circle-icon':overCircleIcon[idx]}"
-            :style="'top:' + popularLocationY[idx] +'%;' + 'left:' + adjustLocationX[idx] + '%; cursor: pointer;'"
+            :class="{
+              'adjust-location': true,
+              'transition-circle-icon': overCircleIcon[idx]
+            }"
+            :style="
+              'top:' +
+                popularLocationY[idx] +
+                '%;' +
+                'left:' +
+                adjustLocationX[idx] +
+                '%; cursor: pointer;'
+            "
             @mouseover="selectLocation(idx)"
             @mouseleave="leaveCircleIcon(idx)"
-          >
+          />
         </div>
       </v-col>
 
       <!-- 지도 보여주기 -->
-      <v-col
-        cols="6"
-      >
+      <v-col cols="6">
         <div>
           <img
             src="@/assets/continents/oceania.svg"
             alt="image error"
             class="continent-scale"
-          >
+          />
         </div>
       </v-col>
       <v-col
@@ -57,14 +65,14 @@
 </template>
 
 <script>
-import ContinentCard from "@/components/continents/ContinentCard"
+import ContinentCard from "@/components/continents/ContinentCard";
 
 export default {
   name: "Oceania",
   components: {
     ContinentCard
   },
-  data: function () {
+  data: function() {
     return {
       popularDistrict: [0, -2.5, -5, -7.5, -10],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
@@ -79,8 +87,8 @@ export default {
       likeCount: 103,
       // 고른곳 확인
       locationIdx: 0,
-      overCircleIcon: [false, false, false, false, false],
-    }
+      overCircleIcon: [false, false, false, false, false]
+    };
   },
   props: {
     images: [Array],
@@ -93,12 +101,13 @@ export default {
   computed: {
     // Y축 보정하기
     // 재사용을 위한 코드
-    adjustLocationX: function () {
+    adjustLocationX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] = this.popularLocationX[index] + this.popularDistrict[index]
+        array[index] =
+          this.popularLocationX[index] + this.popularDistrict[index];
       }
-      return array
+      return array;
     }
   },
   methods: {
@@ -111,16 +120,14 @@ export default {
       this.likeCount= this.likes[idx]
       this.overCircleIcon[idx] = true
     },
-    leaveCircleIcon: function (idx) {
-      this.overCircleIcon[idx] = false
+    leaveCircleIcon: function(idx) {
+      this.overCircleIcon[idx] = false;
     }
   }
-
-}
+};
 </script>
 
 <style>
-
 .transition-circle-icon {
   transform: scale(1.3);
   transition: 0.3s;
@@ -128,7 +135,7 @@ export default {
 
 /* 지도의 크기와 위치 반응형으로 만듬 */
 .adjust-location {
-  position:relative;
+  position: relative;
   width: 25px;
 }
 .continent-scale {
@@ -149,7 +156,7 @@ export default {
 
 @media (min-width: 1904px) {
   .adjust-location {
-    position:relative;
+    position: relative;
     width: 40px;
   }
   .continent-scale {
@@ -157,5 +164,4 @@ export default {
     width: 800px;
   }
 }
-
 </style>

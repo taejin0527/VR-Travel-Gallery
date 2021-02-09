@@ -18,10 +18,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,7 +60,12 @@ public class User {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(length=100, nullable=false)
 	private String password;
-
+	
+	@Column(insertable = false, updatable = true)
+	@ColumnDefault("0")
+	private int money;
+	
+	
 	@Column(insertable = false, updatable = false)
 	@Temporal(TemporalType.DATE)
 	private Date joinDate;
