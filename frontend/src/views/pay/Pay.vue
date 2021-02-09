@@ -23,7 +23,15 @@ export default {
     methods:{
         charge(){
             
-            const money = $('input[name="cp_item"]:checked').val();
+            const moneylist = document.getElementsByName('cp_item');
+            let money=0;
+            moneylist.forEach((node)=>{
+                if(node.checked){
+                    money=node.value;
+                    
+                }
+            })
+            console.log(money);
             const formData = new FormData();
             formData.append('cost',money);
             // 수정부분
