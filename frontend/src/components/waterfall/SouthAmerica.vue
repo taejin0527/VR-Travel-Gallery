@@ -1,20 +1,16 @@
 <template>
   <!-- 각 대륙의 전체 사진 불러오기. -->
   <!-- 단, 각 대륙의 모든 사진을 불러오기 때문에 더 보기 버튼을 만들어서 15개씩 불러오는 방향을 잡아야 할 듯. -->
-  <v-container
-    class="adjust-grid-container"
-  >
+  <v-container class="adjust-grid-container">
     <v-row>
-      <v-col
-        v-for="(image, idx) in images"
-        :key="idx"
-        cols="12"
-        sm="6"
-        md="4"
-      >
+      <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
         <!-- 이미지 가져오는 코드 -->
         <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-        <img :src="`${image}`" alt="image error" class="adjust-grid-image">
+        <img :src="`${image}`" alt="image error"
+          class="adjust-grid-image opacity-event-for-waterfall"
+          style="cursor:pointer;"
+          @click="gotoSelectArticle(idx)"
+        >
         <br>
 
         <!-- 태그 보여주는 코드 -->
@@ -28,49 +24,55 @@
             :key="idx"
             style="background-color:#DD6288; color:white;"
           >
-            {{item}}
+            {{ item }}
           </v-chip>
-        </v-chip-group>        
+        </v-chip-group>
       </v-col>
     </v-row>
   </v-container>
-  
 </template>
 
 <script>
 export default {
-  name:"SouthAmerica",
-  data: function () {
+  name: "SouthAmerica",
+  data: function() {
     return {
-      exhibitionContent: ['뉴욕', 'hi'] // 샘플 태그, 나중에 지울 예정
-    }
+      exhibitionContent: ["뉴욕", "hi"] // 샘플 태그, 나중에 지울 예정
+    };
   },
   props: {
     images:[Array], // EachWaterfall.vue router에서 받아온 데이터들
     tags:[Array], // EachWaterfall.vue router에서 받아온 데이터들
+    indexs:[Array], // EachWaterfall.vue router에서 받아온 데이터들
+  },
+  methods: {
+    // 게시물 사진 보기
+    gotoSelectArticle: function (idx) {
+      localStorage.setItem("articleId", this.indexs[idx])
+      this.$router.push({name:"PhotoView"})
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-
 /* 이미지 반응형으로 모든 기기에서 사용가능하게 만듬 */
 .adjust-grid-container {
   padding: 80px 0px 0px 140px;
 }
 .adjust-grid-image {
-  width:250px;
+  width: 250px;
 }
 
 @media (min-width: 600px) {
   .adjust-grid-image {
-    width:230px;
+    width: 230px;
   }
 }
 
 @media (min-width: 800px) {
   .adjust-grid-image {
-    width:270px;
+    width: 270px;
   }
 }
 
@@ -83,7 +85,7 @@ export default {
 /* 1264px 부터 css코드 */
 @media (min-width: 1264px) {
   .adjust-grid-image {
-    width:350px;
+    width: 350px;
   }
 }
 
@@ -93,7 +95,7 @@ export default {
     padding: 80px 0px 0px 0px;
   }
   .adjust-grid-image {
-    width:400px;
+    width: 400px;
   }
 }
 
@@ -103,8 +105,15 @@ export default {
     padding: 80px 0px 0px 130px;
   }
   .adjust-grid-image {
-    width:450px;
+    width: 450px;
   }
+}
+
+/* 후버 효과 */
+.opacity-event-for-waterfall:hover {
+  transition: 0.5s;
+  transform: scale(1.03);
+  opacity: 0.4;
 }
 
 </style>
