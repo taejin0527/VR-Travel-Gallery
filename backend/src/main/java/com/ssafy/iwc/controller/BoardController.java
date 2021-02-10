@@ -55,8 +55,8 @@ public class BoardController {
 	@Autowired
 	private TagService tagService;
 //	이부분 처리
-	private String FileMainSrc = "https://i4d110.p.ssafy.io/images/mainImg/";
-	private String FileSubSrc = "https://i4d110.p.ssafy.io/images/subImg/";
+	private String FileMainSrc = "http://i4d110.p.ssafy.io:9000/mainImg/";
+	private String FileSubSrc = "http://i4d110.p.ssafy.io:9000/subImg/";
 	
 	
 	@ApiOperation(value = "게시물 id를 보내면 게시물과 관련 모든것 삭제", response = String.class)
@@ -94,42 +94,7 @@ public class BoardController {
 		}
 
 	}
-
-	@ApiOperation(value = "해당 num 만큼 게시물 추가, 게시물 없으면 End Page 리턴", response = String.class)
-	@GetMapping("/paging")
-	public ResponseEntity<List<AllMainView>> paging(@RequestParam("location") String location,
-			@RequestParam("num") String num) {
-		List<LocationInfo> result = new LinkedList<>();
-//		한번에 보여줄 posts갯수
-		int idx = 6;
-//		시작페이지
-		int start = Integer.parseInt(num) * idx;
-		try {
-			List<Board> dto = boardService.getLocationIdxBoard(location, start, idx);
-			if(dto.size()==0) {
-				return new ResponseEntity("End Page", HttpStatus.FAILED_DEPENDENCY);
-			}
-			for (Board a : dto) {
-				System.out.println(a);
-				LocationInfo data = new LocationInfo();
-//			data에 Board값 넣기
-				data.setBoard(a);
-//			메인 이미지 경로 가져와서 넣기
-				Optional<MainImage> d = mainImageService.findById(a.getId());
-				data.setFilePath(FileMainSrc + d.get().getFilename());
-//			tag가져와서 넣기
-				data.setTags(tagService.findTagId(a.getId()));
-				System.out.println(data.getTags());
-
-				result.add(data);
-			}
-			return new ResponseEntity(result, HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println("에러");
-			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
-
-		}
-	}
+	
 	
 	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
