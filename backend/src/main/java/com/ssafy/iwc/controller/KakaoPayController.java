@@ -73,9 +73,9 @@ public class KakaoPayController {
 		params.add("quantity", "1");
 //		금액
 		params.add("total_amount", cost);
-		params.add("approval_url", "https://localhost:8080/kakaoPaySuccess");
-        params.add("cancel_url", "https://localhost:8080/kakaoPayCancel");
-        params.add("fail_url", "https://localhost:8080/kakaoPaySuccessFail");
+		params.add("approval_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccess");
+        params.add("cancel_url", "https://i4d110.p.ssafy.io/apis/kakaoPayCancel");
+        params.add("fail_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccessFail");
 		
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         System.out.println(body);
