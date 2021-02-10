@@ -81,7 +81,7 @@ export default {
             const formData = new FormData();
             formData.append('cost',money);
             // 수정부분
-            axios.post(`${SERVER.PAY_BASE_URL}kakao`,
+            axios.post(`http://localhost:8080/kakao`,
           formData,{
               headers:{
                   
