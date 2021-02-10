@@ -25,26 +25,56 @@
         mdi-star
       </v-icon>
     </v-btn>
-    <!-- 오른쪽 상단 Tips 픽스 -->
-    <div
+    <!-- 검색 버튼 및 입력창 -->
+    <v-lazy
+      min-height="200"
+      transition="slide-x-reverse-transition"
+      v-if="isSelectSearch"
       style="
               position: fixed;
               height: 10%;
               margin: 0;
               padding: 0;
-              width: 100px;
-              top: 15px;
-              right: 185px;
+              width: 300px;
+              top: 23px;
+              right: 170px;
               z-index: 101;
+              transition:0.5s;
             "
     >
-      <img
-        src="@/assets/3DHelp3.png" alt="" width="120px"
-        :class="{'select-tips-transition': isSelectTips}"
-        @mouseover="isSelectTips = true"
-        @mouseleave="isSelectTips = false"
+      <v-card
+        color="#DDA288"
+        height="50px"
+        width="300px"
+        dark
       >
-    </div>
+        <v-card-text>
+          <v-text-field
+            v-model="searchData"
+            color="white"
+            placeholder="장소나 태그를 입력하세요."
+            append-outer-icon="mdi-airplane-takeoff"
+            @keydown.enter="searchKeyword"
+            @click:append-outer="searchKeyword"
+            style="position:relative; bottom:24px;"
+          ></v-text-field>
+        </v-card-text>
+      </v-card>
+    </v-lazy>
+    
+    <v-btn
+      v-else
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
+      @click="isSelectSearch = true"
+    >
+      <v-icon>
+        mdi-image-search
+      </v-icon>
+    </v-btn>
+
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -65,7 +95,9 @@ export default {
   data: function() {
     return {
       popularExhibition: true,
-      isSelectTips: false
+      isSelectTips: false,
+      searchData:"",
+      isSelectSearch:false,
     }
   },
   components: {
@@ -82,28 +114,19 @@ export default {
     },
     clickGotoCreate: function() {
       this.$router.push({ name: "Create" });
+    },
+    searchKeyword: function() {
+      if (this.searchData === "") {
+        alert('검색어를 입력해주세요.')
+      }
+      else {
+        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* TIPS 애니메이션 */
-@keyframes tipsbeat {
-  from {
-    transform: scale(0.95);
-  }
 
-  to {
-    transform: scale(1.1);
-  }
-}
-
-.select-tips-transition {
-  animation-duration: 0.8s;
-  animation-name: tipsbeat;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  cursor: pointer;
-}
 </style>
