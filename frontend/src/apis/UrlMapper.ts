@@ -1,6 +1,7 @@
 export default {
-  BASE_URL: "http://localhost:8080/api/",
-  BOARD_BASE_URL:"http://localhost:8080/board/",
+  BASE_URL: "https://i4d110.p.ssafy.io/apis/api/",
+  BOARD_BASE_URL: "https://i4d110.p.ssafy.io/apis/board/",
+  PAY_BASE_URL: "https://i4d110.p.ssafy.io/apis/",
   ROUTES: {
     auth: {
       URL: "auth/",
@@ -8,11 +9,11 @@ export default {
       signup: "auth/signup",
       idCheck: "auth/idcheck",
       emailCheck: "auth/emailcheck",
-      emailValidate: "auth/emailvalidate"
+      emailValidate: "auth/emailvalidate",
     },
     files: {
       URL: "files/",
-      upload: "upload/multipleFiles"
-    }
-  }
+      upload: "upload/multipleFiles",
+    },
+  },
 };

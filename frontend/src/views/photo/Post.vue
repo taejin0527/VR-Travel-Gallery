@@ -38,7 +38,7 @@ export default {
   components: {
     Carousel,
     CarouselSlide,
-    MetaCard,
+    MetaCard
   },
   data: function() {
     return {
@@ -47,7 +47,7 @@ export default {
         require("@/assets/images/example/2.jpg"),
         require("@/assets/images/example/3.jpg"),
         require("@/assets/images/example/4.jpg"),
-        require("@/assets/images/example/5.jpg"),
+        require("@/assets/images/example/5.jpg")
       ],
       visibleSlide: 0,
       exhibitionImage: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
@@ -55,13 +55,13 @@ export default {
       exhibitionContent: ["태그 1", "태그 2"],
       exhibitionLocation: "",
       exhibitionAuthor: "ssafy",
-      likeCount: 168,
+      likeCount: 168
     };
   },
   computed: {
     slidesLen() {
       return this.slides.length;
-    },
+    }
   },
   methods: {
     prev() {
@@ -81,8 +81,8 @@ export default {
       } else {
         this.visibleSlide++;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
