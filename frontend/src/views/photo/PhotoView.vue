@@ -28,8 +28,8 @@
               height: 10%;
               margin: 0;
               padding: 0;
-              top: 300px;
-              right: 72px;
+              top: 365px;
+              right: 73px;
               z-index: 101;
             "
     >
@@ -53,12 +53,23 @@
       </v-icon>
     </v-btn>
 
-    <!-- 뒤로가기 버튼 -->
+    <!-- VR 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
       fab
       color="#DDA288"
       style="position:fixed; right:60px; top:200px; color:white;"
+      @click="clickGotoVR"
+    >
+      <span style="font-size:22px">VR</span>
+    </v-btn>
+
+    <!-- 뒤로가기 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:60px; top:280px; color:white;"
       @click="clickGoBack"
     >
       <v-icon size="38px">
@@ -172,6 +183,10 @@ export default {
     likeThisArticle: function () {
       this.isSelectLike = !this.isSelectLike
 
+    },
+    // 여기에 라우터 페이지 이동 하심 댐당
+    clickGotoVR: function () {
+      this.$router.push({name:""})
     }
   }
 };
