@@ -55,8 +55,8 @@ public class BoardController {
 	@Autowired
 	private TagService tagService;
 //	이부분 처리
-	private String FileMainSrc = "http://i4d110.p.ssafy.io:9000/mainImg/";
-	private String FileSubSrc = "http://i4d110.p.ssafy.io:9000/subImg/";
+	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
+	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
 	
 	
 	@ApiOperation(value = "게시물 id를 보내면 게시물과 관련 모든것 삭제", response = String.class)
