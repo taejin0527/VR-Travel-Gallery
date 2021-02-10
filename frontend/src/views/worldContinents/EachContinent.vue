@@ -24,6 +24,57 @@
         mdi-star
       </v-icon>
     </v-btn>
+
+    <!-- 검색 버튼 및 입력창 -->
+    <v-lazy
+      min-height="200"
+      transition="slide-x-reverse-transition"
+      v-if="isSelectSearch"
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 300px;
+              top: 23px;
+              right: 170px;
+              z-index: 101;
+              transition:0.5s;
+            "
+    >
+      <v-card
+        color="#DDA288"
+        height="50px"
+        width="300px"
+        dark
+      >
+        <v-card-text>
+          <v-text-field
+            v-model="searchData"
+            color="white"
+            placeholder="장소나 태그를 입력하세요."
+            append-outer-icon="mdi-airplane-takeoff"
+            @keydown.enter="searchKeyword"
+            @click:append-outer="searchKeyword"
+            style="position:relative; bottom:24px;"
+          ></v-text-field>
+        </v-card-text>
+      </v-card>
+    </v-lazy>
+    
+    <v-btn
+      v-else
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
+      @click="isSelectSearch = true"
+    >
+      <v-icon>
+        mdi-image-search
+      </v-icon>
+    </v-btn>
+
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
       <Oceania
@@ -104,6 +155,8 @@ export default {
       likes: [], // 좋아요 수 데이터 리스트
       locations: [], // 장소 데이터 리스트
       indexs: [], // 게시물 id 리스트
+      searchData:"",
+      isSelectSearch:false,
     }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
@@ -149,6 +202,14 @@ export default {
     // 게시물 작성 페이지로 이동
     clickGotoCreate: function() {
       this.$router.push({ name: "Create" });
+    },
+    searchKeyword: function() {
+      if (this.searchData === "") {
+        alert('검색어를 입력해주세요.')
+      }
+      else {
+        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+      }
     }
   }
 };
