@@ -1,5 +1,5 @@
 <template>
-  <v-containter>
+  <v-container>
     <v-row>
       <!-- 북미 -->
       <v-col cols="2">
@@ -190,7 +190,7 @@
         />
       </v-col>
     </v-row>
-  </v-containter>
+  </v-container>
 </template>
 
 <script>

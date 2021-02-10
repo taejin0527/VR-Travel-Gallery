@@ -1,5 +1,73 @@
 <template>
   <div class="container">
+    <!-- 오른쪽 상단 Tips 픽스 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 100px;
+              top: 15px;
+              right: 50px;
+              z-index: 101;
+            "
+    >
+      <img
+        src="@/assets/3DHelp3.png" alt="" width="120px"
+        :class="{'select-tips-transition': isSelectTips}"
+        @mouseover="isSelectTips = true"
+        @mouseleave="isSelectTips = false"
+      >
+    </div>
+    
+    <!-- 좋아요 버튼 -->
+    <div
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              top: 300px;
+              right: 72px;
+              z-index: 101;
+            "
+    >
+      <v-icon size="30px" :class="{'like-hover-event':true, 'select-like-transition':isSelectLike}"
+        @click="likeThisArticle"
+      >
+          mdi-heart
+      </v-icon>
+    </div>
+        
+
+    <!-- PhotoView 페이지로 가는 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:60px; top:120px; color:white;"
+      @click="clickGotoPhotoView"
+    >
+      <v-icon>
+        mdi-view-carousel-outline
+      </v-icon>
+    </v-btn>
+
+    <!-- 뒤로가기 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:60px; top:200px; color:white;"
+      @click="clickGoBack"
+    >
+      <v-icon size="38px">
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
+
+
     <div
       class="container-center"
       :class="{ 'has-mouse': hasMouse }"
@@ -11,37 +79,38 @@
         :pagesHiRes="pagesHiRes"
         :startPage="pageNum"
         :singlePage="singlePage"
+        :zooms = "zooms"
         ref="flipbook"
         @flip-left-start="onFlipLeftStart"
         @flip-left-end="onFlipLeftEnd"
         @flip-right-start="onFlipRightStart"
         @flip-right-end="onFlipRightEnd"
-        @zoom-start="onZoomStart"
-        @zoom-end="onZoomEnd"
       >
       </Flipbook>
-    </div>
-    <div class="profile">
-      <MetaCard
-        :exhibitionImage="exhibitionImage"
-        :exhibitionTitle="exhibitionTitle"
-        :exhibitionContent="exhibitionContent"
-        :exhibitionLocation="exhibitionLocation"
-        :exhibitionAuthor="exhibitionAuthor"
-        :likeCount="likeCount"
-      />
+      <br>
+      <div style="position:fixed; left:40px; top:45%;">
+        <div class="profile d-flex justify-center" > snapped by</div>
+        <span
+          class="user-hover-event-goto-profile d-flex justify-center"
+          style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
+          @click="gotoProfilePage"
+        >
+        {{author}}
+        </span>
+      </div>
+      
     </div>
   </div>
 </template>
 
 <script>
 import Flipbook from "flipbook-vue";
-import MetaCard from "@/components/photo/MetaCard.vue";
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   components: {
     Flipbook,
-    MetaCard,
   },
   data: function() {
     return {
@@ -50,16 +119,26 @@ export default {
       hasMouse: true,
       pageNum: null,
       singlePage: true,
-
-      exhibitionImage: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      exhibitionTitle: "Test용",
-      exhibitionContent: ["태그 1", "태그 2"],
-      exhibitionLocation: "",
-      exhibitionAuthor: "ssafy",
-      likeCount: 168,
+      isSelectTips: false,
+      author:"",
+      vfImages: [null, require('@/assets/photo/flipbookHelp.jpg')],
+      zooms:[1],
+      isSelectLike:false, // 좋아요는 손봐야 합니다.
     };
   },
   mounted() {
+    // username추가
+    axios
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
+      .then((response) => {
+        this.author = response.data[0].author
+        response.data.forEach((e) => {
+          this.vfImages.push(e.filepath);
+        });
+      })
+      .catch(() => {
+        console.log("subImg 불러오기 실패");
+      });
     window.addEventListener("keydown", (ev) => {
       const { flipbook } = this.$refs;
       if (!flipbook) {
@@ -73,28 +152,16 @@ export default {
       }
     }),
       setTimeout(() => {
-        (this.pages = [
-          null,
-          require("@/assets/images/example/1.jpg"),
-          require("@/assets/images/example/2.jpg"),
-          require("@/assets/images/example/3.jpg"),
-          require("@/assets/images/example/4.jpg"),
-          require("@/assets/images/example/5.jpg"),
-          require("@/assets/images/example/6.jpg"),
-        ]),
-          (this.pagesHiRes = [
-            null,
-            require("@/assets/images/example/1.jpg"),
-            require("@/assets/images/example/2.jpg"),
-            require("@/assets/images/example/3.jpg"),
-            require("@/assets/images/example/4.jpg"),
-            require("@/assets/images/example/5.jpg"),
-          ]);
+        (this.pages = this.vfImages),
+        (this.pagesHiRes = this.vfImages);
       }, 1),
       window.addEventListener("hashchange", this.setPageFromHash);
     this.setPageFromHash();
   },
   methods: {
+    clickGotoPhotoView () {
+      this.$router.push({name:"PhotoView"})
+    },
     onFlipLeftStart(page) {
       return console.log("flip-left-start", page);
     },
@@ -109,23 +176,43 @@ export default {
       console.log("flip-right-end", page);
       return (window.location.hash = "#" + page);
     },
-    onZoomStart(zoom) {
-      return console.log("zoom-start", zoom);
-    },
-    onZoomEnd(zoom) {
-      return console.log("zoom-end", zoom);
-    },
     setPageFromHash() {
       const n = parseInt(window.location.hash.slice(1), 10);
       if (isFinite(n)) {
         return (this.pageNum = n);
       }
     },
+    clickGoBack: function () {
+      this.$router.push({name:localStorage.getItem("page")})
+    },
+    gotoProfilePage: function () {
+      localStorage.setItem('setUserforProfile', this.author)
+      this.$router.push({name:"Profile"})
+    },
+    // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
+    likeThisArticle: function () {
+      this.isSelectLike = !this.isSelectLike;
+
+    }
   },
 };
 </script>
 
 <style scoped>
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
 /* Flex */
 .container {
   display: flex;
@@ -135,9 +222,9 @@ export default {
   position: absolute;
   justify-content: center;
   overflow: hidden;
-  background: #333;
   z-index: 1;
 }
+
 .container-center {
   display: flex;
   margin: 0;
@@ -146,18 +233,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.profile {
-  position: absolute;
-  height: 40vh;
-  width: 20vw;
-  left: 0;
-  bottom: 0;
-}
 
 .flipbook {
-  height: 100%;
-  width: 100%;
+  width: 90%;
+  height: 80%;
 }
+
 .flipbook .viewport {
   width: 100%;
   height: 100%;
@@ -170,4 +251,68 @@ export default {
   line-height: 20px;
   margin: 10px;
 }
+
+/* TIPS 애니메이션 */
+@keyframes tipsbeat {
+  from {
+    transform: scale(0.95);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.select-tips-transition {
+  animation-duration: 0.8s;
+  animation-name: tipsbeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
+/* 좋아요 css */
+@keyframes likebeat {
+  from {
+    transform: scale(1);
+    color: #FDA288;
+  }
+
+  to {
+    transform: scale(1.3);
+    color: #FF8288;
+  }
+}
+
+.select-like-transition {
+  animation-duration: 0.8s;
+  animation-name: likebeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
+.like-hover-event:hover {
+  color: #FF8288;
+  transition: 0.5s;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+/* 여기 까지 좋아요 css*/
+
+.user-hover-event-goto-profile:hover {
+  color: aliceblue !important;
+  transition: 0.5s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.profile {
+  font-family: 'S-CoreDream-3Light', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #111111;
+  font-weight: bold;
+  cursor: default;
+}
+
 </style>

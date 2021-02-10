@@ -57,8 +57,8 @@ export default {
     return {
       formData: {
         id: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
   methods: {
@@ -95,7 +95,7 @@ export default {
     },
     changeProfile() {
       console.log(this.formData);
-    },
-  },
+    }
+  }
 };
 </script>
