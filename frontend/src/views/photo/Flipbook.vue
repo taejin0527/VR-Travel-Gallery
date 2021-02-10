@@ -138,6 +138,7 @@ export default {
     };
   },
   mounted() {
+    // username추가
     axios
       .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
       .then((response) => {
@@ -201,7 +202,7 @@ export default {
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
     likeThisArticle: function () {
-      this.isSelectLike = !this.isSelectLike
+      this.isSelectLike = !this.isSelectLike;
 
     },
     // 여기에 라우터 페이지 이동 하심 댐당
