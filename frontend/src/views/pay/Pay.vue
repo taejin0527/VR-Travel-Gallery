@@ -63,6 +63,7 @@
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 export default {
     
     methods:{

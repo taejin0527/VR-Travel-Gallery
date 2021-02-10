@@ -8,21 +8,29 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "like")
+@Table(name = "likes")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Like {
 
 	@EmbeddedId
-	private String userid;
+	private MultiId likeId;
 
-	private long postsid;
+	
+	@Builder
+	public Like(MultiId likeId) {
+		
+		this.likeId = likeId;
+	}
+	
+	
 	
 	
 	
