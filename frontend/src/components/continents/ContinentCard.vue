@@ -9,8 +9,9 @@
     </template>
 
     <v-img height="250" :src="exhibitionImage"></v-img>
-
-    <v-card-title>{{ exhibitionLocation }}</v-card-title>
+    <div class="d-flex justify-center" style="text-align: center;">
+      <v-card-title class="font-change-MapoPeacefull-card-title">{{ exhibitionLocation }}</v-card-title>
+    </div>
 
     <v-card-text>
       <v-row align="center" class="mx-0">
@@ -23,8 +24,7 @@
         </div>
       </v-row>
 
-      <div class="my-4 subtitle-1">
-      </div>
+      <div class="my-4 subtitle-1"></div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -60,27 +60,43 @@ export default {
   name: "ContinentCard",
   data: () => ({
     loading: false,
-    selection: 1,
+    selection: 1
   }),
   props: {
     exhibitionImage: [String],
-    exhibitionTitle: [String],
     exhibitionContent: [Array, String],
     exhibitionLocation: [String],
+    exhibitionIndex : [Number],
     likeCount: [Number, String],
   },
   methods: {
     goPhotoViewer() {
-      this.$router.push({ name: "PhotoView" });
+      if (this.exhibitionIndex == -1 || this.exhibitionIndex == undefined) {
+        alert('깃발을 선택하고 <GO>버튼을 눌러주세요.')
+      }
+      else {
+        localStorage.setItem('articleId', this.exhibitionIndex)
+        this.$router.push({ name: "PhotoView" });
+      }
+      
     },
-  },
-  mounted: function() {
-    console.log(this.exhibitionImage);
   },
 };
 </script>
 
-<style>
+<style scoped>
+@font-face {
+    font-family: 'MapoPeacefull';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-change-MapoPeacefull-card-title {
+  font-family: 'MapoPeacefull';
+  color: #444444;
+}
+
 @keyframes lighttextparty {
   from {
     transform: scale(0.9);

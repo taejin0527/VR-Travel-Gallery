@@ -30,6 +30,9 @@ import com.ssafy.iwc.model.Charge;
 import com.ssafy.iwc.model.KakaoPay;
 import com.ssafy.iwc.model.KakaoPayApproval;
 import com.ssafy.iwc.service.ChargeService;
+import com.ssafy.iwc.service.UserService;
+
+import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -40,8 +43,12 @@ public class KakaoPayController {
 	private KakaoPayApproval kakaoPayApproval;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	ChargeService chargeService;
 //	결제 요청
+	@ApiOperation(value = "Kakao에 결제요청 cost라는 비용을 던져줘야함", response = String.class)
 	@PostMapping("/kakao")
 	public String kakao(@RequestParam("cost") String cost) {
 		System.out.println("카카오 결제");
@@ -66,9 +73,9 @@ public class KakaoPayController {
 		params.add("quantity", "1");
 //		금액
 		params.add("total_amount", cost);
-		params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
-        params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
-        params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
+		params.add("approval_url", "https://localhost:8080/kakaoPaySuccess");
+        params.add("cancel_url", "https://localhost:8080/kakaoPayCancel");
+        params.add("fail_url", "https://localhost:8080/kakaoPaySuccessFail");
 		
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         System.out.println(body);
@@ -92,6 +99,7 @@ public class KakaoPayController {
         return "/pay";
 	}
 //	결제 승인
+	@ApiOperation(value = "요청된건을 승인하고 최종결제, 요청시의 pg_token을 넣어줘야함", response = String.class)
 	@GetMapping("/kakaoPaySuccess")
 	public void kakaoPaySuccess(@RequestParam("pg_token")String pg_token, HttpServletResponse response) {
 		
@@ -129,9 +137,9 @@ public class KakaoPayController {
         	chargeDto.setUsername(kakaoPayApproval.getPartner_user_id());
         	chargeService.save(chargeDto);
 //        	사용자 돈 갱신
-            
+        	userService.updateUserMoney(kakaoPayApproval.getAmount().getTotal(),kakaoPayApproval.getPartner_user_id());
         	try {
-				response.sendRedirect("http://localhost:8000/pay");
+				response.sendRedirect("https://localhost:8000/pay");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
