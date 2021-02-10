@@ -63,6 +63,7 @@
 
 <script>
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 export default {
     
     methods:{
@@ -80,7 +81,7 @@ export default {
             const formData = new FormData();
             formData.append('cost',money);
             // 수정부분
-            axios.post(`${SERVER.PAY_BASE_URL}/kakao`,
+            axios.post(`${SERVER.PAY_BASE_URL}kakao`,
           formData,{
               headers:{
                   

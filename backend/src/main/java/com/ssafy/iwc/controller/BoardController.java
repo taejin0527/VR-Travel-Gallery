@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jcraft.jsch.Session;
+
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
@@ -31,11 +31,12 @@ import com.ssafy.iwc.model.AllView;
 import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.model.LocationInfo;
 import com.ssafy.iwc.model.MainImage;
-import com.ssafy.iwc.model.Tag;
+import com.ssafy.iwc.model.MultiId;
 import com.ssafy.iwc.service.BoardService;
+import com.ssafy.iwc.service.LikeService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
-import com.ssafy.iwc.service.PostImageServiceImpl;
+
 import com.ssafy.iwc.service.TagService;
 import com.ssafy.iwc.util.MD5Generator;
 import com.ssafy.iwc.util.SFTPsender;
@@ -54,6 +55,9 @@ public class BoardController {
 	private MainImageService mainImageService;
 	@Autowired
 	private TagService tagService;
+	@Autowired
+	private LikeService likeService;
+	
 //	이부분 처리
 	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
 	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
@@ -129,14 +133,21 @@ public class BoardController {
 
 	}
 
-	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기", response = String.class)
+	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기,username으로 좋아요 확인", response = String.class)
 	@GetMapping("/getposts")
-	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id) {
+	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id,@RequestParam("username") String username) {
 		long no = Long.parseLong(id);
 //		조회수 업로드하기
 		
-//		내가 좋아요했는지 확인
+
 		try {
+//			내가 좋아요했는지 확인
+			MultiId mid = new MultiId();
+			mid.setPostsid(no);
+			mid.setUsername(username);
+			int like = likeService.findLike(mid);
+			System.out.println(like);
+			
 			List<AllView> dto = postImageService.findSubImg(no);
 
 			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
@@ -153,7 +164,12 @@ public class BoardController {
 			}
 			AllMainView all = mainImageService.findMainImg(no);
 			Map<String, String> m = new HashMap<String, String>();
-
+			if(like==0) {
+				m.put("like","false");
+			}
+			else {
+				m.put("like", "true");
+			}
 			m.put("id", Long.toString(all.getId()));
 			m.put("author", all.getAuthor());
 			m.put("filepath", FileMainSrc + all.getFilename());

@@ -106,6 +106,7 @@
       <!-- <div class="d-flex justify-end align-center"> <pre class="profile">snapped by  </pre>
       <span class="user-hover-event-goto-profile" style="color:#DDA288; font-size:33px; font-family:'SDSamliphopangche_Outline';">{{author}}</span><pre>  </pre></div> -->
     </div>
+    <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
     <div style="position:fixed; left:40px; top:45%;">
       <div class="profile d-flex justify-center" > snapped by</div>
       <span
@@ -115,8 +116,21 @@
       >
         {{author}}
       </span>
+      <br>
+      <div
+        class="profile d-flex justify-center"
+        v-if="this.$store.state.Auth.authToken.username == this.author"
+        @click="deleteArticle"
+      >
+        <v-btn
+          color="#DDA288"
+          style="color:white; font-weight:bold;"
+        >
+          게시글
+          삭제
+        </v-btn>
+      </div>
     </div>
-    
   </div>
 </template>
 
@@ -148,6 +162,7 @@ export default {
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
     isSelectLike: false, // 좋아요는 손봐야 합니다.
+
   }),
   computed: {
     user() {
@@ -156,16 +171,21 @@ export default {
   },
   mounted() {
     axios
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
       .then((response) => {
+        if (response.data[response.data.length-1].like === "false") {
+          this.isSelectLike = false
+        }
+        else {
+          this.isSelectLike = true
+        }
         this.author = response.data[0].author
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
-          console.log(e.filepath);
         });
       })
-      .catch(() => {
-        console.log("subImg 불러오기 실패");
+      .catch((err) => {
+        console.error(err);
       });
   },
   methods: {
@@ -187,6 +207,30 @@ export default {
     // 여기에 라우터 페이지 이동 하심 댐당
     clickGotoVR: function () {
       this.$router.push({name:""})
+    },
+    // 게시글 삭제
+    deleteArticle: function () {
+      // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
+      if (this.$store.state.Auth.authToken.username != this.author) {
+        console.log(this.$store.state.Auth)
+        alert('인증되지 않은 사용자 입니다.')
+      }
+      else {
+        axios.delete (
+          `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
+          },
+        )
+        .then(() => {
+          this.$router.push({name:localStorage.getItem('page')})
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
     }
   }
 };

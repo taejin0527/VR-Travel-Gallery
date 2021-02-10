@@ -288,7 +288,7 @@ export default {
         .then(response => {
           localStorage.setItem("continent", this.selectContinent);
           this.$router.push({ name: "EachWaterfall" });
-          console.log("succes");
+          console.log("success");
         })
         .catch(function() {
           console.log("FAILURE");
