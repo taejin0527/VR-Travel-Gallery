@@ -108,6 +108,20 @@
         >
         {{author}}
         </span>
+        <br>
+        <div
+          class="profile d-flex justify-center"
+          v-if="this.$store.state.Auth.authToken.username == this.author"
+          @click="deleteArticle"
+        >
+          <v-btn
+            color="#DDA288"
+            style="color:white; font-weight:bold;"
+          >
+            게시글
+            삭제
+          </v-btn>
+        </div>
       </div>
       
     </div>
@@ -140,15 +154,21 @@ export default {
   mounted() {
     // username추가
     axios
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}`)
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
       .then((response) => {
+        if (response.data[response.data.length-1].like === "false") {
+          this.isSelectLike = false
+        }
+        else {
+          this.isSelectLike = true
+        }
         this.author = response.data[0].author
         response.data.forEach((e) => {
           this.vfImages.push(e.filepath);
         });
       })
-      .catch(() => {
-        console.log("subImg 불러오기 실패");
+      .catch((err) => {
+        console.error(err);
       });
     window.addEventListener("keydown", (ev) => {
       const { flipbook } = this.$refs;
@@ -209,6 +229,30 @@ export default {
     clickGotoVR: function () {
       // this.$router.push({name:""})
       console.log("그냥두면 에러나서 이렇게 나중에 지우십셔")
+    },
+    // 게시글 삭제
+    deleteArticle: function () {
+      // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
+      if (this.$store.state.Auth.authToken.username != this.author) {
+        console.log(this.$store.state.Auth)
+        alert('인증되지 않은 사용자 입니다.')
+      }
+      else {
+        axios.delete (
+          `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
+          },
+        )
+        .then(() => {
+          this.$router.push({name:localStorage.getItem('page')})
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
     }
   },
 };
