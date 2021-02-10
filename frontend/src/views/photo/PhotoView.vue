@@ -28,8 +28,8 @@
               height: 10%;
               margin: 0;
               padding: 0;
-              top: 300px;
-              right: 72px;
+              top: 290px;
+              right: 73px;
               z-index: 101;
             "
     >
