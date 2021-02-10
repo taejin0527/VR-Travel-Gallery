@@ -114,12 +114,23 @@
           v-if="this.$store.state.Auth.authToken.username == this.author"
           @click="deleteArticle"
         >
+          
           <v-btn
             color="#DDA288"
             style="color:white; font-weight:bold;"
           >
-            게시글
-            삭제
+            <v-progress-linear
+              v-if="fab"
+              indeterminate
+              color="red"
+              style="width: 70px"
+            ></v-progress-linear>
+            <div
+              v-else
+            >
+              게시글 삭제
+            </div>
+            
           </v-btn>
         </div>
       </div>
@@ -139,6 +150,7 @@ export default {
   },
   data: function() {
     return {
+      fab: false,
       pages: [],
       pagesHiRes: [],
       hasMouse: true,
@@ -232,12 +244,17 @@ export default {
     },
     // 게시글 삭제
     deleteArticle: function () {
+      if (this.fab == true) {
+        this.fab = false
+        return
+      }
       // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
       if (this.$store.state.Auth.authToken.username != this.author) {
         console.log(this.$store.state.Auth)
         alert('인증되지 않은 사용자 입니다.')
       }
       else {
+        this.fab = true
         axios.delete (
           `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
           {
