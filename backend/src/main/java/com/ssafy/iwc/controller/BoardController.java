@@ -83,13 +83,15 @@ public class BoardController {
 
 			sFTPsender.deleteFile(delMain.getFilename(), 0);
 			
-//			DB삭제
+//			DB 이미지 삭제
 			postImageService.delPost(no);
 			mainImageService.delPost(no);
 			System.out.println("오케이");
 //			태그삭제
 			tagService.delPost(no);
 //			좋아요 삭제
+			likeService.deleteAll(no);
+//			게시물 삭제
 			boardService.delPost(no);
 			System.out.println("마지막");
 			return "OK";
@@ -168,7 +170,56 @@ public class BoardController {
 		}
 
 	}
-
+	
+	@ApiOperation(value = "postsid, username, 현재상태(true or false)를 보내면 true or false리턴", response = String.class)
+	@GetMapping("/fixlike")
+	public ResponseEntity fixlike(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("curr") String curr) {
+		String result;
+		if(curr.equals("true")) { //좋아요 누른상태 -> 해제
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					result= "잘못된 접근입니다.";
+				}else {
+					likeService.deleteLike(id,username);
+					result= "false";
+				}
+				
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}else { //좋아요 안누름 -> 추가
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					likeService.addLike(id,username);
+					result = "true";
+				}else {
+					result= "잘못된 접근입니다.";
+				}
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}
+		
+		
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기,username으로 좋아요 확인", response = String.class)
 	@GetMapping("/getposts")
 	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id,@RequestParam("username") String username) {
