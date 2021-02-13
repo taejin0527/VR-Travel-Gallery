@@ -113,7 +113,7 @@ public class BoardController {
 		try {
 			List<Board> dto = boardService.getLocationIdxBoard(location, start, idx);
 			if(dto.size()==0) {
-				return new ResponseEntity("End Page", HttpStatus.FAILED_DEPENDENCY);
+				return new ResponseEntity("End Page",  HttpStatus.OK);
 			}
 			for (Board a : dto) {
 				System.out.println(a);
