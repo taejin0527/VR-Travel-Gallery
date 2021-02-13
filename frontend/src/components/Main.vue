@@ -11,19 +11,11 @@
     }"
   >
     <v-row align="center" justify="center">
-      <!-- 타이틀 문구 -->
-      <v-col cols="12">
-        <div class="d-flex justify-center mb-6">
-          <h1
-            style="font-family:arial; color:#cccccc; font-size: 100px; cursor:default;"
-          >
-            N U V O
-          </h1>
-        </div>
-      </v-col>
-
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col offset="2" cols="4">
+      <v-col
+        cols="6"
+        md="3"
+      >
         <div style="text-align:center">
           <img
             src="@/assets/worldmap/worldmap.svg"
@@ -68,9 +60,33 @@
           </v-icon>
         </div>
       </v-col>
-
-      <!-- VR로 가는 버튼 -->
-      <v-col cols="4">
+      <v-col
+        cols="6"
+        class="is-show-tips"
+      >
+        <!-- 누보 뜻 보여주기 -->
+        <NUVOExplanation/>
+        <!-- 버튼 설명 -->
+        <v-container>
+          <v-row>
+            <v-col
+              cols="6"
+            >
+              <WorldMapExplanation/>
+            </v-col>
+            <v-col
+              cols="6"
+            >
+              <VRExplanation/>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-col>
+      <!-- VR로 가는 버튼 --> 
+      <v-col
+        cols="6"
+        md="3"
+      >
         <div style="text-align:center">
           <img
             src="@/assets/main/VR360Icon.png"
@@ -131,13 +147,22 @@
 </template>
 
 <script>
+import NUVOExplanation from "@/components/showTips/NUVOExplanation.vue"
+import WorldMapExplanation from "@/components/showTips/WorldMapExplanation.vue"
+import VRExplanation from "@/components/showTips/VRExplanation.vue"
+
 export default {
   name: "Main",
+  components: {
+    NUVOExplanation,
+    WorldMapExplanation,
+    VRExplanation
+  },
   data: function() {
     return {
       isShowMapIcon: false,
       isShowVRIcon: false,
-      isSelectTips: false
+      isSelectTips: false,
     };
   },
   methods: {
@@ -183,6 +208,17 @@ export default {
 </script>
 
 <style scoped>
+
+.is-show-tips {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .is-show-tips {
+    display: inline;
+  }
+}
+
 /* 티머니 폰트체인지 CSS */
 .font-change-tmoneyroundwindregular {
   font-family: "TmoneyRoundWindRegular";
