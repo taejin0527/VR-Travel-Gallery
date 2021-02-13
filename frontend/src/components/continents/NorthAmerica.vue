@@ -77,11 +77,11 @@ export default {
       popularDistrict: [0, -2.5, -5, -7.5, -10],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
-      popularLocationX: [62, 57, 35, 26, 72],
+      popularLocationX: [62, 56, 35, 26, 72],
       popularLocationY: [70, 80, 74, 69, 43],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/NA.jpg"),
-      exhibitionContent: ["미국", "뉴욕", "키웨스트", "라스베가스", "샌프란시스코", "그린란드"],
+      exhibitionContent: ["미국", "뉴욕", "플로리다", "올란도", "유니버셜", "키웨스트", "라스베가스", "샌프란시스코", "그린란드"],
       exhibitionLocation: "마우스를 깃발에 올려보세요",
       exhibitionIndex: -1,
       likeCount: 379,
