@@ -3,6 +3,7 @@ package com.ssafy.iwc.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,13 +83,15 @@ public class BoardController {
 
 			sFTPsender.deleteFile(delMain.getFilename(), 0);
 			
-//			DB삭제
+//			DB 이미지 삭제
 			postImageService.delPost(no);
 			mainImageService.delPost(no);
 			System.out.println("오케이");
 //			태그삭제
 			tagService.delPost(no);
 //			좋아요 삭제
+			likeService.deleteAll(no);
+//			게시물 삭제
 			boardService.delPost(no);
 			System.out.println("마지막");
 			return "OK";
@@ -98,7 +101,42 @@ public class BoardController {
 		}
 
 	}
-	
+	@ApiOperation(value = "해당s num 만큼 게시물 추가, 게시물 없으면 End Page 리턴", response = String.class)
+	@GetMapping("/paging")
+	public ResponseEntity<List<AllMainView>> paging(@RequestParam("location") String location,
+			@RequestParam("num") String num) {
+		List<LocationInfo> result = new LinkedList<>();
+//		한번에 보여줄 posts갯수
+		int idx = 6;
+//		시작페이지
+		int start = Integer.parseInt(num) * idx;
+		try {
+			List<Board> dto = boardService.getLocationIdxBoard(location, start, idx);
+			if(dto.size()==0) {
+				return new ResponseEntity("End Page", HttpStatus.FAILED_DEPENDENCY);
+			}
+			for (Board a : dto) {
+				System.out.println(a);
+				LocationInfo data = new LocationInfo();
+//			data에 Board값 넣기
+				data.setBoard(a);
+//			메인 이미지 경로 가져와서 넣기
+				Optional<MainImage> d = mainImageService.findById(a.getId());
+				data.setFilePath(FileMainSrc + d.get().getFilename());
+//			tag가져와서 넣기
+				data.setTags(tagService.findTagId(a.getId()));
+				System.out.println(data.getTags());
+
+				result.add(data);
+			}
+			return new ResponseEntity(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("에러");
+			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
+
+		}
+	}
+
 	
 	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
@@ -132,7 +170,56 @@ public class BoardController {
 		}
 
 	}
-
+	
+	@ApiOperation(value = "postsid, username, 현재상태(true or false)를 보내면 true or false리턴", response = String.class)
+	@GetMapping("/fixlike")
+	public ResponseEntity fixlike(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("curr") String curr) {
+		String result;
+		if(curr.equals("true")) { //좋아요 누른상태 -> 해제
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					result= "잘못된 접근입니다.";
+				}else {
+					likeService.deleteLike(id,username);
+					result= "false";
+				}
+				
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}else { //좋아요 안누름 -> 추가
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					likeService.addLike(id,username);
+					result = "true";
+				}else {
+					result= "잘못된 접근입니다.";
+				}
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}
+		
+		
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기,username으로 좋아요 확인", response = String.class)
 	@GetMapping("/getposts")
 	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id,@RequestParam("username") String username) {
@@ -188,8 +275,9 @@ public class BoardController {
 			@RequestParam("nation") String nation, @RequestParam("tags") List<String> tags) {
 		long id = 0;
 		
+//		파일명에 넣을 시간 데이터
 		
-		
+//		System.out.println(addTime);
 		try {
 			//게시글 작성
 			boardDto.setAuthor(writer);
@@ -205,7 +293,9 @@ public class BoardController {
 					break;
 				}
 			}
-			String fname = new MD5Generator(origname).toString()+expend;
+			Date time = new Date();
+			String addTime = time.toString();
+			String fname = new MD5Generator(origname+addTime).toString()+expend;
 			String fPath = "/home/mainImg/"+ fname;
 			SFTPsender sFTPsender = new SFTPsender();
 			File file = new File(fname);
@@ -249,7 +339,7 @@ public class BoardController {
 		for(MultipartFile mf : files) {
 			try {
 				
-//				파일명 명명을 다시해야함 -> 해쉬값
+
 				String origFilename = mf.getOriginalFilename();
 				System.out.println(origFilename);
 				String expend="";
@@ -259,7 +349,10 @@ public class BoardController {
 						break;
 					}
 				}
-				String filename = new MD5Generator(origFilename).toString()+expend;
+				Date time = new Date();
+				String addTime = time.toString();
+//				파일명 명명시에 MD5Generator안에 넣어야함
+				String filename = new MD5Generator(origFilename+addTime).toString()+expend;
 				String filePath = "/home/subImg/"+ filename;
 				SFTPsender sFTPsender = new SFTPsender();
 
