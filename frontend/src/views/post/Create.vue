@@ -326,7 +326,7 @@ export default {
         formData.append("file", this.files[i].file);
       }
       axios
-        .post(`http://localhost:8080/board/requestupload`, formData, {
+        .post(`${SERVER.BOARD_BASE_URL}requestupload`, formData, {
           headers: {
             Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
             "Content-Type": "multipart/form-data"
