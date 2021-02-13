@@ -234,8 +234,19 @@ export default {
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
     likeThisArticle: function () {
-      this.isSelectLike = !this.isSelectLike;
-
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}fixlike?curr=${this.isSelectLike}&id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
+        .then((response) => {
+          if (response.data === "false" || response.data === false) {
+            this.isSelectLike = false
+          }
+          else {
+            this.isSelectLike = true
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     // 여기에 라우터 페이지 이동 하심 댐당
     clickGotoVR: function () {
