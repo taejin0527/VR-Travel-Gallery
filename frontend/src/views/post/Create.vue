@@ -337,8 +337,8 @@ export default {
           this.$router.push({ name: "EachWaterfall" });
           console.log("success");
         })
-        .catch(function() {
-          console.log("FAILURE");
+        .catch(err => {
+          console.error(err);
         });
     }
   }
