@@ -121,6 +121,7 @@
         :indexs = "indexs"
       />
     </div>
+    <br><br>
     <div
       class="d-flex justify-center"
     >
@@ -141,7 +142,8 @@
         style="width:100%; height:100px; color:#eeeeee;"
       >
         {{endPage}}
-      </div> 
+      </div>
+      <br><br><br><br><br><br>
     </div>
   </v-main>
 </template>
@@ -283,7 +285,7 @@ export default {
 
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .custom-loader {
