@@ -27,7 +27,7 @@
                 '%;' +
                 'left:' +
                 adjustLocationX[idx] +
-                '%; cursor: pointer; z-index:10;'
+                '%; cursor: pointer; z-index:2;'
             "
             @click="selectLocation(idx)"
           />
