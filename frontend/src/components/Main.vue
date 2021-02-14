@@ -6,7 +6,7 @@
     pa-0
     fill-height
     :style="{
-      'background-image': 'url(' + require('@/assets/main/NUVO.png') + ')',
+      'background-image': 'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
       'background-position': 'center',
     }"
   >
