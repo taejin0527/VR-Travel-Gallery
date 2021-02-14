@@ -237,32 +237,33 @@ public class BoardController {
 			
 			List<AllView> dto = postImageService.findSubImg(no);
 
-			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
-
+//			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
+			LocationInfo locationinfo = new LocationInfo();
+			List<String> subImg = new LinkedList<String>();
 			for (AllView a : dto) {
-				Map<String, String> m = new HashMap<String, String>();
-				System.out.println("아이디 " + a.getId());
-				System.out.println("작성자 : " + a.getAuthor());
-				System.out.println("파일 : " + a.getFilename());
-				m.put("id", Long.toString(a.getId()));
-				m.put("author", a.getAuthor());
-				m.put("filepath", FileSubSrc + a.getFilename());
-				result.add(m);
+//			sub이미지 경로 넣기
+				subImg.add(FileSubSrc+a.getFilename());
 			}
+			locationinfo.setSubPath(subImg);
+//			메인이미지 경로넣기
 			AllMainView all = mainImageService.findMainImg(no);
-			Map<String, String> m = new HashMap<String, String>();
+			locationinfo.setFilePath(FileMainSrc+all.getFilePath());
+//			좋아요 유무체크
 			if(like==0) {
-				m.put("like","false");
+				locationinfo.setLike("false");
+				
 			}
 			else {
-				m.put("like", "true");
+				locationinfo.setLike("true");
+				
 			}
-			m.put("id", Long.toString(all.getId()));
-			m.put("author", all.getAuthor());
-			m.put("filepath", FileMainSrc + all.getFilename());
-			result.add(m);
+//			게시물정보 넣기
+			locationinfo.setBoard(boardService.findById(no));
+//			태그정보 넣기
+			locationinfo.setTags(tagService.findTagId(no));
+			
 
-			return new ResponseEntity(result, HttpStatus.OK);
+			return new ResponseEntity(locationinfo, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
 		}
