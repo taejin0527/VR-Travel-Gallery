@@ -10,13 +10,16 @@
                 padding: 0;
                 width: 100px;
                 top: 30px;
-                left: 40px;
+                left: 30px;
                 z-index: 100;
             "
     >
-      <span style="color: #eeeeee; cursor: default">N U </span>
-      <br />
-      <span style="color: #eeeeee; cursor: default">V O</span>
+      <img
+        src="@/assets/main/NUVOchangeColor.png" alt=""
+        width="120px"
+        class="hoverevent-Button"
+        @click="gotoHome"
+      >
     </div>
 
     <transition name="component-fade" mode="out-in">
@@ -29,6 +32,11 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "App",
+  methods: {
+    gotoHome: function () {
+      this.$router.push({name:"Home"})
+    }
+  }
 });
 </script>
 
@@ -50,9 +58,8 @@ export default Vue.extend({
 /* 버튼 후버 처리 */
 /* 쓰실 후버가 있다면 쓰시면 됩니다. */
 .hoverevent-Button:hover {
-  opacity: 0.5;
   transform: scale(1.07);
-  transition: 150ms;
+  transition: 400ms;
   cursor: pointer;
 }
 
@@ -65,4 +72,5 @@ export default Vue.extend({
 .component-fade-leave-to {
   opacity: 0;
 }
+
 </style>
