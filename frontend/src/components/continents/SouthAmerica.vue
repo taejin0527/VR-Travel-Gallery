@@ -84,6 +84,8 @@
 
 <script>
 import ContinentCard from "@/components/continents/ContinentCard";
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
 
 export default {
   name: "SouthAmerica",
@@ -106,7 +108,8 @@ export default {
       likeCount: 178,
       // 고른곳 확인
       locationIdx: 0,
-      overCircleIcon: [false, false, false, false, false]
+      overCircleIcon: [false, false, false, false, false],
+      SAList: [32, 33, 34, 35, 36],
     };
   },
   props: {
@@ -149,11 +152,23 @@ export default {
   methods: {
     // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.exhibitionIndex= this.indexs[idx]
-      this.likeCount= this.likes[idx]
+      const location = localStorage.getItem('continent');
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}getposts?id=${this.SAList[idx]}&username=${this.$store.state.Auth.authToken.username}`)
+        .then((response) => {
+          this.exhibitionImage= response.data.filePath
+          this.exhibitionLocation= response.data.board.nation
+          const tmp = []
+          for (let idx = 0; idx < response.data.tags.length; idx++) {
+            tmp.push(response.data.tags[idx].tag)
+          }
+          this.exhibitionContent= tmp
+          this.exhibitionIndex= response.data.board.id
+          this.likeCount= response.data.board.good
+        })
+        .catch((err) => {
+          console.error(err);
+        });
       this.overCircleIcon = [false, false, false, false, false]
       this.overCircleIcon[idx] = true
     }

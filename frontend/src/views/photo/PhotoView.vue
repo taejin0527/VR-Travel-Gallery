@@ -183,16 +183,17 @@ export default {
     axios
       .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
       .then((response) => {
-        if (response.data[response.data.length-1].like === "false") {
+        if (response.data.like === "false") {
           this.isSelectLike = false
         }
         else {
           this.isSelectLike = true
         }
-        this.author = response.data[0].author
-        response.data.forEach((e) => {
-          this.vfImages.push(e.filepath);
-        });
+        this.author = response.data.board.author
+        this.vfImages.push(response.data.filePath)
+        for (let i = 0; i < response.data.subPath.length; i++) {
+          this.vfImages.push(response.data.subPath[i])
+        }
       })
       .catch((err) => {
         console.error(err);
