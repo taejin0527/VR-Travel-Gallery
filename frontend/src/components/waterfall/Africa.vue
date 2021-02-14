@@ -21,7 +21,7 @@
           column
         >
           <v-chip
-            v-for="(item, i) in tags"
+            v-for="(item, i) in tags[idx]"
             :key="i"
             style="background-color:#DD6288; color:white;"
           >
