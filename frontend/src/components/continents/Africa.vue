@@ -18,7 +18,8 @@
             :key="idx"
             :class="{
               'adjust-location': true,
-              'transition-circle-icon': overCircleIcon[idx]
+              'transition-circle-icon': true,
+              'transition-select-location': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -26,12 +27,30 @@
                 '%;' +
                 'left:' +
                 adjustLocationX[idx] +
-                '%; cursor: pointer;'
+                '%; cursor: pointer; z-index:10;'
             "
-            @mouseover="selectLocation(idx)"
-            @mouseleave="leaveCircleIcon(idx)"
+            @click="selectLocation(idx)"
           />
+          <div
+            v-for="(item, idx) in popularLocationNames"
+            :key="idx"
+            :class="{
+              'adjust-location-text': true,
+              'transition-location-text': overCircleIcon[idx]
+            }"
+            :style="
+              'top:' +
+                adjustLocationNamesY[idx] +
+                '%;' +
+                'left:' +
+                adjustLocationNamesX[idx] +
+                '%; cursor:default;'
+            "
+          >
+            {{popularLocationNames[idx]}}
+          </div>
         </div>
+        
       </v-col>
 
       <!-- 지도 보여주기 -->
@@ -74,15 +93,16 @@ export default {
   },
   data: function() {
     return {
-      popularDistrict: [0, -2.5, -5, -7.5, -10],
+      popularDistrict: [0, -5, -10, -15, -20],
+      popularLocationNames: ["이집트", "빅토리아폭포", "탄자니아", "마다가스카르", "모로코"],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
-      popularLocationX: [70, 60, 72, 80, 17],
+      popularLocationX: [70, 62.5, 77, 87.5, 27],
       popularLocationY: [10, 72, 49, 70, 3],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/AF.jpg"),
       exhibitionContent: ["이집트", "가자네크로폴리스", "잠비아", "잠바브웨", "빅토리아폭포", "탄자니아", "킬리만자로산", "마다가스카르", "모로코"],
-      exhibitionLocation: "마우스를 깃발에 올려보세요",
+      exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 138,
       // 고른곳 확인
@@ -108,28 +128,67 @@ export default {
           this.popularLocationX[index] + this.popularDistrict[index];
       }
       return array;
+    },
+    // 이름 X, Y축 보정
+    adjustLocationNamesY: function() {
+      const array = [1, 2, 3, 4, 5];
+      for (let index = 0; index < array.length; index++) {
+        array[index] =
+          this.popularLocationY[index] + this.popularDistrict[index];
+      }
+      return array;
+    },
+    adjustLocationNamesX: function() {
+      const array = [1, 2, 3, 4, 5];
+      for (let index = 0; index < array.length; index++) {
+        array[index] =
+          this.popularLocationX[index] - 1;
+      }
+      return array;
     }
+
   },
   methods: {
-    // 데이터 통신 해야되지만 일단 샘플 넣기.
+    // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
       this.exhibitionImage= this.images[idx]
       this.exhibitionLocation= this.locations[idx]
       this.exhibitionContent= this.tags[idx]
-      this.likeCount= this.likes[idx]
       this.exhibitionIndex= this.indexs[idx]
+      this.likeCount= this.likes[idx]
+      this.overCircleIcon = [false, false, false, false, false]
       this.overCircleIcon[idx] = true
-    },
-    leaveCircleIcon: function(idx) {
-      this.overCircleIcon[idx] = false;
     }
   }
 };
 </script>
 
-<style>
-.transition-circle-icon {
+<style scoped>
+/* 텍스트 색 바뀌는 애니메이션 */
+@keyframes lighttext {
+  from {
+    color: whitesmoke;
+  }
+
+  to {
+    color: grey;
+  }
+}
+
+.transition-location-text {
+  animation-duration: 0.8s;
+  animation-name: lighttext;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.transition-select-location {
   transform: scale(1.3);
+  transition: 0.3s;
+}
+
+.transition-circle-icon:hover {
+  transform: scale(1.2);
   transition: 0.3s;
 }
 
@@ -137,6 +196,12 @@ export default {
 .adjust-location {
   position: relative;
   width: 25px;
+}
+.adjust-location-text {
+  position: relative;
+  font-family: "TmoneyRoundWindRegular";
+  line-height: 24px;
+  font-size: 15px;
 }
 .continent-scale {
   height: 500px;
@@ -148,6 +213,12 @@ export default {
     position: relative;
     width: 30px;
   }
+  .adjust-location-text {
+    position: relative;
+    font-family: "TmoneyRoundWindRegular";
+    line-height: 28px;
+    font-size: 15px;
+  }
   .continent-scale {
     height: 600px;
     width: 600px;
@@ -158,6 +229,12 @@ export default {
   .adjust-location {
     position: relative;
     width: 40px;
+  }
+  .adjust-location-text {
+    position: relative;
+    font-family: "TmoneyRoundWindRegular";
+    line-height: 38px;
+    font-size: 15px;
   }
   .continent-scale {
     height: 800px;
