@@ -116,6 +116,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <br><br>
     <div
       class="d-flex justify-center"
     >
@@ -139,6 +140,7 @@
       >
         More
       </v-btn>
+      <br><br><br><br><br><br>
     </div>
   </v-main>
 </template>
@@ -272,7 +274,7 @@ export default {
 
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
-  font-size: 25px;
+  font-size: 20px;
 }
 
 /* 후버 효과 */

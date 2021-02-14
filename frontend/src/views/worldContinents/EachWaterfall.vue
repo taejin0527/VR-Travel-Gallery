@@ -121,6 +121,7 @@
         :indexs = "indexs"
       />
     </div>
+    <br><br>
     <div
       class="d-flex justify-center"
     >
@@ -141,7 +142,8 @@
         style="width:100%; height:100px; color:#eeeeee;"
       >
         {{endPage}}
-      </div> 
+      </div>
+      <br><br><br><br><br><br>
     </div>
   </v-main>
 </template>
@@ -193,6 +195,7 @@ export default {
     axios
       .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
       .then(response => {
+        console.log(response)
         for (let index = 0; index < response.data.length; index++) {
           this.images.push(response.data[index].filePath);
           const tmp = []
@@ -238,7 +241,6 @@ export default {
       axios
         .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
         .then(response => {
-          console.log(response)
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
             const tmp = []
@@ -283,7 +285,7 @@ export default {
 
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .custom-loader {
