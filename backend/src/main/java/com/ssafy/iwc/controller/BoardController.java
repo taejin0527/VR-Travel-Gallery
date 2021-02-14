@@ -246,8 +246,8 @@ public class BoardController {
 			}
 			locationinfo.setSubPath(subImg);
 //			메인이미지 경로넣기
-			AllMainView all = mainImageService.findMainImg(no);
-			locationinfo.setFilePath(FileMainSrc+all.getFilePath());
+			Optional<MainImage> d = mainImageService.findById(no);
+			locationinfo.setFilePath(FileMainSrc + d.get().getFilename());
 //			좋아요 유무체크
 			if(like==0) {
 				locationinfo.setLike("false");
