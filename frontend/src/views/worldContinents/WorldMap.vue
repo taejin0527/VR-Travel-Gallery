@@ -32,29 +32,36 @@
         </v-icon>
       </v-btn>
       <!-- 검색 버튼 및 입력창 -->
-      <v-lazy
-        min-height="200"
-        transition="slide-x-reverse-transition"
-        v-if="isSelectSearch"
+      <div
+        v-if="isSelectSearch && windowWidth > 500"
         style="
                 position: fixed;
-                height: 10%;
+                height: 50px;
                 margin: 0;
                 padding: 0;
                 width: 300px;
                 top: 23px;
                 right: 170px;
-                z-index: 101;
                 transition:0.5s;
+                z-index: 1;
+                background-color:#DDA288;
+                border-radius: 3px;
               "
       >
-        <v-card
-          color="#DDA288"
-          height="50px"
-          width="300px"
-          dark
+        </div>
+        <div
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
+                  width: 270px;
+                  top: 16px;
+                  right: 185px;
+                  z-index: 2;
+                  color:white;
+                "   
         >
-          <v-card-text>
+          <div
+            class="d-flex align-start justify-center"
+          >
             <v-text-field
               v-model="searchData"
               color="white"
@@ -62,24 +69,24 @@
               append-outer-icon="mdi-airplane-takeoff"
               @keydown.enter="searchKeyword"
               @click:append-outer="searchKeyword"
-              style="position:relative; bottom:24px;"
+              style=""
+              dark
             ></v-text-field>
-          </v-card-text>
-        </v-card>
-      </v-lazy>
-      
-      <v-btn
-        v-else
-        elevation="3"
-        fab
-        color="#DDA288"
-        style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
-        @click="isSelectSearch = true"
-      >
-        <v-icon>
-          mdi-image-search
-        </v-icon>
-      </v-btn>
+          </div>
+        </div>
+        
+        <v-btn
+          v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
+          @click="isSelectSearch = true"
+        >
+          <v-icon>
+            mdi-image-search
+          </v-icon>
+        </v-btn>
 
       <v-container>
         <v-row>
