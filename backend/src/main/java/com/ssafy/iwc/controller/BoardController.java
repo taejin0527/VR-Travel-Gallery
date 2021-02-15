@@ -63,6 +63,67 @@ public class BoardController {
 	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
 	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
 	
+	@ApiOperation(value = "location,num과 검색데이터 기준으로 조회", response = String.class)
+	@GetMapping("/eachsearch")
+	public ResponseEntity search(@RequestParam("location") String location,
+			@RequestParam("num") String num,@RequestParam("searchData")String searchData) {
+		List<LocationInfo> result = new LinkedList<>();
+		searchData = "%"+searchData+"%";
+//		한번에 보여줄 posts갯수
+		int idx = 6;
+//		시작페이지
+		int start = Integer.parseInt(num) * idx;
+		List<Long> getPostsNum = boardService.getPostsNum(location,searchData,start,idx);
+		if(getPostsNum.size()==0) {
+			return new ResponseEntity("End Page",  HttpStatus.OK);
+		}
+		for(long sidx : getPostsNum) {
+			LocationInfo data = new LocationInfo();
+//			data에 Board값 넣기
+			data.setBoard(boardService.getPost(sidx));
+//			메인 이미지 경로 가져와서 넣기
+			Optional<MainImage> d = mainImageService.findById(sidx);
+			data.setFilePath(FileMainSrc + d.get().getFilename());
+//			tag가져와서 넣기
+			data.setTags(tagService.findTagId(sidx));
+			System.out.println(data.getTags());
+
+			result.add(data);
+		}
+		
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "모든데이터의 num과 검색데이터 기준으로 조회", response = String.class)
+	@GetMapping("/allsearch")
+	public ResponseEntity allsearch(@RequestParam("num") String num,@RequestParam("searchData")String searchData) {
+		List<LocationInfo> result = new LinkedList<>();
+		searchData = "%"+searchData+"%";
+//		한번에 보여줄 posts갯수
+		int idx = 6;
+//		시작페이지
+		int start = Integer.parseInt(num) * idx;
+		List<Long> getPostsNum = boardService.getAllPostsNum(searchData,start,idx);
+		if(getPostsNum.size()==0) {
+			return new ResponseEntity("End Page",  HttpStatus.OK);
+		}
+		for(long sidx : getPostsNum) {
+			LocationInfo data = new LocationInfo();
+//			data에 Board값 넣기
+			data.setBoard(boardService.getPost(sidx));
+//			메인 이미지 경로 가져와서 넣기
+			Optional<MainImage> d = mainImageService.findById(sidx);
+			data.setFilePath(FileMainSrc + d.get().getFilename());
+//			tag가져와서 넣기
+			data.setTags(tagService.findTagId(sidx));
+			System.out.println(data.getTags());
+
+			result.add(data);
+		}
+		
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+	
 	
 	@ApiOperation(value = "게시물 id를 보내면 게시물과 관련 모든것 삭제", response = String.class)
 	@DeleteMapping("/delpost")
