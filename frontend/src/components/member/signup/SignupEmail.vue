@@ -1,5 +1,10 @@
 <template>
   <v-card class="mx-auto" flat max-width="350">
+    <v-card-sub-title
+      style="line-height: 50px;"
+    >
+      E-mail 인증
+    </v-card-sub-title>
     <v-text-field
       v-model="email"
       v-validate="'required|email'"
