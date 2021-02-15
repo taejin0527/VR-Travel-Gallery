@@ -70,7 +70,6 @@
         dark
       >
         <v-card-text>
-          
           <v-text-field
             v-model="searchData"
             color="white"
@@ -214,26 +213,7 @@ export default {
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
-  mounted:function(){
-    let searchData =null;
-    
-    try{
-      searchData = this.$route.query.searchData;
-    }catch{
-      searchData = null;
-    }
-    
-    if(searchData==null){
-      console.log("빔");
-    }else{
-      console.log(searchData);
-    }
-  },
   created:function(){
-    
-    
-    
-   
     localStorage.setItem('page', "EachWaterfall")
     const location = localStorage.getItem('continent');
     axios
@@ -309,9 +289,7 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
-        this.$router.replace("/EachWaterfall?searchData=" + this.searchData);
-        // this.$router.push("/EachWaterfall?searchData=" + this.searchData);
-        
+        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
       }
     }
   }

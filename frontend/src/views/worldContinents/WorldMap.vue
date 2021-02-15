@@ -131,7 +131,7 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
-        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+        this.$router.replace("/AllWaterfall?searchData=" + this.searchData);
       }
     }
   }
