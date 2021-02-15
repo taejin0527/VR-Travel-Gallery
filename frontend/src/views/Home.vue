@@ -2,7 +2,7 @@
   <!-- App.vue -->
   <v-main>
     <MobileMain
-      v-if="windowWidth < 500"
+      v-if="windowWidth < 500 || windowHeight < 450"
     />
     <Main
       v-else
@@ -19,7 +19,8 @@ export default {
   name:"Home",
   data: function () {
     return {
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     }
   },
   components: {

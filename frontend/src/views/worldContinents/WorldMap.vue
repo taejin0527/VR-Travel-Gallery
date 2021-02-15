@@ -2,7 +2,7 @@
   <!-- App.vue -->
   <div>
     <MobileWorldMap
-      v-if="windowWidth < 500"
+      v-if="windowWidth < 500 || windowHeight < 450"
     />
     <div
       v-else
@@ -107,6 +107,7 @@ export default {
       searchData:"",
       isSelectSearch:false,
       windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     }
   },
   components: {
