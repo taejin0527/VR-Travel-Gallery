@@ -1,5 +1,49 @@
 <template>
   <div style="width:100%; height:100%;">
+    <!-- 오른쪽 상단 Tips 픽스 -->
+    <div
+      v-if="windowWidth < 500 || windowHeight < 450"
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 90px;
+              top: 20px;
+              right: 20px;
+              z-index: 101;
+            "
+            
+    >
+      <img
+        src="@/assets/3DHelp3.png"
+        alt=""
+        @click="showTipsOverlay = true"
+        width="90px"
+      />
+    </div>
+    <div
+      v-else
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 100px;
+              top: 15px;
+              right: 50px;
+              z-index: 101;
+            "
+    >
+      <img
+        src="@/assets/3DHelp3.png"
+        alt=""
+        width="120px"
+        :class="{ 'select-tips-transition': isSelectTips }"
+        @mouseover="isSelectTips = true"
+        @mouseleave="isSelectTips = false"
+      />
+    </div>
     <MobileView
       v-if="windowWidth < 500 || windowHeight < 450"
       :vfImages = "vfImages"
@@ -8,29 +52,6 @@
       class="container d-flex justify-center"
       v-else
     >
-      <!-- 오른쪽 상단 Tips 픽스 -->
-      <div
-        style="
-                position: fixed;
-                height: 10%;
-                margin: 0;
-                padding: 0;
-                width: 100px;
-                top: 15px;
-                right: 50px;
-                z-index: 101;
-              "
-      >
-        <img
-          src="@/assets/3DHelp3.png"
-          alt=""
-          width="120px"
-          :class="{ 'select-tips-transition': isSelectTips }"
-          @mouseover="isSelectTips = true"
-          @mouseleave="isSelectTips = false"
-        />
-      </div>
-
       <!-- 좋아요 버튼 -->
       <div
         style="
@@ -151,6 +172,32 @@
         </div>
       </div>
     </div>
+    <v-overlay
+      :absolute="absolute"
+      :value="showTipsOverlay"
+      :opacity="0.8"
+    >
+      오른쪽 화면을 누르면 <br><br> 다음 사진으로 넘김니다.
+      <pre>
+
+      </pre>
+      왼쪽 화면을 누르면 <br><br> 이전 사진으로 돌아옵니다.
+      <pre>
+        
+      </pre>
+      <div
+        class="d-flex justify-center"
+      >
+        <v-btn
+          color="#DDA288"
+          @click="showTipsOverlay = false"
+          
+        >
+          확인
+        </v-btn>
+      </div>
+      
+    </v-overlay>
   </div>
 </template>
 
@@ -188,6 +235,8 @@ export default {
     isSelectLike: false,
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
+    absolute:true,
+    showTipsOverlay: false,
   }),
   computed: {
     user() {

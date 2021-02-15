@@ -167,6 +167,19 @@
       </div>
       <br><br><br><br><br><br>
     </div>
+    <!-- 대륙 선택으로 가는 버튼 -->
+    <v-btn
+      v-if="windowWidth < 500 || windowHeight < 450"
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:43px; color:white;"
+      @click="clickGotoBack"
+    >
+      <v-icon>
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
   </v-main>
 </template>
 
@@ -291,6 +304,9 @@ export default {
       else {
         alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
       }
+    },
+    clickGotoBack: function () {
+      this.$router.push({name:"WorldMap"})
     }
   }
 };

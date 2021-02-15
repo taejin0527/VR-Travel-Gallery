@@ -41,6 +41,18 @@
         마지막 사진입니다
       </v-btn>
     </v-overlay>
+    <!-- 사진 목록으로 가는 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:43px; color:white;"
+      @click="clickGotoBack"
+    >
+      <v-icon>
+        mdi-view-carousel-outline
+      </v-icon>
+    </v-btn>
   </div>
 
 </template>
@@ -80,6 +92,9 @@ export default {
       else {
         this.firstOverlay = true
       }
+    },
+    clickGotoBack: function () {
+      this.$router.push({name:"EachWaterfall"})
     }
   }
 }
