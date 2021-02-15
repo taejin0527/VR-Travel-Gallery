@@ -1,8 +1,11 @@
 <template>
   <v-main>
-    <SideNavBar/>
+    <SideNavBar
+      v-if="windowWidth > 500"
+    />
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
+      v-if="windowWidth > 500"
       elevation="3"
       fab
       color="#DDA288"
@@ -16,6 +19,7 @@
 
     <!-- 각 대륙맵 및 인기 전시 카드 페이지로 돌아가는 버튼 -->
     <v-btn
+      v-if="windowWidth > 500"
       elevation="3"
       fab
       color="#DDA288"
@@ -46,6 +50,7 @@
             "
     >
       <v-card
+        v-if="windowWidth > 500"
         color="#DDA288"
         height="50px"
         width="300px"
@@ -66,7 +71,7 @@
     </v-lazy>
     
     <v-btn
-      v-else
+      v-if="windowWidth > 500 && !isSelectSearch"
       elevation="3"
       fab
       color="#DDA288"
@@ -174,6 +179,7 @@ export default {
       searchData:"",
       isSelectSearch:false,
       pagingIndex:0,
+      windowWidth: window.innerWidth,
     }
   },
   // 로딩
