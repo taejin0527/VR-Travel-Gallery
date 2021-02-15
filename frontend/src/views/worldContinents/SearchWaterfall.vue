@@ -26,6 +26,8 @@
               v-for="(item, i) in tags[idx]"
               :key="i"
               style="background-color:#DD6288; color:white;"
+              class="tag-hover-event-class"
+              @click="gotoSearch(item)"
             >
               {{ item }}
             </v-chip>
@@ -365,6 +367,38 @@ export default {
         }
       }  
     },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+      }
+      localStorage.setItem('searchData', tag)
+      this.images = []
+      this.indexs = []
+      this.tags = []
+      this.pageNum = 0
+      axios
+      .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
+      .then(res => {
+        if (res.data == "End Page") {
+          this.endPage = "검색 결과가 없습니다."
+        }
+        else {
+          for (let i = 0; i < res.data.length; i++) {
+            const tmp = []
+            this.images.push(res.data[i].filePath)
+            this.indexs.push(res.data[i].board.id)
+            res.data[i].tags.forEach(e => {
+              tmp.push(e.tag)
+            });
+            this.tags.push(tmp)
+          }
+          this.pageNum = this.pageNum + 1
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    }
   }
 
 }
@@ -486,4 +520,5 @@ export default {
     transform: rotate(360deg);
   }
 }
+
 </style>
