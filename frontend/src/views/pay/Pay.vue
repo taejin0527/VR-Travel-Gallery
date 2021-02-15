@@ -136,15 +136,15 @@ export default {
               'Content-Type' : 'multipart/form-data'
           }
       }).then(response=>{
-        //   this.$router.push("/view");
+        
         console.log("succes");
         console.log(response.data);
-        // try{
-        //     window.location.href = response.data;
+        try{
+            window.location.href = response.data;
             
-        // }catch{
-        //     alert('결제 실패');
-        // }
+        }catch{
+            alert('결제 실패');
+        }
       }).catch(function(){
           console.log("FAILURE");
       });
