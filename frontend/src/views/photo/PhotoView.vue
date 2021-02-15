@@ -113,6 +113,7 @@
       <!-- <div class="d-flex justify-end align-center"> <pre class="profile">snapped by  </pre>
       <span class="user-hover-event-goto-profile" style="color:#DDA288; font-size:33px; font-family:'SDSamliphopangche_Outline';">{{author}}</span><pre>  </pre></div> -->
     </div>
+    <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
     <div style="position:fixed; left:40px; top:45%;">
       <div class="profile d-flex justify-center">snapped by</div>
       <span
@@ -122,6 +123,29 @@
       >
         {{ author }}
       </span>
+      <br>
+      <div
+        class="profile d-flex justify-center"
+        v-if="this.$store.state.Auth.authToken.username == this.author"
+        @click="deleteArticle"
+      >
+        <v-btn
+          color="#DDA288"
+          style="color:white; font-weight:bold;"
+        >
+          <v-progress-linear
+            v-if="fab"
+            indeterminate
+            color="red"
+            style="width: 70px"
+          ></v-progress-linear>
+          <div
+            v-else
+          >
+            게시글 삭제
+          </div>
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -146,6 +170,7 @@ export default {
     FluxPreloader
   },
   data: () => ({
+    fab: false,
     vfOptions: {
       autoplay: false
     },
@@ -153,7 +178,8 @@ export default {
     author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
-    isSelectLike: false // 좋아요는 손봐야 합니다.
+    isSelectLike: false, // 좋아요는 손봐야 합니다.
+
   }),
   computed: {
     user() {
@@ -162,20 +188,22 @@ export default {
   },
   mounted() {
     axios
-      .get(
-        `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
-          "articleId"
-        )}`
-      )
-      .then(response => {
-        this.author = response.data[0].author;
-        response.data.forEach(e => {
-          this.vfImages.push(e.filepath);
-          console.log(e.filepath);
-        });
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
+      .then((response) => {
+        if (response.data.like === "false") {
+          this.isSelectLike = false
+        }
+        else {
+          this.isSelectLike = true
+        }
+        this.author = response.data.board.author
+        this.vfImages.push(response.data.filePath)
+        for (let i = 0; i < response.data.subPath.length; i++) {
+          this.vfImages.push(response.data.subPath[i])
+        }
       })
-      .catch(() => {
-        console.log("subImg 불러오기 실패");
+      .catch((err) => {
+        console.error(err);
       });
   },
   methods: {
@@ -190,12 +218,53 @@ export default {
       this.$router.push({ name: "Profile" });
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
-    likeThisArticle: function() {
-      this.isSelectLike = !this.isSelectLike;
+    likeThisArticle: function () {
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}fixlike?curr=${this.isSelectLike}&id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
+        .then((response) => {
+          if (response.data === "false" || response.data === false) {
+            this.isSelectLike = false
+          }
+          else {
+            this.isSelectLike = true
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     // 여기에 라우터 페이지 이동 하심 댐당
-    clickGotoVR: function() {
-      this.$router.push({ name: "Aframe" });
+    clickGotoVR: function () {
+      this.$router.push({name:""})
+    },
+    // 게시글 삭제
+    deleteArticle: function () {
+      if (this.fab == true) {
+        this.fab = false
+        return
+      }
+      // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
+      if (this.$store.state.Auth.authToken.username != this.author) {
+        console.log(this.$store.state.Auth)
+        alert('인증되지 않은 사용자 입니다.')
+      }
+      else {
+        this.fab = true
+        axios.delete (
+          `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
+          },
+        )
+        .then(() => {
+          this.$router.push({name:localStorage.getItem('page')})
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
     }
   }
 };

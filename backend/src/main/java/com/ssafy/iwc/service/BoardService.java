@@ -14,4 +14,5 @@ public interface BoardService {
 	public void delPost(Long no);
 	public List<Board> getLocationBoard(String location);
 	public List<Board> getLocationIdxBoard(String location, int start, int idx);
+	public Board findById(long no);
 }

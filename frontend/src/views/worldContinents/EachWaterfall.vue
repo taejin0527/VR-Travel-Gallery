@@ -121,6 +121,30 @@
         :indexs = "indexs"
       />
     </div>
+    <br><br>
+    <div
+      class="d-flex justify-center"
+    >
+      <v-btn
+        class="ma-2 change-font-more-articles"
+        :loading="loading"
+        :disabled="loading"
+        color="#DDA288"
+        style="color:white;"
+        @click="moreArticles"
+        v-if="endPage==''"
+      >
+        More
+      </v-btn>
+      <div
+        v-else
+        class="d-flex justify-center change-font-more-articles align-center"
+        style="width:100%; height:100px; color:#eeeeee;"
+      >
+        {{endPage}}
+      </div>
+      <br><br><br><br><br><br>
+    </div>
   </v-main>
 </template>
 
@@ -139,6 +163,9 @@ export default {
   name: "EachWaterfall",
   data: function() {
     return {
+      loader:null,
+      loading: false,
+      endPage: '',
       getContinentName: localStorage.getItem("continent"), // 대륙별로 나누는 변수
       popularExhibition: false, // 버튼 바꾸기 변수
       images: [], // 이미지 데이터 리스트
@@ -146,28 +173,46 @@ export default {
       indexs: [], // id 데이터 리스트
       searchData:"",
       isSelectSearch:false,
+      pagingIndex:0,
     }
+  },
+  // 로딩
+  watch: {
+    loader () {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    },
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
   created:function(){
     localStorage.setItem('page', "EachWaterfall")
     const location = localStorage.getItem('continent');
-    console.log(location)
-    axios.get(`${SERVER.BOARD_BASE_URL}allview?location=${location}`).then(response => {
-          for (let index = 0; index < response.data.length; index++) {
-            this.images.push(response.data[index].filePath);
-            const tmp = []
-            for (let i = 0; i < response.data[index].tags.length; i++) {
-              tmp.push(response.data[index].tags[i].tag);
-            }
-            this.tags.push(tmp)
-            this.indexs.push(response.data[index].board.id)
-            console.log(response.data)
+    axios
+      .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
+      .then(response => {
+        console.log(response)
+        for (let index = 0; index < response.data.length; index++) {
+          this.images.push(response.data[index].filePath);
+          const tmp = []
+          for (let i = 0; i < response.data[index].tags.length; i++) {
+            tmp.push(response.data[index].tags[i].tag);
           }
-        }).catch(function(){
-          console.log(`${location} DB 이미지 및 태그 불러오기 실패`);
-        });
+          this.tags.push(tmp)
+          this.indexs.push(response.data[index].board.id)
+        }
+        this.pagingIndex = this.pagingIndex + 1
+      })
+      .catch(err => {
+        console.log(err)
+        this.endPage = "게시물이 없습니다."
+        }
+      );
+
   },
   // 대륙 컴포넌트
   components: {
@@ -189,6 +234,32 @@ export default {
     clickGotoCreate: function() {
       this.$router.push({ name: "Create" });
     },
+    // 6개씩 더 가져오기
+    moreArticles: function () {
+      this.loader = 'loading'
+      const location = localStorage.getItem('continent');
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
+        .then(response => {
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
+            this.indexs.push(response.data[index].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        })
+        .catch(err => {
+          console.log(err)
+          this.endPage = "더 이상 게시물이 없습니다."
+          }
+        );
+    },
+
+    // 검색
     searchKeyword: function() {
       if (this.searchData === "") {
         alert('검색어를 입력해주세요.')
@@ -201,4 +272,56 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+/* 눈누에서 폰트 가져옴 */
+@font-face {
+  font-family: "TmoneyRoundWindRegular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.change-font-more-articles {
+  font-family: "TmoneyRoundWindRegular";
+  font-size: 20px;
+}
+
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
