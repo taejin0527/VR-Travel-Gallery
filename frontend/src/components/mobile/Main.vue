@@ -41,7 +41,7 @@
                     rounded
                     small
                   >
-                    GOto VR Expo
+                    GOto VR mode
                   </v-btn>
                 </v-card-actions>
               </div>
@@ -141,7 +141,7 @@
                     rounded
                     small
                   >
-                    GOto VR Expo
+                    GOto VR mode
                   </v-btn>
                 </v-card-actions>
               </div>
