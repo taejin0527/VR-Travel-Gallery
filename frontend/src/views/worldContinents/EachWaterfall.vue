@@ -1,5 +1,18 @@
 <template>
   <v-main>
+    <div
+      v-if="windowWidth < 500"
+    >
+      <v-app-bar
+        fixed
+        height="90px;"
+        color="#5a4e4d"
+        elevation="0"
+      >
+      </v-app-bar>
+      <br>
+    </div>
+    
     <SideNavBar
       v-if="windowWidth > 500"
     />
@@ -84,47 +97,51 @@
     </v-btn>
 
     <!-- 각 대륙별로 이미지 가져오기 -->
-    <div v-if="this.getContinentName == 'oceania'">
-      <Oceania
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
-    </div>
-    <div v-else-if="this.getContinentName == 'asia'">
-      <Asia
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
-    </div>
-    <div v-else-if="this.getContinentName == 'northAmerica'">
-      <NorthAmerica
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
-    </div>
-    <div v-else-if="this.getContinentName == 'southAmerica'">
-      <SouthAmerica
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
-    </div>
-    <div v-else-if="this.getContinentName == 'europe'">
-      <Europe
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
-    </div>
-    <div v-else>
-      <Africa
-        :images = "images"
-        :tags = "tags"
-        :indexs = "indexs"
-      />
+    <div
+      :class="{'adjust-location-for-mobile':(windowWidth < 500)}"
+    >
+      <div v-if="this.getContinentName == 'oceania'">
+        <Oceania
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'asia'">
+        <Asia
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'northAmerica'">
+        <NorthAmerica
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'southAmerica'">
+        <SouthAmerica
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'europe'">
+        <Europe
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else>
+        <Africa
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
     </div>
     <br><br>
     <div
@@ -292,6 +309,11 @@ export default {
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
   font-size: 20px;
+}
+
+.adjust-location-for-mobile {
+  position:relative;
+  right:70px;
 }
 
 .custom-loader {
