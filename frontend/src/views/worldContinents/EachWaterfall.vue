@@ -22,7 +22,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:95px; top:20px; color:white;"
+      style="position:fixed; right:95px; top:20px; color:white; z-index: 2;"
       @click="clickGotoCreate"
     >
       <v-icon>
@@ -36,7 +36,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:20px; top:20px; color:white;"
+      style="position:fixed; right:20px; top:20px; color:white; z-index: 2;"
       @click="clickChangeContinentViewButton"
     >
       <span v-if="popularExhibition"> ALL </span>
@@ -46,55 +46,99 @@
     </v-btn>
 
     <!-- 검색 버튼 및 입력창 -->
-    <v-lazy
-      min-height="200"
-      transition="slide-x-reverse-transition"
-      v-if="isSelectSearch"
+    <div
+      v-if="isSelectSearch && windowWidth > 500"
       style="
               position: fixed;
-              height: 10%;
+              height: 50px;
               margin: 0;
               padding: 0;
               width: 300px;
               top: 23px;
               right: 170px;
-              z-index: 101;
               transition:0.5s;
+              z-index: 1;
+              background-color:#DDA288;
+              border-radius: 3px;
             "
     >
-      <v-card
-        v-if="windowWidth > 500"
-        color="#DDA288"
-        height="50px"
-        width="300px"
-        dark
+    </div>
+    <div
+      v-if="isSelectSearch && windowWidth > 500"
+      style="position:fixed;
+              width: 270px;
+              top: 16px;
+              right: 185px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <div
+        class="d-flex align-start justify-center"
       >
-        <v-card-text>
-          <v-text-field
-            v-model="searchData"
-            color="white"
-            placeholder="장소나 태그를 입력하세요."
-            append-outer-icon="mdi-airplane-takeoff"
-            @keydown.enter="searchKeyword"
-            @click:append-outer="searchKeyword"
-            style="position:relative; bottom:24px;"
-          ></v-text-field>
-        </v-card-text>
-      </v-card>
-    </v-lazy>
+        <v-text-field
+          v-model="searchData"
+          color="white"
+          placeholder="장소나 태그를 입력하세요."
+          append-outer-icon="mdi-airplane-takeoff"
+          @keydown.enter="searchKeyword"
+          @click:append-outer="searchKeyword"
+          style=""
+          dark
+        ></v-text-field>
+      </div>
+    </div>
     
     <v-btn
       v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
+      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
       @click="isSelectSearch = true"
     >
       <v-icon>
         mdi-image-search
       </v-icon>
     </v-btn>
+    <div
+      class="text-center"
+      v-if="isSelectSearch && windowWidth > 500"
+      style="position:fixed;
+              width: 120px;
+              top: 30px;
+              right: 485px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="#DDA288"
+            style="width: 120px;"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{selectContinent}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in continents"
+            :key="index"
+          >
+            <v-list-item-title
+              style="text-align:center; cursor:pointer;"
+              @click="selectContinent = item"
+            >
+            {{ item }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
 
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div
@@ -167,6 +211,19 @@
       </div>
       <br><br><br><br><br><br>
     </div>
+    <!-- 대륙 선택으로 가는 버튼 -->
+    <v-btn
+      v-if="windowWidth < 500 || windowHeight < 450"
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:43px; color:white;"
+      @click="clickGotoBack"
+    >
+      <v-icon>
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
   </v-main>
 </template>
 
@@ -185,6 +242,8 @@ export default {
   name: "EachWaterfall",
   data: function() {
     return {
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
       loader:null,
       loading: false,
       endPage: '',
@@ -219,21 +278,24 @@ export default {
     axios
       .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
       .then(response => {
-        console.log(response)
-        for (let index = 0; index < response.data.length; index++) {
-          this.images.push(response.data[index].filePath);
-          const tmp = []
-          for (let i = 0; i < response.data[index].tags.length; i++) {
-            tmp.push(response.data[index].tags[i].tag);
-          }
-          this.tags.push(tmp)
-          this.indexs.push(response.data[index].board.id)
+        if (response.data == "End Page") {
+          this.endPage = "저장된 사진이 없습니다."
         }
-        this.pagingIndex = this.pagingIndex + 1
+        else {
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
+            this.indexs.push(response.data[index].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        }
       })
       .catch(err => {
         console.log(err)
-        this.endPage = "게시물이 없습니다."
         }
       );
 
@@ -260,25 +322,28 @@ export default {
     },
     // 6개씩 더 가져오기
     moreArticles: function () {
-      this.loader = 'loading'
       const location = localStorage.getItem('continent');
       axios
         .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
         .then(response => {
-          for (let index = 0; index < response.data.length; index++) {
-            this.images.push(response.data[index].filePath);
-            const tmp = []
-            for (let i = 0; i < response.data[index].tags.length; i++) {
-              tmp.push(response.data[index].tags[i].tag);
-            }
-            this.tags.push(tmp)
-            this.indexs.push(response.data[index].board.id)
+          if (response.data == "End Page") {
+            this.endPage = "더 이상 사진이 없습니다."
           }
-          this.pagingIndex = this.pagingIndex + 1
+          else {
+            for (let index = 0; index < response.data.length; index++) {
+              this.images.push(response.data[index].filePath);
+              const tmp = []
+              for (let i = 0; i < response.data[index].tags.length; i++) {
+                tmp.push(response.data[index].tags[i].tag);
+              }
+              this.tags.push(tmp)
+              this.indexs.push(response.data[index].board.id)
+            }
+            this.pagingIndex = this.pagingIndex + 1
+          }
         })
         .catch(err => {
           console.log(err)
-          this.endPage = "더 이상 게시물이 없습니다."
           }
         );
     },
@@ -289,8 +354,13 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
-        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
+        localStorage.setItem('searchData', this.searchData)
+        this.$router.push({name: "SearchWaterfall"})
       }
+    },
+    clickGotoBack: function () {
+      this.$router.push({name:"WorldMap"})
     }
   }
 };
