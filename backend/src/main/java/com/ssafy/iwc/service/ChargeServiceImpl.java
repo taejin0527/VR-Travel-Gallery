@@ -23,7 +23,13 @@ public class ChargeServiceImpl implements ChargeService{
 	@Transactional
 	public long getMax() {
 		// TODO Auto-generated method stub
-		return chargeRepository.getMax();
+		long maxNum=0;
+		try {
+			maxNum = chargeRepository.getMax();
+		}catch(Exception e){
+			maxNum=0;
+		}
+		return maxNum;
 	}
 
 }
