@@ -123,25 +123,20 @@
       >
         {{ author }}
       </span>
-      <br>
+      <br />
       <div
         class="profile d-flex justify-center"
         v-if="this.$store.state.Auth.authToken.username == this.author"
         @click="deleteArticle"
       >
-        <v-btn
-          color="#DDA288"
-          style="color:white; font-weight:bold;"
-        >
+        <v-btn color="#DDA288" style="color:white; font-weight:bold;">
           <v-progress-linear
             v-if="fab"
             indeterminate
             color="red"
             style="width: 70px"
           ></v-progress-linear>
-          <div
-            v-else
-          >
+          <div v-else>
             게시글 삭제
           </div>
         </v-btn>
@@ -178,8 +173,7 @@ export default {
     author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
-    isSelectLike: false, // 좋아요는 손봐야 합니다.
-
+    isSelectLike: false // 좋아요는 손봐야 합니다.
   }),
   computed: {
     user() {
@@ -188,21 +182,24 @@ export default {
   },
   mounted() {
     axios
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
-      .then((response) => {
+      .get(
+        `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
+          "articleId"
+        )}&username=${this.$store.state.Auth.authToken.username}`
+      )
+      .then(response => {
         if (response.data.like === "false") {
-          this.isSelectLike = false
+          this.isSelectLike = false;
+        } else {
+          this.isSelectLike = true;
         }
-        else {
-          this.isSelectLike = true
-        }
-        this.author = response.data.board.author
-        this.vfImages.push(response.data.filePath)
+        this.author = response.data.board.author;
+        this.vfImages.push(response.data.filePath);
         for (let i = 0; i < response.data.subPath.length; i++) {
-          this.vfImages.push(response.data.subPath[i])
+          this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   },
@@ -213,57 +210,65 @@ export default {
     clickGoBack: function() {
       this.$router.push({ name: localStorage.getItem("page") });
     },
+    // 여기에 라우터 페이지 이동 하심 댐당
+    clickGotoVR: function() {
+      this.$router.push({ name: "Aframe" });
+    },
     gotoProfilePage: function() {
       localStorage.setItem("setUserforProfile", this.author);
       this.$router.push({ name: "Profile" });
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
-    likeThisArticle: function () {
+    likeThisArticle: function() {
       axios
-        .get(`${SERVER.BOARD_BASE_URL}fixlike?curr=${this.isSelectLike}&id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
-        .then((response) => {
+        .get(
+          `${SERVER.BOARD_BASE_URL}fixlike?curr=${
+            this.isSelectLike
+          }&id=${localStorage.getItem("articleId")}&username=${
+            this.$store.state.Auth.authToken.username
+          }`
+        )
+        .then(response => {
           if (response.data === "false" || response.data === false) {
-            this.isSelectLike = false
-          }
-          else {
-            this.isSelectLike = true
+            this.isSelectLike = false;
+          } else {
+            this.isSelectLike = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
-    // 여기에 라우터 페이지 이동 하심 댐당
-    clickGotoVR: function () {
-      this.$router.push({name:""})
-    },
     // 게시글 삭제
-    deleteArticle: function () {
+    deleteArticle: function() {
       if (this.fab == true) {
-        this.fab = false
-        return
+        this.fab = false;
+        return;
       }
       // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
       if (this.$store.state.Auth.authToken.username != this.author) {
-        console.log(this.$store.state.Auth)
-        alert('인증되지 않은 사용자 입니다.')
-      }
-      else {
-        this.fab = true
-        axios.delete (
-          `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+        console.log(this.$store.state.Auth);
+        alert("인증되지 않은 사용자 입니다.");
+      } else {
+        this.fab = true;
+        axios
+          .delete(
+            `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem(
+              "articleId"
+            )}`,
+            {
+              headers: {
+                Authorization:
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
-          },
-        )
-        .then(() => {
-          this.$router.push({name:localStorage.getItem('page')})
-        })
-        .catch(err => {
-          console.error(err)
-        })
+          )
+          .then(() => {
+            this.$router.push({ name: localStorage.getItem("page") });
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
     }
   }
