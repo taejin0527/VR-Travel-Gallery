@@ -11,11 +11,14 @@
           @click="gotoNorthAmericaContinent"
           :class="{ 'hoverevent-Continent': true, 'continent-opacity': true }"
           id="north_america-setting-location"
+          v-intro="'마커 클릭 시 해당 대륙으로 이동'"
+          v-intro-position="'top'"
+          v-intro-step="2"
         />
         <v-icon
           :class="{
             'disappeared-north-airplane-icon': !isShowNorthIcon,
-            'show-north-airplane-icon': isShowNorthIcon
+            'show-north-airplane-icon': isShowNorthIcon,
           }"
         >
           mdi-airplane
@@ -24,7 +27,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-north-america-text': !isShowNorthIcon,
-            'show-north-america-text': isShowNorthIcon
+            'show-north-america-text': isShowNorthIcon,
           }"
           id="north_america-setting-location"
         >
@@ -45,7 +48,7 @@
         <v-icon
           :class="{
             'disappeared-south-airplane-icon': !isShowSouthIcon,
-            'show-south-airplane-icon': isShowSouthIcon
+            'show-south-airplane-icon': isShowSouthIcon,
           }"
         >
           mdi-airplane
@@ -54,7 +57,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-south-america-text': !isShowSouthIcon,
-            'show-south-america-text': isShowSouthIcon
+            'show-south-america-text': isShowSouthIcon,
           }"
           id="south_america-setting-location"
         >
@@ -75,7 +78,7 @@
         <v-icon
           :class="{
             'disappeared-europe-airplane-icon': !isShowEuropeIcon,
-            'show-europe-airplane-icon': isShowEuropeIcon
+            'show-europe-airplane-icon': isShowEuropeIcon,
           }"
         >
           mdi-airplane
@@ -84,7 +87,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-europe-text': !isShowEuropeIcon,
-            'show-europe-text': isShowEuropeIcon
+            'show-europe-text': isShowEuropeIcon,
           }"
           id="europe-setting-location"
         >
@@ -105,7 +108,7 @@
         <v-icon
           :class="{
             'disappeared-africa-airplane-icon': !isShowAfricaIcon,
-            'show-africa-airplane-icon': isShowAfricaIcon
+            'show-africa-airplane-icon': isShowAfricaIcon,
           }"
         >
           mdi-airplane
@@ -114,7 +117,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-africa-text': !isShowAfricaIcon,
-            'show-africa-text': isShowAfricaIcon
+            'show-africa-text': isShowAfricaIcon,
           }"
           id="africa-setting-location"
         >
@@ -135,7 +138,7 @@
         <v-icon
           :class="{
             'disappeared-asia-airplane-icon': !isShowAsiaIcon,
-            'show-asia-airplane-icon': isShowAsiaIcon
+            'show-asia-airplane-icon': isShowAsiaIcon,
           }"
         >
           mdi-airplane
@@ -144,7 +147,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-asia-text': !isShowAsiaIcon,
-            'show-asia-text': isShowAsiaIcon
+            'show-asia-text': isShowAsiaIcon,
           }"
           id="asia-setting-location"
         >
@@ -165,7 +168,7 @@
         <v-icon
           :class="{
             'disappeared-oceania-airplane-icon': !isShowOceaniaIcon,
-            'show-oceania-airplane-icon': isShowOceaniaIcon
+            'show-oceania-airplane-icon': isShowOceaniaIcon,
           }"
         >
           mdi-airplane
@@ -174,7 +177,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-oceania-text': !isShowOceaniaIcon,
-            'show-oceania-text': isShowOceaniaIcon
+            'show-oceania-text': isShowOceaniaIcon,
           }"
           id="oceania-setting-location"
         >
@@ -203,7 +206,7 @@ export default {
       isShowEuropeIcon: false,
       isShowAfricaIcon: false,
       isShowAsiaIcon: false,
-      isShowOceaniaIcon: false
+      isShowOceaniaIcon: false,
     };
   },
   methods: {
@@ -274,8 +277,8 @@ export default {
     },
     leaveOceania: function() {
       this.isShowOceaniaIcon = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

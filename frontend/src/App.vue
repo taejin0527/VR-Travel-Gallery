@@ -15,11 +15,12 @@
             "
     >
       <img
-        src="@/assets/main/NUVOchangeColor.png" alt=""
+        src="@/assets/main/NUVOchangeColor.png"
+        alt=""
         width="120px"
         class="hoverevent-Button"
         @click="gotoHome"
-      >
+      />
     </div>
 
     <transition name="component-fade" mode="out-in">
@@ -33,8 +34,8 @@ import Vue from "vue";
 export default Vue.extend({
   name: "App",
   methods: {
-    gotoHome: function () {
-      this.$router.push({name:"Home"})
+    gotoHome: function() {
+      this.$router.push({ name: "Home" });
     }
   }
 });
@@ -72,5 +73,4 @@ export default Vue.extend({
 .component-fade-leave-to {
   opacity: 0;
 }
-
 </style>

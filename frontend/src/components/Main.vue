@@ -6,16 +6,14 @@
     pa-0
     fill-height
     :style="{
-      'background-image': 'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
+      'background-image':
+        'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
       'background-position': 'center',
     }"
   >
     <v-row align="center" justify="center">
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col
-        cols="6"
-        md="3"
-      >
+      <v-col cols="6" md="3">
         <div style="text-align:center">
           <img
             src="@/assets/worldmap/worldmap.svg"
@@ -60,33 +58,23 @@
           </v-icon>
         </div>
       </v-col>
-      <v-col
-        cols="6"
-        class="is-show-tips"
-      >
+      <v-col cols="6" class="is-show-tips">
         <!-- 누보 뜻 보여주기 -->
-        <NUVOExplanation/>
+        <NUVOExplanation />
         <!-- 버튼 설명 -->
         <v-container>
           <v-row>
-            <v-col
-              cols="6"
-            >
-              <WorldMapExplanation/>
+            <v-col cols="6">
+              <WorldMapExplanation />
             </v-col>
-            <v-col
-              cols="6"
-            >
-              <VRExplanation/>
+            <v-col cols="6">
+              <VRExplanation />
             </v-col>
           </v-row>
         </v-container>
       </v-col>
-      <!-- VR로 가는 버튼 --> 
-      <v-col
-        cols="6"
-        md="3"
-      >
+      <!-- VR로 가는 버튼 -->
+      <v-col cols="6" md="3">
         <div style="text-align:center">
           <img
             src="@/assets/main/VR360Icon.png"
@@ -136,27 +124,29 @@
             "
     >
       <img
-        src="@/assets/3DHelp3.png" alt="" width="120px"
-        :class="{'select-tips-transition': isSelectTips}"
+        src="@/assets/3DHelp3.png"
+        alt=""
+        width="80px"
+        :class="{ 'select-tips-transition': isSelectTips }"
         @mouseover="isSelectTips = true"
         @mouseleave="isSelectTips = false"
         @click="activeIntro"
-      >
+      />
     </div>
   </v-container>
 </template>
 
 <script>
-import NUVOExplanation from "@/components/showTips/NUVOExplanation.vue"
-import WorldMapExplanation from "@/components/showTips/WorldMapExplanation.vue"
-import VRExplanation from "@/components/showTips/VRExplanation.vue"
+import NUVOExplanation from "@/components/showTips/NUVOExplanation.vue";
+import WorldMapExplanation from "@/components/showTips/WorldMapExplanation.vue";
+import VRExplanation from "@/components/showTips/VRExplanation.vue";
 
 export default {
   name: "Main",
   components: {
     NUVOExplanation,
     WorldMapExplanation,
-    VRExplanation
+    VRExplanation,
   },
   data: function() {
     return {
@@ -208,7 +198,6 @@ export default {
 </script>
 
 <style scoped>
-
 .is-show-tips {
   display: none;
 }
@@ -337,5 +326,4 @@ export default {
   animation-direction: alternate;
   cursor: pointer;
 }
-
 </style>

@@ -4,15 +4,9 @@
     <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
-      <v-col
-        cols="1"
-        xl="2"
-      >
-        <div
-          class="continent-scale"
-          style="position:relative; left:100%; "
-        >
-          <img 
+      <v-col cols="1" xl="2">
+        <div class="continent-scale" style="position:relative; left:100%; ">
+          <img
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
@@ -47,7 +41,7 @@
                 '%; cursor:default;'
             "
           >
-            {{popularLocationNames[idx]}}
+            {{ popularLocationNames[idx] }}
           </div>
         </div>
       </v-col>
@@ -71,11 +65,11 @@
       >
         <div style="min-width:80px;"></div>
         <ContinentCard
-          :exhibitionImage = "exhibitionImage"
-          :exhibitionContent = "exhibitionContent"
-          :exhibitionLocation = "exhibitionLocation"
-          :likeCount = "likeCount"
-          :exhibitionIndex = "exhibitionIndex"
+          :exhibitionImage="exhibitionImage"
+          :exhibitionContent="exhibitionContent"
+          :exhibitionLocation="exhibitionLocation"
+          :likeCount="likeCount"
+          :exhibitionIndex="exhibitionIndex"
         />
       </v-col>
     </v-row>
@@ -100,7 +94,19 @@ export default {
       popularLocationY: [72, 77, 82, 87, 51],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/E.jpg"),
-      exhibitionContent: ["영국", "런던", "프랑스", "파리", "이탈리아", "밀라노", "베니스", "그리스", "아크로폴리스", "산토리니", "스웨덴"],
+      exhibitionContent: [
+        "영국",
+        "런던",
+        "프랑스",
+        "파리",
+        "이탈리아",
+        "밀라노",
+        "베니스",
+        "그리스",
+        "아크로폴리스",
+        "산토리니",
+        "스웨덴"
+      ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 486,
@@ -114,7 +120,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
-    indexs: [Array],
+    indexs: [Array]
   },
 
   computed: {
@@ -135,7 +141,7 @@ export default {
         array[index] =
           this.popularLocationY[index] + this.popularDistrict[index];
         if (index == 0) {
-          array[index] = array[index] - 5
+          array[index] = array[index] - 5;
         }
       }
       return array;
@@ -143,16 +149,15 @@ export default {
     adjustLocationNamesX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] =
-          this.popularLocationX[index] - 1;
+        array[index] = this.popularLocationX[index] - 1;
         if (index == 0) {
-          array[index] = array[index] - 5
+          array[index] = array[index] - 5;
         }
         if (index == 1) {
-          array[index] = array[index] - 1
+          array[index] = array[index] - 1;
         }
         if (index == 2) {
-          array[index] = array[index] - 1
+          array[index] = array[index] - 1;
         }
       }
       return array;
@@ -161,13 +166,13 @@ export default {
   methods: {
     // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.exhibitionIndex= this.indexs[idx]
-      this.likeCount= this.likes[idx]
-      this.overCircleIcon = [false, false, false, false, false]
-      this.overCircleIcon[idx] = true
+      this.exhibitionImage = this.images[idx];
+      this.exhibitionLocation = this.locations[idx];
+      this.exhibitionContent = this.tags[idx];
+      this.exhibitionIndex = this.indexs[idx];
+      this.likeCount = this.likes[idx];
+      this.overCircleIcon = [false, false, false, false, false];
+      this.overCircleIcon[idx] = true;
     }
   }
 };

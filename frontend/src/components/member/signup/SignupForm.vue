@@ -1,5 +1,14 @@
 <template>
-  <v-card class="mx-auto" flat max-width="350">
+  <v-card
+    class="mx-auto"
+    flat
+    dark
+    color="#5a4e4d"
+    max-width="450"
+    max-height="550"
+  >
+    <div><h1>회원 가입</h1></div>
+
     <v-text-field
       label="아이디"
       name="signup"
@@ -57,7 +66,7 @@
     ></v-text-field>
 
     <!-- 영문, 숫자 혼용 확인 필요 -->
-    <div>
+    <div style="padding:40px">
       <v-btn
         color="grey"
         class="white--text"
@@ -90,7 +99,7 @@ import { mapActions } from "vuex";
 export default {
   name: "SignupForm",
   props: {
-    signupData2: Object
+    signupData2: Object,
   },
   mounted() {
     console.log("signupform mounted!");
@@ -103,11 +112,11 @@ export default {
       signupData: {
         username: "",
         password: "",
-        password2: ""
+        password2: "",
       },
       show1: false,
       show2: false,
-      idcheck: false
+      idcheck: false,
     };
   },
   methods: {
@@ -134,10 +143,10 @@ export default {
       return true;
     },
     idCheck2(username) {
-      this.idCheck(username).then(res =>
+      this.idCheck(username).then((res) =>
         res ? (this.idcheck = true) : (this.idcheck = false)
       );
-    }
-  }
+    },
+  },
 };
 </script>

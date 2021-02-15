@@ -14,11 +14,13 @@
             "
     >
       <img
-        src="@/assets/3DHelp3.png" alt="" width="120px"
-        :class="{'select-tips-transition': isSelectTips}"
+        src="@/assets/3DHelp3.png"
+        alt=""
+        width="120px"
+        :class="{ 'select-tips-transition': isSelectTips }"
         @mouseover="isSelectTips = true"
         @mouseleave="isSelectTips = false"
-      >
+      />
     </div>
 
     <!-- 좋아요 버튼 -->
@@ -33,10 +35,15 @@
               z-index: 101;
             "
     >
-      <v-icon size="30px" :class="{'like-hover-event':true, 'select-like-transition':isSelectLike}"
+      <v-icon
+        size="30px"
+        :class="{
+          'like-hover-event': true,
+          'select-like-transition': isSelectLike
+        }"
         @click="likeThisArticle"
       >
-          mdi-heart
+        mdi-heart
       </v-icon>
     </div>
 
@@ -108,33 +115,28 @@
     </div>
     <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
     <div style="position:fixed; left:40px; top:45%;">
-      <div class="profile d-flex justify-center" > snapped by</div>
+      <div class="profile d-flex justify-center">snapped by</div>
       <span
         class="user-hover-event-goto-profile d-flex justify-center"
         style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
         @click="gotoProfilePage"
       >
-        {{author}}
+        {{ author }}
       </span>
-      <br>
+      <br />
       <div
         class="profile d-flex justify-center"
         v-if="this.$store.state.Auth.authToken.username == this.author"
         @click="deleteArticle"
       >
-        <v-btn
-          color="#DDA288"
-          style="color:white; font-weight:bold;"
-        >
+        <v-btn color="#DDA288" style="color:white; font-weight:bold;">
           <v-progress-linear
             v-if="fab"
             indeterminate
             color="red"
             style="width: 70px"
           ></v-progress-linear>
-          <div
-            v-else
-          >
+          <div v-else>
             게시글 삭제
           </div>
         </v-btn>
@@ -171,8 +173,7 @@ export default {
     author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
-    isSelectLike: false, // 좋아요는 손봐야 합니다.
-
+    isSelectLike: false // 좋아요는 손봐야 합니다.
   }),
   computed: {
     user() {
@@ -181,81 +182,92 @@ export default {
   },
   mounted() {
     axios
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
-      .then((response) => {
-        if (response.data[response.data.length-1].like === "false") {
-          this.isSelectLike = false
+      .get(
+        `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
+          "articleId"
+        )}&username=${this.$store.state.Auth.authToken.username}`
+      )
+      .then(response => {
+        if (response.data[response.data.length - 1].like === "false") {
+          this.isSelectLike = false;
+        } else {
+          this.isSelectLike = true;
         }
-        else {
-          this.isSelectLike = true
-        }
-        this.author = response.data[0].author
-        response.data.forEach((e) => {
+        this.author = response.data[0].author;
+        response.data.forEach(e => {
           this.vfImages.push(e.filepath);
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   },
   methods: {
-    clickGotoFlipbook: function () {
-      this.$router.push({name:"Flipbook"})
+    clickGotoFlipbook: function() {
+      this.$router.push({ name: "Flipbook" });
     },
-    clickGoBack: function () {
-      this.$router.push({name:localStorage.getItem("page")})
+    clickGoBack: function() {
+      this.$router.push({ name: localStorage.getItem("page") });
     },
-    gotoProfilePage: function () {
-      localStorage.setItem('setUserforProfile', this.author)
-      this.$router.push({name:"Profile"})
+    gotoProfilePage: function() {
+      localStorage.setItem("setUserforProfile", this.author);
+      this.$router.push({ name: "Profile" });
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
-    likeThisArticle: function () {
+    likeThisArticle: function() {
       axios
-        .get(`${SERVER.BOARD_BASE_URL}fixlike?curr=${this.isSelectLike}&id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
-        .then((response) => {
+        .get(
+          `${SERVER.BOARD_BASE_URL}fixlike?curr=${
+            this.isSelectLike
+          }&id=${localStorage.getItem("articleId")}&username=${
+            this.$store.state.Auth.authToken.username
+          }`
+        )
+        .then(response => {
           if (response.data === "false" || response.data === false) {
-            this.isSelectLike = false
-          }
-          else {
-            this.isSelectLike = true
+            this.isSelectLike = false;
+          } else {
+            this.isSelectLike = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
     // 여기에 라우터 페이지 이동 하심 댐당
-    clickGotoVR: function () {
-      this.$router.push({name:""})
+    clickGotoVR: function() {
+      this.$router.push({ name: "" });
     },
     // 게시글 삭제
-    deleteArticle: function () {
+    deleteArticle: function() {
       if (this.fab == true) {
-        this.fab = false
-        return
+        this.fab = false;
+        return;
       }
       // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
       if (this.$store.state.Auth.authToken.username != this.author) {
-        console.log(this.$store.state.Auth)
-        alert('인증되지 않은 사용자 입니다.')
-      }
-      else {
-        this.fab = true
-        axios.delete (
-          `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem('articleId')}`,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+        console.log(this.$store.state.Auth);
+        alert("인증되지 않은 사용자 입니다.");
+      } else {
+        this.fab = true;
+        axios
+          .delete(
+            `${SERVER.BOARD_BASE_URL}delpost?id=${localStorage.getItem(
+              "articleId"
+            )}`,
+            {
+              headers: {
+                Authorization:
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
-          },
-        )
-        .then(() => {
-          this.$router.push({name:localStorage.getItem('page')})
-        })
-        .catch(err => {
-          console.error(err)
-        })
+          )
+          .then(() => {
+            this.$router.push({ name: localStorage.getItem("page") });
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
     }
   }
@@ -264,29 +276,31 @@ export default {
 
 <style scoped>
 @font-face {
-    font-family: 'SDSamliphopangche_Outline';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+  font-family: "S-CoreDream-3Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* 좋아요 css */
 @keyframes likebeat {
   from {
     transform: scale(1);
-    color: #FDA288;
+    color: #fda288;
   }
 
   to {
     transform: scale(1.3);
-    color: #FF8288;
+    color: #ff8288;
   }
 }
 
@@ -299,7 +313,7 @@ export default {
 }
 
 .like-hover-event:hover {
-  color: #FF8288;
+  color: #ff8288;
   transition: 0.5s;
   transform: scale(1.3);
   cursor: pointer;
@@ -324,7 +338,7 @@ export default {
 }
 
 .profile {
-  font-family: 'S-CoreDream-3Light', Arial, Helvetica, sans-serif;
+  font-family: "S-CoreDream-3Light", Arial, Helvetica, sans-serif;
   font-size: 18px;
   color: #111111;
   font-weight: bold;
@@ -362,7 +376,7 @@ export default {
 /* 1600px 부터 css코드 */
 @media (min-width: 1500px) {
   .adjust-grid-image {
-    width:1200px;
+    width: 1200px;
     height: 700px;
   }
 }
@@ -370,7 +384,7 @@ export default {
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
   .adjust-grid-image {
-    width:1400px;
+    width: 1400px;
     height: 750px;
   }
 }
@@ -393,5 +407,4 @@ export default {
   animation-direction: alternate;
   cursor: pointer;
 }
-
 </style>

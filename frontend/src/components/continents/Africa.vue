@@ -4,15 +4,9 @@
     <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
-      <v-col
-        cols="1"
-        xl="2"
-      >
-        <div
-          class="continent-scale"
-          style="position:relative; left:100%; "
-        >
-          <img 
+      <v-col cols="1" xl="2">
+        <div class="continent-scale" style="position:relative; left:100%; ">
+          <img
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
@@ -47,10 +41,9 @@
                 '%; cursor:default;'
             "
           >
-            {{popularLocationNames[idx]}}
+            {{ popularLocationNames[idx] }}
           </div>
         </div>
-        
       </v-col>
 
       <!-- 지도 보여주기 -->
@@ -72,11 +65,11 @@
       >
         <div style="min-width:80px;"></div>
         <ContinentCard
-          :exhibitionImage = "exhibitionImage"
-          :exhibitionContent = "exhibitionContent"
-          :exhibitionLocation = "exhibitionLocation"
-          :likeCount = "likeCount"
-          :exhibitionIndex = "exhibitionIndex"
+          :exhibitionImage="exhibitionImage"
+          :exhibitionContent="exhibitionContent"
+          :exhibitionLocation="exhibitionLocation"
+          :likeCount="likeCount"
+          :exhibitionIndex="exhibitionIndex"
         />
       </v-col>
     </v-row>
@@ -94,14 +87,30 @@ export default {
   data: function() {
     return {
       popularDistrict: [0, -5, -10, -15, -20],
-      popularLocationNames: ["이집트", "빅토리아폭포", "탄자니아", "마다가스카르", "모로코"],
+      popularLocationNames: [
+        "이집트",
+        "빅토리아폭포",
+        "탄자니아",
+        "마다가스카르",
+        "모로코"
+      ],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
       popularLocationX: [70, 62.5, 77, 87.5, 27],
       popularLocationY: [10, 72, 49, 70, 3],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/AF.jpg"),
-      exhibitionContent: ["이집트", "가자네크로폴리스", "잠비아", "잠바브웨", "빅토리아폭포", "탄자니아", "킬리만자로산", "마다가스카르", "모로코"],
+      exhibitionContent: [
+        "이집트",
+        "가자네크로폴리스",
+        "잠비아",
+        "잠바브웨",
+        "빅토리아폭포",
+        "탄자니아",
+        "킬리만자로산",
+        "마다가스카르",
+        "모로코"
+      ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 138,
@@ -115,7 +124,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
-    indexs: [Array],
+    indexs: [Array]
   },
 
   computed: {
@@ -141,23 +150,21 @@ export default {
     adjustLocationNamesX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] =
-          this.popularLocationX[index] - 1;
+        array[index] = this.popularLocationX[index] - 1;
       }
       return array;
     }
-
   },
   methods: {
     // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.exhibitionIndex= this.indexs[idx]
-      this.likeCount= this.likes[idx]
-      this.overCircleIcon = [false, false, false, false, false]
-      this.overCircleIcon[idx] = true
+      this.exhibitionImage = this.images[idx];
+      this.exhibitionLocation = this.locations[idx];
+      this.exhibitionContent = this.tags[idx];
+      this.exhibitionIndex = this.indexs[idx];
+      this.likeCount = this.likes[idx];
+      this.overCircleIcon = [false, false, false, false, false];
+      this.overCircleIcon[idx] = true;
     }
   }
 };
