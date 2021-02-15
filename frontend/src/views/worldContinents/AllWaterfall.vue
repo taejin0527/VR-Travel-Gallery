@@ -127,15 +127,6 @@
     <div
       class="d-flex justify-center"
     >
-      <div
-        v-if='(this.endPage[0]==="더 이상 게시물이 없습니다." && this.endPage[1]==="더 이상 게시물이 없습니다." &&
-              this.endPage[2]==="더 이상 게시물이 없습니다." && this.endPage[3]==="더 이상 게시물이 없습니다." &&
-              this.endPage[4]==="더 이상 게시물이 없습니다." && this.endPage[5]==="더 이상 게시물이 없습니다.")'
-        class="d-flex justify-center change-font-more-articles align-center"
-        style="width:100%; height:100px; color:#eeeeee;"
-      >
-        더 이상 게시물이 없습니다.
-      </div> 
       <v-btn
         class="ma-2 change-font-more-articles"
         :loading="loading"
@@ -143,10 +134,17 @@
         color="#DDA288"
         style="color:white;"
         @click="moreArticles"
-        v-else
+        v-if='checkEndPage ==""'
       >
         More
       </v-btn>
+      <div
+        v-else
+        class="d-flex justify-center change-font-more-articles align-center"
+        style="width:100%; height:100px; color:#eeeeee;"
+      >
+        {{checkEndPage}}
+      </div>
       <br><br><br><br><br><br>
     </div>
   </v-main>
@@ -174,6 +172,7 @@ export default {
       isSelectSearch:false,
       pagingIndex:0,
       endPage: ['', '', '', '', '', ''],
+      checkEndPage: '',
     }
   },
   // 로딩
@@ -196,17 +195,27 @@ export default {
       axios
       .get(`${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`)
       .then(response => {
-        for (let i = 0; i < response.data.length; i++) {
-          this.images.push(response.data[i].filePath);
-          this.tags.push(response.data[i].tags)
-          this.indexs.push(response.data[i].board.id)
+        if (response.data == "End Page") {
+          this.endPage[index] = "저장된 사진이 없습니다."
+          let count = 0
+          this.endPage.forEach(e => {
+            if (e != "") { count = count + 1 }
+          });
+          if (count == 6) {
+            this.checkEndPage = "저장된 사진이 없습니다."
+          }
         }
-        this.pagingIndex = this.pagingIndex + 1
+        else {
+          for (let i = 0; i < response.data.length; i++) {
+            this.images.push(response.data[i].filePath);
+            this.tags.push(response.data[i].tags)
+            this.indexs.push(response.data[i].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        }
       })
       .catch(err => {
         console.log(err)
-        this.endPage[index] = "게시물이 없습니다."
-        this.pagingIndex = this.pagingIndex + 1
         }
       );
 
@@ -229,7 +238,6 @@ export default {
     },
     // 6개씩 더 가져오기
     moreArticles: function () {
-      this.loader = 'loading'
       const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
       const realPage = this.pagingIndex/6
       console.log(this.endPage)
@@ -237,18 +245,28 @@ export default {
         axios
           .get(`${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`)
           .then(response => {
-            console.log(response)
-            for (let i = 0; i < response.data.length; i++) {
-              this.images.push(response.data[i].filePath);
-              this.tags.push(response.data[i].tags)
-              this.indexs.push(response.data[i].board.id)
+            if (response.data == "End Page") {
+              this.endPage[index] = "더 이상 사진이 없습니다."
+              this.pagingIndex = this.pagingIndex + 1
+              let count = 0
+              this.endPage.forEach(e => {
+                if (e != "") { count = count + 1 }
+              });
+              if (count == 6) {
+                this.checkEndPage = "더 이상 사진이 없습니다."
+              }
             }
-            this.pagingIndex = this.pagingIndex + 1
+            else {
+              for (let i = 0; i < response.data.length; i++) {
+                this.images.push(response.data[i].filePath);
+                this.tags.push(response.data[i].tags)
+                this.indexs.push(response.data[i].board.id)
+              }
+              this.pagingIndex = this.pagingIndex + 1
+            }
           })
           .catch(err => {
             console.log(err)
-            this.endPage[index] = "더 이상 게시물이 없습니다."
-            this.pagingIndex = this.pagingIndex + 1
             }
           );
       }

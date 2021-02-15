@@ -217,7 +217,6 @@ export default {
     },
     // 6개씩 더 가져오기
     moreArticles: function () {
-      this.loader = 'loading'
       if (this.selectContinent === "All") {
           axios
           .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
