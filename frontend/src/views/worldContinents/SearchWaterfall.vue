@@ -2,7 +2,10 @@
   <div>
     <SideNavBar/>
     <v-container class="adjust-grid-container">
-      <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 60px; font-size:26px; color:white;"> "{{searchData}}" 검색 결과 </div>
+    <div style="width:100%; height: 20px;"></div>
       <v-row>
         <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
           <!-- 이미지들 -->
@@ -23,6 +26,8 @@
               v-for="(item, i) in tags[idx]"
               :key="i"
               style="background-color:#DD6288; color:white;"
+              class="tag-hover-event-class"
+              @click="gotoSearch(item)"
             >
               {{ item }}
             </v-chip>
@@ -190,7 +195,7 @@ export default {
       indexs:[],
       tags:[], 
       pageNum:0,
-      searchData:"",
+      searchData:localStorage.getItem('searchData'),
       isSelectSearch:false,
     }
   },
@@ -362,6 +367,38 @@ export default {
         }
       }  
     },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+      }
+      localStorage.setItem('searchData', tag)
+      this.images = []
+      this.indexs = []
+      this.tags = []
+      this.pageNum = 0
+      axios
+      .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
+      .then(res => {
+        if (res.data == "End Page") {
+          this.endPage = "검색 결과가 없습니다."
+        }
+        else {
+          for (let i = 0; i < res.data.length; i++) {
+            const tmp = []
+            this.images.push(res.data[i].filePath)
+            this.indexs.push(res.data[i].board.id)
+            res.data[i].tags.forEach(e => {
+              tmp.push(e.tag)
+            });
+            this.tags.push(tmp)
+          }
+          this.pageNum = this.pageNum + 1
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    }
   }
 
 }
@@ -483,4 +520,5 @@ export default {
     transform: rotate(360deg);
   }
 }
+
 </style>

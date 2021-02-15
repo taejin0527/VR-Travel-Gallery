@@ -139,7 +139,7 @@
         </v-list>
       </v-menu>
     </div>
-
+    
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div
       :class="{'adjust-location-for-mobile':(windowWidth < 500)}"

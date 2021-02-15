@@ -99,4 +99,10 @@ export default Vue.extend({
   opacity: 0;
 }
 
+.tag-hover-event-class:hover {
+  transition: 0.5s;
+  transform: scale(1.06);
+  opacity: 0.8;
+}
+
 </style>
