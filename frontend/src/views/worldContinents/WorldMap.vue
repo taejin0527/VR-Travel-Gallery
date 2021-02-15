@@ -87,6 +87,44 @@
             mdi-image-search
           </v-icon>
         </v-btn>
+        <div
+          class="text-center"
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
+                  width: 120px;
+                  top: 30px;
+                  right: 485px;
+                  z-index: 2;
+                  color:white;
+                "   
+        >
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#DDA288"
+                style="width: 120px;"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{selectContinent}}
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in continents"
+                :key="index"
+              >
+                <v-list-item-title
+                  style="text-align:center; cursor:pointer;"
+                  @click="selectContinent = item"
+                >
+                {{ item }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
 
       <v-container>
         <v-row>
@@ -109,6 +147,8 @@ export default {
   name: "WorldMap",
   data: function() {
     return {
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
       popularExhibition: true,
       isSelectTips: false,
       searchData:"",
@@ -139,6 +179,7 @@ export default {
       }
       else {
         localStorage.setItem('searchData', this.searchData)
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
         this.$router.push({name: "SearchWaterfall"})
       }
     }
