@@ -1,7 +1,7 @@
 <template>
   <a-scene>
     <a-assets>
-      <template v-for="(image, idx) in images">
+      <template v-for="(image, idx) in vfImages">
         <img
           :src="image.imgSrc"
           :id="idx"
@@ -43,7 +43,7 @@
     ></a-sky>
 
     <!-- 이미지 링크가 담기는 엔티티. -->
-    <a-entity
+    <!-- <a-entity
       v-for="(image, idx) in images"
       :key="idx"
       id="links"
@@ -63,7 +63,7 @@
         proxy-event="event: click; to: #image-360; as: fade"
         sound="on: click; src: #click-sound"
       ></a-entity>
-    </a-entity>
+    </a-entity> -->
 
     <!-- Camera + cursor. -->
     <a-entity camera look-controls>
@@ -80,38 +80,57 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
+
 export default {
   name: "GalleryVR",
   data: function() {
     return {
       currId: "#0",
-      images: [
-        {
-          // https://medium.com/bom-i/binding-image-src-from-object-in-vue-js-76b782eb19a7
-          imgSrc: require("@/assets/photo/PANO_freezerwarehouse.jpg"),
-          thumbSrc:
-            "https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg"
-        },
-        {
-          imgSrc: require("@/assets/photo/PANO_HomesJungle1.jpg"),
-          thumbSrc:
-            "https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg"
-        }
+      isSelectLike: false,
+      vfImages: [
         // {
-        //   imgSrc:
-        //     "https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg",
+        //   // https://medium.com/bom-i/binding-image-src-from-object-in-vue-js-76b782eb19a7
+        //   imgSrc: require("@/assets/photo/PANO_freezerwarehouse.jpg"),
         //   thumbSrc:
-        //     "https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-sechelt.jpg"
+        //     "https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-city.jpg"
+        // },
+        // {
+        //   imgSrc: require("@/assets/photo/PANO_HomesJungle1.jpg"),
+        //   thumbSrc:
+        //     "https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg"
         // }
       ]
     };
+  },
+  mounted() {
+    axios
+      .get(
+        `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
+          "articleId"
+        )}&username=${this.$store.state.Auth.authToken.username}`
+      )
+      .then(response => {
+        if (response.data.like === "false") this.isSelectLike = false;
+        else this.isSelectLike = true;
+        this.author = response.data.board.author;
+        this.vfImages.push(response.data.filePath);
+        for (let i = 0; i < response.data.subPath.length; i++) {
+          this.vfImages.push(response.data.subPath[i]);
+          console.log(response.data.subPath[i]);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   },
   methods: {
     mergeId(prefix, idx) {
       return prefix + "thumb-" + idx;
     },
     clickGoBack: function() {
-      this.$router.push({ name: localStorage.getItem("page") });
+      this.$router.push({ name: "PhotoView" });
     },
     changeScene(idx) {
       this.currId = "#" + (idx + 1);
