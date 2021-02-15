@@ -9,6 +9,18 @@ import VueIntro from "vue-introjs";
 import "intro.js/introjs.css";
 
 Vue.config.productionTip = false;
+Vue.config.ignoredElements = [
+  "a-scene",
+  "a-entity",
+  "a-camera",
+  "a-box",
+  "a-sky",
+  "a-sphere",
+  "a-cylinder",
+  "a-plane",
+  "a-assets",
+  "a-cursor"
+];
 
 Vue.use(VueIntro);
 Vue.use(VeeValidate, {

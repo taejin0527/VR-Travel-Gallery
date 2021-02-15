@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 public class Charge {
 //	id = order_id
 	@Id
-	@GeneratedValue
 	private long id;
 	
 	@Column(nullable = false,length=20)
