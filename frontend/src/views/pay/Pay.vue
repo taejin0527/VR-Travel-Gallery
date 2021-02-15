@@ -126,6 +126,7 @@ export default {
       const money = this.selectMoney
       console.log(money);
       const formData = new FormData();
+      formData.append('username', this.$store.state.Auth.authToken.username);
       formData.append('cost',money);
       // 수정부분
       axios.post(`${SERVER.PAY_BASE_URL}kakao`,
@@ -135,9 +136,9 @@ export default {
               'Content-Type' : 'multipart/form-data'
           }
       }).then(response=>{
-        //   this.$router.push("/view");
+        
         console.log("succes");
-        console.log(response);
+        console.log(response.data);
         try{
             window.location.href = response.data;
             

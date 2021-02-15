@@ -50,7 +50,7 @@ public class KakaoPayController {
 //	결제 요청
 	@ApiOperation(value = "Kakao에 결제요청 cost라는 비용을 던져줘야함", response = String.class)
 	@PostMapping("/kakao")
-	public String kakao(@RequestParam("cost") String cost) {
+	public String kakao(@RequestParam("cost") String cost,@RequestParam("username") String username) {
 		System.out.println("카카오 결제");
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -64,8 +64,10 @@ public class KakaoPayController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.add("cid", "TC0ONETIME");
 //		주문번호 DB테이블에서 가져오기
-		params.add("partner_order_id", "1");
-		params.add("partner_user_id", "ssafy");
+		Long order_id = chargeService.getMax();
+		
+		params.add("partner_order_id", order_id.toString());
+		params.add("partner_user_id", username);
 		params.add("item_name", cost+"원");
 //		비과세 금액보내야함
 		params.add("tax_free_amount", "100");
@@ -76,27 +78,28 @@ public class KakaoPayController {
 		params.add("approval_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccess");
         params.add("cancel_url", "https://i4d110.p.ssafy.io/apis/kakaoPayCancel");
         params.add("fail_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccessFail");
-		
+		String response="";
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         System.out.println(body);
+        response+=body+"\n";
         try {
         	
         	kakaoPay = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPay.class);
-            kakaoPay.setUser_id("ssafy");
-            kakaoPay.setOrder_id("1");
+            kakaoPay.setUser_id(username);
+            kakaoPay.setOrder_id(order_id.toString());
             System.out.println(kakaoPay);
-            
+            response+=kakaoPay+"\n";
             return kakaoPay.getNext_redirect_pc_url();
  
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+        	response+="restClientException : "+e+"\n";
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+        	response+="URIsyntaxException : "+e+"\n";
         }
         
-        return "/pay";
+        return response;
 	}
 //	결제 승인
 	@ApiOperation(value = "요청된건을 승인하고 최종결제, 요청시의 pg_token을 넣어줘야함", response = String.class)
@@ -131,6 +134,7 @@ public class KakaoPayController {
         	kakaoPayApproval = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApproval.class);
 //          DB에 저장
         	ChargeDto chargeDto = new ChargeDto();
+        	chargeDto.setId(Long.parseLong(kakaoPayApproval.getPartner_order_id()));
         	chargeDto.setTid(kakaoPayApproval.getTid());
         	chargeDto.setPayday(kakaoPayApproval.getApproved_at());
         	chargeDto.setPrice(kakaoPayApproval.getAmount().getTotal());
