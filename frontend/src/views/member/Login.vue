@@ -83,6 +83,7 @@ export default class Login extends Vue {
       if (!isValid) {
         console.log("validate 오류");
         this.loading = false;
+        alert('로그인 형식을 맞춰주세요.')
         setTimeout(() => {
           this.active = !this.active;
         }, 1000);
@@ -101,6 +102,7 @@ export default class Login extends Vue {
               this.active = !this.active;
             }, 1000);
             this.message = error;
+            alert('아이디와 비밀번호가 틀렸습니다.')
           }
         );
       }

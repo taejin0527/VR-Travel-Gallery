@@ -35,6 +35,8 @@
           v-for="(item, idx) in exhibitionContent"
           :key="idx"
           style="background-color:#DD6288; color:white;"
+          class="tag-hover-event-class"
+          @click="gotoSearch(item)"
         >
           {{ item }}
         </v-chip>
@@ -78,8 +80,15 @@ export default {
         localStorage.setItem('articleId', this.exhibitionIndex)
         this.$router.push({ name: "PhotoView" });
       }
-      
     },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+      }
+      localStorage.setItem('selectContinentforSearch', 'All')
+      localStorage.setItem('searchData', tag)
+      this.$router.push({name:"SearchWaterfall"})
+    }
   },
 };
 </script>
