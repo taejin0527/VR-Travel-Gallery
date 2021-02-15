@@ -27,6 +27,8 @@
             v-for="(item, i) in tags[idx]"
             :key="i"
             style="background-color:#DD6288; color:white;"
+            class="tag-hover-event-class"
+            @click="gotoSearch(item)"
           >
             {{ item }}
           </v-chip>
@@ -49,6 +51,14 @@ export default {
     gotoSelectArticle: function (idx) {
       localStorage.setItem("articleId", this.indexs[idx])
       this.$router.push({name:"PhotoView"})
+    },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+      }
+      localStorage.setItem('selectContinentforSearch', 'All')
+      localStorage.setItem('searchData', tag)
+      this.$router.push({name:"SearchWaterfall"})
     }
   }
 }
