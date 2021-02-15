@@ -1,5 +1,10 @@
 <template>
-  <v-card class="mx-auto" flat max-width="350">
+  <v-card class="mx-auto" flat dark color="#5a4e4d" max-width="450">
+    <div>
+      <h1>인증</h1>
+      <p>인증번호를 입력하세요</p>
+    </div>
+
     <v-text-field
       v-model="confirm"
       :messages="error.confirm"
@@ -36,10 +41,10 @@ export default {
     return {
       confirm: "",
       error: {
-        confirm: ""
+        confirm: "",
       },
       isSubmit: false,
-      component: this
+      component: this,
     };
   },
   created() {
@@ -48,10 +53,10 @@ export default {
   watch: {
     confirm: function() {
       this.checkForm();
-    }
+    },
   },
   computed: {
-    ...mapState("Signup", ["confirmCode2"])
+    ...mapState("Signup", ["confirmCode2"]),
   },
   methods: {
     checkForm() {
@@ -61,7 +66,7 @@ export default {
 
       let isSubmit = true;
 
-      Object.values(this.error).map(v => {
+      Object.values(this.error).map((v) => {
         if (v) isSubmit = false;
       });
       this.isSubmit = isSubmit;
@@ -77,10 +82,10 @@ export default {
       } else {
         swal.fire({
           icon: "error",
-          text: "인증번호를 확인해주세요"
+          text: "인증번호를 확인해주세요",
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -10,7 +10,9 @@
 
     <v-img height="250" :src="exhibitionImage"></v-img>
     <div class="d-flex justify-center" style="text-align: center;">
-      <v-card-title class="font-change-MapoPeacefull-card-title">{{ exhibitionLocation }}</v-card-title>
+      <v-card-title class="font-change-MapoPeacefull-card-title">{{
+        exhibitionLocation
+      }}</v-card-title>
     </div>
 
     <v-card-text>
@@ -66,34 +68,33 @@ export default {
     exhibitionImage: [String],
     exhibitionContent: [Array, String],
     exhibitionLocation: [String],
-    exhibitionIndex : [Number],
-    likeCount: [Number, String],
+    exhibitionIndex: [Number],
+    likeCount: [Number, String]
   },
   methods: {
     goPhotoViewer() {
       if (this.exhibitionIndex == -1 || this.exhibitionIndex == undefined) {
-        alert('깃발을 선택하고 <GO>버튼을 눌러주세요.')
-      }
-      else {
-        localStorage.setItem('articleId', this.exhibitionIndex)
+        alert("깃발을 선택하고 <GO>버튼을 눌러주세요.");
+      } else {
+        localStorage.setItem("articleId", this.exhibitionIndex);
         this.$router.push({ name: "PhotoView" });
       }
-      
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
 @font-face {
-    font-family: 'MapoPeacefull';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "MapoPeacefull";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .font-change-MapoPeacefull-card-title {
-  font-family: 'MapoPeacefull';
+  font-family: "MapoPeacefull";
   color: #444444;
 }
 

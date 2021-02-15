@@ -1,26 +1,46 @@
 <template>
-  <div class="wrapper">
-    <div class="wrapper-center">
-      <!-- Header -->
-      <ProfileForm />
+  <div>
+    <SideNavBar />
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:95px; top:20px; color:white;"
+      @click="clickGotoWorldmap"
+    >
+      <v-icon>
+        mdi-map-marker-radius
+      </v-icon>
+    </v-btn>
+    <div class="wrapper">
+      <div class="wrapper-center">
+        <!-- Header -->
+        <ProfileForm />
 
-      <!-- Follower -->
+        <!-- Follower -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SideNavBar from "@/components/navigation/SideNavBar.vue";
 import ProfileForm from "@/components/member/profile/ProfileForm";
 
 export default {
   name: "scale",
   components: {
-    ProfileForm
+    SideNavBar,
+    ProfileForm,
   },
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    clickGotoWorldmap: function() {
+      this.$router.push({ name: "WorldMap" });
+    },
+  },
 };
 </script>
 

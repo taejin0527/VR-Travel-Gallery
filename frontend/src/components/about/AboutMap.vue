@@ -131,7 +131,7 @@ ul {
 }
 
 .img-wrapper01 .img01 {
-  background: url("~@/assets/images/example/1.jpg") no-repeat;
+  background: url("~@/assets/worldmap/worldmap.svg") no-repeat;
   background-position: 50%;
   background-size: cover;
   height: 30vh;
@@ -149,7 +149,7 @@ ul {
 }
 
 .img-wrapper02 .img02 {
-  background: url("~@/assets/images/example/2.jpg") no-repeat;
+  background: url("~@/assets/main/VRIcon.png") no-repeat;
   background-position: 50%;
   background-size: cover;
   height: 80vh;
@@ -177,7 +177,7 @@ ul {
   left: 0;
   width: 0%;
   height: 100%;
-  background: rgb(163, 124, 140);
+  background: #dda288;
   animation: block-appear 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
   animation-delay: 1.5s;
 }

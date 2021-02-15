@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <SideNavBar/>
+    <SideNavBar />
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
       elevation="3"
@@ -45,12 +45,7 @@
               transition:0.5s;
             "
     >
-      <v-card
-        color="#DDA288"
-        height="50px"
-        width="300px"
-        dark
-      >
+      <v-card color="#DDA288" height="50px" width="300px" dark>
         <v-card-text>
           <v-text-field
             v-model="searchData"
@@ -64,7 +59,7 @@
         </v-card-text>
       </v-card>
     </v-lazy>
-    
+
     <v-btn
       v-else
       elevation="3"
@@ -93,12 +88,16 @@
           <!-- 이미지 가져오는 코드 -->
           <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
           <img
-            :src="`${image}`" alt="image error"
-            :class="{'adjust-grid-image':true, 'opacity-event-for-waterfall':true}"
+            :src="`${image}`"
+            alt="image error"
+            :class="{
+              'adjust-grid-image': true,
+              'opacity-event-for-waterfall': true
+            }"
             style="cursor:pointer;"
             @click="gotoSelectArticle(idx)"
-          >
-          <br>
+          />
+          <br />
           <!-- 태그 보여주는 코드 -->
           <v-chip-group
             class="accent-4 white--text"
@@ -116,18 +115,21 @@
         </v-col>
       </v-row>
     </v-container>
-    <div
-      class="d-flex justify-center"
-    >
+    <div class="d-flex justify-center">
       <div
-        v-if='(this.endPage[0]==="더 이상 게시물이 없습니다." && this.endPage[1]==="더 이상 게시물이 없습니다." &&
-              this.endPage[2]==="더 이상 게시물이 없습니다." && this.endPage[3]==="더 이상 게시물이 없습니다." &&
-              this.endPage[4]==="더 이상 게시물이 없습니다." && this.endPage[5]==="더 이상 게시물이 없습니다.")'
+        v-if="
+          this.endPage[0] === '더 이상 게시물이 없습니다.' &&
+            this.endPage[1] === '더 이상 게시물이 없습니다.' &&
+            this.endPage[2] === '더 이상 게시물이 없습니다.' &&
+            this.endPage[3] === '더 이상 게시물이 없습니다.' &&
+            this.endPage[4] === '더 이상 게시물이 없습니다.' &&
+            this.endPage[5] === '더 이상 게시물이 없습니다.'
+        "
         class="d-flex justify-center change-font-more-articles align-center"
         style="width:100%; height:100px; color:#eeeeee;"
       >
         더 이상 게시물이 없습니다.
-      </div> 
+      </div>
       <v-btn
         class="ma-2 change-font-more-articles"
         :loading="loading"
@@ -145,62 +147,69 @@
 
 <script>
 import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts"
+import SERVER from "@/apis/UrlMapper.ts";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
-  name:"EachWaterfall",
+  name: "EachWaterfall",
   components: {
-    SideNavBar,
+    SideNavBar
   },
-  data: function () {
+  data: function() {
     return {
-      loader:null,
+      loader: null,
       loading: false,
       popularExhibition: false, // 버튼 바꾸기 데이터
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
       indexs: [], // id 데이터 리스트
-      searchData:"",
-      isSelectSearch:false,
-      pagingIndex:0,
-      endPage: ['', '', '', '', '', ''],
-    }
+      searchData: "",
+      isSelectSearch: false,
+      pagingIndex: 0,
+      endPage: ["", "", "", "", "", ""]
+    };
   },
   // 로딩
   watch: {
-    loader () {
-      const l = this.loader
-      this[l] = !this[l]
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
-      setTimeout(() => (this[l] = false), 3000)
+      setTimeout(() => (this[l] = false), 3000);
 
-      this.loader = null
-    },
+      this.loader = null;
+    }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
-  created:function(){
-    localStorage.setItem('page', "AllWaterfall")
-    const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
-    const realPage = this.pagingIndex/6
+  created: function() {
+    localStorage.setItem("page", "AllWaterfall");
+    const locations = [
+      "northAmerica",
+      "southAmerica",
+      "europe",
+      "asia",
+      "oceania",
+      "africa"
+    ];
+    const realPage = this.pagingIndex / 6;
     for (let index = 0; index < locations.length; index++) {
       axios
-      .get(`${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`)
-      .then(response => {
-        for (let i = 0; i < response.data.length; i++) {
-          this.images.push(response.data[i].filePath);
-          this.tags.push(response.data[i].tags)
-          this.indexs.push(response.data[i].board.id)
-        }
-        this.pagingIndex = this.pagingIndex + 1
-      })
-      .catch(err => {
-        console.log(err)
-        this.endPage[index] = "게시물이 없습니다."
-        this.pagingIndex = this.pagingIndex + 1
-        }
-      );
-
+        .get(
+          `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
+        )
+        .then(response => {
+          for (let i = 0; i < response.data.length; i++) {
+            this.images.push(response.data[i].filePath);
+            this.tags.push(response.data[i].tags);
+            this.indexs.push(response.data[i].board.id);
+          }
+          this.pagingIndex = this.pagingIndex + 1;
+        })
+        .catch(err => {
+          console.log(err);
+          this.endPage[index] = "게시물이 없습니다.";
+          this.pagingIndex = this.pagingIndex + 1;
+        });
     }
   },
   methods: {
@@ -210,57 +219,62 @@ export default {
       this.$router.push({ name: "WorldMap" });
     },
     // 게시물 작성 페이지로 이동
-    clickGotoCreate: function () {
-      this.$router.push({name:"Create"})
+    clickGotoCreate: function() {
+      this.$router.push({ name: "Create" });
     },
     // 게시물 사진 보기
-    gotoSelectArticle: function (idx) {
-      localStorage.setItem("articleId", this.indexs[idx])
-      this.$router.push({name:"PhotoView"})
+    gotoSelectArticle: function(idx) {
+      localStorage.setItem("articleId", this.indexs[idx]);
+      this.$router.push({ name: "PhotoView" });
     },
     // 6개씩 더 가져오기
-    moreArticles: function () {
-      this.loader = 'loading'
-      const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
-      const realPage = this.pagingIndex/6
-      console.log(this.endPage)
+    moreArticles: function() {
+      this.loader = "loading";
+      const locations = [
+        "northAmerica",
+        "southAmerica",
+        "europe",
+        "asia",
+        "oceania",
+        "africa"
+      ];
+      const realPage = this.pagingIndex / 6;
+      console.log(this.endPage);
       for (let index = 0; index < locations.length; index++) {
         axios
-          .get(`${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`)
+          .get(
+            `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
+          )
           .then(response => {
-            console.log(response)
+            console.log(response);
             for (let i = 0; i < response.data.length; i++) {
               this.images.push(response.data[i].filePath);
-              this.tags.push(response.data[i].tags)
-              this.indexs.push(response.data[i].board.id)
+              this.tags.push(response.data[i].tags);
+              this.indexs.push(response.data[i].board.id);
             }
-            this.pagingIndex = this.pagingIndex + 1
+            this.pagingIndex = this.pagingIndex + 1;
           })
           .catch(err => {
-            console.log(err)
-            this.endPage[index] = "더 이상 게시물이 없습니다."
-            this.pagingIndex = this.pagingIndex + 1
-            }
-          );
+            console.log(err);
+            this.endPage[index] = "더 이상 게시물이 없습니다.";
+            this.pagingIndex = this.pagingIndex + 1;
+          });
       }
     },
-
 
     // 검색
     searchKeyword: function() {
       if (this.searchData === "") {
-        alert('검색어를 입력해주세요.')
-      }
-      else {
-        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+        alert("검색어를 입력해주세요.");
+      } else {
+        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
 /* 눈누에서 폰트 가져옴 */
 @font-face {
   font-family: "TmoneyRoundWindRegular";

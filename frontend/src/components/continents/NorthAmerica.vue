@@ -4,15 +4,9 @@
     <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
-      <v-col
-        cols="1"
-        xl="2"
-      >
-        <div
-          class="continent-scale"
-          style="position:relative; left:100%; "
-        >
-          <img 
+      <v-col cols="1" xl="2">
+        <div class="continent-scale" style="position:relative; left:100%; ">
+          <img
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
             :key="idx"
@@ -47,7 +41,7 @@
                 '%; cursor:default;'
             "
           >
-            {{popularLocationNames[idx]}}
+            {{ popularLocationNames[idx] }}
           </div>
         </div>
       </v-col>
@@ -71,11 +65,11 @@
       >
         <div style="min-width:80px;"></div>
         <ContinentCard
-          :exhibitionImage = "exhibitionImage"
-          :exhibitionContent = "exhibitionContent"
-          :exhibitionLocation = "exhibitionLocation"
-          :likeCount = "likeCount"
-          :exhibitionIndex = "exhibitionIndex"
+          :exhibitionImage="exhibitionImage"
+          :exhibitionContent="exhibitionContent"
+          :exhibitionLocation="exhibitionLocation"
+          :likeCount="likeCount"
+          :exhibitionIndex="exhibitionIndex"
         />
       </v-col>
     </v-row>
@@ -93,14 +87,30 @@ export default {
   data: function() {
     return {
       popularDistrict: [0, -5, -10, -15, -20],
-      popularLocationNames: ["뉴욕", "플로리다", "라스베가스", "샌프란시스코", "그린란드"],
+      popularLocationNames: [
+        "뉴욕",
+        "플로리다",
+        "라스베가스",
+        "샌프란시스코",
+        "그린란드"
+      ],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
       popularLocationX: [62, 58.5, 40, 33.5, 82],
       popularLocationY: [70, 80, 74, 69, 43],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/NA.jpg"),
-      exhibitionContent: ["미국", "뉴욕", "플로리다", "올란도", "유니버셜", "키웨스트", "라스베가스", "샌프란시스코", "그린란드"],
+      exhibitionContent: [
+        "미국",
+        "뉴욕",
+        "플로리다",
+        "올란도",
+        "유니버셜",
+        "키웨스트",
+        "라스베가스",
+        "샌프란시스코",
+        "그린란드"
+      ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 379,
@@ -114,7 +124,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
-    indexs: [Array],
+    indexs: [Array]
   },
 
   computed: {
@@ -135,10 +145,10 @@ export default {
         array[index] =
           this.popularLocationY[index] + this.popularDistrict[index];
         if (index == 0) {
-          array[index] = array[index] - 6
+          array[index] = array[index] - 6;
         }
         if (index == 3) {
-          array[index] = array[index] - 7
+          array[index] = array[index] - 7;
         }
       }
       return array;
@@ -146,13 +156,12 @@ export default {
     adjustLocationNamesX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] =
-          this.popularLocationX[index] - 1;
+        array[index] = this.popularLocationX[index] - 1;
         if (index == 0) {
-          array[index] = array[index] + 7
+          array[index] = array[index] + 7;
         }
         if (index == 3) {
-          array[index] = array[index] + 7
+          array[index] = array[index] + 7;
         }
       }
       return array;
@@ -161,13 +170,13 @@ export default {
   methods: {
     // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.exhibitionIndex= this.indexs[idx]
-      this.likeCount= this.likes[idx]
-      this.overCircleIcon = [false, false, false, false, false]
-      this.overCircleIcon[idx] = true
+      this.exhibitionImage = this.images[idx];
+      this.exhibitionLocation = this.locations[idx];
+      this.exhibitionContent = this.tags[idx];
+      this.exhibitionIndex = this.indexs[idx];
+      this.likeCount = this.likes[idx];
+      this.overCircleIcon = [false, false, false, false, false];
+      this.overCircleIcon[idx] = true;
     }
   }
 };

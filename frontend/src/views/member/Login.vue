@@ -1,5 +1,17 @@
 <template>
   <div class="wrapper">
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:95px; top:20px; color:white;"
+      @click="clickGotoWorldmap"
+    >
+      <v-icon>
+        mdi-map-marker-radius
+      </v-icon>
+    </v-btn>
+
     <transition name="slide">
       <form v-if="active" @submit.prevent="logInSubmit" class="ticket">
         <p class="title">Welcome to NUVO</p>
@@ -71,6 +83,9 @@ export default class Login extends Vue {
     }
   }
 
+  clickGotoWorldmap() {
+    this.$router.push({ name: "WorldMap" });
+  }
   signUpPage() {
     this.$router.push("/signup");
   }
@@ -91,11 +106,11 @@ export default class Login extends Vue {
 
       if (this.user.username && this.user.password) {
         this.login(this.user).then(
-          data => {
+          (data) => {
             console.log("success!");
             this.$router.push("/worldmap");
           },
-          error => {
+          (error) => {
             this.loading = false;
             setTimeout(() => {
               this.active = !this.active;

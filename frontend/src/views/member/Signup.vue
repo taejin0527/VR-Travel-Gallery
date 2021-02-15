@@ -1,24 +1,42 @@
 <template>
-  <v-container class="signup" fill-height>
-    <v-row class="text-center" align="center" justify="center">
-      <v-col cols="12">
-        <SignupForm
-          v-if="page === 1"
-          @toEmailVerification="setSignupData"
-          :signupData2="signupData"
-        />
-        <SignupEmail
-          v-if="page === 2"
-          @toEmailVerification="emailVerification"
-          @pageDown="(page = 1), setPage(1)"
-        />
-        <SignupEmailVerification
-          v-if="page === 3"
-          @finishSignup="doSignup"
-          @pageDown="(page = 2), setPage(2)"
-        />
-      </v-col>
-    </v-row>
+  <v-container fill-height>
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:95px; top:20px; color:white;"
+      @click="clickGotoWorldmap"
+    >
+      <v-icon>
+        mdi-map-marker-radius
+      </v-icon>
+    </v-btn>
+
+    <!-- Signup -->
+    <v-container class="signup" fill-height>
+      <v-row class="text-center" align="center" justify="center">
+        <v-col cols="12">
+          <!-- 아이디, 비번, 비번확인 -->
+          <SignupForm
+            v-if="page === 1"
+            @toEmailVerification="setSignupData"
+            :signupData2="signupData"
+          />
+          <!-- 이메일 입력 -->
+          <SignupEmail
+            v-if="page === 2"
+            @toEmailVerification="emailVerification"
+            @pageDown="(page = 1), setPage(1)"
+          />
+          <!-- 인증번호 확인 -->
+          <SignupEmailVerification
+            v-if="page === 3"
+            @finishSignup="doSignup"
+            @pageDown="(page = 2), setPage(2)"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
@@ -35,16 +53,19 @@ export default {
   components: {
     SignupForm,
     SignupEmail,
-    SignupEmailVerification
+    SignupEmailVerification,
   },
   data: function() {
     return {
       signupData: {},
-      page: 1
+      page: 1,
     };
   },
   methods: {
     ...mapActions("Signup", ["signup", "saveSignupData", "setPage"]),
+    clickGotoWorldmap() {
+      this.$router.push({ name: "WorldMap" });
+    },
     setSignupData(signupData) {
       this.saveSignupData(signupData);
       this.signupData = this.$store.state.Signup.signupData;
@@ -76,14 +97,17 @@ export default {
     url("/images/nyan-cat.gif")
     left top
     no-repeat
-  `
+  `,
       });
       this.saveSignupData({});
       this.setPage(1);
       this.$router.push({ name: "Home" });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.signup {
+}
+</style>
