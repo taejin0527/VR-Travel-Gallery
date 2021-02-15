@@ -238,21 +238,24 @@ export default {
     axios
       .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
       .then(response => {
-        console.log(response)
-        for (let index = 0; index < response.data.length; index++) {
-          this.images.push(response.data[index].filePath);
-          const tmp = []
-          for (let i = 0; i < response.data[index].tags.length; i++) {
-            tmp.push(response.data[index].tags[i].tag);
-          }
-          this.tags.push(tmp)
-          this.indexs.push(response.data[index].board.id)
+        if (response.data == "End Page") {
+          this.endPage = "저장된 사진이 없습니다."
         }
-        this.pagingIndex = this.pagingIndex + 1
+        else {
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
+            this.indexs.push(response.data[index].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        }
       })
       .catch(err => {
         console.log(err)
-        this.endPage = "게시물이 없습니다."
         }
       );
 
@@ -279,25 +282,28 @@ export default {
     },
     // 6개씩 더 가져오기
     moreArticles: function () {
-      this.loader = 'loading'
       const location = localStorage.getItem('continent');
       axios
         .get(`${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`)
         .then(response => {
-          for (let index = 0; index < response.data.length; index++) {
-            this.images.push(response.data[index].filePath);
-            const tmp = []
-            for (let i = 0; i < response.data[index].tags.length; i++) {
-              tmp.push(response.data[index].tags[i].tag);
-            }
-            this.tags.push(tmp)
-            this.indexs.push(response.data[index].board.id)
+          if (response.data == "End Page") {
+            this.endPage = "더 이상 사진이 없습니다."
           }
-          this.pagingIndex = this.pagingIndex + 1
+          else {
+            for (let index = 0; index < response.data.length; index++) {
+              this.images.push(response.data[index].filePath);
+              const tmp = []
+              for (let i = 0; i < response.data[index].tags.length; i++) {
+                tmp.push(response.data[index].tags[i].tag);
+              }
+              this.tags.push(tmp)
+              this.indexs.push(response.data[index].board.id)
+            }
+            this.pagingIndex = this.pagingIndex + 1
+          }
         })
         .catch(err => {
           console.log(err)
-          this.endPage = "더 이상 게시물이 없습니다."
           }
         );
     },
