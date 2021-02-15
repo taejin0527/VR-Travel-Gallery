@@ -1,7 +1,29 @@
 <template>
-  <div class="container d-flex justify-center">
+  <div style="width:100%; height:100%;">
     <!-- 오른쪽 상단 Tips 픽스 -->
     <div
+      v-if="windowWidth < 500 || windowHeight < 450"
+      style="
+              position: fixed;
+              height: 10%;
+              margin: 0;
+              padding: 0;
+              width: 90px;
+              top: 20px;
+              right: 20px;
+              z-index: 101;
+            "
+            
+    >
+      <img
+        src="@/assets/3DHelp3.png"
+        alt=""
+        @click="showTipsOverlay = true"
+        width="90px"
+      />
+    </div>
+    <div
+      v-else
       style="
               position: fixed;
               height: 10%;
@@ -22,126 +44,160 @@
         @mouseleave="isSelectTips = false"
       />
     </div>
-
-    <!-- 좋아요 버튼 -->
+    <MobileView
+      v-if="windowWidth < 500 || windowHeight < 450"
+      :vfImages = "vfImages"
+    />
     <div
-      style="
-              position: fixed;
-              height: 10%;
-              margin: 0;
-              padding: 0;
-              top: 365px;
-              right: 73px;
-              z-index: 101;
-            "
+      class="container d-flex justify-center"
+      v-else
     >
-      <v-icon
-        size="30px"
-        :class="{
-          'like-hover-event': true,
-          'select-like-transition': isSelectLike
-        }"
-        @click="likeThisArticle"
-      >
-        mdi-heart
-      </v-icon>
-    </div>
-
-    <!-- Flipbook 페이지로 가는 버튼 -->
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:60px; top:120px; color:white;"
-      @click="clickGotoFlipbook"
-    >
-      <v-icon>
-        mdi-book-open-page-variant
-      </v-icon>
-    </v-btn>
-
-    <!-- VR 페이지로 가는 버튼 -->
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:60px; top:200px; color:white;"
-      @click="clickGotoVR"
-    >
-      <span style="font-size:22px">VR</span>
-    </v-btn>
-
-    <!-- 뒤로가기 버튼 -->
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:60px; top:280px; color:white;"
-      @click="clickGoBack"
-    >
-      <v-icon size="38px">
-        mdi-arrow-left-bold-circle
-      </v-icon>
-    </v-btn>
-
-    <div class="flux">
-      <vue-flux
-        :options="vfOptions"
-        :images="vfImages"
-        :transitions="vfTransitions"
-        class="adjust-grid-image"
-        ref="slider"
-      >
-        <template v-slot:preloader>
-          <flux-preloader />
-        </template>
-
-        <template v-slot:controls>
-          <flux-controls />
-        </template>
-
-        <template v-slot:pagination>
-          <flux-pagination />
-        </template>
-
-        <template v-slot:index>
-          <flux-index />
-        </template>
-      </vue-flux>
-
-      <!-- 이 코드는 사진 밑에 넣는 코드 근데.. 음 왼쪽이 나은 거 같긴함. -->
-      <!-- <div class="d-flex justify-end align-center"> <pre class="profile">snapped by  </pre>
-      <span class="user-hover-event-goto-profile" style="color:#DDA288; font-size:33px; font-family:'SDSamliphopangche_Outline';">{{author}}</span><pre>  </pre></div> -->
-    </div>
-    <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
-    <div style="position:fixed; left:40px; top:45%;">
-      <div class="profile d-flex justify-center">snapped by</div>
-      <span
-        class="user-hover-event-goto-profile d-flex justify-center"
-        style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
-        @click="gotoProfilePage"
-      >
-        {{ author }}
-      </span>
-      <br />
+      <!-- 좋아요 버튼 -->
       <div
-        class="profile d-flex justify-center"
-        v-if="this.$store.state.Auth.authToken.username == this.author"
-        @click="deleteArticle"
+        style="
+                position: fixed;
+                height: 10%;
+                margin: 0;
+                padding: 0;
+                top: 365px;
+                right: 73px;
+                z-index: 101;
+              "
       >
-        <v-btn color="#DDA288" style="color:white; font-weight:bold;">
-          <v-progress-linear
-            v-if="fab"
-            indeterminate
-            color="red"
-            style="width: 70px"
-          ></v-progress-linear>
-          <div v-else>
-            게시글 삭제
-          </div>
-        </v-btn>
+        <v-icon
+          size="30px"
+          :class="{
+            'like-hover-event': true,
+            'select-like-transition': isSelectLike
+          }"
+          @click="likeThisArticle"
+        >
+          mdi-heart
+        </v-icon>
+      </div>
+
+      <!-- Flipbook 페이지로 가는 버튼 -->
+      <v-btn
+        elevation="3"
+        fab
+        color="#DDA288"
+        style="position:fixed; right:60px; top:120px; color:white;"
+        @click="clickGotoFlipbook"
+      >
+        <v-icon>
+          mdi-book-open-page-variant
+        </v-icon>
+      </v-btn>
+
+      <!-- VR 페이지로 가는 버튼 -->
+      <v-btn
+        elevation="3"
+        fab
+        color="#DDA288"
+        style="position:fixed; right:60px; top:200px; color:white;"
+        @click="clickGotoVR"
+      >
+        <span style="font-size:22px">VR</span>
+      </v-btn>
+
+      <!-- 뒤로가기 버튼 -->
+      <v-btn
+        elevation="3"
+        fab
+        color="#DDA288"
+        style="position:fixed; right:60px; top:280px; color:white;"
+        @click="clickGoBack"
+      >
+        <v-icon size="38px">
+          mdi-arrow-left-bold-circle
+        </v-icon>
+      </v-btn>
+
+      <div class="flux">
+        <vue-flux
+          :options="vfOptions"
+          :images="vfImages"
+          :transitions="vfTransitions"
+          class="adjust-grid-image"
+          ref="slider"
+        >
+          <template v-slot:preloader>
+            <flux-preloader />
+          </template>
+
+          <template v-slot:controls>
+            <flux-controls />
+          </template>
+
+          <template v-slot:pagination>
+            <flux-pagination />
+          </template>
+
+          <template v-slot:index>
+            <flux-index />
+          </template>
+        </vue-flux>
+
+        <!-- 이 코드는 사진 밑에 넣는 코드 근데.. 음 왼쪽이 나은 거 같긴함. -->
+        <!-- <div class="d-flex justify-end align-center"> <pre class="profile">snapped by  </pre>
+        <span class="user-hover-event-goto-profile" style="color:#DDA288; font-size:33px; font-family:'SDSamliphopangche_Outline';">{{author}}</span><pre>  </pre></div> -->
+      </div>
+      <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
+      <div style="position:fixed; left:40px; top:45%;">
+        <div class="profile d-flex justify-center">snapped by</div>
+        <span
+          class="user-hover-event-goto-profile d-flex justify-center"
+          style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
+          @click="gotoProfilePage"
+        >
+          {{ author }}
+        </span>
+        <br />
+        <div
+          class="profile d-flex justify-center"
+          v-if="this.$store.state.Auth.authToken.username == this.author"
+          @click="deleteArticle"
+        >
+          <v-btn color="#DDA288" style="color:white; font-weight:bold;">
+            <v-progress-linear
+              v-if="fab"
+              indeterminate
+              color="red"
+              style="width: 70px"
+            ></v-progress-linear>
+            <div v-else>
+              게시글 삭제
+            </div>
+          </v-btn>
+        </div>
       </div>
     </div>
+    <v-overlay
+      :absolute="absolute"
+      :value="showTipsOverlay"
+      :opacity="0.8"
+    >
+      오른쪽 화면을 누르면 <br><br> 다음 사진으로 넘김니다.
+      <pre>
+
+      </pre>
+      왼쪽 화면을 누르면 <br><br> 이전 사진으로 돌아옵니다.
+      <pre>
+        
+      </pre>
+      <div
+        class="d-flex justify-center"
+      >
+        <v-btn
+          color="#DDA288"
+          @click="showTipsOverlay = false"
+          
+        >
+          확인
+        </v-btn>
+      </div>
+      
+    </v-overlay>
   </div>
 </template>
 
@@ -155,6 +211,8 @@ import {
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
+import MobileView from "@/components/mobile/View.vue"
+
 
 export default {
   components: {
@@ -162,7 +220,8 @@ export default {
     FluxControls,
     FluxIndex,
     FluxPagination,
-    FluxPreloader
+    FluxPreloader,
+    MobileView
   },
   data: () => ({
     fab: false,
@@ -173,7 +232,11 @@ export default {
     author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
-    isSelectLike: false // 좋아요는 손봐야 합니다.
+    isSelectLike: false,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
+    absolute:true,
+    showTipsOverlay: false,
   }),
   computed: {
     user() {
