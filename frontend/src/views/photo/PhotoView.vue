@@ -14,11 +14,13 @@
             "
     >
       <img
-        src="@/assets/3DHelp3.png" alt="" width="120px"
-        :class="{'select-tips-transition': isSelectTips}"
+        src="@/assets/3DHelp3.png"
+        alt=""
+        width="120px"
+        :class="{ 'select-tips-transition': isSelectTips }"
         @mouseover="isSelectTips = true"
         @mouseleave="isSelectTips = false"
-      >
+      />
     </div>
 
     <!-- 좋아요 버튼 -->
@@ -33,10 +35,15 @@
               z-index: 101;
             "
     >
-      <v-icon size="30px" :class="{'like-hover-event':true, 'select-like-transition':isSelectLike}"
+      <v-icon
+        size="30px"
+        :class="{
+          'like-hover-event': true,
+          'select-like-transition': isSelectLike
+        }"
         @click="likeThisArticle"
       >
-          mdi-heart
+        mdi-heart
       </v-icon>
     </div>
 
@@ -108,13 +115,13 @@
     </div>
     <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
     <div style="position:fixed; left:40px; top:45%;">
-      <div class="profile d-flex justify-center" > snapped by</div>
+      <div class="profile d-flex justify-center">snapped by</div>
       <span
         class="user-hover-event-goto-profile d-flex justify-center"
         style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
         @click="gotoProfilePage"
       >
-        {{author}}
+        {{ author }}
       </span>
       <br>
       <div
@@ -200,15 +207,15 @@ export default {
       });
   },
   methods: {
-    clickGotoFlipbook: function () {
-      this.$router.push({name:"Flipbook"})
+    clickGotoFlipbook: function() {
+      this.$router.push({ name: "Flipbook" });
     },
-    clickGoBack: function () {
-      this.$router.push({name:localStorage.getItem("page")})
+    clickGoBack: function() {
+      this.$router.push({ name: localStorage.getItem("page") });
     },
-    gotoProfilePage: function () {
-      localStorage.setItem('setUserforProfile', this.author)
-      this.$router.push({name:"Profile"})
+    gotoProfilePage: function() {
+      localStorage.setItem("setUserforProfile", this.author);
+      this.$router.push({ name: "Profile" });
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
     likeThisArticle: function () {
@@ -265,29 +272,31 @@ export default {
 
 <style scoped>
 @font-face {
-    font-family: 'SDSamliphopangche_Outline';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+  font-family: "S-CoreDream-3Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* 좋아요 css */
 @keyframes likebeat {
   from {
     transform: scale(1);
-    color: #FDA288;
+    color: #fda288;
   }
 
   to {
     transform: scale(1.3);
-    color: #FF8288;
+    color: #ff8288;
   }
 }
 
@@ -300,7 +309,7 @@ export default {
 }
 
 .like-hover-event:hover {
-  color: #FF8288;
+  color: #ff8288;
   transition: 0.5s;
   transform: scale(1.3);
   cursor: pointer;
@@ -325,7 +334,7 @@ export default {
 }
 
 .profile {
-  font-family: 'S-CoreDream-3Light', Arial, Helvetica, sans-serif;
+  font-family: "S-CoreDream-3Light", Arial, Helvetica, sans-serif;
   font-size: 18px;
   color: #111111;
   font-weight: bold;
@@ -363,7 +372,7 @@ export default {
 /* 1600px 부터 css코드 */
 @media (min-width: 1500px) {
   .adjust-grid-image {
-    width:1200px;
+    width: 1200px;
     height: 700px;
   }
 }
@@ -371,7 +380,7 @@ export default {
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
   .adjust-grid-image {
-    width:1400px;
+    width: 1400px;
     height: 750px;
   }
 }
@@ -394,5 +403,4 @@ export default {
   animation-direction: alternate;
   cursor: pointer;
 }
-
 </style>
