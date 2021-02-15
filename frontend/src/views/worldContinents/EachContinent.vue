@@ -81,6 +81,44 @@
         mdi-image-search
       </v-icon>
     </v-btn>
+        <div
+      class="text-center"
+      v-if="isSelectSearch"
+      style="position:fixed;
+              width: 120px;
+              top: 30px;
+              right: 485px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="#DDA288"
+            style="width: 120px;"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{selectContinent}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in continents"
+            :key="index"
+          >
+            <v-list-item-title
+              style="text-align:center; cursor:pointer;"
+              @click="selectContinent = item"
+            >
+            {{ item }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
 
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
@@ -153,6 +191,8 @@ export default {
   name: "EachContinent",
   data: function() {
     return {
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
       getContinentName: localStorage.getItem("continent"),
       popularExhibition: true,
       images: [], // 이미지 데이터 리스트
@@ -195,6 +235,7 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
         localStorage.setItem('searchData', this.searchData)
         this.$router.push({name: "SearchWaterfall"})
       }

@@ -84,6 +84,44 @@
         mdi-image-search
       </v-icon>
     </v-btn>
+    <div
+      class="text-center"
+      v-if="isSelectSearch"
+      style="position:fixed;
+              width: 120px;
+              top: 30px;
+              right: 485px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="#DDA288"
+            style="width: 120px;"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{selectContinent}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in continents"
+            :key="index"
+          >
+            <v-list-item-title
+              style="text-align:center; cursor:pointer;"
+              @click="selectContinent = item"
+            >
+            {{ item }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
 
     <!-- 전체 사진 불러오기. -->
     <!-- 단, 모든 사진을 불러오기 때문에 더 보기 버튼을 만들어서 15개씩 불러오는 방향을 잡아야 할 듯. -->
@@ -162,6 +200,8 @@ export default {
   },
   data: function () {
     return {
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
       loader:null,
       loading: false,
       popularExhibition: false, // 버튼 바꾸기 데이터
@@ -279,6 +319,7 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
         localStorage.setItem('searchData', this.searchData)
         this.$router.push({name: "SearchWaterfall"})
       }
