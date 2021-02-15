@@ -2,7 +2,10 @@
   <div>
     <SideNavBar/>
     <v-container class="adjust-grid-container">
-      <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 60px; font-size:26px; color:white;"> "{{searchData}}" 검색 결과 </div>
+    <div style="width:100%; height: 20px;"></div>
       <v-row>
         <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
           <!-- 이미지들 -->
@@ -190,7 +193,7 @@ export default {
       indexs:[],
       tags:[], 
       pageNum:0,
-      searchData:"",
+      searchData:localStorage.getItem('searchData'),
       isSelectSearch:false,
     }
   },
