@@ -18,7 +18,8 @@
             :key="idx"
             :class="{
               'adjust-location': true,
-              'transition-circle-icon': overCircleIcon[idx]
+              'transition-circle-icon': true,
+              'transition-select-location': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -26,11 +27,28 @@
                 '%;' +
                 'left:' +
                 adjustLocationX[idx] +
-                '%; cursor: pointer;'
+                '%; cursor: pointer; z-index:2;'
             "
-            @mouseover="selectLocation(idx)"
-            @mouseleave="leaveCircleIcon(idx)"
+            @click="selectLocation(idx)"
           />
+          <div
+            v-for="(item, idx) in popularLocationNames"
+            :key="idx"
+            :class="{
+              'adjust-location-text': true,
+              'transition-location-text': overCircleIcon[idx]
+            }"
+            :style="
+              'top:' +
+                adjustLocationNamesY[idx] +
+                '%;' +
+                'left:' +
+                adjustLocationNamesX[idx] +
+                '%; cursor:default;'
+            "
+          >
+            {{popularLocationNames[idx]}}
+          </div>
         </div>
       </v-col>
 
@@ -66,6 +84,9 @@
 
 <script>
 import ContinentCard from "@/components/continents/ContinentCard";
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts"
+
 
 export default {
   name: "Oceania",
@@ -74,20 +95,22 @@ export default {
   },
   data: function() {
     return {
-      popularDistrict: [0, -2.5, -5, -7.5, -10],
+      popularDistrict: [0, -5, -10, -15, -20],
+      popularLocationNames: ["시드니", "멜버른", "골드코스트", "피지", "뉴질랜드"],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
-      popularLocationX: [54, 44, 50, 80, 70],
+      popularLocationX: [54, 46.5, 55, 87.5, 80],
       popularLocationY: [54, 62, 44, 32, 70],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/O.jpg"),
       exhibitionContent: ["오스트레일리아", "시드니", "멜버른", "골드코스트", "피지", "뉴질랜드"],
-      exhibitionLocation: "마우스를 깃발에 올려보세요",
+      exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 103,
       // 고른곳 확인
       locationIdx: 0,
-      overCircleIcon: [false, false, false, false, false]
+      overCircleIcon: [false, false, false, false, false],
+      OList: [52, 53, 54, 55, 56],
     };
   },
   props: {
@@ -108,28 +131,78 @@ export default {
           this.popularLocationX[index] + this.popularDistrict[index];
       }
       return array;
+    },
+    // 이름 X, Y축 보정
+    adjustLocationNamesY: function() {
+      const array = [1, 2, 3, 4, 5];
+      for (let index = 0; index < array.length; index++) {
+        array[index] =
+          this.popularLocationY[index] + this.popularDistrict[index] - 1;
+      }
+      return array;
+    },
+    adjustLocationNamesX: function() {
+      const array = [1, 2, 3, 4, 5];
+      for (let index = 0; index < array.length; index++) {
+        array[index] =
+          this.popularLocationX[index] - 1;
+      }
+      return array;
     }
   },
   methods: {
-    // 데이터 통신 해야되지만 일단 샘플 넣기.
+    // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      this.exhibitionImage= this.images[idx]
-      this.exhibitionLocation= this.locations[idx]
-      this.exhibitionContent= this.tags[idx]
-      this.exhibitionIndex= this.indexs[idx]
-      this.likeCount= this.likes[idx]
+      const location = localStorage.getItem('continent');
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}getposts?id=${this.OList[idx]}&username=${this.$store.state.Auth.authToken.username}`)
+        .then((response) => {
+          this.exhibitionImage= response.data.filePath
+          this.exhibitionLocation= response.data.board.nation
+          const tmp = []
+          for (let idx = 0; idx < response.data.tags.length; idx++) {
+            tmp.push(response.data.tags[idx].tag)
+          }
+          this.exhibitionContent= tmp
+          this.exhibitionIndex= response.data.board.id
+          this.likeCount= response.data.board.good
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      this.overCircleIcon = [false, false, false, false, false]
       this.overCircleIcon[idx] = true
-    },
-    leaveCircleIcon: function(idx) {
-      this.overCircleIcon[idx] = false;
     }
   }
 };
 </script>
 
-<style>
-.transition-circle-icon {
+<style scoped>
+/* 텍스트 색 바뀌는 애니메이션 */
+@keyframes lighttext {
+  from {
+    color: whitesmoke;
+  }
+
+  to {
+    color: grey;
+  }
+}
+
+.transition-location-text {
+  animation-duration: 0.8s;
+  animation-name: lighttext;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.transition-select-location {
   transform: scale(1.3);
+  transition: 0.3s;
+}
+
+.transition-circle-icon:hover {
+  transform: scale(1.2);
   transition: 0.3s;
 }
 
@@ -137,6 +210,12 @@ export default {
 .adjust-location {
   position: relative;
   width: 25px;
+}
+.adjust-location-text {
+  position: relative;
+  font-family: "TmoneyRoundWindRegular";
+  line-height: 24px;
+  font-size: 15px;
 }
 .continent-scale {
   height: 500px;
@@ -148,6 +227,12 @@ export default {
     position: relative;
     width: 30px;
   }
+  .adjust-location-text {
+    position: relative;
+    font-family: "TmoneyRoundWindRegular";
+    line-height: 28px;
+    font-size: 15px;
+  }
   .continent-scale {
     height: 600px;
     width: 600px;
@@ -158,6 +243,12 @@ export default {
   .adjust-location {
     position: relative;
     width: 40px;
+  }
+  .adjust-location-text {
+    position: relative;
+    font-family: "TmoneyRoundWindRegular";
+    line-height: 38px;
+    font-size: 15px;
   }
   .continent-scale {
     height: 800px;

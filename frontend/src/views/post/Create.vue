@@ -60,6 +60,7 @@
 
         <!-- 장소(국가) 선택 : nation -->
         <v-text-field
+          dark
           label="장소(국가)"
           prepend-icon="mdi-map-marker"
           v-model="nation"
@@ -68,7 +69,7 @@
         <!-- tags는 리스트로 되어 있슴 -->
         <v-row>
           <v-col cols="6" v-for="(item, idx) in tags" :key="idx">
-            <v-text-field label="#Tag입력" v-model="tags[idx]"></v-text-field>
+            <v-text-field dark color="white" label="#Tag입력" v-model="tags[idx]"></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-btn
@@ -82,13 +83,26 @@
           </v-col>
         </v-row>
 
-        <!-- submit 버튼 별로긴한데 담에 바꿀게 -->
-        <v-btn color="blue-grey" class="ma-2 white--text" @click="submitFile">
-          Upload
-          <v-icon right dark>
-            mdi-cloud-upload
-          </v-icon>
-        </v-btn>
+        <!-- submit 버튼 바꿈 -->
+        <div class="d-flex justify-end">
+          <v-btn color="blue-grey" class="ma-2 white--text" @click="submitFile">
+            <v-progress-linear
+              v-if="fab"
+              indeterminate
+              color="#dda288"
+              style="width: 90px"
+            ></v-progress-linear>
+            <div
+              v-else
+            >
+              Upload
+              <v-icon right dark>
+                mdi-cloud-upload
+              </v-icon>
+            </div>
+            
+          </v-btn>
+        </div>
       </v-col>
       <v-col offset="2" cols="8">
         <h1 style="color:#eeeeee">추가 사진</h1>
@@ -173,6 +187,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 export default {
   data() {
     return {
+      fab : false,
       continentsNames: [
         "northAmerica",
         "southAmerica",
@@ -186,7 +201,7 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [], //보여줄 파일
       uploadImageIndex: 0, //이미지 업로드를 위한 변수
-      tags: [], // 태그들
+      tags: [""], // 태그들
       nation: "", // 장소(국가)
       num: 0,
       mainImageData: null
@@ -267,12 +282,44 @@ export default {
       this.files = this.files.filter(data => data.number !== Number(name));
     },
     submitFile() {
+      if (this.fab == true) {
+        this.fab = false
+        return
+      }
+
       console.log(this.files.length);
       const formData = new FormData();
-      formData.append("main", this.main[0].file);
+
+      // 유효성 검사
+      if (this.main[0]) {
+        formData.append("main", this.main[0].file);
+      }
+      else {
+        return alert('사진을 넣어주세요.')
+      }
+      if (this.files.length != 0) {
+        formData.append("main", this.main[0].file);
+      }
+      else {
+        return alert('추가 사진을 1장 이상 넣어주세요.')
+      }
+      if (this.nation) {
+        formData.append("nation", this.nation);
+      }
+      else {
+        return alert('장소를 지정해 주세요.')
+      }
+      for (let i = 0; i < this.tags.length; i++) {
+        if (this.tags[i] === '') {
+          return alert('태그를 적어주세요.')
+        }
+      }
+
+      // 프로그레스 애니메이션 설정
+      this.fab = true
+        
       formData.append("writer", this.$store.state.Auth.authToken.username);
       formData.append("location", this.selectContinent);
-      formData.append("nation", this.nation);
       formData.append("tags", this.tags);
       for (let i = 0; i < this.files.length; i++) {
         console.log(this.files[i].file);
@@ -288,10 +335,10 @@ export default {
         .then(response => {
           localStorage.setItem("continent", this.selectContinent);
           this.$router.push({ name: "EachWaterfall" });
-          console.log("succes");
+          console.log("success");
         })
-        .catch(function() {
-          console.log("FAILURE");
+        .catch(err => {
+          console.error(err);
         });
     }
   }

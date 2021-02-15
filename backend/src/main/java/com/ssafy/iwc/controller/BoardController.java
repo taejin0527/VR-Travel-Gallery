@@ -3,6 +3,7 @@ package com.ssafy.iwc.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jcraft.jsch.Session;
+
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
 import com.ssafy.iwc.dto.PostImageDto;
@@ -31,11 +32,12 @@ import com.ssafy.iwc.model.AllView;
 import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.model.LocationInfo;
 import com.ssafy.iwc.model.MainImage;
-import com.ssafy.iwc.model.Tag;
+import com.ssafy.iwc.model.MultiId;
 import com.ssafy.iwc.service.BoardService;
+import com.ssafy.iwc.service.LikeService;
 import com.ssafy.iwc.service.MainImageService;
 import com.ssafy.iwc.service.PostImageService;
-import com.ssafy.iwc.service.PostImageServiceImpl;
+
 import com.ssafy.iwc.service.TagService;
 import com.ssafy.iwc.util.MD5Generator;
 import com.ssafy.iwc.util.SFTPsender;
@@ -54,9 +56,12 @@ public class BoardController {
 	private MainImageService mainImageService;
 	@Autowired
 	private TagService tagService;
+	@Autowired
+	private LikeService likeService;
+	
 //	이부분 처리
-	private String FileMainSrc = "https://i4d110.p.ssafy.io/images/mainImg/";
-	private String FileSubSrc = "https://i4d110.p.ssafy.io/images/subImg/";
+	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
+	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
 	
 	
 	@ApiOperation(value = "게시물 id를 보내면 게시물과 관련 모든것 삭제", response = String.class)
@@ -78,13 +83,15 @@ public class BoardController {
 
 			sFTPsender.deleteFile(delMain.getFilename(), 0);
 			
-//			DB삭제
+//			DB 이미지 삭제
 			postImageService.delPost(no);
 			mainImageService.delPost(no);
 			System.out.println("오케이");
 //			태그삭제
 			tagService.delPost(no);
 //			좋아요 삭제
+			likeService.deleteAll(no);
+//			게시물 삭제
 			boardService.delPost(no);
 			System.out.println("마지막");
 			return "OK";
@@ -94,8 +101,7 @@ public class BoardController {
 		}
 
 	}
-
-	@ApiOperation(value = "해당 num 만큼 게시물 추가, 게시물 없으면 End Page 리턴", response = String.class)
+	@ApiOperation(value = "해당s num 만큼 게시물 추가, 게시물 없으면 End Page 리턴", response = String.class)
 	@GetMapping("/paging")
 	public ResponseEntity<List<AllMainView>> paging(@RequestParam("location") String location,
 			@RequestParam("num") String num) {
@@ -107,7 +113,7 @@ public class BoardController {
 		try {
 			List<Board> dto = boardService.getLocationIdxBoard(location, start, idx);
 			if(dto.size()==0) {
-				return new ResponseEntity("End Page", HttpStatus.FAILED_DEPENDENCY);
+				return new ResponseEntity("End Page",  HttpStatus.OK);
 			}
 			for (Board a : dto) {
 				System.out.println(a);
@@ -130,6 +136,7 @@ public class BoardController {
 
 		}
 	}
+
 	
 	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
@@ -163,38 +170,100 @@ public class BoardController {
 		}
 
 	}
-
-	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기", response = String.class)
+	
+	@ApiOperation(value = "postsid, username, 현재상태(true or false)를 보내면 true or false리턴", response = String.class)
+	@GetMapping("/fixlike")
+	public ResponseEntity fixlike(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("curr") String curr) {
+		String result;
+		if(curr.equals("true")) { //좋아요 누른상태 -> 해제
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					result= "잘못된 접근입니다.";
+				}else {
+					likeService.deleteLike(id,username);
+					result= "false";
+				}
+				
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}else { //좋아요 안누름 -> 추가
+			try {
+//				좋아요 중복방지
+				MultiId multiId = new MultiId();
+				multiId.setPostsid(Long.parseLong(id));
+				multiId.setUsername(username);
+				int flag = likeService.findLike(multiId);
+				if(flag==0) {
+					likeService.addLike(id,username);
+					result = "true";
+				}else {
+					result= "잘못된 접근입니다.";
+				}
+				
+				
+				
+			}catch(Exception e) {
+				result= "실패";
+			}
+		}
+		
+		
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기,username으로 좋아요 확인", response = String.class)
 	@GetMapping("/getposts")
-	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id) {
+	public ResponseEntity<List<AllView>> getpost(@RequestParam("id") String id,@RequestParam("username") String username) {
 		long no = Long.parseLong(id);
 //		조회수 업로드하기
 		
-//		내가 좋아요했는지 확인
+
 		try {
+//			내가 좋아요했는지 확인
+			MultiId mid = new MultiId();
+			mid.setPostsid(no);
+			mid.setUsername(username);
+			int like = likeService.findLike(mid);
+			System.out.println(like);
+			
 			List<AllView> dto = postImageService.findSubImg(no);
 
-			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
-
+//			List<Map<String, String>> result = new LinkedList<Map<String, String>>();
+			LocationInfo locationinfo = new LocationInfo();
+			List<String> subImg = new LinkedList<String>();
 			for (AllView a : dto) {
-				Map<String, String> m = new HashMap<String, String>();
-				System.out.println("아이디 " + a.getId());
-				System.out.println("작성자 : " + a.getAuthor());
-				System.out.println("파일 : " + a.getFilename());
-				m.put("id", Long.toString(a.getId()));
-				m.put("author", a.getAuthor());
-				m.put("filepath", FileSubSrc + a.getFilename());
-				result.add(m);
+//			sub이미지 경로 넣기
+				subImg.add(FileSubSrc+a.getFilename());
 			}
-			AllMainView all = mainImageService.findMainImg(no);
-			Map<String, String> m = new HashMap<String, String>();
+			locationinfo.setSubPath(subImg);
+//			메인이미지 경로넣기
+			Optional<MainImage> d = mainImageService.findById(no);
+			locationinfo.setFilePath(FileMainSrc + d.get().getFilename());
+//			좋아요 유무체크
+			if(like==0) {
+				locationinfo.setLike("false");
+				
+			}
+			else {
+				locationinfo.setLike("true");
+				
+			}
+//			게시물정보 넣기
+			locationinfo.setBoard(boardService.findById(no));
+//			태그정보 넣기
+			locationinfo.setTags(tagService.findTagId(no));
+			
 
-			m.put("id", Long.toString(all.getId()));
-			m.put("author", all.getAuthor());
-			m.put("filepath", FileMainSrc + all.getFilename());
-			result.add(m);
-
-			return new ResponseEntity(result, HttpStatus.OK);
+			return new ResponseEntity(locationinfo, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
 		}
@@ -207,8 +276,9 @@ public class BoardController {
 			@RequestParam("nation") String nation, @RequestParam("tags") List<String> tags) {
 		long id = 0;
 		
+//		파일명에 넣을 시간 데이터
 		
-		
+//		System.out.println(addTime);
 		try {
 			//게시글 작성
 			boardDto.setAuthor(writer);
@@ -224,7 +294,9 @@ public class BoardController {
 					break;
 				}
 			}
-			String fname = new MD5Generator(origname).toString()+expend;
+			Date time = new Date();
+			String addTime = time.toString();
+			String fname = new MD5Generator(origname+addTime).toString()+expend;
 			String fPath = "/home/mainImg/"+ fname;
 			SFTPsender sFTPsender = new SFTPsender();
 			File file = new File(fname);
@@ -268,7 +340,7 @@ public class BoardController {
 		for(MultipartFile mf : files) {
 			try {
 				
-//				파일명 명명을 다시해야함 -> 해쉬값
+
 				String origFilename = mf.getOriginalFilename();
 				System.out.println(origFilename);
 				String expend="";
@@ -278,7 +350,10 @@ public class BoardController {
 						break;
 					}
 				}
-				String filename = new MD5Generator(origFilename).toString()+expend;
+				Date time = new Date();
+				String addTime = time.toString();
+//				파일명 명명시에 MD5Generator안에 넣어야함
+				String filename = new MD5Generator(origFilename+addTime).toString()+expend;
 				String filePath = "/home/subImg/"+ filename;
 				SFTPsender sFTPsender = new SFTPsender();
 

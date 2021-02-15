@@ -64,4 +64,11 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardRepository.getLocationIdxBoard(location,start,idx);
 	}
+
+
+	@Override
+	public Board findById(long no) {
+		// TODO Auto-generated method stub
+		return boardRepository.findById(no).get();
+	}
 }
