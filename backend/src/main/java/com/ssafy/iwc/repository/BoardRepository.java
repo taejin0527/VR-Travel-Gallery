@@ -25,8 +25,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 	@Query(value = "update posts set good = ? where id = ? ",nativeQuery = true)
 	void fixLikes(Long likes, Long id);
 
-	@Query(value = "select distinct p.id from posts p inner join tags t on p.id=t.no where (p.location = ? and p.nation like ?)or t.tag like ? order by p.id desc limit ?,?",nativeQuery = true)
-	List<Long> getPostsNum(String location, String searchData, String searchData2, int start, int idx);
+	@Query(value = "select distinct p.id from posts p inner join tags t on p.id=t.no where (p.location = ? and p.nation like ?)or (t.tag like ? and p.location = ?) order by p.id desc limit ?,?",nativeQuery = true)
+	List<Long> getPostsNum(String location, String searchData, String searchData2,String location2, int start, int idx);
 
 	@Query(value = "select distinct p.id from posts p inner join tags t on p.id=t.no where p.nation like ? or t.tag like ? order by p.id desc limit ?,?",nativeQuery = true)
 	List<Long> getAllPostsNum(String searchData, String searchData2, int start, int idx);

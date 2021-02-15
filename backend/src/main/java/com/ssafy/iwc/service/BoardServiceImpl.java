@@ -67,7 +67,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<Long> getPostsNum(String location, String searchData, int start, int idx) {
 		// TODO Auto-generated method stub
-		return boardRepository.getPostsNum(location,searchData,searchData,start,idx);
+		return boardRepository.getPostsNum(location,searchData,searchData,location,start,idx);
 	}
 
 
