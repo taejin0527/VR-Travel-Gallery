@@ -195,7 +195,8 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
-        this.$router.replace("/EachWaterfall?searchData=" + this.searchData);
+        localStorage.setItem('searchData', this.searchData)
+        this.$router.push({name: "SearchWaterfall"})
       }
     }
   }

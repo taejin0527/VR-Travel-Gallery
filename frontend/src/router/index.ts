@@ -15,6 +15,7 @@ import AllWaterfall from "@/views/worldContinents/AllWaterfall.vue";
 import Flipbook from "@/views/photo/Flipbook.vue";
 import Aframe from "@/views/photo/Aframe.vue";
 import Pay from "@/views/pay/Pay.vue";
+import SearchWaterfall from "@/views/worldContinents/SearchWaterfall.vue";
 
 Vue.use(VueRouter);
 
@@ -113,6 +114,11 @@ const routes: Array<RouteConfig> = [
     path: "/aframe/",
     name: "Aframe",
     component: Aframe
+  },
+  {
+    path: "/searchdata/",
+    name: "SearchWaterfall",
+    component: SearchWaterfall
   }
 ];
 
