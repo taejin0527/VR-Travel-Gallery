@@ -63,6 +63,15 @@ public class BoardController {
 	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
 	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
 	
+	
+	@ApiOperation(value = "조회수 증가시키기 게시물 id값을 get방식으로 넘김", response = String.class)
+	@GetMapping("/increaseview")
+	public void increaseview(@RequestParam("id") String id) {
+		long Id = Long.parseLong(id);
+		boardService.increaseView(Id);
+	}
+	
+	
 	@ApiOperation(value = "location,num과 검색데이터 기준으로 조회", response = String.class)
 	@GetMapping("/eachsearch")
 	public ResponseEntity search(@RequestParam("location") String location,
@@ -80,6 +89,7 @@ public class BoardController {
 		for(long sidx : getPostsNum) {
 			LocationInfo data = new LocationInfo();
 //			data에 Board값 넣기
+			
 			data.setBoard(boardService.getPost(sidx));
 //			메인 이미지 경로 가져와서 넣기
 			Optional<MainImage> d = mainImageService.findById(sidx);
