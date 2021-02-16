@@ -74,7 +74,6 @@
 <script>
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
-
 export default {
   name: "GalleryVR",
   data: function() {
@@ -84,7 +83,7 @@ export default {
       isLoaded: false,
       isSelectLike: false,
       vfImages: [],
-      vfIcons: require("@/assets/photo/icon2.png")
+      vfIcons: require("@/assets/photo/Icon.png")
     };
   },
   created() {
