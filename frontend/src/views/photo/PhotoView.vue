@@ -355,6 +355,10 @@ export default {
         if (res.data.money > 2) {
           this.payCointoAuthor()
         }
+        else {
+          alert('코인이 부족합니다. 결제페이지로 이동합니다.')
+          this.$router.push({name:'Pay'})
+        }
       })
       .catch(err => {
         console.log(err)
