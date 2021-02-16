@@ -75,7 +75,7 @@
                     color:#dda288; border-radius:5px; text-align:center; margin-left:10%;
                     line-height:35px; font-size: 18px; font-weight: bold;"
               :class="{'select-view-method':selectViewMethodData, 'pay-hover-event-class':true}"
-              @click="selectViewMethod"
+              @click="selectViewMethod2"
             >
               유료
             </div>
@@ -305,12 +305,10 @@ export default {
       this.files = this.files.filter(data => data.number !== Number(name));
     },
     selectViewMethod: function () {
-      if (this.selectViewMethodData === true) {
-        this.selectViewMethodData = false
-      }
-      else {
-        this.selectViewMethodData = true
-      } 
+      this.selectViewMethodData = false
+    },
+    selectViewMethod2: function () {
+      this.selectViewMethodData = true
     },
     submitFile() {
       if (this.fab == true) {
@@ -348,10 +346,10 @@ export default {
       formData.append("location", this.selectContinent);
       formData.append("tags", this.tags);
       if (this.selectViewMethodData) {
-        formData.append("premium", "true");
+        formData.append("premium", 'true');
       }
       else {
-        formData.append("premium", "false");
+        formData.append("premium", 'false');
       }
       for (let i = 0; i < this.files.length; i++) {
         formData.append("file", this.files[i].file);

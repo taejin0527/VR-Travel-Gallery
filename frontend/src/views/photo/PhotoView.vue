@@ -46,6 +46,7 @@
     <MobileView
       v-if="windowWidth < 500 || windowHeight < 450"
       :vfImages="vfImages"
+      :premium="premium"
     />
     <div class="container d-flex justify-center" v-else>
       <!-- 좋아요 버튼 -->
@@ -86,7 +87,31 @@
       </v-btn>
 
       <!-- VR 페이지로 가는 버튼 -->
+      <v-badge
+        avatar
+        bordered
+        overlap
+        style="position:fixed; right:60px; top:200px; color:white; z-index: 101;"
+        v-if="premium"
+      >
+        <template v-slot:badge
+        >
+          <v-avatar>
+            <v-img src="@/assets/photo/premium.png"></v-img>
+          </v-avatar>
+        </template>
+
+        <v-btn
+          elevation="3"
+          fab
+          color="#DDA288"
+          @click="clickGotoVR"
+        >
+          <span style="font-size:22px">VR</span>
+        </v-btn>
+      </v-badge>
       <v-btn
+        v-else
         elevation="3"
         fab
         color="#DDA288"
@@ -95,6 +120,7 @@
       >
         <span style="font-size:22px">VR</span>
       </v-btn>
+      
 
       <!-- 뒤로가기 버튼 -->
       <v-btn
@@ -181,6 +207,28 @@
         </v-btn>
       </div>
     </v-overlay>
+    <v-overlay :absolute="absolute" :value="checkPayment" :opacity="0.8">
+      <div
+        class="d-flex justify-center"
+        style="font-size: 24px;"
+      >
+        해당 게시물의 VR을 보시려면
+        <br><br>
+        3 N-Coin이 필요합니다.
+        <br><br>
+        결제하시겠습니까?
+        <br><br>
+      </div>
+      <div class="d-flex justify-center">
+        <v-btn color="#DDA288" @click="checkWallet">
+          결제
+        </v-btn>
+        <pre>        </pre>
+        <v-btn color="#DDA288" @click="checkPayment = false">
+          아니오
+        </v-btn>
+      </div>
+    </v-overlay>
   </div>
 </template>
 
@@ -219,6 +267,8 @@ export default {
     windowHeight: window.innerHeight,
     absolute: true,
     showTipsOverlay: false,
+    premium: false,
+    checkPayment: false,
   }),
   computed: {
     user() {
@@ -238,6 +288,7 @@ export default {
         } else {
           this.isSelectLike = true;
         }
+        this.premium = response.data.board.premium
         this.author = response.data.board.author;
         this.vfImages.push(response.data.filePath);
         for (let i = 0; i < response.data.subPath.length; i++) {
@@ -257,13 +308,63 @@ export default {
     },
     // 여기에 라우터 페이지 이동 하심 댐당
     clickGotoVR: function() {
-      this.$router.push({ name: "Aframe" });
+      if (this.premium == true) {
+        axios
+          .get(`${SERVER.BOARD_BASE_URL}payrequest?id=${localStorage.getItem("articleId"
+        )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
+          headers: {
+            Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+          }
+        })
+          .then(res => {
+            if (res.data == true) {
+              this.$router.push({ name: "Aframe" });
+            }
+            else {
+              this.checkPayment = true
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+      }
+      else {
+        this.$router.push({ name: "Aframe" });
+      }
+    },
+    payCointoAuthor: function () {
+      axios
+        .get(`${SERVER.BOARD_BASE_URL}paypost?id=${localStorage.getItem("articleId"
+          )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
+          })
+        .then(() => {
+          this.$router.push({ name: "Aframe" });
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    checkWallet: function () {
+      axios
+      .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
+      .then(res => {
+        if (res.data.money > 2) {
+          this.payCointoAuthor()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
     gotoProfilePage: function() {
       localStorage.setItem("setUserforProfile", this.author);
       this.$router.push({ name: "Profile" });
     },
-    // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
+    // 좋아요
     likeThisArticle: function() {
       axios
         .get(
@@ -271,8 +372,11 @@ export default {
             this.isSelectLike
           }&id=${localStorage.getItem("articleId")}&username=${
             this.$store.state.Auth.authToken.username
-          }`
-        )
+          }`,{
+          headers: {
+            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+          }
+        })
         .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
@@ -294,12 +398,12 @@ export default {
       axios
         .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
         .then(res => {
-          if (this.$store.state.Auth.authToken.id != this.res.data.id) {
+          if (this.$store.state.Auth.authToken.id != res.data.id) {
             alert("인증되지 않은 사용자 입니다.");
           }
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
         })
       if (this.$store.state.Auth.authToken.username != this.author) {
         alert("인증되지 않은 사용자 입니다.");

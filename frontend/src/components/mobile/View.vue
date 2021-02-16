@@ -37,7 +37,31 @@
       </v-icon>
     </v-btn>
     <!-- VR 페이지로 가는 버튼 -->
+    <v-badge
+      avatar
+      bordered
+      overlap
+      style="position:fixed; bottom:43px; right:120px; color:white; z-index: 101;"
+      v-if="premium"
+    >
+      <template v-slot:badge
+      >
+        <v-avatar>
+          <v-img src="@/assets/photo/premium.png"></v-img>
+        </v-avatar>
+      </template>
+
+      <v-btn
+        elevation="3"
+        fab
+        color="#DDA288"
+        @click="clickGotoVR"
+      >
+        <span style="font-size:22px">VR</span>
+      </v-btn>
+    </v-badge>
     <v-btn
+      v-else
       elevation="3"
       fab
       color="#DDA288"
@@ -62,7 +86,8 @@ export default {
     };
   },
   props: {
-    vfImages: [Array]
+    vfImages: [Array],
+    premium: [Boolean, String],
   },
   methods: {
     righttoImage: function() {
