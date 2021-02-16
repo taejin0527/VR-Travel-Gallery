@@ -13,7 +13,7 @@
             :class="{
               'adjust-location': true,
               'transition-circle-icon': true,
-              'transition-select-location': overCircleIcon[idx],
+              'transition-select-location': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -30,7 +30,7 @@
             :key="idx"
             :class="{
               'adjust-location-text': true,
-              'transition-location-text': overCircleIcon[idx],
+              'transition-location-text': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -84,7 +84,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 export default {
   name: "NorthAmerica",
   components: {
-    ContinentCard,
+    ContinentCard
   },
   data: function() {
     return {
@@ -94,7 +94,7 @@ export default {
         "플로리다",
         "라스베가스",
         "샌프란시스코",
-        "그린란드",
+        "그린란드"
       ],
       // 여기에 X, Y축의 크기만 안다면 지도에 표시 가능.
       // 데이터를 받아올 예정
@@ -111,7 +111,7 @@ export default {
         "키웨스트",
         "라스베가스",
         "샌프란시스코",
-        "그린란드",
+        "그린란드"
       ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
@@ -119,7 +119,7 @@ export default {
       // 고른곳 확인
       locationIdx: 0,
       overCircleIcon: [false, false, false, false, false],
-      NAList: [27, 30, 28, 29, 31],
+      NAList: [27, 30, 28, 29, 31]
     };
   },
   props: {
@@ -127,7 +127,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
-    indexs: [Array],
+    indexs: [Array]
   },
 
   computed: {
@@ -168,7 +168,7 @@ export default {
         }
       }
       return array;
-    },
+    }
   },
   methods: {
     // 클릭하면 데이터 불러오기
@@ -178,7 +178,7 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}getposts?id=${this.NAList[idx]}&username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((response) => {
+        .then(response => {
           this.exhibitionImage = response.data.filePath;
           this.exhibitionLocation = response.data.board.nation;
           const tmp = [];
@@ -189,13 +189,13 @@ export default {
           this.exhibitionIndex = response.data.board.id;
           this.likeCount = response.data.board.good;
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       this.overCircleIcon = [false, false, false, false, false];
       this.overCircleIcon[idx] = true;
-    },
-  },
+    }
+  }
 };
 </script>
 

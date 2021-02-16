@@ -90,7 +90,7 @@ export default {
     clickGotoBack: function() {
       this.$router.push({ name: "EachWaterfall" });
     },
-    clickGotoVR: function () {
+    clickGotoVR: function() {
       this.$router.push({ name: "Aframe" });
     }
   }

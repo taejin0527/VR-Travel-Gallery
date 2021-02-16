@@ -206,7 +206,7 @@ export default {
         "Asia",
         "Africa",
         "Europe",
-        "Oceania",
+        "Oceania"
       ],
       selectContinent: "All",
       loader: null,
@@ -221,7 +221,7 @@ export default {
       isSelectSearch: false,
       pagingIndex: 0,
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      windowHeight: window.innerHeight
     };
   },
   // 로딩
@@ -233,7 +233,7 @@ export default {
       setTimeout(() => (this[l] = false), 3000);
 
       this.loader = null;
-    },
+    }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   // 마찬가지로 Blob 디코딩과 더보기 버튼으로 몇개만 가져오게 끔, 수정해야됨.
@@ -244,7 +244,7 @@ export default {
       .get(
         `${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`
       )
-      .then((response) => {
+      .then(response => {
         if (response.data == "End Page") {
           this.endPage = "저장된 사진이 없습니다.";
         } else {
@@ -260,7 +260,7 @@ export default {
           this.pagingIndex = this.pagingIndex + 1;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -272,7 +272,7 @@ export default {
     Asia,
     Africa,
     Europe,
-    SideNavBar,
+    SideNavBar
   },
   methods: {
     // 각 대륙으로 이동
@@ -291,7 +291,7 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`
         )
-        .then((response) => {
+        .then(response => {
           if (response.data == "End Page") {
             this.endPage = "더 이상 사진이 없습니다.";
           } else {
@@ -307,7 +307,7 @@ export default {
             this.pagingIndex = this.pagingIndex + 1;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -324,8 +324,8 @@ export default {
     },
     clickGotoBack: function() {
       this.$router.push({ name: "WorldMap" });
-    },
-  },
+    }
+  }
 };
 </script>
 

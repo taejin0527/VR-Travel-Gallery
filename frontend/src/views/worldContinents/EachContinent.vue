@@ -192,7 +192,7 @@ export default {
         "Asia",
         "Africa",
         "Europe",
-        "Oceania",
+        "Oceania"
       ],
       selectContinent: "All",
       getContinentName: localStorage.getItem("continent"),
@@ -204,7 +204,7 @@ export default {
       indexs: [], // 게시물 id 리스트
       searchData: "",
       isSelectSearch: false,
-      pagingIndex: 0,
+      pagingIndex: 0
     };
   },
   // 대륙 이름 저장
@@ -219,7 +219,7 @@ export default {
     Asia,
     Africa,
     Europe,
-    SideNavBar,
+    SideNavBar
   },
   methods: {
     // 각 대륙으로 이동
@@ -239,8 +239,8 @@ export default {
         localStorage.setItem("searchData", this.searchData);
         this.$router.push({ name: "SearchWaterfall" });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
