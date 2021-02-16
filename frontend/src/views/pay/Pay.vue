@@ -169,8 +169,6 @@ export default {
           }
         })
         .then(response => {
-          console.log("succes");
-          console.log(response.data);
           try {
             window.location.href = response.data;
           } catch {
