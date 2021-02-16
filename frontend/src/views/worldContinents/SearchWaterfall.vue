@@ -435,17 +435,19 @@ export default {
           console.error(err);
         });
     },
-    gotoSelectArticle: function (idx) {
+    gotoSelectArticle: function(idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
       axios
         .get(
-          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem(
+            "articleId"
+          )}`
         )
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       this.$router.push({ name: "PhotoView" });
-    },
+    }
   }
 };
 </script>

@@ -141,7 +141,7 @@
             alt="image error"
             :class="{
               'adjust-grid-image': true,
-              'opacity-event-for-waterfall': true,
+              'opacity-event-for-waterfall': true
             }"
             style="cursor:pointer;"
             @click="gotoSelectArticle(idx)"
@@ -199,7 +199,7 @@ import SideNavBar from "@/components/navigation/SideNavBar.vue";
 export default {
   name: "EachWaterfall",
   components: {
-    SideNavBar,
+    SideNavBar
   },
   data: function() {
     return {
@@ -210,7 +210,7 @@ export default {
         "Asia",
         "Africa",
         "Europe",
-        "Oceania",
+        "Oceania"
       ],
       selectContinent: "All",
       loader: null,
@@ -223,7 +223,7 @@ export default {
       isSelectSearch: false,
       pagingIndex: 0,
       endPage: ["", "", "", "", "", ""],
-      checkEndPage: "",
+      checkEndPage: ""
     };
   },
   // 로딩
@@ -235,7 +235,7 @@ export default {
       setTimeout(() => (this[l] = false), 3000);
 
       this.loader = null;
-    },
+    }
   },
   // 아예 처음 이 페이지가 생성될 때부터 데이터를 가져옴.
   created: function() {
@@ -246,7 +246,7 @@ export default {
       "europe",
       "asia",
       "oceania",
-      "africa",
+      "africa"
     ];
     const realPage = this.pagingIndex / 6;
     for (let index = 0; index < locations.length; index++) {
@@ -254,11 +254,11 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
         )
-        .then((response) => {
+        .then(response => {
           if (response.data == "End Page") {
             this.endPage[index] = "저장된 사진이 없습니다.";
             let count = 0;
-            this.endPage.forEach((e) => {
+            this.endPage.forEach(e => {
               if (e != "") {
                 count = count + 1;
               }
@@ -275,7 +275,7 @@ export default {
             this.pagingIndex = this.pagingIndex + 1;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -291,13 +291,15 @@ export default {
       this.$router.push({ name: "Create" });
     },
     // 게시물 사진 보기
-    gotoSelectArticle: function (idx) {
+    gotoSelectArticle: function(idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
       axios
         .get(
-          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem(
+            "articleId"
+          )}`
         )
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       this.$router.push({ name: "PhotoView" });
@@ -310,7 +312,7 @@ export default {
         "europe",
         "asia",
         "oceania",
-        "africa",
+        "africa"
       ];
       const realPage = this.pagingIndex / 6;
       console.log(this.endPage);
@@ -319,12 +321,12 @@ export default {
           .get(
             `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
           )
-          .then((response) => {
+          .then(response => {
             if (response.data == "End Page") {
               this.endPage[index] = "더 이상 사진이 없습니다.";
               this.pagingIndex = this.pagingIndex + 1;
               let count = 0;
-              this.endPage.forEach((e) => {
+              this.endPage.forEach(e => {
                 if (e != "") {
                   count = count + 1;
                 }
@@ -341,7 +343,7 @@ export default {
               this.pagingIndex = this.pagingIndex + 1;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       }
@@ -363,8 +365,8 @@ export default {
       localStorage.setItem("selectContinentforSearch", "All");
       localStorage.setItem("searchData", tag);
       this.$router.push({ name: "SearchWaterfall" });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -39,7 +39,7 @@
         size="30px"
         :class="{
           'like-hover-event': true,
-          'select-like-transition': isSelectLike,
+          'select-like-transition': isSelectLike
         }"
         @click="likeThisArticle"
       >
@@ -144,7 +144,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   components: {
-    Flipbook,
+    Flipbook
   },
   data: function() {
     return {
@@ -158,7 +158,7 @@ export default {
       author: "",
       vfImages: [null, require("@/assets/photo/flipbookHelp.jpg")],
       zooms: [1],
-      isSelectLike: false, // 좋아요는 손봐야 합니다.
+      isSelectLike: false // 좋아요는 손봐야 합니다.
     };
   },
   mounted() {
@@ -169,7 +169,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then((response) => {
+      .then(response => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -181,10 +181,10 @@ export default {
           this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
-    window.addEventListener("keydown", (ev) => {
+    window.addEventListener("keydown", ev => {
       const { flipbook } = this.$refs;
       if (!flipbook) {
         return;
@@ -243,14 +243,14 @@ export default {
             this.$store.state.Auth.authToken.username
           }`
         )
-        .then((response) => {
+        .then(response => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
@@ -279,19 +279,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,39 +1,42 @@
 <template>
-  <div class="impression section bg-grey" id="impression">
-    <v-container>
-      <v-carousel
-        cycle
-        :show-arrows="false"
-        delimiter-icon="mdi-minus"
-        height="400"
-        hide-delimiter-background
-        show-arrows-on-hover
-      >
-        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-          <v-sheet color="transparent" height="100%">
-            <v-container class="fill-height" justify="center">
-              <v-row justify="center">
-                <v-icon>{{ slide.icon }}</v-icon>
-              </v-row>
-              <v-row justify="center">
-                <div class="display-1">{{ slide.text }}</div>
-              </v-row>
-              <v-row justify="center">
-                <div class="subtitle-1">{{ slide.name }}</div>
-                <div>...[{{ slide.team }}]</div>
-              </v-row>
-            </v-container>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
-    </v-container>
-  </div>
+  <v-parallax dark :src="parallaxImg">
+    <div class="impression section bg-grey" id="impression">
+      <v-container>
+        <v-carousel
+          cycle
+          :show-arrows="false"
+          delimiter-icon="mdi-minus"
+          height="400"
+          hide-delimiter-background
+          show-arrows-on-hover
+        >
+          <v-carousel-item v-for="(slide, i) in slides" :key="i">
+            <v-sheet color="transparent" height="100%">
+              <v-container class="fill-height" justify="center">
+                <v-row justify="center">
+                  <v-icon>{{ slide.icon }}</v-icon>
+                </v-row>
+                <v-row justify="center">
+                  <div class="display-1">{{ slide.text }}</div>
+                </v-row>
+                <v-row justify="center">
+                  <div class="subtitle-1">{{ slide.name }}</div>
+                  <div>...[{{ slide.team }}]</div>
+                </v-row>
+              </v-container>
+            </v-sheet>
+          </v-carousel-item>
+        </v-carousel>
+      </v-container>
+    </div>
+  </v-parallax>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      parallaxImg: require("@/assets/main/NUVOchangeColorShallow.png"),
       slides: [
         {
           icon: "mdi-comment-quote",

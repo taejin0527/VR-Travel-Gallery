@@ -64,7 +64,7 @@
           size="30px"
           :class="{
             'like-hover-event': true,
-            'select-like-transition': isSelectLike,
+            'select-like-transition': isSelectLike
           }"
           @click="likeThisArticle"
         >
@@ -190,7 +190,7 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader,
+  FluxPreloader
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
@@ -203,12 +203,12 @@ export default {
     FluxIndex,
     FluxPagination,
     FluxPreloader,
-    MobileView,
+    MobileView
   },
   data: () => ({
     fab: false,
     vfOptions: {
-      autoplay: false,
+      autoplay: false
     },
     vfImages: [],
     author: "",
@@ -218,12 +218,12 @@ export default {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
     absolute: true,
-    showTipsOverlay: false,
+    showTipsOverlay: false
   }),
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    },
+    }
   },
   mounted() {
     axios
@@ -232,7 +232,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then((response) => {
+      .then(response => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -244,7 +244,7 @@ export default {
           this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   },
@@ -273,14 +273,14 @@ export default {
             this.$store.state.Auth.authToken.username
           }`
         )
-        .then((response) => {
+        .then(response => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
@@ -304,19 +304,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -68,7 +68,7 @@ export default {
       $(".pricing .content").removeClass("content-center");
       $(this).addClass("content-center");
     });
-  },
+  }
 };
 </script>
 
