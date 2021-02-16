@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="navi">
+    <div
+      class="navi"
+      v-intro="'메뉴바'"
+      v-intro-position="'right'"
+      v-intro-step="1"
+    >
       <div style="width=100%; text-align:center;">
         <div class="navi-button" @click="toggleNav">N U V O A to Z</div>
 
@@ -65,15 +70,15 @@ import Menu from "@/components/navigation/Menu.vue";
 
 export default {
   components: {
-    Menu,
+    Menu
   },
   data: function() {
     return {
-      isMenuPageOpen: false,
+      isMenuPageOpen: false
     };
   },
   computed: {
-    ...mapGetters("Auth", ["isLoggedIn"]),
+    ...mapGetters("Auth", ["isLoggedIn"])
   },
   methods: {
     ...mapActions("Auth", ["signOut"]),
@@ -86,8 +91,8 @@ export default {
     },
     closeMenuPage: function() {
       this.isMenuPageOpen = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -158,7 +163,7 @@ export default {
 /* transition slide 효과 */
 .slide-leave-active,
 .slide-enter-active {
-  transition: 0.2s;
+  transition: 0.4s;
 }
 .slide-enter {
   transform: translateX(-100%);

@@ -5,14 +5,10 @@
     class="mx-auto"
     style="background-color:#5a4e4d;"
   >
-    <br><br><br><br><br><br>
-    <v-container
-      v-if="windowWidth < windowHeight"
-    >
+    <br /><br /><br /><br /><br /><br />
+    <v-container v-if="windowWidth < windowHeight">
       <v-row dense>
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <v-card
             color="#DDA288"
             dark
@@ -22,44 +18,29 @@
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title
-                  class="headline"
-                >VR</v-card-title>
+                <v-card-title class="headline">VR</v-card-title>
                 <v-divider dark></v-divider>
-                <v-card-subtitle
-                  style="width:160px;"
-                >
+                <v-card-subtitle style="width:160px;">
                   VR 전시관 감상
                   <pre></pre>
                   3D 전시관 감상
                 </v-card-subtitle>
 
                 <v-card-actions>
-                  <v-btn
-                    class="ml-2"
-                    outlined
-                    rounded
-                    small
-                  >
+                  <v-btn class="ml-2" outlined rounded small>
                     GOto VR mode
                   </v-btn>
                 </v-card-actions>
               </div>
 
-              <v-avatar
-                class="ma-3"
-                size=""
-                tile
-              >
+              <v-avatar class="ma-3" size="" tile>
                 <v-img src="@/assets/main/VRIcon.png"></v-img>
               </v-avatar>
             </div>
           </v-card>
-          <br><br><br><br><br>
+          <br /><br /><br /><br /><br />
         </v-col>
-        <v-col
-          cols="12"
-        >
+        <v-col cols="12">
           <v-card
             color="#DDA288"
             style="position:fixed; left:3%; top:55%; width:94%;"
@@ -69,50 +50,33 @@
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title
-                  class="headline"
-                >사진</v-card-title>
+                <v-card-title class="headline">사진</v-card-title>
                 <v-divider dark></v-divider>
-                <v-card-subtitle
-                  style="width:160px;"
-                >
+                <v-card-subtitle style="width:160px;">
                   여행 사진 감상
                   <pre></pre>
                   여행지별 사진 분류
                 </v-card-subtitle>
 
                 <v-card-actions>
-                  <v-btn
-                    class="ml-2"
-                    outlined
-                    rounded
-                    small
-                  >
+                  <v-btn class="ml-2" outlined rounded small>
                     GOto WorldMap
                   </v-btn>
                 </v-card-actions>
               </div>
 
-              <v-avatar
-                class="ma-3"
-                size=""
-                tile
-              >
+              <v-avatar class="ma-3" size="" tile>
                 <v-img src="@/assets/worldmap/worldmap.svg"></v-img>
               </v-avatar>
             </div>
           </v-card>
-          <br><br><br><br><br>
+          <br /><br /><br /><br /><br />
         </v-col>
       </v-row>
     </v-container>
-    <v-container
-      v-else
-    >
+    <v-container v-else>
       <v-row dense>
-        <v-col
-          cols="6"
-        >
+        <v-col cols="6">
           <v-card
             color="#DDA288"
             dark
@@ -122,44 +86,29 @@
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title
-                  class="headline"
-                >VR</v-card-title>
+                <v-card-title class="headline">VR</v-card-title>
                 <v-divider dark></v-divider>
-                <v-card-subtitle
-                  style="width:160px;"
-                >
+                <v-card-subtitle style="width:160px;">
                   VR 전시관 감상
                   <pre></pre>
                   3D 전시관 감상
                 </v-card-subtitle>
 
                 <v-card-actions>
-                  <v-btn
-                    class="ml-2"
-                    outlined
-                    rounded
-                    small
-                  >
+                  <v-btn class="ml-2" outlined rounded small>
                     GOto VR mode
                   </v-btn>
                 </v-card-actions>
               </div>
 
-              <v-avatar
-                class="ma-3"
-                size=""
-                tile
-              >
+              <v-avatar class="ma-3" size="" tile>
                 <v-img src="@/assets/main/VRIcon.png"></v-img>
               </v-avatar>
             </div>
           </v-card>
-          <br><br><br><br><br>
+          <br /><br /><br /><br /><br />
         </v-col>
-        <v-col
-          cols="6"
-        >
+        <v-col cols="6">
           <v-card
             color="#DDA288"
             style="position:fixed; left:55%; top:30%; width:40%;"
@@ -169,40 +118,27 @@
           >
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title
-                  class="headline"
-                >사진</v-card-title>
+                <v-card-title class="headline">사진</v-card-title>
                 <v-divider dark></v-divider>
-                <v-card-subtitle
-                  style="width:160px;"
-                >
+                <v-card-subtitle style="width:160px;">
                   여행 사진 감상
                   <pre></pre>
                   여행지별 사진 분류
                 </v-card-subtitle>
 
                 <v-card-actions>
-                  <v-btn
-                    class="ml-2"
-                    outlined
-                    rounded
-                    small
-                  >
+                  <v-btn class="ml-2" outlined rounded small>
                     GOto WorldMap
                   </v-btn>
                 </v-card-actions>
               </div>
 
-              <v-avatar
-                class="ma-3"
-                size=""
-                tile
-              >
+              <v-avatar class="ma-3" size="" tile>
                 <v-img src="@/assets/worldmap/worldmap.svg"></v-img>
               </v-avatar>
             </div>
           </v-card>
-          <br><br><br><br><br>
+          <br /><br /><br /><br /><br />
         </v-col>
       </v-row>
     </v-container>
@@ -211,22 +147,20 @@
 
 <script>
 export default {
-  name:"MobileMain",
+  name: "MobileMain",
   data: () => ({
     windowWidth: window.innerWidth,
-    windowHeight: window.innerHeight,
+    windowHeight: window.innerHeight
   }),
   methods: {
-    gotoVR: function () {
-      console.log('VR URL 넣기')
+    gotoVR: function() {
+      console.log("VR URL 넣기");
     },
-    gotoWorldmap: function () {
-      this.$router.push({name:'WorldMap'})
-    },
+    gotoWorldmap: function() {
+      this.$router.push({ name: "WorldMap" });
+    }
   }
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,20 +1,30 @@
 <template>
   <div>
-    <SideNavBar/>
+    <SideNavBar />
     <v-container class="adjust-grid-container">
-    <div style="width:100%; height: 20px;"></div>
-    <div style="width:100%; height: 20px;"></div>
-    <div style="width:100%; height: 60px; font-size:26px; color:white;"> "{{searchData}}" 검색 결과 </div>
-    <div style="width:100%; height: 20px;"></div>
+      <div style="width:100%; height: 20px;"></div>
+      <div style="width:100%; height: 20px;"></div>
+      <div style="width:100%; height: 60px; font-size:26px; color:white;">
+        "{{ searchData }}" 검색 결과
+      </div>
+      <div style="width:100%; height: 20px;"></div>
       <v-row>
-        <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
+        <v-col
+          v-for="(image, idx) in images"
+          :key="idx"
+          cols="12"
+          sm="6"
+          md="4"
+        >
           <!-- 이미지들 -->
-          <img :src="`${image}`" alt="image error"
+          <img
+            :src="`${image}`"
+            alt="image error"
             class="adjust-grid-image opacity-event-for-waterfall"
             style="cursor:pointer;"
             @click="gotoSelectArticle(idx)"
-          >
-          <br>
+          />
+          <br />
 
           <!-- 태그들 -->
           <v-chip-group
@@ -36,10 +46,8 @@
       </v-row>
 
       <!-- 더보기 -->
-      <br><br>
-      <div
-        class="d-flex justify-center"
-      >
+      <br /><br />
+      <div class="d-flex justify-center">
         <v-btn
           class="ma-2 change-font-more-articles"
           :loading="loading"
@@ -47,7 +55,7 @@
           color="#DDA288"
           style="color:white;"
           @click="moreArticles"
-          v-if="endPage==''"
+          v-if="endPage == ''"
         >
           More
         </v-btn>
@@ -56,9 +64,9 @@
           class="d-flex justify-center change-font-more-articles align-center"
           style="width:100%; height:100px; color:#eeeeee;"
         >
-          {{endPage}}
+          {{ endPage }}
         </div>
-        <br><br><br><br><br><br>
+        <br /><br /><br /><br /><br /><br />
       </div>
 
       <!-- 검색 버튼 및 입력창 -->
@@ -77,8 +85,7 @@
                 background-color:#DDA288;
                 border-radius: 3px;
               "
-      >
-      </div>
+      ></div>
       <div
         v-if="isSelectSearch"
         style="position:fixed;
@@ -87,11 +94,9 @@
                 right: 110px;
                 z-index: 2;
                 color:white;
-              "   
+              "
       >
-        <div
-          class="d-flex align-start justify-center"
-        >
+        <div class="d-flex align-start justify-center">
           <v-text-field
             v-model="searchData"
             color="white"
@@ -104,7 +109,7 @@
           ></v-text-field>
         </div>
       </div>
-      
+
       <v-btn
         v-if="!isSelectSearch"
         elevation="3"
@@ -127,7 +132,7 @@
                 right: 410px;
                 z-index: 2;
                 color:white;
-              "   
+              "
       >
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -138,19 +143,16 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{selectContinent}}
+              {{ selectContinent }}
             </v-btn>
           </template>
           <v-list>
-            <v-list-item
-              v-for="(item, index) in continents"
-              :key="index"
-            >
+            <v-list-item v-for="(item, index) in continents" :key="index">
               <v-list-item-title
                 style="text-align:center; cursor:pointer;"
                 @click="selectContinent = item"
               >
-              {{ item }}
+                {{ item }}
               </v-list-item-title>
             </v-list-item>
           </v-list>
@@ -174,79 +176,93 @@
 </template>
 
 <script>
-import axios from "axios"
-import SERVER from "@/apis/UrlMapper.ts"
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
-
 export default {
-  name:"SearchWaterfall",
+  name: "SearchWaterfall",
   components: {
     SideNavBar
   },
-  data: function () {
+  data: function() {
     return {
-      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
-      selectContinent: 'All',
-      loader:null,
+      continents: [
+        "All",
+        "N. America",
+        "S. America",
+        "Asia",
+        "Africa",
+        "Europe",
+        "Oceania"
+      ],
+      selectContinent: "All",
+      loader: null,
       loading: false,
-      endPage: '',
-      images:[],
-      indexs:[],
-      tags:[], 
-      pageNum:0,
-      searchData:localStorage.getItem('searchData'),
-      isSelectSearch:false,
-    }
+      endPage: "",
+      images: [],
+      indexs: [],
+      tags: [],
+      pageNum: 0,
+      searchData: localStorage.getItem("searchData"),
+      isSelectSearch: false
+    };
   },
-  created: function () {
-    if (localStorage.getItem('selectContinentforSearch') == "All"){
+  created: function() {
+    if (localStorage.getItem("selectContinentforSearch") == "All") {
       axios
-      .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
-      .then(res => {
-        if (res.data == "End Page") {
-          this.endPage = "검색 결과가 없습니다."
-        }
-        else {
-          for (let i = 0; i < res.data.length; i++) {
-            const tmp = []
-            this.images.push(res.data[i].filePath)
-            this.indexs.push(res.data[i].board.id)
-            res.data[i].tags.forEach(e => {
-              tmp.push(e.tag)
-            });
-            this.tags.push(tmp)
+        .get(
+          `${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem(
+            "searchData"
+          )}&num=${this.pageNum}`
+        )
+        .then(res => {
+          if (res.data == "End Page") {
+            this.endPage = "검색 결과가 없습니다.";
+          } else {
+            for (let i = 0; i < res.data.length; i++) {
+              const tmp = [];
+              this.images.push(res.data[i].filePath);
+              this.indexs.push(res.data[i].board.id);
+              res.data[i].tags.forEach(e => {
+                tmp.push(e.tag);
+              });
+              this.tags.push(tmp);
+            }
+            this.pageNum = this.pageNum + 1;
           }
-          this.pageNum = this.pageNum + 1
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
-    }
-    else {
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } else {
       axios
-      .get(`${SERVER.BOARD_BASE_URL}eachsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}&location=${localStorage.getItem('selectContinentforSearch')}`)
-      .then(res => {
-        if (res.data == "End Page") {
-          this.endPage = "검색 결과가 없습니다."
-        }
-        else {
-          for (let i = 0; i < res.data.length; i++) {
-            const tmp = []
-            this.images.push(res.data[i].filePath)
-            this.indexs.push(res.data[i].board.id)
-            res.data[i].tags.forEach(e => {
-              tmp.push(e.tag)
-            });
-            this.tags.push(tmp)
+        .get(
+          `${SERVER.BOARD_BASE_URL}eachsearch?searchData=${localStorage.getItem(
+            "searchData"
+          )}&num=${this.pageNum}&location=${localStorage.getItem(
+            "selectContinentforSearch"
+          )}`
+        )
+        .then(res => {
+          if (res.data == "End Page") {
+            this.endPage = "검색 결과가 없습니다.";
+          } else {
+            for (let i = 0; i < res.data.length; i++) {
+              const tmp = [];
+              this.images.push(res.data[i].filePath);
+              this.indexs.push(res.data[i].board.id);
+              res.data[i].tags.forEach(e => {
+                tmp.push(e.tag);
+              });
+              this.tags.push(tmp);
+            }
+            this.pageNum = this.pageNum + 1;
           }
-          this.pageNum = this.pageNum + 1
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   },
   methods: {
@@ -255,153 +271,172 @@ export default {
       this.$router.push({ name: "Create" });
     },
     // 6개씩 더 가져오기
-    moreArticles: function () {
+    moreArticles: function() {
       if (this.selectContinent === "All") {
-          axios
-          .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
+        axios
+          .get(
+            `${
+              SERVER.BOARD_BASE_URL
+            }allsearch?searchData=${localStorage.getItem("searchData")}&num=${
+              this.pageNum
+            }`
+          )
           .then(res => {
             if (res.data == "End Page") {
-              this.endPage = "더 이상 사진이 없습니다."
-            }
-            else {
+              this.endPage = "더 이상 사진이 없습니다.";
+            } else {
               for (let i = 0; i < res.data.length; i++) {
-                const tmp = []
-                this.images.push(res.data[i].filePath)
-                this.indexs.push(res.data[i].board.id)
+                const tmp = [];
+                this.images.push(res.data[i].filePath);
+                this.indexs.push(res.data[i].board.id);
                 res.data[i].tags.forEach(e => {
-                  tmp.push(e.tag)
+                  tmp.push(e.tag);
                 });
-                this.tags.push(tmp)
+                this.tags.push(tmp);
               }
-              this.pageNum = this.pageNum + 1
+              this.pageNum = this.pageNum + 1;
             }
           })
           .catch(err => {
-            console.error(err)
-          })
-        }
-        else {
-          axios
-          .get(`${SERVER.BOARD_BASE_URL}eachsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}&location=${this.selectContinent}`)
+            console.error(err);
+          });
+      } else {
+        axios
+          .get(
+            `${
+              SERVER.BOARD_BASE_URL
+            }eachsearch?searchData=${localStorage.getItem("searchData")}&num=${
+              this.pageNum
+            }&location=${this.selectContinent}`
+          )
           .then(res => {
             if (res.data == "End Page") {
-              this.endPage = "더 이상 사진이 없습니다."
-            }
-            else {
+              this.endPage = "더 이상 사진이 없습니다.";
+            } else {
               for (let i = 0; i < res.data.length; i++) {
-                const tmp = []
-                this.images.push(res.data[i].filePath)
-                this.indexs.push(res.data[i].board.id)
+                const tmp = [];
+                this.images.push(res.data[i].filePath);
+                this.indexs.push(res.data[i].board.id);
                 res.data[i].tags.forEach(e => {
-                  tmp.push(e.tag)
+                  tmp.push(e.tag);
                 });
-                this.tags.push(tmp)
+                this.tags.push(tmp);
               }
-              this.pageNum = this.pageNum + 1
+              this.pageNum = this.pageNum + 1;
             }
           })
           .catch(err => {
-            console.error(err)
-          })
-        }
+            console.error(err);
+          });
+      }
     },
 
     // 검색
     searchKeyword: function() {
       if (this.searchData === "") {
-        alert('검색어를 입력해주세요.')
-      }
-      else {
-        localStorage.setItem('searchData', this.searchData)
-        this.images = []
-        this.indexs = []
-        this.tags = []
-        this.pageNum = 0
+        alert("검색어를 입력해주세요.");
+      } else {
+        localStorage.setItem("searchData", this.searchData);
+        this.images = [];
+        this.indexs = [];
+        this.tags = [];
+        this.pageNum = 0;
         if (this.selectContinent === "All") {
           axios
-          .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
-          .then(res => {
-            if (res.data == "End Page") {
-              this.endPage = "검색 결과가 없습니다."
-            }
-            else {
-              for (let i = 0; i < res.data.length; i++) {
-                const tmp = []
-                this.images.push(res.data[i].filePath)
-                this.indexs.push(res.data[i].board.id)
-                res.data[i].tags.forEach(e => {
-                  tmp.push(e.tag)
-                });
-                this.tags.push(tmp)
+            .get(
+              `${
+                SERVER.BOARD_BASE_URL
+              }allsearch?searchData=${localStorage.getItem("searchData")}&num=${
+                this.pageNum
+              }`
+            )
+            .then(res => {
+              if (res.data == "End Page") {
+                this.endPage = "검색 결과가 없습니다.";
+              } else {
+                for (let i = 0; i < res.data.length; i++) {
+                  const tmp = [];
+                  this.images.push(res.data[i].filePath);
+                  this.indexs.push(res.data[i].board.id);
+                  res.data[i].tags.forEach(e => {
+                    tmp.push(e.tag);
+                  });
+                  this.tags.push(tmp);
+                }
+                this.pageNum = this.pageNum + 1;
               }
-              this.pageNum = this.pageNum + 1
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-        }
-        else {
-          axios
-          .get(`${SERVER.BOARD_BASE_URL}eachsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}&location=${this.selectContinent}`)
-          .then(res => {
-            if (res.data == "End Page") {
-              this.endPage = "검색 결과가 없습니다."
-            }
-            else {
-              for (let i = 0; i < res.data.length; i++) {
-                const tmp = []
-                this.images.push(res.data[i].filePath)
-                this.indexs.push(res.data[i].board.id)
-                res.data[i].tags.forEach(e => {
-                  tmp.push(e.tag)
-                });
-                this.tags.push(tmp)
-              }
-              this.pageNum = this.pageNum + 1
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-        }
-      }  
-    },
-    gotoSearch: function (tag) {
-      if (tag[0] == '#') {
-        tag = tag.substring(1, tag.length)
-      }
-      localStorage.setItem('searchData', tag)
-      this.images = []
-      this.indexs = []
-      this.tags = []
-      this.pageNum = 0
-      axios
-      .get(`${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem('searchData')}&num=${this.pageNum}`)
-      .then(res => {
-        if (res.data == "End Page") {
-          this.endPage = "검색 결과가 없습니다."
-        }
-        else {
-          for (let i = 0; i < res.data.length; i++) {
-            const tmp = []
-            this.images.push(res.data[i].filePath)
-            this.indexs.push(res.data[i].board.id)
-            res.data[i].tags.forEach(e => {
-              tmp.push(e.tag)
+            })
+            .catch(err => {
+              console.error(err);
             });
-            this.tags.push(tmp)
-          }
-          this.pageNum = this.pageNum + 1
+        } else {
+          axios
+            .get(
+              `${
+                SERVER.BOARD_BASE_URL
+              }eachsearch?searchData=${localStorage.getItem(
+                "searchData"
+              )}&num=${this.pageNum}&location=${this.selectContinent}`
+            )
+            .then(res => {
+              if (res.data == "End Page") {
+                this.endPage = "검색 결과가 없습니다.";
+              } else {
+                for (let i = 0; i < res.data.length; i++) {
+                  const tmp = [];
+                  this.images.push(res.data[i].filePath);
+                  this.indexs.push(res.data[i].board.id);
+                  res.data[i].tags.forEach(e => {
+                    tmp.push(e.tag);
+                  });
+                  this.tags.push(tmp);
+                }
+                this.pageNum = this.pageNum + 1;
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            });
         }
-      })
-      .catch(err => {
-        console.error(err)
-      })
+      }
+    },
+    gotoSearch: function(tag) {
+      if (tag[0] == "#") {
+        tag = tag.substring(1, tag.length);
+      }
+      localStorage.setItem("searchData", tag);
+      this.images = [];
+      this.indexs = [];
+      this.tags = [];
+      this.pageNum = 0;
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}allsearch?searchData=${localStorage.getItem(
+            "searchData"
+          )}&num=${this.pageNum}`
+        )
+        .then(res => {
+          if (res.data == "End Page") {
+            this.endPage = "검색 결과가 없습니다.";
+          } else {
+            for (let i = 0; i < res.data.length; i++) {
+              const tmp = [];
+              this.images.push(res.data[i].filePath);
+              this.indexs.push(res.data[i].board.id);
+              res.data[i].tags.forEach(e => {
+                tmp.push(e.tag);
+              });
+              this.tags.push(tmp);
+            }
+            this.pageNum = this.pageNum + 1;
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   }
-
-}
+};
 </script>
 
 <style>
@@ -480,8 +515,8 @@ export default {
 }
 
 .adjust-location-for-mobile {
-  position:relative;
-  right:70px;
+  position: relative;
+  right: 70px;
 }
 
 .custom-loader {
@@ -520,5 +555,4 @@ export default {
     transform: rotate(360deg);
   }
 }
-
 </style>

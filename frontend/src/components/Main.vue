@@ -6,23 +6,21 @@
     pa-0
     fill-height
     :style="{
-      'background-image': 'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
-      'background-position': 'center',
+      'background-image':
+        'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
+      'background-position': 'center'
     }"
   >
     <v-row align="center" justify="center">
       <!-- 월드 맵으로 가는 버튼 -->
-      <v-col
-        cols="6"
-        md="3"
-      >
+      <v-col cols="6" md="3">
         <div style="text-align:center">
           <img
             src="@/assets/worldmap/worldmap.svg"
             alt=""
             :class="{
               'disappeared-hidden-map-icon': !isShowMapIcon,
-              'show-hidden-map-icon': isShowMapIcon,
+              'show-hidden-map-icon': isShowMapIcon
             }"
             width="170px"
             height="150px"
@@ -30,7 +28,7 @@
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
-              'show-airplane-icon': isShowMapIcon,
+              'show-airplane-icon': isShowMapIcon
             }"
           >
             mdi-airplane
@@ -60,33 +58,23 @@
           </v-icon>
         </div>
       </v-col>
-      <v-col
-        cols="6"
-        class="is-show-tips"
-      >
+      <v-col cols="6" class="is-show-tips">
         <!-- 누보 뜻 보여주기 -->
-        <NUVOExplanation/>
+        <NUVOExplanation />
         <!-- 버튼 설명 -->
         <v-container>
           <v-row>
-            <v-col
-              cols="6"
-            >
-              <WorldMapExplanation/>
+            <v-col cols="6">
+              <WorldMapExplanation />
             </v-col>
-            <v-col
-              cols="6"
-            >
-              <VRExplanation/>
+            <v-col cols="6">
+              <VRExplanation />
             </v-col>
           </v-row>
         </v-container>
       </v-col>
-      <!-- VR로 가는 버튼 --> 
-      <v-col
-        cols="6"
-        md="3"
-      >
+      <!-- VR로 가는 버튼 -->
+      <v-col cols="6" md="3">
         <div style="text-align:center">
           <img
             src="@/assets/main/VR360Icon.png"
@@ -95,7 +83,7 @@
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
-              'show-hidden-VR-icon': isShowVRIcon,
+              'show-hidden-VR-icon': isShowVRIcon
             }"
           />
         </div>
@@ -136,20 +124,22 @@
             "
     >
       <img
-        src="@/assets/3DHelp3.png" alt="" width="120px"
-        :class="{'select-tips-transition': isSelectTips}"
+        src="@/assets/3DHelp3.png"
+        alt=""
+        width="80px"
+        :class="{ 'select-tips-transition': isSelectTips }"
         @mouseover="isSelectTips = true"
         @mouseleave="isSelectTips = false"
         @click="activeIntro"
-      >
+      />
     </div>
   </v-container>
 </template>
 
 <script>
-import NUVOExplanation from "@/components/showTips/NUVOExplanation.vue"
-import WorldMapExplanation from "@/components/showTips/WorldMapExplanation.vue"
-import VRExplanation from "@/components/showTips/VRExplanation.vue"
+import NUVOExplanation from "@/components/showTips/NUVOExplanation.vue";
+import WorldMapExplanation from "@/components/showTips/WorldMapExplanation.vue";
+import VRExplanation from "@/components/showTips/VRExplanation.vue";
 
 export default {
   name: "Main",
@@ -162,7 +152,7 @@ export default {
     return {
       isShowMapIcon: false,
       isShowVRIcon: false,
-      isSelectTips: false,
+      isSelectTips: false
     };
   },
   methods: {
@@ -202,13 +192,12 @@ export default {
     activeIntro() {
       this.$intro().start(); // start the guide
       this.$intro().showHints(); // show hints
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-
 .is-show-tips {
   display: none;
 }
@@ -337,5 +326,4 @@ export default {
   animation-direction: alternate;
   cursor: pointer;
 }
-
 </style>

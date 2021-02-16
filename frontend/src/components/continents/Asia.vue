@@ -4,22 +4,16 @@
     <br />
     <v-row>
       <!-- 반응형 점찍기 // 밑에서 좌표만 설정해주면 찍어줌(백에서 받아오면 됨.) -->
-      <v-col
-        cols="1"
-        xl="2"
-      >
-        <div
-          class="continent-scale"
-          style="position:relative; left:100%; "
-        >
-          <img 
+      <v-col cols="1" xl="2">
+        <div class="continent-scale" style="position:relative; left:100%; ">
+          <img
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
-            :key="'A'+idx"
+            :key="'A' + idx"
             :class="{
               'adjust-location': true,
               'transition-circle-icon': true,
-              'transition-select-location': overCircleIcon[idx]
+              'transition-select-location': overCircleIcon[idx],
             }"
             :style="
               'top:' +
@@ -36,7 +30,7 @@
             :key="idx"
             :class="{
               'adjust-location-text': true,
-              'transition-location-text': overCircleIcon[idx]
+              'transition-location-text': overCircleIcon[idx],
             }"
             :style="
               'top:' +
@@ -47,7 +41,7 @@
                 '%; cursor:default;'
             "
           >
-            {{popularLocationNames[idx]}}
+            {{ popularLocationNames[idx] }}
           </div>
         </div>
       </v-col>
@@ -71,11 +65,11 @@
       >
         <div style="min-width:80px;"></div>
         <ContinentCard
-          :exhibitionImage = "exhibitionImage"
-          :exhibitionContent = "exhibitionContent"
-          :exhibitionLocation = "exhibitionLocation"
-          :likeCount = "likeCount"
-          :exhibitionIndex = "exhibitionIndex"
+          :exhibitionImage="exhibitionImage"
+          :exhibitionContent="exhibitionContent"
+          :exhibitionLocation="exhibitionLocation"
+          :likeCount="likeCount"
+          :exhibitionIndex="exhibitionIndex"
         />
       </v-col>
     </v-row>
@@ -85,13 +79,12 @@
 <script>
 import ContinentCard from "@/components/continents/ContinentCard";
 import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts"
-
+import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   name: "Asia",
   components: {
-    ContinentCard
+    ContinentCard,
   },
   data: function() {
     return {
@@ -103,7 +96,18 @@ export default {
       popularLocationY: [46, 72, 63, 59, 71],
       // 여기로 데이터 가져오기 - 배열형식으로 가져와야 함. 아니면 딕셔너리형태로
       exhibitionImage: require("@/assets/continents/A.jpg"),
-      exhibitionContent: ["몽골", "초원", "징키스칸광장", "대만", "지우펀", "일본", "도쿄", "중국", "베이징", "홍콩"],
+      exhibitionContent: [
+        "몽골",
+        "초원",
+        "징키스칸광장",
+        "대만",
+        "지우펀",
+        "일본",
+        "도쿄",
+        "중국",
+        "베이징",
+        "홍콩",
+      ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
       likeCount: 246,
@@ -144,36 +148,37 @@ export default {
     adjustLocationNamesX: function() {
       const array = [1, 2, 3, 4, 5];
       for (let index = 0; index < array.length; index++) {
-        array[index] =
-          this.popularLocationX[index] - 1;
+        array[index] = this.popularLocationX[index] - 1;
       }
       return array;
-    }
+    },
   },
   methods: {
     // 클릭하면 데이터 불러오기
     selectLocation: function(idx) {
-      const location = localStorage.getItem('continent');
+      const location = localStorage.getItem("continent");
       axios
-        .get(`${SERVER.BOARD_BASE_URL}getposts?id=${this.AList[idx]}&username=${this.$store.state.Auth.authToken.username}`)
+        .get(
+          `${SERVER.BOARD_BASE_URL}getposts?id=${this.AList[idx]}&username=${this.$store.state.Auth.authToken.username}`
+        )
         .then((response) => {
-          this.exhibitionImage= response.data.filePath
-          this.exhibitionLocation= response.data.board.nation
-          const tmp = []
+          this.exhibitionImage = response.data.filePath;
+          this.exhibitionLocation = response.data.board.nation;
+          const tmp = [];
           for (let idx = 0; idx < response.data.tags.length; idx++) {
-            tmp.push(response.data.tags[idx].tag)
+            tmp.push(response.data.tags[idx].tag);
           }
-          this.exhibitionContent= tmp
-          this.exhibitionIndex= response.data.board.id
-          this.likeCount= response.data.board.good
+          this.exhibitionContent = tmp;
+          this.exhibitionIndex = response.data.board.id;
+          this.likeCount = response.data.board.good;
         })
         .catch((err) => {
           console.error(err);
         });
-      this.overCircleIcon = [false, false, false, false, false]
-      this.overCircleIcon[idx] = true
-    }
-  }
+      this.overCircleIcon = [false, false, false, false, false];
+      this.overCircleIcon[idx] = true;
+    },
+  },
 };
 </script>
 

@@ -16,10 +16,11 @@
             "
     >
       <img
-        src="@/assets/main/NUVOchangeColor.png" alt=""
+        src="@/assets/main/NUVOchangeColor.png"
+        alt=""
         width="100px"
         @click="gotoHome"
-      >
+      />
     </div>
     <div
       v-else
@@ -35,11 +36,12 @@
             "
     >
       <img
-        src="@/assets/main/NUVOchangeColor.png" alt=""
+        src="@/assets/main/NUVOchangeColor.png"
+        alt=""
         width="120px"
         class="hoverevent-Button"
         @click="gotoHome"
-      >
+      />
     </div>
 
     <transition name="component-fade" mode="out-in">
@@ -52,15 +54,15 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "App",
-  data: function () {
+  data: function() {
     return {
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-    }
+      windowHeight: window.innerHeight
+    };
   },
   methods: {
-    gotoHome: function () {
-      this.$router.push({name:"Home"})
+    gotoHome: function() {
+      this.$router.push({ name: "Home" });
     }
   }
 });
@@ -104,5 +106,4 @@ export default Vue.extend({
   transform: scale(1.06);
   opacity: 0.8;
 }
-
 </style>

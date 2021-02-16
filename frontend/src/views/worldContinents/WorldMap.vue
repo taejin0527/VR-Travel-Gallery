@@ -1,19 +1,11 @@
 <template>
   <!-- App.vue -->
   <div>
-    <MobileWorldMap
-      v-if="windowWidth < 500 || windowHeight < 450"
-    />
-    <div
-      v-else
-    >
-      <MobileWorldMap
-        class="adjust-grid-system"
-      />
-      <div
-        class="adjust-grid-system-reverse"
-      >
-        <SideNavBar/>
+    <MobileWorldMap v-if="windowWidth < 500 || windowHeight < 450" />
+    <div v-else>
+      <MobileWorldMap class="adjust-grid-system" />
+      <div class="adjust-grid-system-reverse">
+        <SideNavBar />
         <v-btn
           elevation="3"
           fab
@@ -53,84 +45,78 @@
                   background-color:#DDA288;
                   border-radius: 3px;
                 "
-        >
-          </div>
-          <div
-            v-if="isSelectSearch && windowWidth > 500"
-            style="position:fixed;
+        ></div>
+        <div
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
                     width: 270px;
                     top: 16px;
                     right: 185px;
                     z-index: 2;
                     color:white;
-                  "   
-          >
-            <div
-              class="d-flex align-start justify-center"
-            >
-              <v-text-field
-                v-model="searchData"
-                color="white"
-                placeholder="장소나 태그를 입력하세요."
-                append-outer-icon="mdi-airplane-takeoff"
-                @keydown.enter="searchKeyword"
-                @click:append-outer="searchKeyword"
-                style=""
-                dark
-              ></v-text-field>
-            </div>
+                  "
+        >
+          <div class="d-flex align-start justify-center">
+            <v-text-field
+              v-model="searchData"
+              color="white"
+              placeholder="장소나 태그를 입력하세요."
+              append-outer-icon="mdi-airplane-takeoff"
+              @keydown.enter="searchKeyword"
+              @click:append-outer="searchKeyword"
+              style=""
+              dark
+            ></v-text-field>
           </div>
-          
-          <v-btn
-            v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
-            elevation="3"
-            fab
-            color="#DDA288"
-            style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
-            @click="isSelectSearch = true"
-          >
-            <v-icon>
-              mdi-image-search
-            </v-icon>
-          </v-btn>
-          <div
-            class="text-center"
-            v-if="isSelectSearch && windowWidth > 500"
-            style="position:fixed;
+        </div>
+
+        <v-btn
+          v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
+          @click="isSelectSearch = true"
+        >
+          <v-icon>
+            mdi-image-search
+          </v-icon>
+        </v-btn>
+        <div
+          class="text-center"
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
                     width: 120px;
                     top: 30px;
                     right: 485px;
                     z-index: 2;
                     color:white;
-                  "   
-          >
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#DDA288"
-                  style="width: 120px;"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
+                  "
+        >
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#DDA288"
+                style="width: 120px;"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ selectContinent }}
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, index) in continents" :key="index">
+                <v-list-item-title
+                  style="text-align:center; cursor:pointer;"
+                  @click="selectContinent = item"
                 >
-                  {{selectContinent}}
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(item, index) in continents"
-                  :key="index"
-                >
-                  <v-list-item-title
-                    style="text-align:center; cursor:pointer;"
-                    @click="selectContinent = item"
-                  >
                   {{ item }}
-                  </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
 
         <v-container>
           <v-row>
@@ -154,25 +140,37 @@ export default {
   name: "WorldMap",
   data: function() {
     return {
-      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
-      selectContinent: 'All',
+      continents: [
+        "All",
+        "N. America",
+        "S. America",
+        "Asia",
+        "Africa",
+        "Europe",
+        "Oceania",
+      ],
+      selectContinent: "All",
       popularExhibition: true,
       isSelectTips: false,
-      searchData:"",
-      isSelectSearch:false,
+      searchData: "",
+      isSelectSearch: false,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-    }
+    };
   },
   components: {
     WorldMapDivision,
     SideNavBar,
-    MobileWorldMap
+    MobileWorldMap,
   },
-  created: function () {
-    localStorage.setItem('page', "WorldMap")
+  created: function() {
+    localStorage.setItem("page", "WorldMap");
   },
   methods: {
+    activeIntro: function() {
+      this.$intro().start(); // start the guide
+      this.$intro().showHints(); // show hints
+    },
     clickChangeContinentViewButton: function() {
       this.popularExhibition = !this.popularExhibition;
       this.$router.push({ name: "AllWaterfall" });
@@ -182,19 +180,34 @@ export default {
     },
     searchKeyword: function() {
       if (this.searchData === "") {
-        alert('검색어를 입력해주세요.')
+        alert("검색어를 입력해주세요.");
+      } else {
+        localStorage.setItem("searchData", this.searchData);
+        localStorage.setItem("selectContinentforSearch", this.selectContinent);
+        this.$router.push({ name: "SearchWaterfall" });
       }
-      else {
-        localStorage.setItem('searchData', this.searchData)
-        localStorage.setItem('selectContinentforSearch', this.selectContinent)
-        this.$router.push({name: "SearchWaterfall"})
-      }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.tipBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TIPS 애니메이션 */
+@keyframes tipsbeat {
+  from {
+    transform: scale(0.95);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
 
 .adjust-grid-system-reverse {
   display: none;
@@ -204,7 +217,7 @@ export default {
   display: unset;
 }
 
-@media (min-width:930px) {
+@media (min-width: 930px) {
   .adjust-grid-system {
     display: none;
   }
@@ -212,5 +225,4 @@ export default {
     display: unset;
   }
 }
-
 </style>

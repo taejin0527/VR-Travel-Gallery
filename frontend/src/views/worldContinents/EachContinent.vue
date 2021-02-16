@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <SideNavBar/>
+    <SideNavBar />
     <v-btn
       elevation="3"
       fab
@@ -41,8 +41,7 @@
               background-color:#DDA288;
               border-radius: 3px;
             "
-    >
-    </div>
+    ></div>
     <div
       v-if="isSelectSearch"
       style="position:fixed;
@@ -51,11 +50,9 @@
               right: 185px;
               z-index: 2;
               color:white;
-            "   
+            "
     >
-      <div
-        class="d-flex align-start justify-center"
-      >
+      <div class="d-flex align-start justify-center">
         <v-text-field
           v-model="searchData"
           color="white"
@@ -68,7 +65,7 @@
         ></v-text-field>
       </div>
     </div>
-    
+
     <v-btn
       v-if="!isSelectSearch"
       elevation="3"
@@ -81,7 +78,7 @@
         mdi-image-search
       </v-icon>
     </v-btn>
-        <div
+    <div
       class="text-center"
       v-if="isSelectSearch"
       style="position:fixed;
@@ -90,7 +87,7 @@
               right: 485px;
               z-index: 2;
               color:white;
-            "   
+            "
     >
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -101,19 +98,16 @@
             v-bind="attrs"
             v-on="on"
           >
-            {{selectContinent}}
+            {{ selectContinent }}
           </v-btn>
         </template>
         <v-list>
-          <v-list-item
-            v-for="(item, index) in continents"
-            :key="index"
-          >
+          <v-list-item v-for="(item, index) in continents" :key="index">
             <v-list-item-title
               style="text-align:center; cursor:pointer;"
               @click="selectContinent = item"
             >
-            {{ item }}
+              {{ item }}
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -123,56 +117,56 @@
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
       <Oceania
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'asia'">
       <Asia
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'northAmerica'">
       <NorthAmerica
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'southAmerica'">
       <SouthAmerica
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
     <div v-else-if="this.getContinentName == 'europe'">
       <Europe
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
     <div v-else>
       <Africa
-        :images = "images"
-        :tags = "tags"
-        :likes = "likes" 
-        :locations = "locations"
-        :indexs = "indexs"
+        :images="images"
+        :tags="tags"
+        :likes="likes"
+        :locations="locations"
+        :indexs="indexs"
       />
     </div>
   </v-main>
@@ -191,8 +185,16 @@ export default {
   name: "EachContinent",
   data: function() {
     return {
-      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
-      selectContinent: 'All',
+      continents: [
+        "All",
+        "N. America",
+        "S. America",
+        "Asia",
+        "Africa",
+        "Europe",
+        "Oceania",
+      ],
+      selectContinent: "All",
       getContinentName: localStorage.getItem("continent"),
       popularExhibition: true,
       images: [], // 이미지 데이터 리스트
@@ -200,15 +202,14 @@ export default {
       likes: [], // 좋아요 수 데이터 리스트
       locations: [], // 장소 데이터 리스트
       indexs: [], // 게시물 id 리스트
-      searchData:"",
-      isSelectSearch:false,
+      searchData: "",
+      isSelectSearch: false,
       pagingIndex: 0,
-      
-    }
+    };
   },
   // 대륙 이름 저장
-  created:function(){
-    localStorage.setItem('page', "EachContinent")
+  created: function() {
+    localStorage.setItem("page", "EachContinent");
   },
   // 대륙 컴포넌트
   components: {
@@ -218,7 +219,7 @@ export default {
     Asia,
     Africa,
     Europe,
-    SideNavBar
+    SideNavBar,
   },
   methods: {
     // 각 대륙으로 이동
@@ -232,15 +233,14 @@ export default {
     },
     searchKeyword: function() {
       if (this.searchData === "") {
-        alert('검색어를 입력해주세요.')
+        alert("검색어를 입력해주세요.");
+      } else {
+        localStorage.setItem("selectContinentforSearch", this.selectContinent);
+        localStorage.setItem("searchData", this.searchData);
+        this.$router.push({ name: "SearchWaterfall" });
       }
-      else {
-        localStorage.setItem('selectContinentforSearch', this.selectContinent)
-        localStorage.setItem('searchData', this.searchData)
-        this.$router.push({name: "SearchWaterfall"})
-      }
-    }
-  }
+    },
+  },
 };
 </script>
 
