@@ -27,7 +27,7 @@ import com.ssafy.iwc.model.User;
 import com.ssafy.iwc.model.request.LoginRequest;
 import com.ssafy.iwc.model.request.SignupRequest;
 import com.ssafy.iwc.model.response.JwtResponse;
-import com.ssafy.iwc.model.response.MessageResponse;
+
 import com.ssafy.iwc.security.jwt.JwtUtils;
 import com.ssafy.iwc.security.services.UserDetailsImpl;
 import com.ssafy.iwc.service.UserService;
@@ -155,16 +155,25 @@ public class AuthController {
 	 * @desc 	비밀번호 변경
 	 */
 	@PostMapping("/checkpw")
-	public ResponseEntity changepw(@RequestParam("password") String password,@RequestParam("username") String username) {
+	public ResponseEntity checkpw(@RequestParam("password") String password,@RequestParam("username") String username) {
 		if(userService.checkPw(password,username)) {
-			System.out.println("완");
+			System.out.println("성공");
 			return new ResponseEntity("true",HttpStatus.OK);
 		}else {
-			System.out.println("실");
+			System.out.println("실패");
 			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
 		}
 	}
 	
-	
+	@PostMapping("/changepw")
+	public ResponseEntity changepw(@RequestParam("password") String password,@RequestParam("username")String username,@RequestParam("currpassword")String currpassword) {
+		if(userService.changePw(password,username,currpassword)) {
+			System.out.println("성공");
+			return new ResponseEntity("true",HttpStatus.OK);
+		}else {
+			System.out.println("실패");
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+	}
 }
 	
