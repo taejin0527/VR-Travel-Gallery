@@ -4,18 +4,22 @@
   <v-container class="adjust-grid-container">
     <div style="width:100%; height: 20px;"></div>
     <div style="width:100%; height: 20px;"></div>
-    <div style="width:100%; height: 60px; font-size:30px; color:white;"> South America</div>
+    <div style="width:100%; height: 60px; font-size:30px; color:white;">
+      South America
+    </div>
     <div style="width:100%; height: 20px;"></div>
     <v-row>
       <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
         <!-- 이미지 가져오는 코드 -->
         <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-        <img :src="`${image}`" alt="image error"
+        <img
+          :src="`${image}`"
+          alt="image error"
           class="adjust-grid-image opacity-event-for-waterfall"
           style="cursor:pointer;"
           @click="gotoSelectArticle(idx)"
-        >
-        <br>
+        />
+        <br />
 
         <!-- 태그 보여주는 코드 -->
         <v-chip-group
@@ -39,28 +43,38 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
+
 export default {
   name: "SouthAmerica",
   props: {
-    images:[Array], // EachWaterfall.vue router에서 받아온 데이터들
-    tags:[Array], // EachWaterfall.vue router에서 받아온 데이터들
-    indexs:[Array], // EachWaterfall.vue router에서 받아온 데이터들
+    images: [Array], // EachWaterfall.vue router에서 받아온 데이터들
+    tags: [Array], // EachWaterfall.vue router에서 받아온 데이터들
+    indexs: [Array], // EachWaterfall.vue router에서 받아온 데이터들
   },
   methods: {
     // 게시물 사진 보기
     gotoSelectArticle: function (idx) {
-      localStorage.setItem("articleId", this.indexs[idx])
-      this.$router.push({name:"PhotoView"})
+      localStorage.setItem("articleId", this.indexs[idx]);
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+        )
+        .catch((err) => {
+          console.error(err);
+        });
+      this.$router.push({ name: "PhotoView" });
     },
-    gotoSearch: function (tag) {
-      if (tag[0] == '#') {
-        tag = tag.substring(1, tag.length)
+    gotoSearch: function(tag) {
+      if (tag[0] == "#") {
+        tag = tag.substring(1, tag.length);
       }
-      localStorage.setItem('selectContinentforSearch', 'All')
-      localStorage.setItem('searchData', tag)
-      this.$router.push({name:"SearchWaterfall"})
-    }
-  }
+      localStorage.setItem("selectContinentforSearch", "All");
+      localStorage.setItem("searchData", tag);
+      this.$router.push({ name: "SearchWaterfall" });
+    },
+  },
 };
 </script>
 
@@ -124,5 +138,4 @@ export default {
   transform: scale(1.03);
   opacity: 0.4;
 }
-
 </style>

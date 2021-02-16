@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User(signUpRequest.getUsername(), 
 				 signUpRequest.getEmail(),
 				 encoder.encode(signUpRequest.getPassword()));
-
+		
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
 
@@ -109,8 +109,53 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		User user = userRepository.findByUsername(userid)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userid));
-		int currMoney = user.getMoney()+total;
+		int currMoney = user.getMoney();
+//		금액에따른 인센티브
+		if(total>=50000) {
+			currMoney+=total*1.2;
+		}else if(total>=40000) {
+			currMoney+=total*1.125;
+		}else if(total>=20000) {
+			currMoney+=total*1.1;
+		}else {
+			currMoney+=total;
+		}
+		
+
+		
 		userRepository.upDateMoney(currMoney,userid);
+	}
+
+	@Override
+	public User getUserInfo(String username) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUsername(username).get();
+		user.setPassword("");
+		user.setEmail("");
+		return user;
+	}
+
+	@Override
+	public boolean findUser(Long userid, String username) {
+		// TODO Auto-generated method stub
+		int num = userRepository.findUser(userid,username);
+		if(num==1) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+
+	@Override
+	public boolean checkPw(String password, String username) {
+		// TODO Auto-generated method stub
+		
+		
+		if(encoder.matches(password, userRepository.findUserPw(username))){
+			return true;
+		}
+		return false;
 	}
 
 

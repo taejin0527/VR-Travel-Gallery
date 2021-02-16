@@ -13,7 +13,6 @@
               right: 20px;
               z-index: 101;
             "
-            
     >
       <img
         src="@/assets/3DHelp3.png"
@@ -46,12 +45,9 @@
     </div>
     <MobileView
       v-if="windowWidth < 500 || windowHeight < 450"
-      :vfImages = "vfImages"
+      :vfImages="vfImages"
     />
-    <div
-      class="container d-flex justify-center"
-      v-else
-    >
+    <div class="container d-flex justify-center" v-else>
       <!-- 좋아요 버튼 -->
       <div
         style="
@@ -68,7 +64,7 @@
           size="30px"
           :class="{
             'like-hover-event': true,
-            'select-like-transition': isSelectLike
+            'select-like-transition': isSelectLike,
           }"
           @click="likeThisArticle"
         >
@@ -172,31 +168,18 @@
         </div>
       </div>
     </div>
-    <v-overlay
-      :absolute="absolute"
-      :value="showTipsOverlay"
-      :opacity="0.8"
-    >
-      오른쪽 화면을 누르면 <br><br> 다음 사진으로 넘김니다.
-      <pre>
-
-      </pre>
-      왼쪽 화면을 누르면 <br><br> 이전 사진으로 돌아옵니다.
-      <pre>
-        
-      </pre>
-      <div
-        class="d-flex justify-center"
-      >
-        <v-btn
-          color="#DDA288"
-          @click="showTipsOverlay = false"
-          
-        >
+    <v-overlay :absolute="absolute" :value="showTipsOverlay" :opacity="0.8">
+      오른쪽 화면을 누르면 <br /><br />
+      다음 사진으로 넘김니다.
+      <pre></pre>
+      왼쪽 화면을 누르면 <br /><br />
+      이전 사진으로 돌아옵니다.
+      <pre></pre>
+      <div class="d-flex justify-center">
+        <v-btn color="#DDA288" @click="showTipsOverlay = false">
           확인
         </v-btn>
       </div>
-      
     </v-overlay>
   </div>
 </template>
@@ -207,12 +190,11 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader
+  FluxPreloader,
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
-import MobileView from "@/components/mobile/View.vue"
-
+import MobileView from "@/components/mobile/View.vue";
 
 export default {
   components: {
@@ -221,12 +203,12 @@ export default {
     FluxIndex,
     FluxPagination,
     FluxPreloader,
-    MobileView
+    MobileView,
   },
   data: () => ({
     fab: false,
     vfOptions: {
-      autoplay: false
+      autoplay: false,
     },
     vfImages: [],
     author: "",
@@ -235,13 +217,13 @@ export default {
     isSelectLike: false,
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
-    absolute:true,
+    absolute: true,
     showTipsOverlay: false,
   }),
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    }
+    },
   },
   mounted() {
     axios
@@ -250,7 +232,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then(response => {
+      .then((response) => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -262,7 +244,7 @@ export default {
           this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   },
@@ -291,14 +273,14 @@ export default {
             this.$store.state.Auth.authToken.username
           }`
         )
-        .then(response => {
+        .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -322,19 +304,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token
-              }
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
