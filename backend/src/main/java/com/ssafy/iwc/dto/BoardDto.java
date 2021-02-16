@@ -23,7 +23,7 @@ public class BoardDto {
 	private String nation;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
-	
+	private boolean premium;
 	public Board toEntity() {
 		Board build = Board.builder()
 				.id(id)
