@@ -27,7 +27,7 @@ import com.ssafy.iwc.model.User;
 import com.ssafy.iwc.model.request.LoginRequest;
 import com.ssafy.iwc.model.request.SignupRequest;
 import com.ssafy.iwc.model.response.JwtResponse;
-import com.ssafy.iwc.model.response.MessageResponse;
+
 import com.ssafy.iwc.security.jwt.JwtUtils;
 import com.ssafy.iwc.security.services.UserDetailsImpl;
 import com.ssafy.iwc.service.UserService;
@@ -103,7 +103,7 @@ public class AuthController {
 	@ApiOperation(value="(이메일, 비밀번호)로 로그인, 성공시 jwt와 기본 정보 반환")
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+		System.out.println(loginRequest);
 		// 요청으로 받은 아이디와 비밀번호를 통해 인증용 객체 생성
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -131,7 +131,11 @@ public class AuthController {
 	 * @author	김동걸
 	 * @desc 	소셜 로그인(구글, 카카오)
 	 */
-	
+	/*
+	 * @author	김동걸
+	 * @desc 	유저정보조회
+	 * 
+	 */
 	@ApiOperation(value="유저명을 통해 유저정보를 가져옴")
 	@GetMapping("/getuser")
 	public ResponseEntity getuser(@RequestParam("username")String username) {
@@ -146,11 +150,30 @@ public class AuthController {
 		
 		
 	}
-	
-	
 	/**
 	 * @author	김동걸
-	 * @desc 	로그아웃
+	 * @desc 	비밀번호 변경
 	 */
+	@PostMapping("/checkpw")
+	public ResponseEntity checkpw(@RequestParam("password") String password,@RequestParam("username") String username) {
+		if(userService.checkPw(password,username)) {
+			System.out.println("성공");
+			return new ResponseEntity("true",HttpStatus.OK);
+		}else {
+			System.out.println("실패");
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+	}
+	
+	@PostMapping("/changepw")
+	public ResponseEntity changepw(@RequestParam("password") String password,@RequestParam("username")String username,@RequestParam("currpassword")String currpassword) {
+		if(userService.changePw(password,username,currpassword)) {
+			System.out.println("성공");
+			return new ResponseEntity("true",HttpStatus.OK);
+		}else {
+			System.out.println("실패");
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+	}
 }
 	
