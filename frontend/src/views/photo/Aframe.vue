@@ -49,8 +49,8 @@
         material="shader: flat; src: #city-thumb"
         event-set__mouseenter="scale: 1.2 1.2 1"
         event-set__mouseleave="scale: 1 1 1"
-        event-set__click="
-          '_target: #image-360; _delay: 300; material.src: #'+currSrc
+        :event-set__click="
+          '_target: #image-360; _delay: 300; material.src: #' + currSrc
         "
         proxy-event="event: click; to: #image-360; as: fade"
         sound="on: click; src: #click-sound"
@@ -84,7 +84,7 @@ export default {
       isLoaded: false,
       isSelectLike: false,
       vfImages: [],
-      vfIcons: require("@/assets/photo/icon.jpg")
+      vfIcons: require("@/assets/photo/icon2.png")
     };
   },
   created() {
@@ -123,6 +123,7 @@ export default {
     changeScene() {
       const idx = (this.currIndex + 1) % this.vfImages.length;
       this.currSrc = this.hashcode(this.vfImages[idx], idx);
+      this.currIndex = idx;
       return;
     }
   }
