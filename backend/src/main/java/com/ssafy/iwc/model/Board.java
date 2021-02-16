@@ -54,6 +54,10 @@ public class Board {
 	private LocalDateTime createdDate;
 	
 	
+	@Column(nullable = false)
+	@ColumnDefault("false")
+	private boolean premium;
+	
 	@UpdateTimestamp
 	private LocalDateTime modifiedDate;
 

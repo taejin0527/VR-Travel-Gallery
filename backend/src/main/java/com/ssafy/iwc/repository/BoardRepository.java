@@ -30,4 +30,11 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 
 	@Query(value = "select distinct p.id from posts p inner join tags t on p.id=t.no where p.nation like ? or t.tag like ? order by p.id desc limit ?,?",nativeQuery = true)
 	List<Long> getAllPostsNum(String searchData, String searchData2, int start, int idx);
+
+	@Query(value = "select views from posts where id=?",nativeQuery = true)
+	Long getView(long id);
+
+	@Modifying
+	@Query(value = "update posts set views = ? where id= ?",nativeQuery = true)
+	void setView(long num,long id);
 }

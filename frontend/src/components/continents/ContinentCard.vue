@@ -60,6 +60,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
+
 export default {
   name: "ContinentCard",
   data: () => ({
@@ -79,6 +82,13 @@ export default {
         alert("깃발을 선택하고 <GO>버튼을 눌러주세요.");
       } else {
         localStorage.setItem("articleId", this.exhibitionIndex);
+        axios
+          .get(
+            `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+          )
+          .catch((err) => {
+            console.error(err);
+          });
         this.$router.push({ name: "PhotoView" });
       }
     },

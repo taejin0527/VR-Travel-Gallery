@@ -87,7 +87,6 @@
         <v-btn
           id="charge_kakao"
           style="background-color: yellow; font-size:25px; color:#222222; font-family:'S-CoreDream-8Heavy'; width: 280px; height: 50px;"
-          @click="charge"
           v-if="selectMoney != null"
         >
           {{ selectMoney }}원 결제하기
@@ -98,16 +97,22 @@
       </v-col>
       <button></button>
     </v-row>
+    <v-overlay :absolute="true" :value="true" :opacity="0.9"
+      style="text-align:center; font-size: 26px;"
+    >
+      결제가 완료되었습니다. <br> <br>
+      프로필에서 확인 가능합니다. <br> <br>
+
+      <v-btn color="#DDA288" @click="gotoHome">
+        메인으로
+      </v-btn>
+    </v-overlay>
   </v-container>
 </template>
 
 <script>
-import axios from "axios";
-import SERVER from "@/apis/UrlMapper.ts";
-
-
 export default {
-  name: "Pay",
+  name: "PayResult",
   data: function() {
     return {
       coinWallet: 0,
@@ -127,16 +132,6 @@ export default {
       selectMoney: null
     };
   },
-  created: function () {
-    axios
-      .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
-      .then(res => {
-        this.coinWallet = res.data.money
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  },
   methods: {
     clickChargeMoney: function(idx) {
       this.selectMoney = this.moneylist[idx];
@@ -154,32 +149,8 @@ export default {
       this.selectChargeMoney[idx] = true;
       console.log(this.selectMoney + "원 선택");
     },
-    charge() {
-      const money = this.selectMoney;
-      console.log(money);
-      const formData = new FormData();
-      formData.append("username", this.$store.state.Auth.authToken.username);
-      formData.append("cost", money);
-      // 수정부분
-      axios
-        .post(`${SERVER.PAY_BASE_URL}kakao`, formData, {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(response => {
-          console.log("succes");
-          console.log(response.data);
-          try {
-            window.location.href = response.data;
-          } catch {
-            alert("결제 실패");
-          }
-        })
-        .catch(function() {
-          console.log("FAILURE");
-        });
+    gotoHome: function () {
+      this.$router.push({name:"Home"})
     }
   }
 };
