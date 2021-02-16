@@ -67,14 +67,14 @@ export default {
   name: "ContinentCard",
   data: () => ({
     loading: false,
-    selection: 1,
+    selection: 1
   }),
   props: {
     exhibitionImage: [String],
     exhibitionContent: [Array, String],
     exhibitionLocation: [String],
     exhibitionIndex: [Number],
-    likeCount: [Number, String],
+    likeCount: [Number, String]
   },
   methods: {
     goPhotoViewer() {
@@ -84,9 +84,11 @@ export default {
         localStorage.setItem("articleId", this.exhibitionIndex);
         axios
           .get(
-            `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+            `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem(
+              "articleId"
+            )}`
           )
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
           });
         this.$router.push({ name: "PhotoView" });
@@ -99,8 +101,8 @@ export default {
       localStorage.setItem("selectContinentforSearch", "All");
       localStorage.setItem("searchData", tag);
       this.$router.push({ name: "SearchWaterfall" });
-    },
-  },
+    }
+  }
 };
 </script>
 

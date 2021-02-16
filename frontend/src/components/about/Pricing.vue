@@ -1,18 +1,18 @@
 <template>
   <div class="pricing section" id="pricing">
-    <div class="container">
+    <v-container>
       <div class="title-section">
         <p>PRICING TABLE</p>
         <h3>Your plance, your choise</h3>
       </div>
-      <div class="row">
-        <div class="col-md-4">
+      <v-row>
+        <v-col md="4">
           <div class="content">
             <h4>Basic</h4>
-            <span>$15</span>
+            <span>$5</span>
             <ul>
-              <li>Responsive</li>
-              <li>Documentation</li>
+              <li>Access selected content</li>
+              <li>Access to VR viewer</li>
               <li class="not-active">Support</li>
               <li class="not-active">Multimedia</li>
               <li class="not-active">Creative</li>
@@ -21,14 +21,14 @@
             </ul>
           </div>
           <button class="button">Get Started</button>
-        </div>
-        <div class="col-md-4">
-          <div class="content content-center">
-            <h4>Standart</h4>
-            <span>$30</span>
+        </v-col>
+        <v-col md="4">
+          <div class="content">
+            <h4>Standard</h4>
+            <span>$50</span>
             <ul>
-              <li>Responsive</li>
-              <li>Documentation</li>
+              <li>Access every content(1 month)</li>
+              <li>Access to VR viewer</li>
               <li>Support</li>
               <li>Multimedia</li>
               <li class="not-active">Creative</li>
@@ -37,14 +37,14 @@
             </ul>
           </div>
           <button class="button">Get Started</button>
-        </div>
-        <div class="col-md-4">
+        </v-col>
+        <v-col md="4">
           <div class="content">
             <h4>Premium</h4>
-            <span>$50</span>
+            <span>$200</span>
             <ul>
-              <li>Responsive</li>
-              <li>Documentation</li>
+              <li>Access every content(unlimited)</li>
+              <li>Access to VR viewer</li>
               <li>Support</li>
               <li>Multimedia</li>
               <li>Creative</li>
@@ -53,14 +53,23 @@
             </ul>
           </div>
           <button class="button">Get Started</button>
-        </div>
-      </div>
-    </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-export default {};
+import $ from "jquery";
+
+export default {
+  mounted() {
+    $(".pricing .content").on("mouseover", function() {
+      $(".pricing .content").removeClass("content-center");
+      $(this).addClass("content-center");
+    });
+  }
+};
 </script>
 
 <style scoped>
@@ -71,6 +80,19 @@ ul {
 
 ul li {
   list-style-type: none;
+}
+/* button */
+.button {
+  background: #ffb005;
+  padding: 12px 30px;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 5px;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-top: 22px;
+  display: inline-block;
+  border: 2px solid transparent;
 }
 
 /* section */
@@ -157,9 +179,5 @@ ul li {
   position: relative;
   bottom: 46px;
   margin-bottom: -46px;
-}
-
-.pricing .button:hover {
-  background: #fff;
 }
 </style>

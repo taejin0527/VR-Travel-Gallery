@@ -45,37 +45,37 @@ export default {
         {
           icon: "mdi-map-search",
           subtitle: "Worldmap",
-          text: "세계 지도를 따라 대륙별 탐색 기능",
+          text: "세계 지도를 따라 대륙별 탐색 기능"
         },
         {
           icon: "mdi-lock-check",
           subtitle: "Secured",
           text:
-            "Spring Security, JWT를 통한 인증, 인가 MD5 Hash 알고리즘을 통한 이미지 데이터 보호",
+            "Spring Security, JWT를 통한 인증, 인가 MD5 Hash 알고리즘을 통한 이미지 데이터 보호"
         },
         {
           icon: "mdi-comment-alert",
           subtitle: "Tips",
-          text: "처음 방문하는 사용자를 위한 웹 사이트 사용 가이드 제공",
+          text: "처음 방문하는 사용자를 위한 웹 사이트 사용 가이드 제공"
         },
         {
           icon: "mdi-arrange-bring-to-front",
           subtitle: "Animation",
-          text: "다양한 애니메이션 기능",
+          text: "다양한 애니메이션 기능"
         },
         {
           icon: "mdi-panorama",
           subtitle: "Photo VR Viewer",
-          text: "파노라마 사진을 VR로 감상",
+          text: "파노라마 사진을 VR로 감상"
         },
         {
           icon: "mdi-cash",
           subtitle: "Easy Payment",
-          text: "카카오 Pay 연동",
-        },
-      ],
+          text: "카카오 Pay 연동"
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

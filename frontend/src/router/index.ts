@@ -24,110 +24,110 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: Home
   },
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: Login
   },
   {
     path: "/aboutus",
     name: "Aboutus",
-    component: About,
+    component: About
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("@/views/member/Signup.vue"),
+    component: () => import("@/views/member/Signup.vue")
   },
   {
     path: "/profile",
     name: "Profile",
-    component: () => import("@/views/member/Profile.vue"),
+    component: () => import("@/views/member/Profile.vue")
   },
   {
     path: "/card",
     name: "Paycard",
-    component: () => import("@/views/member/Paycard.vue"),
+    component: () => import("@/views/member/Paycard.vue")
   },
   {
     path: "/photoview",
     name: "PhotoView",
-    component: () => import("@/views/photo/PhotoView.vue"),
+    component: () => import("@/views/photo/PhotoView.vue")
   },
   {
     path: "/worldmap/",
     name: "WorldMap",
-    component: WorldMap,
+    component: WorldMap
   },
   {
     path: "/eachcontinent/",
     name: "EachContinent",
-    component: EachContinent,
+    component: EachContinent
   },
   {
     path: "/create/",
     name: "Create",
-    component: Create,
+    component: Create
   },
   {
     path: "/view/",
     name: "View",
-    component: View,
+    component: View
   },
   {
     path: "/detail/",
     name: "Detail",
-    component: Detail,
+    component: Detail
   },
   {
     path: "/post/",
     name: "Post",
-    component: Post,
+    component: Post
   },
   {
     path: "/eachwaterfall/",
     name: "EachWaterfall",
-    component: EachWaterfall,
+    component: EachWaterfall
   },
   {
     path: "/allwaterfall/",
     name: "AllWaterfall",
-    component: AllWaterfall,
+    component: AllWaterfall
   },
   {
     path: "/flipbook/",
     name: "Flipbook",
-    component: Flipbook,
+    component: Flipbook
   },
   {
     path: "/pay/",
     name: "Pay",
-    component: Pay,
+    component: Pay
   },
   {
     path: "/aframe/",
     name: "Aframe",
-    component: Aframe,
+    component: Aframe
   },
   {
     path: "/searchdata/",
     name: "SearchWaterfall",
-    component: SearchWaterfall,
+    component: SearchWaterfall
   },
   {
     path: "/payresult/",
     name: "PayResult",
-    component: PayResult,
-  },
+    component: PayResult
+  }
 ];
 
 const userRoutes: Array<RouteConfig> = [];
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 router.beforeEach((to, from, next) => {
@@ -138,7 +138,7 @@ router.beforeEach((to, from, next) => {
     "/worldmap",
     "/aboutus",
     "/create",
-    "/view",
+    "/view"
   ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");

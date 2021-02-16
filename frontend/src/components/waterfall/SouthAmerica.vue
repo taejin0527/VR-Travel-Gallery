@@ -51,17 +51,19 @@ export default {
   props: {
     images: [Array], // EachWaterfall.vue router에서 받아온 데이터들
     tags: [Array], // EachWaterfall.vue router에서 받아온 데이터들
-    indexs: [Array], // EachWaterfall.vue router에서 받아온 데이터들
+    indexs: [Array] // EachWaterfall.vue router에서 받아온 데이터들
   },
   methods: {
     // 게시물 사진 보기
-    gotoSelectArticle: function (idx) {
+    gotoSelectArticle: function(idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
       axios
         .get(
-          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem(
+            "articleId"
+          )}`
         )
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       this.$router.push({ name: "PhotoView" });
@@ -76,8 +78,8 @@ export default {
       localStorage.setItem("selectContinentforSearch", "All");
       localStorage.setItem("searchData", tag);
       this.$router.push({ name: "SearchWaterfall" });
-    },
-  },
+    }
+  }
 };
 </script>
 
