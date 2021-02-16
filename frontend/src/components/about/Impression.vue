@@ -11,20 +11,18 @@
       >
         <v-carousel-item v-for="(slide, i) in slides" :key="i">
           <v-sheet color="transparent" height="100%">
-            <v-row class="fill-height" align="center" justify="center">
-              <v-row>
+            <v-container class="fill-height" justify="center">
+              <v-row justify="center">
                 <v-icon>{{ slide.icon }}</v-icon>
               </v-row>
-              <v-row>
-                <div class="display-1">{{ slide.text }}</div></v-row
-              >
-              <v-row
-                ><div class="display-1">{{ slide.name }}</div></v-row
-              >
-              <v-row
-                ><div>{{ slide.team }}</div></v-row
-              >
-            </v-row>
+              <v-row justify="center">
+                <div class="display-1">{{ slide.text }}</div>
+              </v-row>
+              <v-row justify="center">
+                <div class="subtitle-1">{{ slide.name }}</div>
+                <div>...[{{ slide.team }}]</div>
+              </v-row>
+            </v-container>
           </v-sheet>
         </v-carousel-item>
       </v-carousel>
@@ -41,13 +39,25 @@ export default {
           icon: "mdi-comment-quote",
           text: "팀원들이 말을 안 들어서 힘들었습니다ㅠㅠ",
           name: "Donggeol Kim",
-          team: "Backend",
+          team: "Leader",
+        },
+        {
+          icon: "mdi-comment-quote",
+          text: "여기 한마디씩 작성하시면 됩니다",
+          name: "Minho Jang",
+          team: "Specialist",
+        },
+        {
+          icon: "mdi-comment-quote",
+          text: "프로젝트하면서 즐겁고 재밌었습니다 ^^",
+          name: "TaeJin Kim",
+          team: "Developer",
         },
         {
           icon: "mdi-comment-quote",
           text: "모델링... 랜더링... 죽는줄 알았습니다...",
-          name: "Minho Jang",
-          team: "Specialist",
+          name: "TaeWan Gu",
+          team: "Developer",
         },
       ],
     };
