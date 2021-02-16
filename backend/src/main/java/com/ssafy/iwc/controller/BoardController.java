@@ -215,7 +215,43 @@ public class BoardController {
 
 		}
 	}
+	@ApiOperation(value = "username을 통해 해당사람이 쓴글 가져오기", response = String.class)
+	@GetMapping("/postgetusername")
+	public ResponseEntity postgetusername(@RequestParam("username")String username,@RequestParam("num") String num) {
+		List<LocationInfo> result = new LinkedList<>();
+		int idx = 6;
+		int start = Integer.parseInt(num) * idx;
+		try {
+			List<Board> board = boardService.getUsernameBoard(username,start,idx);
+			if(board.size()==0) {
+				return new ResponseEntity("End Page",  HttpStatus.OK);
+			}
+			for (Board a : board) {
+				System.out.println(a);
+				LocationInfo data = new LocationInfo();
+//			data에 Board값 넣기
+				data.setBoard(a);
+//			메인 이미지 경로 가져와서 넣기
+				Optional<MainImage> d = mainImageService.findById(a.getId());
+				System.out.println("무엇이냐");
+				data.setFilePath(FileMainSrc + d.get().getFilename());
+//			tag가져와서 넣기
+				data.setTags(tagService.findTagId(a.getId()));
+				System.out.println(data.getTags());
 
+				result.add(data);
+			}
+			return new ResponseEntity(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("에러");
+			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
+
+		}
+		
+		
+		
+		
+	}
 	
 	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
@@ -298,6 +334,7 @@ public class BoardController {
 		
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
+	
 	
 	@ApiOperation(value = "게시물 id를 통해 게시물 상세보기,username으로 좋아요 확인", response = String.class)
 	@GetMapping("/getposts")
@@ -407,6 +444,7 @@ public class BoardController {
 		
 	}
 	
+	
 	@ApiOperation(value = "게시물 업로드", response = String.class)
 	@PostMapping("/requestupload")
 	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,
@@ -428,6 +466,11 @@ public class BoardController {
 				boardDto.setPremium(false);
 			}
 			id = boardService.savePost(boardDto);
+			PayInfoDto payInfoDto = new PayInfoDto();
+			payInfoDto.setCost(0);
+			payInfoDto.setUsername(writer);
+			payInfoDto.setPostid(id);
+			payInfoService.saveInfo(payInfoDto);
 			//메인 이미지 작성
 			String origname = main.getOriginalFilename();
 			String expend="";
