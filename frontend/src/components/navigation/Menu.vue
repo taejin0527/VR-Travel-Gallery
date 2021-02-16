@@ -28,7 +28,7 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Menu",
   props: {
-    isMenuPageOpen: Boolean,
+    isMenuPageOpen: Boolean
   },
   data() {
     return {};
@@ -41,8 +41,8 @@ export default Vue.extend({
       );
       sound.play();
       this.$emit("closeMenuPage");
-    },
-  },
+    }
+  }
 });
 </script>
 

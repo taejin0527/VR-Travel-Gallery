@@ -8,7 +8,7 @@
     :style="{
       'background-image':
         'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
-      'background-position': 'center',
+      'background-position': 'center'
     }"
   >
     <v-row align="center" justify="center">
@@ -20,7 +20,7 @@
             alt=""
             :class="{
               'disappeared-hidden-map-icon': !isShowMapIcon,
-              'show-hidden-map-icon': isShowMapIcon,
+              'show-hidden-map-icon': isShowMapIcon
             }"
             width="170px"
             height="150px"
@@ -28,7 +28,7 @@
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
-              'show-airplane-icon': isShowMapIcon,
+              'show-airplane-icon': isShowMapIcon
             }"
           >
             mdi-airplane
@@ -83,7 +83,7 @@
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
-              'show-hidden-VR-icon': isShowVRIcon,
+              'show-hidden-VR-icon': isShowVRIcon
             }"
           />
         </div>
@@ -146,13 +146,13 @@ export default {
   components: {
     NUVOExplanation,
     WorldMapExplanation,
-    VRExplanation,
+    VRExplanation
   },
   data: function() {
     return {
       isShowMapIcon: false,
       isShowVRIcon: false,
-      isSelectTips: false,
+      isSelectTips: false
     };
   },
   methods: {
@@ -192,8 +192,8 @@ export default {
     activeIntro() {
       this.$intro().start(); // start the guide
       this.$intro().showHints(); // show hints
-    },
-  },
+    }
+  }
 };
 </script>
 

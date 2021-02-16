@@ -133,7 +133,7 @@ import EditPassword from "@/components/member/profile/EditPassword.vue";
 
 export default {
   components: {
-    EditPassword,
+    EditPassword
   },
   data() {
     return {
@@ -141,44 +141,44 @@ export default {
         {
           title: "나의 게시물",
           src: require("@/assets/images/unsplash/noiseporn-JNuKyKXLh8U-unsplash.jpg"),
-          flex: 12,
+          flex: 12
         },
         {
           title: "Follow",
           src: require("@/assets/images/unsplash/freestocks-Y9mWkERHYCU-unsplash.jpg"),
-          flex: 6,
+          flex: 6
         },
         {
           title: "Follwer",
           src: require("@/assets/images/unsplash/possessed-photography-ChiM2OuX5JQ-unsplash.jpg"),
-          flex: 6,
-        },
+          flex: 6
+        }
       ],
       items: [
         {
           color: "#1F7087",
           src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
           title: "Supermodel",
-          artist: "Foster the People",
+          artist: "Foster the People"
         },
         {
           color: "#952175",
           src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
           title: "Halcyon Days",
-          artist: "Ellie Goulding",
-        },
+          artist: "Ellie Goulding"
+        }
       ],
-      worldmapImg: require("@/assets/continents/worldmap.png"),
+      worldmapImg: require("@/assets/continents/worldmap.png")
     };
   },
   computed: {
-    ...mapState("Auth", ["authToken"]),
+    ...mapState("Auth", ["authToken"])
   },
   methods: {
     goEditCard() {
       this.$router.push({ name: "Paycard" });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -29,22 +29,23 @@
     </v-btn>
 
     <!-- 검색 버튼 및 입력창 -->
-    <v-lazy
-      min-height="200"
-      transition="slide-x-reverse-transition"
+    <div
       v-if="isSelectSearch"
       style="
               position: fixed;
-              height: 10%;
+              height: 50px;
               margin: 0;
               padding: 0;
               width: 300px;
               top: 23px;
               right: 170px;
-              z-index: 101;
               transition:0.5s;
+              z-index: 1;
+              background-color:#DDA288;
+              border-radius: 3px;
             "
     >
+<<<<<<< HEAD
       <v-card color="#DDA288" height="50px" width="300px" dark>
         <v-card-text>
           <v-text-field
@@ -60,23 +61,93 @@
       </v-card>
     </v-lazy>
 
+=======
+    </div>
+    <div
+      v-if="isSelectSearch"
+      style="position:fixed;
+              width: 270px;
+              top: 16px;
+              right: 185px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <div
+        class="d-flex align-start justify-center"
+      >
+        <v-text-field
+          v-model="searchData"
+          color="white"
+          placeholder="장소나 태그를 입력하세요."
+          append-outer-icon="mdi-airplane-takeoff"
+          @keydown.enter="searchKeyword"
+          @click:append-outer="searchKeyword"
+          style=""
+          dark
+        ></v-text-field>
+      </div>
+    </div>
+    
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     <v-btn
-      v-else
+      v-if="!isSelectSearch"
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
+      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
       @click="isSelectSearch = true"
     >
       <v-icon>
         mdi-image-search
       </v-icon>
     </v-btn>
+    <div
+      class="text-center"
+      v-if="isSelectSearch"
+      style="position:fixed;
+              width: 120px;
+              top: 30px;
+              right: 485px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="#DDA288"
+            style="width: 120px;"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{selectContinent}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in continents"
+            :key="index"
+          >
+            <v-list-item-title
+              style="text-align:center; cursor:pointer;"
+              @click="selectContinent = item"
+            >
+            {{ item }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
 
     <!-- 전체 사진 불러오기. -->
     <!-- 단, 모든 사진을 불러오기 때문에 더 보기 버튼을 만들어서 15개씩 불러오는 방향을 잡아야 할 듯. -->
     <v-container class="adjust-grid-container">
-      <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 60px; font-size:30px; color:white;"> The World </div>
+    <div style="width:100%; height: 20px;"></div>
       <v-row>
         <v-col
           v-for="(image, idx) in images"
@@ -108,6 +179,8 @@
               v-for="(item, i) in tags[idx]"
               :key="i"
               style="background-color:#DD6288; color:white;"
+              class="tag-hover-event-class"
+              @click="gotoSearch(item)"
             >
               {{ item.tag }}
             </v-chip>
@@ -115,6 +188,7 @@
         </v-col>
       </v-row>
     </v-container>
+<<<<<<< HEAD
     <div class="d-flex justify-center">
       <div
         v-if="
@@ -130,6 +204,12 @@
       >
         더 이상 게시물이 없습니다.
       </div>
+=======
+    <br><br>
+    <div
+      class="d-flex justify-center"
+    >
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       <v-btn
         class="ma-2 change-font-more-articles"
         :loading="loading"
@@ -137,10 +217,18 @@
         color="#DDA288"
         style="color:white;"
         @click="moreArticles"
-        v-else
+        v-if='checkEndPage ==""'
       >
         More
       </v-btn>
+      <div
+        v-else
+        class="d-flex justify-center change-font-more-articles align-center"
+        style="width:100%; height:100px; color:#eeeeee;"
+      >
+        {{checkEndPage}}
+      </div>
+      <br><br><br><br><br><br>
     </div>
   </v-main>
 </template>
@@ -157,17 +245,32 @@ export default {
   },
   data: function() {
     return {
+<<<<<<< HEAD
       loader: null,
+=======
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
+      loader:null,
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       loading: false,
       popularExhibition: false, // 버튼 바꾸기 데이터
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
       indexs: [], // id 데이터 리스트
+<<<<<<< HEAD
       searchData: "",
       isSelectSearch: false,
       pagingIndex: 0,
       endPage: ["", "", "", "", "", ""]
     };
+=======
+      searchData:"",
+      isSelectSearch:false,
+      pagingIndex:0,
+      endPage: ['', '', '', '', '', ''],
+      checkEndPage: '',
+    }
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
   },
   // 로딩
   watch: {
@@ -194,6 +297,7 @@ export default {
     const realPage = this.pagingIndex / 6;
     for (let index = 0; index < locations.length; index++) {
       axios
+<<<<<<< HEAD
         .get(
           `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
         )
@@ -210,6 +314,34 @@ export default {
           this.endPage[index] = "게시물이 없습니다.";
           this.pagingIndex = this.pagingIndex + 1;
         });
+=======
+      .get(`${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`)
+      .then(response => {
+        if (response.data == "End Page") {
+          this.endPage[index] = "저장된 사진이 없습니다."
+          let count = 0
+          this.endPage.forEach(e => {
+            if (e != "") { count = count + 1 }
+          });
+          if (count == 6) {
+            this.checkEndPage = "저장된 사진이 없습니다."
+          }
+        }
+        else {
+          for (let i = 0; i < response.data.length; i++) {
+            this.images.push(response.data[i].filePath);
+            this.tags.push(response.data[i].tags)
+            this.indexs.push(response.data[i].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        }
+      );
+
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     }
   },
   methods: {
@@ -228,6 +360,7 @@ export default {
       this.$router.push({ name: "PhotoView" });
     },
     // 6개씩 더 가져오기
+<<<<<<< HEAD
     moreArticles: function() {
       this.loader = "loading";
       const locations = [
@@ -240,12 +373,19 @@ export default {
       ];
       const realPage = this.pagingIndex / 6;
       console.log(this.endPage);
+=======
+    moreArticles: function () {
+      const locations = ['northAmerica', 'southAmerica', 'europe', 'asia', 'oceania', 'africa']
+      const realPage = this.pagingIndex/6
+      console.log(this.endPage)
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       for (let index = 0; index < locations.length; index++) {
         axios
           .get(
             `${SERVER.BOARD_BASE_URL}paging?location=${locations[index]}&num=${realPage}`
           )
           .then(response => {
+<<<<<<< HEAD
             console.log(response);
             for (let i = 0; i < response.data.length; i++) {
               this.images.push(response.data[i].filePath);
@@ -268,7 +408,52 @@ export default {
         alert("검색어를 입력해주세요.");
       } else {
         alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`);
+=======
+            if (response.data == "End Page") {
+              this.endPage[index] = "더 이상 사진이 없습니다."
+              this.pagingIndex = this.pagingIndex + 1
+              let count = 0
+              this.endPage.forEach(e => {
+                if (e != "") { count = count + 1 }
+              });
+              if (count == 6) {
+                this.checkEndPage = "더 이상 사진이 없습니다."
+              }
+            }
+            else {
+              for (let i = 0; i < response.data.length; i++) {
+                this.images.push(response.data[i].filePath);
+                this.tags.push(response.data[i].tags)
+                this.indexs.push(response.data[i].board.id)
+              }
+              this.pagingIndex = this.pagingIndex + 1
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            }
+          );
       }
+    },
+    // 검색
+    searchKeyword: function() {
+      if (this.searchData === "") {
+        alert('검색어를 입력해주세요.')
+      }
+      else {
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
+        localStorage.setItem('searchData', this.searchData)
+        this.$router.push({name: "SearchWaterfall"})
+      }
+    },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
+      }
+      localStorage.setItem('selectContinentforSearch', 'All')
+      localStorage.setItem('searchData', tag)
+      this.$router.push({name:"SearchWaterfall"})
     }
   }
 };
@@ -286,7 +471,7 @@ export default {
 
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
-  font-size: 25px;
+  font-size: 20px;
 }
 
 /* 후버 효과 */

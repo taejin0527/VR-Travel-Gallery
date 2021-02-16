@@ -3,6 +3,27 @@
   <v-app style="background-color: #5a4e4d; width:100%; min-height:100%">
     <!-- 왼쪽 상단 로고 픽스 -->
     <div
+      v-if="windowWidth < 500 || windowHeight < 450"
+      style="
+                position: fixed;
+                height: 10%;
+                margin: 0;
+                padding: 0;
+                width: 100px;
+                top: 30px;
+                left: 30px;
+                z-index: 100;
+            "
+    >
+      <img
+        src="@/assets/main/NUVOchangeColor.png"
+        alt=""
+        width="100px"
+        @click="gotoHome"
+      />
+    </div>
+    <div
+      v-else
       style="
                 position: fixed;
                 height: 10%;
@@ -33,6 +54,12 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "App",
+  data: function() {
+    return {
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight
+    };
+  },
   methods: {
     gotoHome: function() {
       this.$router.push({ name: "Home" });
@@ -72,5 +99,11 @@ export default Vue.extend({
 .component-fade-enter,
 .component-fade-leave-to {
   opacity: 0;
+}
+
+.tag-hover-event-class:hover {
+  transition: 0.5s;
+  transform: scale(1.06);
+  opacity: 0.8;
 }
 </style>

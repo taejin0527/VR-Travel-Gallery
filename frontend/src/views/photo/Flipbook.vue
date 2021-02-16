@@ -52,7 +52,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:120px; color:white;"
+      style="position:fixed; right:60px; top:120px; color:white; z-index: 101;"
       @click="clickGotoPhotoView"
     >
       <v-icon>
@@ -65,7 +65,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:200px; color:white;"
+      style="position:fixed; right:60px; top:200px; color:white; z-index: 101;"
       @click="clickGotoVR"
     >
       <span style="font-size:22px">VR</span>
@@ -76,7 +76,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:280px; color:white;"
+      style="position:fixed; right:60px; top:280px; color:white; z-index: 101;"
       @click="clickGoBack"
     >
       <v-icon size="38px">
@@ -164,6 +164,7 @@ export default {
   mounted() {
     // username추가
     axios
+<<<<<<< HEAD
       .get(
         `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
           "articleId"
@@ -179,6 +180,21 @@ export default {
         response.data.forEach(e => {
           this.vfImages.push(e.filepath);
         });
+=======
+      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
+      .then((response) => {
+        if (response.data.like === "false") {
+          this.isSelectLike = false
+        }
+        else {
+          this.isSelectLike = true
+        }
+        this.author = response.data.board.author
+        this.vfImages.push(response.data.filePath)
+        for (let i = 0; i < response.data.subPath.length; i++) {
+          this.vfImages.push(response.data.subPath[i])
+        }
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       })
       .catch(err => {
         console.error(err);

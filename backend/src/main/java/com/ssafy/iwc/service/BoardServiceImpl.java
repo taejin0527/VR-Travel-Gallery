@@ -27,19 +27,10 @@ public class BoardServiceImpl implements BoardService{
 	 
 
 	@Transactional
-	public BoardDto getPost(long id) {
+	public Board getPost(long id) {
 		Board board = boardRepository.findById(id).get();
 
-		BoardDto boardDto = BoardDto.builder()
-				.id(id)
-				.author(board.getAuthor())
-				.good(board.getGood())
-				.views(board.getViews())
-				.location(board.getLocation())
-				
-				.createdDate(board.getCreatedDate())
-				.build();
-		return boardDto;
+		return board;
 
 	}
 
@@ -63,5 +54,26 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> getLocationIdxBoard(String location, int start, int idx) {
 		// TODO Auto-generated method stub
 		return boardRepository.getLocationIdxBoard(location,start,idx);
+	}
+
+
+	@Override
+	public Board findById(long no) {
+		// TODO Auto-generated method stub
+		return boardRepository.findById(no).get();
+	}
+
+
+	@Override
+	public List<Long> getPostsNum(String location, String searchData, int start, int idx) {
+		// TODO Auto-generated method stub
+		return boardRepository.getPostsNum(location,searchData,searchData,location,start,idx);
+	}
+
+
+	@Override
+	public List<Long> getAllPostsNum(String searchData, int start, int idx) {
+		// TODO Auto-generated method stub
+		return boardRepository.getAllPostsNum(searchData,searchData,start,idx);
 	}
 }

@@ -21,7 +21,7 @@
       :style="{
         'background-image':
           'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
-        'background-position': 'center',
+        'background-position': 'center'
       }"
     >
       <!--=============================== Contents[FIXED] =============================== -->
@@ -83,18 +83,18 @@ import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   components: {
-    SideNavBar,
+    SideNavBar
   },
   data() {
     return {
-      section: true,
+      section: true
     };
   },
   methods: {
     clickGotoWorldmap: function() {
       this.$router.push({ name: "WorldMap" });
-    },
-  },
+    }
+  }
 };
 </script>
 

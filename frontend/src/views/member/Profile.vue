@@ -31,7 +31,7 @@ export default {
   name: "scale",
   components: {
     SideNavBar,
-    ProfileForm,
+    ProfileForm
   },
   data() {
     return {};
@@ -39,8 +39,8 @@ export default {
   methods: {
     clickGotoWorldmap: function() {
       this.$router.push({ name: "WorldMap" });
-    },
-  },
+    }
+  }
 };
 </script>
 

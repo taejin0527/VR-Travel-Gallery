@@ -1,12 +1,32 @@
 <template>
   <v-main>
+<<<<<<< HEAD
     <SideNavBar />
+=======
+    <div
+      v-if="windowWidth < 500 || windowHeight < 450"
+    >
+      <v-app-bar
+        fixed
+        height="90px;"
+        color="#5a4e4d"
+        elevation="0"
+      >
+      </v-app-bar>
+      <br>
+    </div>
+    
+    <SideNavBar
+      v-if="windowWidth > 500 && windowHeight > 450"
+    />
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     <!-- 게시물 작성 페이지로 가는 버튼 -->
     <v-btn
+      v-if="windowWidth > 500 && windowHeight > 450"
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:95px; top:20px; color:white;"
+      style="position:fixed; right:95px; top:20px; color:white; z-index: 2;"
       @click="clickGotoCreate"
     >
       <v-icon>
@@ -16,10 +36,11 @@
 
     <!-- 각 대륙맵 및 인기 전시 카드 페이지로 돌아가는 버튼 -->
     <v-btn
+      v-if="(windowWidth > 500 && windowHeight > 450)"
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:20px; top:20px; color:white;"
+      style="position:fixed; right:20px; top:20px; color:white; z-index: 2;"
       @click="clickChangeContinentViewButton"
     >
       <span v-if="popularExhibition"> ALL </span>
@@ -29,22 +50,23 @@
     </v-btn>
 
     <!-- 검색 버튼 및 입력창 -->
-    <v-lazy
-      min-height="200"
-      transition="slide-x-reverse-transition"
-      v-if="isSelectSearch"
+    <div
+      v-if="isSelectSearch && windowWidth > 500"
       style="
               position: fixed;
-              height: 10%;
+              height: 50px;
               margin: 0;
               padding: 0;
               width: 300px;
               top: 23px;
               right: 170px;
-              z-index: 101;
               transition:0.5s;
+              z-index: 1;
+              background-color:#DDA288;
+              border-radius: 3px;
             "
     >
+<<<<<<< HEAD
       <v-card color="#DDA288" height="50px" width="300px" dark>
         <v-card-text>
           <v-text-field
@@ -60,18 +82,48 @@
       </v-card>
     </v-lazy>
 
+=======
+    </div>
+    <div
+      v-if="isSelectSearch && windowWidth > 500"
+      style="position:fixed;
+              width: 270px;
+              top: 16px;
+              right: 185px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <div
+        class="d-flex align-start justify-center"
+      >
+        <v-text-field
+          v-model="searchData"
+          color="white"
+          placeholder="장소나 태그를 입력하세요."
+          append-outer-icon="mdi-airplane-takeoff"
+          @keydown.enter="searchKeyword"
+          @click:append-outer="searchKeyword"
+          style=""
+          dark
+        ></v-text-field>
+      </div>
+    </div>
+    
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     <v-btn
-      v-else
+      v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
+      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
       @click="isSelectSearch = true"
     >
       <v-icon>
         mdi-image-search
       </v-icon>
     </v-btn>
+<<<<<<< HEAD
 
     <!-- 각 대륙별로 이미지 가져오기 -->
     <div v-if="this.getContinentName == 'oceania'">
@@ -93,6 +145,98 @@
       <Africa :images="images" :tags="tags" :indexs="indexs" />
     </div>
     <div class="d-flex justify-center">
+=======
+    <div
+      class="text-center"
+      v-if="isSelectSearch && windowWidth > 500"
+      style="position:fixed;
+              width: 120px;
+              top: 30px;
+              right: 485px;
+              z-index: 2;
+              color:white;
+            "   
+    >
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="#DDA288"
+            style="width: 120px;"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{selectContinent}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in continents"
+            :key="index"
+          >
+            <v-list-item-title
+              style="text-align:center; cursor:pointer;"
+              @click="selectContinent = item"
+            >
+            {{ item }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
+    
+    <!-- 각 대륙별로 이미지 가져오기 -->
+    <div
+      :class="{'adjust-location-for-mobile':(windowWidth < 500)}"
+    >
+      <div v-if="this.getContinentName == 'oceania'">
+        <Oceania
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'asia'">
+        <Asia
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'northAmerica'">
+        <NorthAmerica
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'southAmerica'">
+        <SouthAmerica
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else-if="this.getContinentName == 'europe'">
+        <Europe
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+      <div v-else>
+        <Africa
+          :images = "images"
+          :tags = "tags"
+          :indexs = "indexs"
+        />
+      </div>
+    </div>
+    <br><br>
+    <div
+      class="d-flex justify-center"
+    >
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       <v-btn
         class="ma-2 change-font-more-articles"
         :loading="loading"
@@ -109,9 +253,28 @@
         class="d-flex justify-center change-font-more-articles align-center"
         style="width:100%; height:100px; color:#eeeeee;"
       >
+<<<<<<< HEAD
         {{ endPage }}
       </div>
+=======
+        {{endPage}}
+      </div>
+      <br><br><br><br><br><br>
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     </div>
+    <!-- 대륙 선택으로 가는 버튼 -->
+    <v-btn
+      v-if="windowWidth < 500 || windowHeight < 450"
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:43px; color:white;"
+      @click="clickGotoBack"
+    >
+      <v-icon>
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
   </v-main>
 </template>
 
@@ -130,7 +293,13 @@ export default {
   name: "EachWaterfall",
   data: function() {
     return {
+<<<<<<< HEAD
       loader: null,
+=======
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
+      loader:null,
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       loading: false,
       endPage: "",
       getContinentName: localStorage.getItem("continent"), // 대륙별로 나누는 변수
@@ -138,10 +307,19 @@ export default {
       images: [], // 이미지 데이터 리스트
       tags: [], // 태그 데이터 리스트
       indexs: [], // id 데이터 리스트
+<<<<<<< HEAD
       searchData: "",
       isSelectSearch: false,
       pagingIndex: 0
     };
+=======
+      searchData:"",
+      isSelectSearch:false,
+      pagingIndex:0,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    }
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
   },
   // 로딩
   watch: {
@@ -164,6 +342,7 @@ export default {
         `${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`
       )
       .then(response => {
+<<<<<<< HEAD
         for (let index = 0; index < response.data.length; index++) {
           this.images.push(response.data[index].filePath);
           const tmp = [];
@@ -179,6 +358,29 @@ export default {
         console.log(err);
         this.endPage = "게시물이 없습니다.";
       });
+=======
+        if (response.data == "End Page") {
+          this.endPage = "저장된 사진이 없습니다."
+        }
+        else {
+          for (let index = 0; index < response.data.length; index++) {
+            this.images.push(response.data[index].filePath);
+            const tmp = []
+            for (let i = 0; i < response.data[index].tags.length; i++) {
+              tmp.push(response.data[index].tags[i].tag);
+            }
+            this.tags.push(tmp)
+            this.indexs.push(response.data[index].board.id)
+          }
+          this.pagingIndex = this.pagingIndex + 1
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        }
+      );
+
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
   },
   // 대륙 컴포넌트
   components: {
@@ -201,14 +403,20 @@ export default {
       this.$router.push({ name: "Create" });
     },
     // 6개씩 더 가져오기
+<<<<<<< HEAD
     moreArticles: function() {
       this.loader = "loading";
       const location = localStorage.getItem("continent");
+=======
+    moreArticles: function () {
+      const location = localStorage.getItem('continent');
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       axios
         .get(
           `${SERVER.BOARD_BASE_URL}paging?location=${location}&num=${this.pagingIndex}`
         )
         .then(response => {
+<<<<<<< HEAD
           console.log(response);
           for (let index = 0; index < response.data.length; index++) {
             this.images.push(response.data[index].filePath);
@@ -225,15 +433,49 @@ export default {
           console.log(err);
           this.endPage = "더 이상 게시물이 없습니다.";
         });
+=======
+          if (response.data == "End Page") {
+            this.endPage = "더 이상 사진이 없습니다."
+          }
+          else {
+            for (let index = 0; index < response.data.length; index++) {
+              this.images.push(response.data[index].filePath);
+              const tmp = []
+              for (let i = 0; i < response.data[index].tags.length; i++) {
+                tmp.push(response.data[index].tags[i].tag);
+              }
+              this.tags.push(tmp)
+              this.indexs.push(response.data[index].board.id)
+            }
+            this.pagingIndex = this.pagingIndex + 1
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          }
+        );
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     },
 
     // 검색
     searchKeyword: function() {
       if (this.searchData === "") {
+<<<<<<< HEAD
         alert("검색어를 입력해주세요.");
       } else {
         alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`);
+=======
+        alert('검색어를 입력해주세요.')
       }
+      else {
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
+        localStorage.setItem('searchData', this.searchData)
+        this.$router.push({name: "SearchWaterfall"})
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
+      }
+    },
+    clickGotoBack: function () {
+      this.$router.push({name:"WorldMap"})
     }
   }
 };
@@ -251,7 +493,12 @@ export default {
 
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
-  font-size: 25px;
+  font-size: 20px;
+}
+
+.adjust-location-for-mobile {
+  position:relative;
+  right:70px;
 }
 
 .custom-loader {

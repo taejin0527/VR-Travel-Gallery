@@ -1,9 +1,18 @@
 <template>
+<<<<<<< HEAD
   <v-card class="mx-auto" flat dark color="#5a4e4d" max-width="450">
     <div style="margin: 40px">
       <h1>이메일 인증</h1>
       <p>인증번호가 발송됩니다</p>
     </div>
+=======
+  <v-card class="mx-auto" flat max-width="350">
+    <v-card-sub-title
+      style="line-height: 50px;"
+    >
+      E-mail 인증
+    </v-card-sub-title>
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     <v-text-field
       v-model="email"
       v-validate="'required|email'"
