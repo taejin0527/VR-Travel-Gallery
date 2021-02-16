@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.iwc.model.User;
@@ -130,6 +131,21 @@ public class AuthController {
 	 * @author	김동걸
 	 * @desc 	소셜 로그인(구글, 카카오)
 	 */
+	
+	@ApiOperation(value="유저명을 통해 유저정보를 가져옴")
+	@GetMapping("/getuser")
+	public ResponseEntity getuser(@RequestParam("username")String username) {
+		try {
+			User user = userService.getUserInfo(username);
+			return new ResponseEntity(user,HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+		
+		
+		
+	}
 	
 	
 	/**
