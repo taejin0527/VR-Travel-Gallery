@@ -37,4 +37,10 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 	@Modifying
 	@Query(value = "update posts set views = ? where id= ?",nativeQuery = true)
 	void setView(long num,long id);
+
+	
+
+
+	@Query(value = "select * from posts where author = ? order by id desc limit ?,?",nativeQuery = true)
+	List<Board> getUsernameIdxBoard(String username, int start, int idx);
 }

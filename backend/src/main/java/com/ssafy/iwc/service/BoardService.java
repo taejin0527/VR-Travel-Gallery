@@ -18,4 +18,6 @@ public interface BoardService {
 	public List<Long> getPostsNum(String location, String searchData, int start, int idx);
 	public List<Long> getAllPostsNum(String searchData, int start, int idx);
 	public void increaseView(long id);
+	
+	public List<Board> getUsernameBoard(String username, int start, int idx);
 }

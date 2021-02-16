@@ -18,6 +18,8 @@ public class PayInfoServiceImpl implements PayInfoService{
 	PayInfoRepository payInfoRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	BoardRepository boardRepositroy;
 	@Override
 	public int getPayRequest(String username, long no) {
 		// TODO Auto-generated method stub
@@ -30,9 +32,13 @@ public class PayInfoServiceImpl implements PayInfoService{
 		try {
 //			결제 진행
 			User user = userRepository.findByUsername(payInfoDto.getUsername()).get();
-			userRepository.upDateMoney(user.getMoney()-30,payInfoDto.getUsername());
+			if(user.getMoney()-3<0) return false;
+			userRepository.upDateMoney(user.getMoney()-3,payInfoDto.getUsername());
+//			해당유저에게 코인전달
+			String userName = boardRepositroy.findById(payInfoDto.getPostid()).get().getAuthor();
+			int cuser = userRepository.findByUsername(userName).get().getMoney();
 //			결제정보 저장
-			payInfoRepository.save(payInfoDto.toEntity());
+			userRepository.upDateMoney(cuser+3,userName);
 		
 		}catch(Exception e) {
 			System.out.println(e);
