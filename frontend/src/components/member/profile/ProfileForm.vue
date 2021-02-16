@@ -13,18 +13,10 @@
                       <v-card-title class="headline">My Profile</v-card-title>
 
                       <v-card-subtitle>
-                        profile
+                        {{ authToken.username }}
                       </v-card-subtitle>
                       <v-card-actions>
-                        <v-btn
-                          @click="goEditProfile"
-                          class="ml-2 mt-5"
-                          outlined
-                          rounded
-                          small
-                        >
-                          Edit profile
-                        </v-btn>
+                        <EditPassword />
                       </v-card-actions>
                     </div>
                     <v-avatar class="ma-3" height="120" width="200" tile>
@@ -135,45 +127,54 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+import EditPassword from "@/components/member/profile/EditPassword.vue";
+
 export default {
-  data: () => ({
-    cards: [
-      {
-        title: "나의 게시물",
-        src: require("@/assets/images/unsplash/noiseporn-JNuKyKXLh8U-unsplash.jpg"),
-        flex: 12
-      },
-      {
-        title: "Follow",
-        src: require("@/assets/images/unsplash/freestocks-Y9mWkERHYCU-unsplash.jpg"),
-        flex: 6
-      },
-      {
-        title: "Follwer",
-        src: require("@/assets/images/unsplash/possessed-photography-ChiM2OuX5JQ-unsplash.jpg"),
-        flex: 6
-      }
-    ],
-    items: [
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        title: "Supermodel",
-        artist: "Foster the People"
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        artist: "Ellie Goulding"
-      }
-    ],
-    worldmapImg: require("@/assets/continents/worldmap.png")
-  }),
+  components: {
+    EditPassword
+  },
+  data() {
+    return {
+      cards: [
+        {
+          title: "나의 게시물",
+          src: require("@/assets/images/unsplash/noiseporn-JNuKyKXLh8U-unsplash.jpg"),
+          flex: 12
+        },
+        {
+          title: "Follow",
+          src: require("@/assets/images/unsplash/freestocks-Y9mWkERHYCU-unsplash.jpg"),
+          flex: 6
+        },
+        {
+          title: "Follwer",
+          src: require("@/assets/images/unsplash/possessed-photography-ChiM2OuX5JQ-unsplash.jpg"),
+          flex: 6
+        }
+      ],
+      items: [
+        {
+          color: "#1F7087",
+          src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+          title: "Supermodel",
+          artist: "Foster the People"
+        },
+        {
+          color: "#952175",
+          src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+          title: "Halcyon Days",
+          artist: "Ellie Goulding"
+        }
+      ],
+      worldmapImg: require("@/assets/continents/worldmap.png")
+    };
+  },
+  computed: {
+    ...mapState("Auth", ["authToken"])
+  },
   methods: {
-    goEditProfile() {
-      this.$router.push({ name: "ProfileEdit" });
-    },
     goEditCard() {
       this.$router.push({ name: "Paycard" });
     }

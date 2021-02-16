@@ -1,5 +1,10 @@
 <template>
-  <v-card class="mx-auto" flat max-width="350">
+  <v-card class="mx-auto" flat dark color="#5a4e4d" max-width="450">
+    <div>
+      <h1>인증</h1>
+      <p>인증번호를 입력하세요</p>
+    </div>
+
     <v-text-field
       v-model="confirm"
       :messages="error.confirm"

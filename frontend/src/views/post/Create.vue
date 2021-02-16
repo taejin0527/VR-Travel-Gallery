@@ -69,7 +69,12 @@
         <!-- tags는 리스트로 되어 있슴 -->
         <v-row>
           <v-col cols="6" v-for="(item, idx) in tags" :key="idx">
-            <v-text-field dark color="white" label="#Tag입력" v-model="tags[idx]"></v-text-field>
+            <v-text-field
+              dark
+              color="white"
+              label="#Tag입력"
+              v-model="tags[idx]"
+            ></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-btn
@@ -92,15 +97,12 @@
               color="#dda288"
               style="width: 90px"
             ></v-progress-linear>
-            <div
-              v-else
-            >
+            <div v-else>
               Upload
               <v-icon right dark>
                 mdi-cloud-upload
               </v-icon>
             </div>
-            
           </v-btn>
         </div>
       </v-col>
@@ -187,7 +189,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 export default {
   data() {
     return {
-      fab : false,
+      fab: false,
       continentsNames: [
         "northAmerica",
         "southAmerica",
@@ -283,8 +285,8 @@ export default {
     },
     submitFile() {
       if (this.fab == true) {
-        this.fab = false
-        return
+        this.fab = false;
+        return;
       }
 
       console.log(this.files.length);
@@ -293,31 +295,28 @@ export default {
       // 유효성 검사
       if (this.main[0]) {
         formData.append("main", this.main[0].file);
-      }
-      else {
-        return alert('사진을 넣어주세요.')
+      } else {
+        return alert("사진을 넣어주세요.");
       }
       if (this.files.length != 0) {
         formData.append("main", this.main[0].file);
-      }
-      else {
-        return alert('추가 사진을 1장 이상 넣어주세요.')
+      } else {
+        return alert("추가 사진을 1장 이상 넣어주세요.");
       }
       if (this.nation) {
         formData.append("nation", this.nation);
-      }
-      else {
-        return alert('장소를 지정해 주세요.')
+      } else {
+        return alert("장소를 지정해 주세요.");
       }
       for (let i = 0; i < this.tags.length; i++) {
-        if (this.tags[i] === '') {
-          return alert('태그를 적어주세요.')
+        if (this.tags[i] === "") {
+          return alert("태그를 적어주세요.");
         }
       }
 
       // 프로그레스 애니메이션 설정
-      this.fab = true
-        
+      this.fab = true;
+
       formData.append("writer", this.$store.state.Auth.authToken.username);
       formData.append("location", this.selectContinent);
       formData.append("tags", this.tags);

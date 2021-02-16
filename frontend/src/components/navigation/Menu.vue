@@ -28,7 +28,7 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Menu",
   props: {
-    isMenuPageOpen: Boolean,
+    isMenuPageOpen: Boolean
   },
   data() {
     return {};
@@ -41,8 +41,8 @@ export default Vue.extend({
       );
       sound.play();
       this.$emit("closeMenuPage");
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -82,7 +82,7 @@ export default Vue.extend({
   padding: 5px 20px;
   display: inline-flex;
   font-weight: 300;
-  transition: 0.3s;
+  transition: 0.8s;
   z-index: 9;
 }
 
