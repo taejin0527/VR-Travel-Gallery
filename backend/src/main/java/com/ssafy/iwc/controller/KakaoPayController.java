@@ -93,10 +93,10 @@ public class KakaoPayController {
  
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+        	response+="restClientException : "+e+"\n";
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+        	response+="URIsyntaxException : "+e+"\n";
         }
         
         return response;
