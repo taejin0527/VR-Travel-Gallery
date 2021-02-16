@@ -1,117 +1,11 @@
 <template>
   <!-- App.vue -->
   <div>
-<<<<<<< HEAD
-    <SideNavBar />
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:95px; top:20px; color:white;"
-      @click="clickGotoCreate"
-    >
-      <v-icon
-        v-intro="'새 게시글 작성'"
-        v-intro-position="'left'"
-        v-intro-step="4"
-      >
-        mdi-plus
-      </v-icon>
-    </v-btn>
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:20px; top:20px; color:white;"
-      @click="clickChangeContinentViewButton"
-      v-intro="'전체 게시글 보기'"
-      v-intro-position="'top'"
-      v-intro-step="5"
-    >
-      <span v-if="popularExhibition"> ALL </span>
-      <v-icon v-else>
-        mdi-star
-      </v-icon>
-    </v-btn>
-    <!-- 검색 버튼 및 입력창 -->
-    <v-lazy
-      min-height="200"
-      transition="slide-x-reverse-transition"
-      v-if="isSelectSearch"
-      style="
-              position: fixed;
-              height: 10%;
-              margin: 0;
-              padding: 0;
-              width: 300px;
-              top: 23px;
-              right: 170px;
-              z-index: 101;
-              transition:0.5s;
-            "
-    >
-      <v-card color="#DDA288" height="50px" width="300px" dark>
-        <v-card-text>
-          <v-text-field
-            v-model="searchData"
-            color="white"
-            placeholder="장소나 태그를 입력하세요."
-            append-outer-icon="mdi-airplane-takeoff"
-            @keydown.enter="searchKeyword"
-            @click:append-outer="searchKeyword"
-            style="position:relative; bottom:24px;"
-          ></v-text-field>
-        </v-card-text>
-      </v-card>
-    </v-lazy>
-
-    <v-btn
-=======
-    <MobileWorldMap
-      v-if="windowWidth < 500 || windowHeight < 450"
-    />
-    <div
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
-      v-else
-    >
-<<<<<<< HEAD
-      <v-icon
-        v-intro="'게시글 검색(태그)'"
-        v-intro-position="'left'"
-        v-intro-step="3"
-      >
-        mdi-image-search
-      </v-icon>
-    </v-btn>
-
-    <v-container>
-      <v-row>
-        <v-col cols="12">
-          <!-- 월드 맵 나누기 -->
-          <WorldMapDivision />
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <!-- 오른쪽 상단 Tips 픽스 -->
-    <div class="tipBtn">
-      <img
-        src="@/assets/3DHelp3.png"
-        alt=""
-        width="80px"
-        :class="{ 'select-tips-transition': isSelectTips }"
-        @mouseover="isSelectTips = true"
-        @mouseleave="isSelectTips = false"
-        @click="activeIntro"
-      />
-=======
-      <MobileWorldMap
-        class="adjust-grid-system"
-      />
-      <div
-        class="adjust-grid-system-reverse"
-      >
-        <SideNavBar/>
+    <MobileWorldMap v-if="windowWidth < 500 || windowHeight < 450" />
+    <div v-else>
+      <MobileWorldMap class="adjust-grid-system" />
+      <div class="adjust-grid-system-reverse">
+        <SideNavBar />
         <v-btn
           elevation="3"
           fab
@@ -151,84 +45,78 @@
                   background-color:#DDA288;
                   border-radius: 3px;
                 "
-        >
-          </div>
-          <div
-            v-if="isSelectSearch && windowWidth > 500"
-            style="position:fixed;
+        ></div>
+        <div
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
                     width: 270px;
                     top: 16px;
                     right: 185px;
                     z-index: 2;
                     color:white;
-                  "   
-          >
-            <div
-              class="d-flex align-start justify-center"
-            >
-              <v-text-field
-                v-model="searchData"
-                color="white"
-                placeholder="장소나 태그를 입력하세요."
-                append-outer-icon="mdi-airplane-takeoff"
-                @keydown.enter="searchKeyword"
-                @click:append-outer="searchKeyword"
-                style=""
-                dark
-              ></v-text-field>
-            </div>
+                  "
+        >
+          <div class="d-flex align-start justify-center">
+            <v-text-field
+              v-model="searchData"
+              color="white"
+              placeholder="장소나 태그를 입력하세요."
+              append-outer-icon="mdi-airplane-takeoff"
+              @keydown.enter="searchKeyword"
+              @click:append-outer="searchKeyword"
+              style=""
+              dark
+            ></v-text-field>
           </div>
-          
-          <v-btn
-            v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
-            elevation="3"
-            fab
-            color="#DDA288"
-            style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
-            @click="isSelectSearch = true"
-          >
-            <v-icon>
-              mdi-image-search
-            </v-icon>
-          </v-btn>
-          <div
-            class="text-center"
-            v-if="isSelectSearch && windowWidth > 500"
-            style="position:fixed;
+        </div>
+
+        <v-btn
+          v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
+          @click="isSelectSearch = true"
+        >
+          <v-icon>
+            mdi-image-search
+          </v-icon>
+        </v-btn>
+        <div
+          class="text-center"
+          v-if="isSelectSearch && windowWidth > 500"
+          style="position:fixed;
                     width: 120px;
                     top: 30px;
                     right: 485px;
                     z-index: 2;
                     color:white;
-                  "   
-          >
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#DDA288"
-                  style="width: 120px;"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
+                  "
+        >
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#DDA288"
+                style="width: 120px;"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ selectContinent }}
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, index) in continents" :key="index">
+                <v-list-item-title
+                  style="text-align:center; cursor:pointer;"
+                  @click="selectContinent = item"
                 >
-                  {{selectContinent}}
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(item, index) in continents"
-                  :key="index"
-                >
-                  <v-list-item-title
-                    style="text-align:center; cursor:pointer;"
-                    @click="selectContinent = item"
-                  >
                   {{ item }}
-                  </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
 
         <v-container>
           <v-row>
@@ -239,7 +127,6 @@
           </v-row>
         </v-container>
       </div>
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     </div>
   </div>
 </template>
@@ -253,29 +140,28 @@ export default {
   name: "WorldMap",
   data: function() {
     return {
-      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
-      selectContinent: 'All',
+      continents: [
+        "All",
+        "N. America",
+        "S. America",
+        "Asia",
+        "Africa",
+        "Europe",
+        "Oceania",
+      ],
+      selectContinent: "All",
       popularExhibition: true,
       isSelectTips: false,
-<<<<<<< HEAD
       searchData: "",
       isSelectSearch: false,
-    };
-=======
-      searchData:"",
-      isSelectSearch:false,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-    }
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
+    };
   },
   components: {
     WorldMapDivision,
     SideNavBar,
-<<<<<<< HEAD
-=======
-    MobileWorldMap
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
+    MobileWorldMap,
   },
   created: function() {
     localStorage.setItem("page", "WorldMap");
@@ -294,18 +180,11 @@ export default {
     },
     searchKeyword: function() {
       if (this.searchData === "") {
-<<<<<<< HEAD
         alert("검색어를 입력해주세요.");
       } else {
-        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`);
-=======
-        alert('검색어를 입력해주세요.')
-      }
-      else {
-        localStorage.setItem('searchData', this.searchData)
-        localStorage.setItem('selectContinentforSearch', this.selectContinent)
-        this.$router.push({name: "SearchWaterfall"})
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
+        localStorage.setItem("searchData", this.searchData);
+        localStorage.setItem("selectContinentforSearch", this.selectContinent);
+        this.$router.push({ name: "SearchWaterfall" });
       }
     },
   },
@@ -330,15 +209,6 @@ export default {
   }
 }
 
-<<<<<<< HEAD
-.select-tips-transition {
-  animation-duration: 0.8s;
-  animation-name: tipsbeat;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  cursor: pointer;
-}
-=======
 .adjust-grid-system-reverse {
   display: none;
 }
@@ -347,7 +217,7 @@ export default {
   display: unset;
 }
 
-@media (min-width:930px) {
+@media (min-width: 930px) {
   .adjust-grid-system {
     display: none;
   }
@@ -355,6 +225,4 @@ export default {
     display: unset;
   }
 }
-
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
 </style>

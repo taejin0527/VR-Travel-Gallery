@@ -4,7 +4,9 @@
   <v-container class="adjust-grid-container">
     <div style="width:100%; height: 20px;"></div>
     <div style="width:100%; height: 20px;"></div>
-    <div style="width:100%; height: 60px; font-size:30px; color:white;"> South America</div>
+    <div style="width:100%; height: 60px; font-size:30px; color:white;">
+      South America
+    </div>
     <div style="width:100%; height: 20px;"></div>
     <v-row>
       <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
@@ -46,29 +48,23 @@ export default {
   props: {
     images: [Array], // EachWaterfall.vue router에서 받아온 데이터들
     tags: [Array], // EachWaterfall.vue router에서 받아온 데이터들
-    indexs: [Array] // EachWaterfall.vue router에서 받아온 데이터들
+    indexs: [Array], // EachWaterfall.vue router에서 받아온 데이터들
   },
   methods: {
     // 게시물 사진 보기
-<<<<<<< HEAD
     gotoSelectArticle: function(idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
       this.$router.push({ name: "PhotoView" });
-=======
-    gotoSelectArticle: function (idx) {
-      localStorage.setItem("articleId", this.indexs[idx])
-      this.$router.push({name:"PhotoView"})
     },
-    gotoSearch: function (tag) {
-      if (tag[0] == '#') {
-        tag = tag.substring(1, tag.length)
+    gotoSearch: function(tag) {
+      if (tag[0] == "#") {
+        tag = tag.substring(1, tag.length);
       }
-      localStorage.setItem('selectContinentforSearch', 'All')
-      localStorage.setItem('searchData', tag)
-      this.$router.push({name:"SearchWaterfall"})
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
-    }
-  }
+      localStorage.setItem("selectContinentforSearch", "All");
+      localStorage.setItem("searchData", tag);
+      this.$router.push({ name: "SearchWaterfall" });
+    },
+  },
 };
 </script>
 

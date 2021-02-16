@@ -8,8 +8,18 @@
             <h2>Art</h2>
             <h2>Nouvueau</h2>
             <ul>
-              <li><a href="" class="button">Android</a></li>
-              <li><a href="" class="button">iOS</a></li>
+              <li>
+                <a href="" class="button">
+                  Android
+                  <v-icon>mdi-cellphone-android</v-icon>
+                </a>
+              </li>
+              <li>
+                <a href="" class="button">
+                  iOS
+                  <v-icon>mdi-cellphone-iphone</v-icon>
+                </a>
+              </li>
             </ul>
           </div>
         </v-col>
