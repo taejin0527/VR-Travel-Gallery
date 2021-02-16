@@ -45,4 +45,10 @@ public interface UserService {
 //	user정보 확인
 	public boolean findUser(Long userid, String username);
 
+	public boolean checkPw(String password, String username);
+
+	public boolean changePw(String password, String username,String currpassword);
+
+
+
 }
