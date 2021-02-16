@@ -1,3 +1,4 @@
+// URL을 재사용하기 위한 목적
 export default {
   BASE_URL: "https://i4d110.p.ssafy.io/apis/api/",
   BOARD_BASE_URL: "https://i4d110.p.ssafy.io/apis/board/",
