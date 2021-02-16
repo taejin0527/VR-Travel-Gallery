@@ -42,5 +42,7 @@ public interface UserService {
 	public void updateUserMoney(Integer total,String userid);
 //	user정보 가져오기
 	public User getUserInfo(String username);
+//	user정보 확인
+	public boolean findUser(Long userid, String username);
 
 }
