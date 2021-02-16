@@ -110,7 +110,17 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findByUsername(userid)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + userid));
 		int currMoney = user.getMoney()+total;
-		userRepository.upDateMoney(currMoney,userid);
+//		코인은 1/100
+		userRepository.upDateMoney(currMoney/100,userid);
+	}
+
+	@Override
+	public User getUserInfo(String username) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUsername(username).get();
+		user.setPassword("");
+		user.setEmail("");
+		return user;
 	}
 
 

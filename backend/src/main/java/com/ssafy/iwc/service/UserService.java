@@ -38,7 +38,9 @@ public interface UserService {
 
 	public boolean send(String subject, String text, String to);
 
-
+//	user코인 갱신
 	public void updateUserMoney(Integer total,String userid);
+//	user정보 가져오기
+	public User getUserInfo(String username);
 
 }
