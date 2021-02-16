@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**","/static/**","/board/getposts","/board/allview","/board/fixlike","/board/eachsearch","/kakaoPaySuccess","/board/allsearch","/board/paging").permitAll()
+			.authorizeRequests().antMatchers("/api/auth/**","/static/**","/board/getposts","/board/allview","/board/fixlike","/board/eachsearch","/kakaoPaySuccess","/board/allsearch","/board/paging","/board/increaseview").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();
 
