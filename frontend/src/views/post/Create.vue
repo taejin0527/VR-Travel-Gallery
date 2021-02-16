@@ -50,6 +50,38 @@
       </v-col>
 
       <v-col offset="1" cols="3">
+        <!-- 유 무료 -->
+        <v-row
+          class="d-flex justify-center"
+        >
+          <v-col
+            cols="6"
+          >
+            <div
+              style="width:80%; height:35px; border:2px solid; cursor:pointer; border-color: #dda288;
+                    color:#dda288; border-radius:5px; text-align:center; margin-left:10%;
+                    line-height:35px; font-size: 18px; font-weight: bold;"
+              :class="{'select-view-method':!selectViewMethodData, 'pay-hover-event-class':true}"
+              @click="selectViewMethod"
+            >
+              무료
+            </div>
+          </v-col>
+          <v-col
+            cols="6"
+          >
+            <div
+              style="width:80%; height:35px; border:2px solid; cursor:pointer; border-color: #dda288;
+                    color:#dda288; border-radius:5px; text-align:center; margin-left:10%;
+                    line-height:35px; font-size: 18px; font-weight: bold;"
+              :class="{'select-view-method':selectViewMethodData, 'pay-hover-event-class':true}"
+              @click="selectViewMethod"
+            >
+              유료
+            </div>
+          </v-col>
+        </v-row>
+        <br>
         <!-- selectContinent가 대륙 선택이야 처음 선택은 선택한 로컬 스토리지의 데이터를 따라서 만들어져. -->
         <v-select
           :items="continentsNames"
@@ -190,6 +222,7 @@ export default {
   data() {
     return {
       fab: false,
+      selectViewMethodData: false,
       continentsNames: [
         "northAmerica",
         "southAmerica",
@@ -209,16 +242,12 @@ export default {
       mainImageData: null
     };
   },
-  created: function() {
-    console.log(this.$store.state.Auth.authToken);
-  },
   methods: {
     addOneTagMore(e) {
       this.tags.push("");
       console.log(this.tags);
     },
     mainUpload() {
-      console.log(this.$refs.mains.files[0]);
       this.main = [
         ...this.main,
         {
@@ -229,7 +258,6 @@ export default {
       ];
     },
     imageUpload() {
-      console.log(this.$refs.files.files);
       //하나의 배열로 넣기
       let num = -1;
       for (let i = 0; i < this.$refs.files.files.length; i++) {
@@ -248,15 +276,11 @@ export default {
         num = i;
       }
       this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 +1
-      console.log(this.files);
-      console.log(this.uploadImageIndex);
     },
     imageAddUpload() {
-      console.log(this.$refs.files.files);
       //하나의 배열로 넣기
       let num = -1;
       for (let i = 0; i < this.$refs.files.files.length; i++) {
-        console.log(this.uploadImageIndex);
         this.files = [
           ...this.files,
           //이미지 업로드
@@ -271,25 +295,28 @@ export default {
         num = i;
       }
       this.uploadImageIndex = this.uploadImageIndex + num + 1;
-      console.log(this.files);
-      console.log(this.uploadImageIndex);
     },
     mainDeleteButton(e) {
       const name = e.target.getAttribute("name");
-      console.log(name);
       this.main = this.main.filter(data => data.number !== Number(name));
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute("name");
       this.files = this.files.filter(data => data.number !== Number(name));
     },
+    selectViewMethod: function () {
+      if (this.selectViewMethodData === true) {
+        this.selectViewMethodData = false
+      }
+      else {
+        this.selectViewMethodData = true
+      } 
+    },
     submitFile() {
       if (this.fab == true) {
         this.fab = false;
         return;
       }
-
-      console.log(this.files.length);
       const formData = new FormData();
 
       // 유효성 검사
@@ -320,8 +347,13 @@ export default {
       formData.append("writer", this.$store.state.Auth.authToken.username);
       formData.append("location", this.selectContinent);
       formData.append("tags", this.tags);
+      if (this.selectViewMethodData) {
+        formData.append("premium", "true");
+      }
+      else {
+        formData.append("premium", "false");
+      }
       for (let i = 0; i < this.files.length; i++) {
-        console.log(this.files[i].file);
         formData.append("file", this.files[i].file);
       }
       axios
@@ -334,7 +366,6 @@ export default {
         .then(response => {
           localStorage.setItem("continent", this.selectContinent);
           this.$router.push({ name: "EachWaterfall" });
-          console.log("success");
         })
         .catch(err => {
           console.error(err);
@@ -460,4 +491,27 @@ width: 100%; */
   width: 200px;
   height: 500px;
 }
+
+@keyframes textlight {
+  from {
+    color: #FFFFA5;
+  }
+  to {
+    color: white;
+  }
+}
+
+.select-view-method {
+  animation-duration: 0.8s;
+  animation-name: textlight;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  background-color: #eda288;
+}
+
+.pay-hover-event-class:hover {
+  background-color: white;
+  transition: 0.5s;
+}
+
 </style>
