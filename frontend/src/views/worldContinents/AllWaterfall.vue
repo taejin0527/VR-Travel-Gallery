@@ -291,8 +291,15 @@ export default {
       this.$router.push({ name: "Create" });
     },
     // 게시물 사진 보기
-    gotoSelectArticle: function(idx) {
+    gotoSelectArticle: function (idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+        )
+        .catch((err) => {
+          console.error(err);
+        });
       this.$router.push({ name: "PhotoView" });
     },
     // 6개씩 더 가져오기
