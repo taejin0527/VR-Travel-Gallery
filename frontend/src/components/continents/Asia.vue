@@ -13,7 +13,7 @@
             :class="{
               'adjust-location': true,
               'transition-circle-icon': true,
-              'transition-select-location': overCircleIcon[idx],
+              'transition-select-location': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -30,7 +30,7 @@
             :key="idx"
             :class="{
               'adjust-location-text': true,
-              'transition-location-text': overCircleIcon[idx],
+              'transition-location-text': overCircleIcon[idx]
             }"
             :style="
               'top:' +
@@ -84,7 +84,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 export default {
   name: "Asia",
   components: {
-    ContinentCard,
+    ContinentCard
   },
   data: function() {
     return {
@@ -106,7 +106,7 @@ export default {
         "도쿄",
         "중국",
         "베이징",
-        "홍콩",
+        "홍콩"
       ],
       exhibitionLocation: "깃발을 클릭해 보세요",
       exhibitionIndex: -1,
@@ -114,7 +114,7 @@ export default {
       // 고른곳 확인
       locationIdx: 0,
       overCircleIcon: [false, false, false, false, false],
-      AList: [37, 38, 39, 40, 41],
+      AList: [37, 38, 39, 40, 41]
     };
   },
   props: {
@@ -122,7 +122,7 @@ export default {
     tags: [Array],
     likes: [Array],
     locations: [Array],
-    indexs: [Array],
+    indexs: [Array]
   },
 
   computed: {
@@ -151,7 +151,7 @@ export default {
         array[index] = this.popularLocationX[index] - 1;
       }
       return array;
-    },
+    }
   },
   methods: {
     // 클릭하면 데이터 불러오기
@@ -161,7 +161,7 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}getposts?id=${this.AList[idx]}&username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((response) => {
+        .then(response => {
           this.exhibitionImage = response.data.filePath;
           this.exhibitionLocation = response.data.board.nation;
           const tmp = [];
@@ -172,13 +172,13 @@ export default {
           this.exhibitionIndex = response.data.board.id;
           this.likeCount = response.data.board.good;
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       this.overCircleIcon = [false, false, false, false, false];
       this.overCircleIcon[idx] = true;
-    },
-  },
+    }
+  }
 };
 </script>
 

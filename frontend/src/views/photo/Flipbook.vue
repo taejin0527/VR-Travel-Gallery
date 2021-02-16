@@ -68,19 +68,13 @@
       style="position:fixed; right:60px; top:200px; color:white; z-index: 101;"
       v-if="premium"
     >
-      <template v-slot:badge
-      >
+      <template v-slot:badge>
         <v-avatar>
           <v-img src="@/assets/photo/premium.png"></v-img>
         </v-avatar>
       </template>
 
-      <v-btn
-        elevation="3"
-        fab
-        color="#DDA288"
-        @click="clickGotoVR"
-      >
+      <v-btn elevation="3" fab color="#DDA288" @click="clickGotoVR">
         <span style="font-size:22px">VR</span>
       </v-btn>
     </v-badge>
@@ -159,22 +153,19 @@
       </div>
     </div>
     <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
-      <div
-        class="d-flex justify-center"
-        style="font-size: 24px;"
-      >
+      <div class="d-flex justify-center" style="font-size: 24px;">
         해당 게시물의 VR을 보시려면
-        <br><br>
+        <br /><br />
         3 N-Coin이 필요합니다.
-        <br><br>
+        <br /><br />
         결제하시겠습니까?
-        <br><br>
+        <br /><br />
       </div>
       <div class="d-flex justify-center">
         <v-btn color="#DDA288" @click="checkWallet">
           결제
         </v-btn>
-        <pre>        </pre>
+        <pre></pre>
         <v-btn color="#DDA288" @click="checkPayment = false">
           아니오
         </v-btn>
@@ -223,7 +214,7 @@ export default {
         } else {
           this.isSelectLike = true;
         }
-        this.premium = response.data.board.premium
+        this.premium = response.data.board.premium;
         this.author = response.data.board.author;
         this.vfImages.push(response.data.filePath);
         for (let i = 0; i < response.data.subPath.length; i++) {
@@ -290,11 +281,13 @@ export default {
             this.isSelectLike
           }&id=${localStorage.getItem("articleId")}&username=${
             this.$store.state.Auth.authToken.username
-          }`,{
-          headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+          }`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
           }
-        })
+        )
         .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
@@ -310,59 +303,70 @@ export default {
     clickGotoVR: function() {
       if (this.premium == true) {
         axios
-          .get(`${SERVER.BOARD_BASE_URL}payrequest?id=${localStorage.getItem("articleId"
-        )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
-          headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-          }
-        })
-          .then(res => {
+          .get(
+            `${SERVER.BOARD_BASE_URL}payrequest?id=${localStorage.getItem(
+              "articleId"
+            )}&username=${this.$store.state.Auth.authToken.username}&userid=${
+              this.$store.state.Auth.authToken.id
+            }`,
+            {
+              headers: {
+                Authorization:
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
+            }
+          )
+          .then((res) => {
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
-            }
-            else {
-              this.checkPayment = true
+            } else {
+              this.checkPayment = true;
             }
           })
-          .catch(err => {
-            console.log(err)
-          })
-
-      }
-      else {
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
         this.$router.push({ name: "Aframe" });
       }
     },
-    payCointoAuthor: function () {
+    payCointoAuthor: function() {
       axios
-        .get(`${SERVER.BOARD_BASE_URL}paypost?id=${localStorage.getItem("articleId"
-          )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
+        .get(
+          `${SERVER.BOARD_BASE_URL}paypost?id=${localStorage.getItem(
+            "articleId"
+          )}&username=${this.$store.state.Auth.authToken.username}&userid=${
+            this.$store.state.Auth.authToken.id
+          }`,
+          {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-            }
-          })
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
+          }
+        )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    checkWallet: function () {
+    checkWallet: function() {
       axios
-      .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
-      .then(res => {
-        if (res.data.money > 2) {
-          this.payCointoAuthor()
-        }
-        else {
-          alert('코인이 부족합니다. 결제페이지로 이동합니다.')
-          this.$router.push({name:'Pay'})
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .get(
+          `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
+        )
+        .then((res) => {
+          if (res.data.money > 2) {
+            this.payCointoAuthor();
+          } else {
+            alert("코인이 부족합니다. 결제페이지로 이동합니다.");
+            this.$router.push({ name: "Pay" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     // 게시글 삭제
     deleteArticle: function() {
@@ -372,15 +376,17 @@ export default {
       }
       // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
       axios
-        .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
-        .then(res => {
+        .get(
+          `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
+        )
+        .then((res) => {
           if (this.$store.state.Auth.authToken.id != res.data.id) {
             alert("인증되지 않은 사용자 입니다.");
           }
         })
-        .catch(err => {
-          console.error(err)
-        })
+        .catch((err) => {
+          console.error(err);
+        });
       if (this.$store.state.Auth.authToken.username != this.author) {
         alert("인증되지 않은 사용자 입니다.");
       } else {

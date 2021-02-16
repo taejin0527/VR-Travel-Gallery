@@ -23,132 +23,92 @@
             </li>
           </ul>
         </div>
-        <div class="row no-gutters filtr-container">
-          <div class="col-md-4 col-sm-6 col-xs-12 filtr-item" data-category="3">
-            <div class="content-image">
-              <a href="images/portfolio1.jpg" class="portfolio-popup">
-                <img src="images/portfolio1.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 filtr-item" data-category="1">
-            <div class="content-image">
-              <a href="images/portfolio2.jpg" class="portfolio-popup">
-                <img src="images/portfolio2.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            class="col-md-4 col-sm-6 col-xs-12 filtr-item"
-            data-category="2, 1"
+
+        <v-row no-gutters class="filtr-container">
+          <v-col
+            v-for="(member, idx) in members"
+            :key="idx"
+            md="4"
+            sm="6"
+            xs="12"
+            class="filtr-item"
+            :data-category="member.category"
           >
             <div class="content-image">
-              <a href="images/portfolio3.jpg" class="portfolio-popup">
-                <img src="images/portfolio3.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
+              <img :src="member.image" alt="" />
+              <div class="image-overlay"></div>
+              <div class="portfolio-caption">
+                <div class="title">
+                  <h4>{{ member.name }}</h4>
+                  <span>{{ member.role }}</span>
                 </div>
-              </a>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12 filtr-item" data-category="3">
-            <div class="content-image">
-              <a href="images/portfolio4.jpg" class="portfolio-popup">
-                <img src="images/portfolio4.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            class="col-md-4 col-sm-6 col-xs-12 filtr-item"
-            data-category="1, 2"
-          >
-            <div class="content-image">
-              <a href="images/portfolio5.jpg" class="portfolio-popup">
-                <img src="images/portfolio5.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            class="col-md-4 col-sm-6 col-xs-12 filtr-item"
-            data-category="3, 1"
-          >
-            <div class="content-image">
-              <a href="images/portfolio6.jpg" class="portfolio-popup">
-                <img src="images/portfolio6.jpg" alt="" />
-                <div class="image-overlay"></div>
-                <div class="portfolio-caption">
-                  <div class="title">
-                    <h4>Modern Design</h4>
-                    <span>Graphic Design</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import $ from "jquery";
+import Filterizr from "filterizr";
+
+Filterizr.installAsJQueryPlugin($);
+
 export default {
   data() {
-    return {};
+    return {
+      members: [
+        {
+          category: "2",
+          image: require("@/assets/images/aboutPage/member1.png"),
+          name: "DongGeol Kim",
+          role: "[Backend] Leader Developer",
+          desc: "Database, Springboot"
+        },
+        {
+          category: "1, 3",
+          image: require("@/assets/images/aboutPage/member2.png"),
+          name: "MinHo Jang",
+          role: "[Frontend] [VR] Developer",
+          desc: ""
+        },
+        {
+          category: "2",
+          image: require("@/assets/images/aboutPage/member3.png"),
+          name: "TaeJin Kim",
+          role: "[Backend] Developer",
+          desc: ""
+        },
+        {
+          category: "1",
+          image: require("@/assets/images/aboutPage/member4.png"),
+          name: "TaeWan Gu",
+          role: "[Frontend] Developer",
+          desc: ""
+        },
+        {
+          category: "3",
+          image: require("@/assets/images/aboutPage/member5.png"),
+          name: "SoJin Kwan",
+          role: "Early member",
+          desc: ""
+        }
+      ]
+    };
   },
-  // mounted: {
-  //       // porfolio filterizr
-  //   $('.filtr-container').imagesLoaded( function() {
-  //       var filterizr = $('.filtr-container').filterizr();
-  //   });
-  //   // portfolio filter
-  //   $('.portfolio-filter-menu li').on('click', function() {
-  //       $('.portfolio-filter-menu li').removeClass('active');
-  //       $(this).addClass('active');
-  //   });
-  //   // portfolio magnific popup
-  //   $('.portfolio').each(function() { // the containers for all your galleries
-  //       $(this).magnificPopup({
-  //           delegate: '.portfolio-popup', // the selector for portfolio item
-  //           type: 'image',
-  //           gallery: {
-  //               enabled: true
-  //           }
-  //       });
-  //   });
-  // }
+  mounted() {
+    // porfolio filterizr
+    const filterizr = $(".filtr-container").filterizr();
+
+    // portfolio filter
+    $(".portfolio-filter-menu li").on("click", function() {
+      $(".portfolio-filter-menu li").removeClass("active");
+      $(this).addClass("active");
+    });
+  }
 };
 </script>
 
@@ -230,6 +190,7 @@ export default {
 
 .portfolio .content-image img {
   width: 100%;
+  height: 270px;
   border-radius: 15px;
 }
 

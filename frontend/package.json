@@ -8,12 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/jquery": "^3.5.5",
     "aframe": "^1.2.0",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "filterizr": "^2.2.4",
     "flipbook-vue": "^0.10.1",
     "intro.js": "^3.2.1",
+    "jquery": "^3.5.1",
     "sweetalert2": "^10.13.3",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",

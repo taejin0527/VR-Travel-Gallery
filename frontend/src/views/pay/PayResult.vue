@@ -97,11 +97,16 @@
       </v-col>
       <button></button>
     </v-row>
-    <v-overlay :absolute="true" :value="true" :opacity="0.9"
+    <v-overlay
+      :absolute="true"
+      :value="true"
+      :opacity="0.9"
       style="text-align:center; font-size: 26px;"
     >
-      결제가 완료되었습니다. <br> <br>
-      프로필에서 확인 가능합니다. <br> <br>
+      결제가 완료되었습니다. <br />
+      <br />
+      프로필에서 확인 가능합니다. <br />
+      <br />
 
       <v-btn color="#DDA288" @click="gotoHome">
         메인으로
@@ -149,8 +154,8 @@ export default {
       this.selectChargeMoney[idx] = true;
       console.log(this.selectMoney + "원 선택");
     },
-    gotoHome: function () {
-      this.$router.push({name:"Home"})
+    gotoHome: function() {
+      this.$router.push({ name: "Home" });
     }
   }
 };

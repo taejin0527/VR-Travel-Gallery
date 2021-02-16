@@ -15,12 +15,12 @@ export default {
   data: function() {
     return {
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      windowHeight: window.innerHeight
     };
   },
   components: {
     Main,
-    MobileMain,
-  },
+    MobileMain
+  }
 };
 </script>

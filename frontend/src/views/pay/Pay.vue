@@ -105,7 +105,6 @@
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
 
-
 export default {
   name: "Pay",
   data: function() {
@@ -127,15 +126,17 @@ export default {
       selectMoney: null
     };
   },
-  created: function () {
+  created: function() {
     axios
-      .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
+      .get(
+        `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
+      )
       .then(res => {
-        this.coinWallet = res.data.money
+        this.coinWallet = res.data.money;
       })
       .catch(err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   },
   methods: {
     clickChargeMoney: function(idx) {

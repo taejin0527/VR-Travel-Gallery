@@ -44,19 +44,13 @@
       style="position:fixed; bottom:43px; right:120px; color:white; z-index: 101;"
       v-if="premium"
     >
-      <template v-slot:badge
-      >
+      <template v-slot:badge>
         <v-avatar>
           <v-img src="@/assets/photo/premium.png"></v-img>
         </v-avatar>
       </template>
 
-      <v-btn
-        elevation="3"
-        fab
-        color="#DDA288"
-        @click="clickGotoVR"
-      >
+      <v-btn elevation="3" fab color="#DDA288" @click="clickGotoVR">
         <span style="font-size:22px">VR</span>
       </v-btn>
     </v-badge>
@@ -70,23 +64,20 @@
     >
       <span style="font-size:22px">VR</span>
     </v-btn>
-        <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
-      <div
-        class="d-flex justify-center"
-        style="font-size: 18px;"
-      >
+    <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
+      <div class="d-flex justify-center" style="font-size: 18px;">
         해당 게시물의 VR을 보시려면
-        <br><br>
+        <br /><br />
         3 N-Coin이 필요합니다.
-        <br><br>
+        <br /><br />
         결제하시겠습니까?
-        <br><br>
+        <br /><br />
       </div>
       <div class="d-flex justify-center">
         <v-btn color="#DDA288" @click="checkWallet">
           결제
         </v-btn>
-        <pre>        </pre>
+        <pre></pre>
         <v-btn color="#DDA288" @click="checkPayment = false">
           아니오
         </v-btn>
@@ -108,7 +99,7 @@ export default {
       firstOverlay: false,
       lastOverlay: false,
       show: true,
-      checkPayment:false,
+      checkPayment: false,
     };
   },
   props: {
@@ -145,61 +136,72 @@ export default {
     clickGotoVR: function() {
       if (this.premium == true) {
         axios
-          .get(`${SERVER.BOARD_BASE_URL}payrequest?id=${localStorage.getItem("articleId"
-        )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
-          headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-          }
-        })
-          .then(res => {
+          .get(
+            `${SERVER.BOARD_BASE_URL}payrequest?id=${localStorage.getItem(
+              "articleId"
+            )}&username=${this.$store.state.Auth.authToken.username}&userid=${
+              this.$store.state.Auth.authToken.id
+            }`,
+            {
+              headers: {
+                Authorization:
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
+            }
+          )
+          .then((res) => {
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
-            }
-            else {
-              this.checkPayment = true
+            } else {
+              this.checkPayment = true;
             }
           })
-          .catch(err => {
-            console.log(err)
-          })
-
-      }
-      else {
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
         this.$router.push({ name: "Aframe" });
       }
     },
-    payCointoAuthor: function () {
+    payCointoAuthor: function() {
       axios
-        .get(`${SERVER.BOARD_BASE_URL}paypost?id=${localStorage.getItem("articleId"
-          )}&username=${this.$store.state.Auth.authToken.username}&userid=${this.$store.state.Auth.authToken.id}`,{
+        .get(
+          `${SERVER.BOARD_BASE_URL}paypost?id=${localStorage.getItem(
+            "articleId"
+          )}&username=${this.$store.state.Auth.authToken.username}&userid=${
+            this.$store.state.Auth.authToken.id
+          }`,
+          {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-            }
-          })
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
+          }
+        )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    checkWallet: function () {
+    checkWallet: function() {
       axios
-      .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
-      .then(res => {
-        if (res.data.money > 2) {
-          this.payCointoAuthor()
-        }
-        else {
-          alert('코인이 부족합니다. 결제페이지로 이동합니다.')
-          this.$router.push({name:'Pay'})
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .get(
+          `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
+        )
+        .then((res) => {
+          if (res.data.money > 2) {
+            this.payCointoAuthor();
+          } else {
+            alert("코인이 부족합니다. 결제페이지로 이동합니다.");
+            this.$router.push({ name: "Pay" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-  }
+  },
 };
 </script>
 
