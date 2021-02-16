@@ -52,7 +52,7 @@ export default Vue.extend({
 /* 화면 전체 랩핑 */
 .menu {
   font-family: "Lobster", cursive;
-  position: absolute;
+  position: fixed;
   background-color: #7e675e;
   min-height: 100vh;
   width: 100%;
