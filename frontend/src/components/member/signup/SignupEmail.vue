@@ -1,10 +1,9 @@
 <template>
-  <v-card class="mx-auto" flat max-width="350">
-    <v-card-sub-title
-      style="line-height: 50px;"
-    >
-      E-mail 인증
-    </v-card-sub-title>
+  <v-card class="mx-auto" flat dark color="#5a4e4d" max-width="450">
+    <div style="margin: 40px">
+      <h1>이메일 인증</h1>
+      <p>인증번호가 발송됩니다</p>
+    </div>
     <v-text-field
       v-model="email"
       v-validate="'required|email'"
@@ -56,18 +55,18 @@ export default {
     return {
       email: "",
       error: {
-        msg: ""
+        msg: "",
       },
       isSubmit: false,
       component: this,
       emailChecked: false,
-      overlay: false
+      overlay: false,
     };
   },
   watch: {
     email: function() {
       this.checkForm();
-    }
+    },
   },
   created() {
     console.log("SignupEmail Component Created!");
@@ -77,7 +76,7 @@ export default {
     ...mapActions("Signup", ["getConfirmCode", "emailCheck"]),
 
     checkForm() {
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (this.email.length >= 0 && !result) {
           this.error.msg = "이메일 형식이 아닙니다.";
         } else if (!this.emailChecked) {
@@ -87,7 +86,7 @@ export default {
 
       let isSubmit = true;
 
-      Object.values(this.error).map(v => {
+      Object.values(this.error).map((v) => {
         if (v) isSubmit = false;
       });
       this.isSubmit = isSubmit;
@@ -96,32 +95,39 @@ export default {
       // email 보내기 + 받아서
       const signupEmailComponent = this;
       signupEmailComponent.overlay = !signupEmailComponent.overlay;
-      this.getConfirmCode(email).then(code => {
+      this.getConfirmCode(email).then((code) => {
         if (code.status === 200) {
           signupEmailComponent.overlay = !signupEmailComponent.overlay;
-          swal.fire("인증번호가 발송되었습니다.");
+          swal.fire({
+            text: "인증번호가 발송되었습니다.",
+            icon: "info",
+          });
           this.$emit("toEmailVerification", {
             confirmCode: code,
-            userEmail: email
+            userEmail: email,
           });
         } else {
           signupEmailComponent.overlay = !signupEmailComponent.overlay;
           swal.fire({
             text: "인증번호 발송에 실패하였습니다.",
-            icon: "error"
+            icon: "error",
           });
         }
       });
     },
     emailCheck2(email) {
-      this.emailCheck(email).then(res => {
+      this.emailCheck(email).then((res) => {
         if (res === true) {
-          swal.fire("사용 가능한 이메일입니다.");
+          swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "사용 가능한 이메일입니다.",
+          });
           this.emailChecked = true;
         } else {
           swal.fire({
             icon: "error",
-            text: "이미 사용 중인 이메일입니다."
+            text: "이미 사용 중인 이메일입니다.",
           });
           this.emailChecked = false;
         }
@@ -131,7 +137,7 @@ export default {
           this.error.msg = "오른쪽 체크를 눌러서 이메일 중복 확인해주세요.";
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>

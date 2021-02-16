@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
+import com.ssafy.iwc.dto.PayInfoDto;
 import com.ssafy.iwc.dto.PostImageDto;
 import com.ssafy.iwc.dto.TagDto;
 import com.ssafy.iwc.model.AllMainView;
@@ -33,12 +34,15 @@ import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.model.LocationInfo;
 import com.ssafy.iwc.model.MainImage;
 import com.ssafy.iwc.model.MultiId;
+import com.ssafy.iwc.model.PayInfo;
 import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.LikeService;
 import com.ssafy.iwc.service.MainImageService;
+import com.ssafy.iwc.service.PayInfoService;
 import com.ssafy.iwc.service.PostImageService;
 
 import com.ssafy.iwc.service.TagService;
+import com.ssafy.iwc.service.UserService;
 import com.ssafy.iwc.util.MD5Generator;
 import com.ssafy.iwc.util.SFTPsender;
 
@@ -58,10 +62,23 @@ public class BoardController {
 	private TagService tagService;
 	@Autowired
 	private LikeService likeService;
+	@Autowired
+	private PayInfoService payInfoService;
+	@Autowired
+	private UserService userService;
 	
 //	이부분 처리
 	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
 	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
+	
+	
+	@ApiOperation(value = "조회수 증가시키기 게시물 id값을 get방식으로 넘김", response = String.class)
+	@GetMapping("/increaseview")
+	public void increaseview(@RequestParam("id") String id) {
+		long Id = Long.parseLong(id);
+		boardService.increaseView(Id);
+	}
+	
 	
 	@ApiOperation(value = "location,num과 검색데이터 기준으로 조회", response = String.class)
 	@GetMapping("/eachsearch")
@@ -80,6 +97,7 @@ public class BoardController {
 		for(long sidx : getPostsNum) {
 			LocationInfo data = new LocationInfo();
 //			data에 Board값 넣기
+			
 			data.setBoard(boardService.getPost(sidx));
 //			메인 이미지 경로 가져와서 넣기
 			Optional<MainImage> d = mainImageService.findById(sidx);
@@ -330,11 +348,70 @@ public class BoardController {
 		}
 
 	}
+	
+	@ApiOperation(value = "게시물 결제여부 확인 true or false", response = String.class)
+	@GetMapping("/payrequest")
+	public String payrequest(@RequestParam("userid")String userid,@RequestParam("username")String username, @RequestParam("id") String id) {
+		String result= "";
+		long userId = Long.parseLong(userid);
+		boolean answer = userService.findUser(userId,username);
+//		해당사용자가 있음
+		if(answer) {
+			long no = Long.parseLong(id);
+			int check = payInfoService.getPayRequest(username,no);
+			if(check==0) {
+				result="false";
+			}else {
+				result = "true";
+			}
+		}else {
+			result="잘못된 접근입니다.";
+		}
+		
+		
+		
+		return result;
+	}
+	@ApiOperation(value = "유저이름과 게시물아이디로 결제진행", response = String.class)
+	@GetMapping("/paypost")
+	public ResponseEntity paypost(@RequestParam("userid")String userid,@RequestParam("username")String username, @RequestParam("id") String id) {
+		long no = Long.parseLong(id);
+		String result= "";
+		long userId = Long.parseLong(userid);
+		boolean answer = userService.findUser(userId,username);
+		if(answer) {
+			try {
+				PayInfoDto payInfoDto = new PayInfoDto();
+				payInfoDto.setCost(30);
+				payInfoDto.setUsername(username);
+				payInfoDto.setPostid(no);
+				boolean flag = payInfoService.saveInfo(payInfoDto);
+				if(flag) {
+					result="결제 성공";
+					return new ResponseEntity(result, HttpStatus.OK);
+				}else {
+					result = "결제 실패";
+					return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
+				}
+				
+			}catch(Exception e) {
+				
+				result = "결제 실패";
+				return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
+			}
+		}else {
+			result="잘못된 접근입니다.";
+			return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+		
+	}
+	
 	@ApiOperation(value = "게시물 업로드", response = String.class)
 	@PostMapping("/requestupload")
 	public String write(@RequestParam("main") MultipartFile main, @RequestParam("file") List<MultipartFile> files,
 			BoardDto boardDto, @RequestParam("writer") String writer, @RequestParam("location") String location,
-			@RequestParam("nation") String nation, @RequestParam("tags") List<String> tags) {
+			@RequestParam("nation") String nation, @RequestParam("tags") List<String> tags,@RequestParam("premium")String premium) {
 		long id = 0;
 		
 //		파일명에 넣을 시간 데이터
@@ -345,6 +422,11 @@ public class BoardController {
 			boardDto.setAuthor(writer);
 			boardDto.setLocation(location);
 			boardDto.setNation(nation);
+			if (premium.equals("true")) {
+				boardDto.setPremium(true);
+			} else {
+				boardDto.setPremium(false);
+			}
 			id = boardService.savePost(boardDto);
 			//메인 이미지 작성
 			String origname = main.getOriginalFilename();
@@ -379,6 +461,7 @@ public class BoardController {
 			mainImageDto.setOrigFilename(origname);
 			mainImageDto.setFilename(fname);
 			mainImageDto.setFilePath(fPath);
+			
 			
 			mainImageService.saveFile(mainImageDto);
 		}catch(Exception e) {
@@ -432,10 +515,6 @@ public class BoardController {
 				}
 
 
-				
-			
-				
-		
 				PostImageDto postImageDto = new PostImageDto();
 				postImageDto.setId(id);
 				postImageDto.setOrigFilename(origFilename);

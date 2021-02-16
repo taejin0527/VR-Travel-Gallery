@@ -58,8 +58,8 @@ export default {
         })
         .catch(err => {
           swal.fire({
-            icon: "error",
-            title: "Oops...",
+            icon: "warning",
+            title: "Error!",
             text: "로그인 정보를 확인해주세요."
           });
         });
@@ -73,11 +73,16 @@ export default {
         .get(SERVER.BASE_URL + SERVER.ROUTES.auth.idCheck + "/" + uid)
         .then(res => {
           if (res.data === "success") {
-            swal.fire("사용 가능한 아이디입니다.");
+            swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "사용 가능한 아이디입니다."
+            });
             return true;
           } else {
             swal.fire({
               icon: "error",
+              title: "Opps...",
               text: "이미 사용 중인 아이디입니다."
             });
             return false;
@@ -106,7 +111,11 @@ export default {
         })
         .then((confirmCode: any) => {
           if (confirmCode === "fail") {
-            swal.fire("이메일을 확인해주세요.");
+            swal.fire({
+              icon: "warning",
+              title: "Error!",
+              text: "이메일을 확인해주세요."
+            });
             return "";
           } else {
             commit("SET_CODE", confirmCode.data);

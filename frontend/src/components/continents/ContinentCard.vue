@@ -10,7 +10,9 @@
 
     <v-img height="250" :src="exhibitionImage"></v-img>
     <div class="d-flex justify-center" style="text-align: center;">
-      <v-card-title class="font-change-MapoPeacefull-card-title">{{ exhibitionLocation }}</v-card-title>
+      <v-card-title class="font-change-MapoPeacefull-card-title">{{
+        exhibitionLocation
+      }}</v-card-title>
     </div>
 
     <v-card-text>
@@ -58,51 +60,61 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
+
 export default {
   name: "ContinentCard",
   data: () => ({
     loading: false,
-    selection: 1
+    selection: 1,
   }),
   props: {
     exhibitionImage: [String],
     exhibitionContent: [Array, String],
     exhibitionLocation: [String],
-    exhibitionIndex : [Number],
+    exhibitionIndex: [Number],
     likeCount: [Number, String],
   },
   methods: {
     goPhotoViewer() {
       if (this.exhibitionIndex == -1 || this.exhibitionIndex == undefined) {
-        alert('깃발을 선택하고 <GO>버튼을 눌러주세요.')
-      }
-      else {
-        localStorage.setItem('articleId', this.exhibitionIndex)
+        alert("깃발을 선택하고 <GO>버튼을 눌러주세요.");
+      } else {
+        localStorage.setItem("articleId", this.exhibitionIndex);
+        axios
+          .get(
+            `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+          )
+          .catch((err) => {
+            console.error(err);
+          });
         this.$router.push({ name: "PhotoView" });
       }
     },
-    gotoSearch: function (tag) {
-      if (tag[0] == '#') {
-        tag = tag.substring(1, tag.length)
+    gotoSearch: function(tag) {
+      if (tag[0] == "#") {
+        tag = tag.substring(1, tag.length);
       }
-      localStorage.setItem('selectContinentforSearch', 'All')
-      localStorage.setItem('searchData', tag)
-      this.$router.push({name:"SearchWaterfall"})
-    }
+      localStorage.setItem("selectContinentforSearch", "All");
+      localStorage.setItem("searchData", tag);
+      this.$router.push({ name: "SearchWaterfall" });
+    },
   },
 };
 </script>
 
 <style scoped>
 @font-face {
-    font-family: 'MapoPeacefull';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "MapoPeacefull";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .font-change-MapoPeacefull-card-title {
-  font-family: 'MapoPeacefull';
+  font-family: "MapoPeacefull";
   color: #444444;
 }
 

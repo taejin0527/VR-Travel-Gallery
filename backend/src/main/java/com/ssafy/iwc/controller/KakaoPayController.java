@@ -143,7 +143,7 @@ public class KakaoPayController {
 //        	사용자 돈 갱신
         	userService.updateUserMoney(kakaoPayApproval.getAmount().getTotal(),kakaoPayApproval.getPartner_user_id());
         	try {
-				response.sendRedirect("https://i4d110.p.ssafy.io/pay");
+				response.sendRedirect("https://i4d110.p.ssafy.io/payresult");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

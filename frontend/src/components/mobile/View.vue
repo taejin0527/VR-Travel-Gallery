@@ -4,12 +4,7 @@
     class="d-flex justify-center align-center"
   >
     <transition name="fade">
-      <img
-        v-if="show"
-        :src="`${vfImages[imageIndex]}`"
-        alt=""
-        width="90%"
-      >
+      <img v-if="show" :src="`${vfImages[imageIndex]}`" alt="" width="90%" />
     </transition>
     <div
       style="position:fixed; left:0px; height:100%; width:50%;"
@@ -19,25 +14,13 @@
       style="position:fixed; right:0px; height:100%; width:50%;"
       @click="righttoImage"
     ></div>
-    <v-overlay
-      :absolute="absolute"
-      :value="firstOverlay"
-    >
-      <v-btn
-        color="#DDA288"
-        @click="firstOverlay = false"
-      >
+    <v-overlay :absolute="absolute" :value="firstOverlay">
+      <v-btn color="#DDA288" @click="firstOverlay = false">
         첫번째 사진입니다
       </v-btn>
     </v-overlay>
-    <v-overlay
-      :absolute="absolute"
-      :value="lastOverlay"
-    >
-      <v-btn
-        color="#DDA288"
-        @click="lastOverlay = false"
-      >
+    <v-overlay :absolute="absolute" :value="lastOverlay">
+      <v-btn color="#DDA288" @click="lastOverlay = false">
         마지막 사진입니다
       </v-btn>
     </v-overlay>
@@ -53,60 +36,73 @@
         mdi-view-carousel-outline
       </v-icon>
     </v-btn>
+    <!-- VR 페이지로 가는 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:120px; color:white; z-index: 101;"
+      @click="clickGotoVR"
+    >
+      <span style="font-size:22px">VR</span>
+    </v-btn>
   </div>
-
 </template>
 
 <script>
 export default {
-  name:"MobileView",
-  data: function () {
+  name: "MobileView",
+  data: function() {
     return {
       imageIndex: 0,
       absolute: true,
       firstOverlay: false,
       lastOverlay: false,
-      show:true,
-    }
+      show: true
+    };
   },
   props: {
-    vfImages: [Array],
+    vfImages: [Array]
   },
   methods: {
-    righttoImage: function () {
-      if (this.imageIndex < this.vfImages.length-1) {
-        this.imageIndex = this.imageIndex + 1
-        this.show = !this.show
-        setTimeout(() => {this.show = !this.show}, 500)
-      }
-      else {
-        this.lastOverlay = true
+    righttoImage: function() {
+      if (this.imageIndex < this.vfImages.length - 1) {
+        this.imageIndex = this.imageIndex + 1;
+        this.show = !this.show;
+        setTimeout(() => {
+          this.show = !this.show;
+        }, 500);
+      } else {
+        this.lastOverlay = true;
       }
     },
-    lefttoImage: function () {
+    lefttoImage: function() {
       if (this.imageIndex > 0) {
-        this.imageIndex = this.imageIndex - 1
-        this.show = !this.show
-        setTimeout(() => {this.show = !this.show}, 500)
-      }
-      else {
-        this.firstOverlay = true
+        this.imageIndex = this.imageIndex - 1;
+        this.show = !this.show;
+        setTimeout(() => {
+          this.show = !this.show;
+        }, 500);
+      } else {
+        this.firstOverlay = true;
       }
     },
-    clickGotoBack: function () {
-      this.$router.push({name:"EachWaterfall"})
+    clickGotoBack: function() {
+      this.$router.push({ name: "EachWaterfall" });
+    },
+    clickGotoVR: function () {
+      this.$router.push({ name: "Aframe" });
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-
 </style>

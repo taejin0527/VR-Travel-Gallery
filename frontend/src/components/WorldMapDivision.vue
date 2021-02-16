@@ -11,6 +11,9 @@
           @click="gotoNorthAmericaContinent"
           :class="{ 'hoverevent-Continent': true, 'continent-opacity': true }"
           id="north_america-setting-location"
+          v-intro="'마커 클릭 시 해당 대륙으로 이동'"
+          v-intro-position="'top'"
+          v-intro-step="2"
         />
         <v-icon
           :class="{
