@@ -23,7 +23,7 @@ public class BoardDto {
 	private String nation;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
-	
+	private boolean premium;
 	public Board toEntity() {
 		Board build = Board.builder()
 				.id(id)
@@ -33,12 +33,13 @@ public class BoardDto {
 				.createdDate(createdDate)
 				.location(location)
 				.nation(nation)
+				.premium(premium)
 				.build();
 		return build;
 	}
 	@Builder
-	public BoardDto(long id, String author, long good, long views, String location,String nation, LocalDateTime createdDate,
-			LocalDateTime modifiedDate) {
+	public BoardDto(long id, String author, long good, long views, String location, String nation,
+			LocalDateTime createdDate, LocalDateTime modifiedDate, boolean premium) {
 		
 		this.id = id;
 		this.author = author;
@@ -48,6 +49,7 @@ public class BoardDto {
 		this.nation = nation;
 		this.createdDate = createdDate;
 		this.modifiedDate = modifiedDate;
+		this.premium = premium;
 	}
 	@Override
 	public String toString() {
