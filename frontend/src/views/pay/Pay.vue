@@ -146,7 +146,12 @@ export default {
       const money = this.selectMoney;
       console.log(money);
       const formData = new FormData();
+<<<<<<< HEAD
       formData.append("cost", money);
+=======
+      formData.append('username', this.$store.state.Auth.authToken.username);
+      formData.append('cost',money);
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       // 수정부분
       axios
         .post(`${SERVER.PAY_BASE_URL}kakao`, formData, {
@@ -154,12 +159,20 @@ export default {
             Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
             "Content-Type": "multipart/form-data"
           }
+<<<<<<< HEAD
         })
         .then(response => {
           //   this.$router.push("/view");
           console.log("succes");
           console.log(response);
           try {
+=======
+      }).then(response=>{
+        
+        console.log("succes");
+        console.log(response.data);
+        try{
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
             window.location.href = response.data;
           } catch {
             alert("결제 실패");

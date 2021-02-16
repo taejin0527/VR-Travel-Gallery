@@ -53,12 +53,12 @@ export default {
   components: {
     SignupForm,
     SignupEmail,
-    SignupEmailVerification,
+    SignupEmailVerification
   },
   data: function() {
     return {
       signupData: {},
-      page: 1,
+      page: 1
     };
   },
   methods: {
@@ -97,13 +97,13 @@ export default {
     url("/images/nyan-cat.gif")
     left top
     no-repeat
-  `,
+  `
       });
       this.saveSignupData({});
       this.setPage(1);
       this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 

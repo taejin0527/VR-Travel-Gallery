@@ -71,9 +71,9 @@ export default {
         pwd: "",
         pwdConfirm: "",
         pwdNotMask: "",
-        pwdConfirmNotMask: "",
+        pwdConfirmNotMask: ""
       },
-      isPasswordMasked: false,
+      isPasswordMasked: false
     };
   },
   methods: {
@@ -107,7 +107,7 @@ export default {
     },
     changeProfile() {
       console.log(this.formData);
-    },
-  },
+    }
+  }
 };
 </script>

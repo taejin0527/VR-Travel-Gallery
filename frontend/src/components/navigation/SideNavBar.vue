@@ -70,15 +70,15 @@ import Menu from "@/components/navigation/Menu.vue";
 
 export default {
   components: {
-    Menu,
+    Menu
   },
   data: function() {
     return {
-      isMenuPageOpen: false,
+      isMenuPageOpen: false
     };
   },
   computed: {
-    ...mapGetters("Auth", ["isLoggedIn"]),
+    ...mapGetters("Auth", ["isLoggedIn"])
   },
   methods: {
     ...mapActions("Auth", ["signOut"]),
@@ -91,8 +91,8 @@ export default {
     },
     closeMenuPage: function() {
       this.isMenuPageOpen = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

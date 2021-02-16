@@ -2,6 +2,9 @@
   <!-- 각 대륙의 전체 사진 불러오기. -->
   <!-- 단, 각 대륙의 모든 사진을 불러오기 때문에 더 보기 버튼을 만들어서 15개씩 불러오는 방향을 잡아야 할 듯. -->
   <v-container class="adjust-grid-container">
+        <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 60px; font-size:30px; color:white;"> Asia</div>
     <div style="width:100%; height: 20px;"></div>
     <v-row>
       <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
@@ -23,9 +26,11 @@
           column
         >
           <v-chip
-            v-for="(item, i) in tags"
+            v-for="(item, i) in tags[idx]"
             :key="i"
             style="background-color:#DD6288; color:white;"
+            class="tag-hover-event-class"
+            @click="gotoSearch(item)"
           >
             {{ item }}
           </v-chip>
@@ -45,9 +50,23 @@ export default {
   },
   methods: {
     // 게시물 사진 보기
+<<<<<<< HEAD
     gotoSelectArticle: function(idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
       this.$router.push({ name: "PhotoView" });
+=======
+    gotoSelectArticle: function (idx) {
+      localStorage.setItem("articleId", this.indexs[idx])
+      this.$router.push({name:"PhotoView"})
+    },
+    gotoSearch: function (tag) {
+      if (tag[0] == '#') {
+        tag = tag.substring(1, tag.length)
+      }
+      localStorage.setItem('selectContinentforSearch', 'All')
+      localStorage.setItem('searchData', tag)
+      this.$router.push({name:"SearchWaterfall"})
+>>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     }
   }
 };

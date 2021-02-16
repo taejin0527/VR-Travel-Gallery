@@ -29,8 +29,8 @@ export default {
     Goal,
     Services,
     Pricing,
-    Profolio,
-  },
+    Profolio
+  }
 };
 </script>
 
