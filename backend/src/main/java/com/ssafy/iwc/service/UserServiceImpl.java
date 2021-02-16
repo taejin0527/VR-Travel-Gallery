@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User(signUpRequest.getUsername(), 
 				 signUpRequest.getEmail(),
 				 encoder.encode(signUpRequest.getPassword()));
-
+		
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
 
@@ -145,6 +145,17 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		
+	}
+
+	@Override
+	public boolean checkPw(String password, String username) {
+		// TODO Auto-generated method stub
+		
+		
+		if(encoder.matches(password, userRepository.findUserPw(username))){
+			return true;
+		}
+		return false;
 	}
 
 

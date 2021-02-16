@@ -73,8 +73,8 @@ public class Board {
 
 	@Builder
 	public Board(long id, String author, long good, long views, String location, String nation,
-			LocalDateTime createdDate, LocalDateTime modifiedDate) {
-		
+			LocalDateTime createdDate, boolean premium, LocalDateTime modifiedDate) {
+		super();
 		this.id = id;
 		this.author = author;
 		this.good = good;
@@ -82,6 +82,7 @@ public class Board {
 		this.location = location;
 		this.nation = nation;
 		this.createdDate = createdDate;
+		this.premium = premium;
 		this.modifiedDate = modifiedDate;
 	}
 
@@ -92,6 +93,12 @@ public class Board {
 				+ location + ", nation=" + nation + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
 				+ "]";
 	}
+
+
+	
+
+
+	
 
 	
 	
