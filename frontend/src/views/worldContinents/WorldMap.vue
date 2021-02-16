@@ -1,108 +1,173 @@
 <template>
   <!-- App.vue -->
   <div>
-    <SideNavBar/>
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:95px; top:20px; color:white;"
-      @click="clickGotoCreate"
-    >
-      <v-icon>
-        mdi-plus
-      </v-icon>
-    </v-btn>
-    <v-btn
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:20px; top:20px; color:white;"
-      @click="clickChangeContinentViewButton"
-    >
-      <span v-if="popularExhibition"> ALL </span>
-      <v-icon v-else>
-        mdi-star
-      </v-icon>
-    </v-btn>
-    <!-- 검색 버튼 및 입력창 -->
-    <v-lazy
-      min-height="200"
-      transition="slide-x-reverse-transition"
-      v-if="isSelectSearch"
-      style="
-              position: fixed;
-              height: 10%;
-              margin: 0;
-              padding: 0;
-              width: 300px;
-              top: 23px;
-              right: 170px;
-              z-index: 101;
-              transition:0.5s;
-            "
-    >
-      <v-card
-        color="#DDA288"
-        height="50px"
-        width="300px"
-        dark
-      >
-        <v-card-text>
-          <v-text-field
-            v-model="searchData"
-            color="white"
-            placeholder="장소나 태그를 입력하세요."
-            append-outer-icon="mdi-airplane-takeoff"
-            @keydown.enter="searchKeyword"
-            @click:append-outer="searchKeyword"
-            style="position:relative; bottom:24px;"
-          ></v-text-field>
-        </v-card-text>
-      </v-card>
-    </v-lazy>
-    
-    <v-btn
+    <MobileWorldMap
+      v-if="windowWidth < 500 || windowHeight < 450"
+    />
+    <div
       v-else
-      elevation="3"
-      fab
-      color="#DDA288"
-      style="position:fixed; right:170px; top:20px; color:white; transition:0.5s;"
-      @click="isSelectSearch = true"
     >
-      <v-icon>
-        mdi-image-search
-      </v-icon>
-    </v-btn>
+      <MobileWorldMap
+        class="adjust-grid-system"
+      />
+      <div
+        class="adjust-grid-system-reverse"
+      >
+        <SideNavBar/>
+        <v-btn
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:95px; top:20px; color:white;"
+          @click="clickGotoCreate"
+        >
+          <v-icon>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+        <v-btn
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:20px; top:20px; color:white;"
+          @click="clickChangeContinentViewButton"
+        >
+          <span v-if="popularExhibition"> ALL </span>
+          <v-icon v-else>
+            mdi-star
+          </v-icon>
+        </v-btn>
+        <!-- 검색 버튼 및 입력창 -->
+        <div
+          v-if="isSelectSearch && windowWidth > 500"
+          style="
+                  position: fixed;
+                  height: 50px;
+                  margin: 0;
+                  padding: 0;
+                  width: 300px;
+                  top: 23px;
+                  right: 170px;
+                  transition:0.5s;
+                  z-index: 1;
+                  background-color:#DDA288;
+                  border-radius: 3px;
+                "
+        >
+          </div>
+          <div
+            v-if="isSelectSearch && windowWidth > 500"
+            style="position:fixed;
+                    width: 270px;
+                    top: 16px;
+                    right: 185px;
+                    z-index: 2;
+                    color:white;
+                  "   
+          >
+            <div
+              class="d-flex align-start justify-center"
+            >
+              <v-text-field
+                v-model="searchData"
+                color="white"
+                placeholder="장소나 태그를 입력하세요."
+                append-outer-icon="mdi-airplane-takeoff"
+                @keydown.enter="searchKeyword"
+                @click:append-outer="searchKeyword"
+                style=""
+                dark
+              ></v-text-field>
+            </div>
+          </div>
+          
+          <v-btn
+            v-if="windowWidth > 500 && windowHeight > 450 && !isSelectSearch"
+            elevation="3"
+            fab
+            color="#DDA288"
+            style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
+            @click="isSelectSearch = true"
+          >
+            <v-icon>
+              mdi-image-search
+            </v-icon>
+          </v-btn>
+          <div
+            class="text-center"
+            v-if="isSelectSearch && windowWidth > 500"
+            style="position:fixed;
+                    width: 120px;
+                    top: 30px;
+                    right: 485px;
+                    z-index: 2;
+                    color:white;
+                  "   
+          >
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="#DDA288"
+                  style="width: 120px;"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{selectContinent}}
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(item, index) in continents"
+                  :key="index"
+                >
+                  <v-list-item-title
+                    style="text-align:center; cursor:pointer;"
+                    @click="selectContinent = item"
+                  >
+                  {{ item }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
 
-    <v-container>
-      <v-row>
-        <v-col cols="12">
-          <!-- 월드 맵 나누기 -->
-          <WorldMapDivision />
-        </v-col>
-      </v-row>
-    </v-container>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <!-- 월드 맵 나누기 -->
+              <WorldMapDivision />
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import WorldMapDivision from "@/components/WorldMapDivision.vue";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
+import MobileWorldMap from "@/components/mobile/WorldMap.vue";
 
 export default {
   name: "WorldMap",
   data: function() {
     return {
+      continents: ['All', 'N. America', 'S. America', 'Asia', 'Africa', 'Europe', 'Oceania'],
+      selectContinent: 'All',
       popularExhibition: true,
       isSelectTips: false,
       searchData:"",
       isSelectSearch:false,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     }
   },
   components: {
     WorldMapDivision,
-    SideNavBar
+    SideNavBar,
+    MobileWorldMap
   },
   created: function () {
     localStorage.setItem('page', "WorldMap")
@@ -120,7 +185,9 @@ export default {
         alert('검색어를 입력해주세요.')
       }
       else {
-        alert(`검색어 : ${this.searchData} -> 백엔드 이으면 댐당`)
+        localStorage.setItem('searchData', this.searchData)
+        localStorage.setItem('selectContinentforSearch', this.selectContinent)
+        this.$router.push({name: "SearchWaterfall"})
       }
     }
   }
@@ -128,5 +195,22 @@ export default {
 </script>
 
 <style scoped>
+
+.adjust-grid-system-reverse {
+  display: none;
+}
+
+.adjust-grid-system {
+  display: unset;
+}
+
+@media (min-width:930px) {
+  .adjust-grid-system {
+    display: none;
+  }
+  .adjust-grid-system-reverse {
+    display: unset;
+  }
+}
 
 </style>

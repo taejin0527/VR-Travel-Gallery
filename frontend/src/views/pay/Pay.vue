@@ -124,27 +124,27 @@ export default {
     },
     charge(){
       const money = this.selectMoney
-      
+      console.log(money);
       const formData = new FormData();
       formData.append('username', this.$store.state.Auth.authToken.username);
       formData.append('cost',money);
       // 수정부분
-      axios.post(`http://localhost:8080/kakao`,
+      axios.post(`${SERVER.PAY_BASE_URL}kakao`,
       formData,{
           headers:{
               'Authorization': 'Bearer ' + this.$store.state.Auth.authToken.token,
               'Content-Type' : 'multipart/form-data'
           }
       }).then(response=>{
-        //   this.$router.push("/view");
+        
         console.log("succes");
         console.log(response.data);
-        // try{
-        //     window.location.href = response.data;
+        try{
+            window.location.href = response.data;
             
-        // }catch{
-        //     alert('결제 실패');
-        // }
+        }catch{
+            alert('결제 실패');
+        }
       }).catch(function(){
           console.log("FAILURE");
       });

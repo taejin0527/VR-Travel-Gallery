@@ -15,7 +15,7 @@
           <img 
             src="@/assets/continents/popularFlag.png"
             v-for="(item, idx) in popularDistrict"
-            :key="idx"
+            :key="'A'+idx"
             :class="{
               'adjust-location': true,
               'transition-circle-icon': true,

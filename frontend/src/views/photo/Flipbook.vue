@@ -45,7 +45,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:120px; color:white;"
+      style="position:fixed; right:60px; top:120px; color:white; z-index: 101;"
       @click="clickGotoPhotoView"
     >
       <v-icon>
@@ -58,7 +58,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:200px; color:white;"
+      style="position:fixed; right:60px; top:200px; color:white; z-index: 101;"
       @click="clickGotoVR"
     >
       <span style="font-size:22px">VR</span>
@@ -69,7 +69,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:280px; color:white;"
+      style="position:fixed; right:60px; top:280px; color:white; z-index: 101;"
       @click="clickGoBack"
     >
       <v-icon size="38px">

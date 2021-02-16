@@ -83,6 +83,7 @@ export default class Login extends Vue {
       if (!isValid) {
         console.log("validate 오류");
         this.loading = false;
+        alert('로그인 형식을 맞춰주세요.')
         setTimeout(() => {
           this.active = !this.active;
         }, 1000);
@@ -101,6 +102,7 @@ export default class Login extends Vue {
               this.active = !this.active;
             }, 1000);
             this.message = error;
+            alert('아이디와 비밀번호가 틀렸습니다.')
           }
         );
       }
@@ -123,7 +125,7 @@ export default class Login extends Vue {
 
 .ticket {
   position: relative;
-  width: 25%;
+  width: 100%;
   height: 500px;
   box-sizing: border-box;
   margin: 10px auto 0;
@@ -131,6 +133,19 @@ export default class Login extends Vue {
   border-radius: 10px;
   background: #fbfbfb;
   box-shadow: 2px 2px 15px 0px #ab9b0d;
+}
+@media (min-width: 500px) {
+  .ticket {
+    position: relative;
+    width: 25%;
+    height: 500px;
+    box-sizing: border-box;
+    margin: 10px auto 0;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fbfbfb;
+    box-shadow: 2px 2px 15px 0px #ab9b0d;
+  }
 }
 .ticket:before,
 .ticket:after {
