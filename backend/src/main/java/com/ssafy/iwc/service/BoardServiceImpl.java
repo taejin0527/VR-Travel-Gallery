@@ -76,4 +76,12 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardRepository.getAllPostsNum(searchData,searchData,start,idx);
 	}
+
+
+	@Transactional
+	public void increaseView(long id) {
+		Long num = boardRepository.getView(id);
+		boardRepository.setView(num+1,id);
+		
+	}
 }

@@ -43,6 +43,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
+
 export default {
   name: "Asia",
   props: {
@@ -52,8 +55,15 @@ export default {
   },
   methods: {
     // 게시물 사진 보기
-    gotoSelectArticle: function(idx) {
+    gotoSelectArticle: function (idx) {
       localStorage.setItem("articleId", this.indexs[idx]);
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}increaseview?id=${localStorage.getItem("articleId")}`
+        )
+        .catch((err) => {
+          console.error(err);
+        });
       this.$router.push({ name: "PhotoView" });
     },
     gotoSearch: function(tag) {
