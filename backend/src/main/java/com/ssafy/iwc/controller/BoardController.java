@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.dto.MainImageDto;
+import com.ssafy.iwc.dto.PayInfoDto;
 import com.ssafy.iwc.dto.PostImageDto;
 import com.ssafy.iwc.dto.TagDto;
 import com.ssafy.iwc.model.AllMainView;
@@ -33,6 +34,7 @@ import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.model.LocationInfo;
 import com.ssafy.iwc.model.MainImage;
 import com.ssafy.iwc.model.MultiId;
+import com.ssafy.iwc.model.PayInfo;
 import com.ssafy.iwc.service.BoardService;
 import com.ssafy.iwc.service.LikeService;
 import com.ssafy.iwc.service.MainImageService;
@@ -359,15 +361,25 @@ public class BoardController {
 		
 		return result;
 	}
-	
+	@ApiOperation(value = "유저이름과 게시물아이디로 결제진행", response = String.class)
 	@GetMapping("/paypost")
 	public ResponseEntity paypost(@RequestParam("username")String username, @RequestParam("id") String id) {
 		long no = Long.parseLong(id);
 		String result= "";
 		try {
-			payInfoService.saveInfo(no,username);
-			result="결제 성공";
-			return new ResponseEntity(result, HttpStatus.OK);
+			PayInfoDto payInfoDto = new PayInfoDto();
+			payInfoDto.setCost(30);
+			payInfoDto.setUsername(username);
+			payInfoDto.setPostid(no);
+			boolean flag = payInfoService.saveInfo(payInfoDto);
+			if(flag) {
+				result="결제 성공";
+				return new ResponseEntity(result, HttpStatus.OK);
+			}else {
+				result = "결제 실패";
+				return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
+			}
+			
 		}catch(Exception e) {
 			
 			result = "결제 실패";
