@@ -135,5 +135,17 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	public boolean findUser(Long userid, String username) {
+		// TODO Auto-generated method stub
+		int num = userRepository.findUser(userid,username);
+		if(num==1) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+
 
 }

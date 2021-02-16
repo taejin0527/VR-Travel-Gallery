@@ -42,6 +42,7 @@ import com.ssafy.iwc.service.PayInfoService;
 import com.ssafy.iwc.service.PostImageService;
 
 import com.ssafy.iwc.service.TagService;
+import com.ssafy.iwc.service.UserService;
 import com.ssafy.iwc.util.MD5Generator;
 import com.ssafy.iwc.util.SFTPsender;
 
@@ -63,6 +64,8 @@ public class BoardController {
 	private LikeService likeService;
 	@Autowired
 	private PayInfoService payInfoService;
+	@Autowired
+	private UserService userService;
 	
 //	이부분 처리
 	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
@@ -348,43 +351,59 @@ public class BoardController {
 	
 	@ApiOperation(value = "게시물 결제여부 확인 true or false", response = String.class)
 	@GetMapping("/payrequest")
-	public String payrequest(@RequestParam("username")String username, @RequestParam("id") String id) {
+	public String payrequest(@RequestParam("userid")String userid,@RequestParam("username")String username, @RequestParam("id") String id) {
 		String result= "";
-		long no = Long.parseLong(id);
-		int check = payInfoService.getPayRequest(username,no);
-		if(check==0) {
-			result="false";
+		long userId = Long.parseLong(userid);
+		boolean answer = userService.findUser(userId,username);
+//		해당사용자가 있음
+		if(answer) {
+			long no = Long.parseLong(id);
+			int check = payInfoService.getPayRequest(username,no);
+			if(check==0) {
+				result="false";
+			}else {
+				result = "true";
+			}
 		}else {
-			result = "true";
+			result="잘못된 접근입니다.";
 		}
+		
 		
 		
 		return result;
 	}
 	@ApiOperation(value = "유저이름과 게시물아이디로 결제진행", response = String.class)
 	@GetMapping("/paypost")
-	public ResponseEntity paypost(@RequestParam("username")String username, @RequestParam("id") String id) {
+	public ResponseEntity paypost(@RequestParam("userid")String userid,@RequestParam("username")String username, @RequestParam("id") String id) {
 		long no = Long.parseLong(id);
 		String result= "";
-		try {
-			PayInfoDto payInfoDto = new PayInfoDto();
-			payInfoDto.setCost(30);
-			payInfoDto.setUsername(username);
-			payInfoDto.setPostid(no);
-			boolean flag = payInfoService.saveInfo(payInfoDto);
-			if(flag) {
-				result="결제 성공";
-				return new ResponseEntity(result, HttpStatus.OK);
-			}else {
+		long userId = Long.parseLong(userid);
+		boolean answer = userService.findUser(userId,username);
+		if(answer) {
+			try {
+				PayInfoDto payInfoDto = new PayInfoDto();
+				payInfoDto.setCost(30);
+				payInfoDto.setUsername(username);
+				payInfoDto.setPostid(no);
+				boolean flag = payInfoService.saveInfo(payInfoDto);
+				if(flag) {
+					result="결제 성공";
+					return new ResponseEntity(result, HttpStatus.OK);
+				}else {
+					result = "결제 실패";
+					return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
+				}
+				
+			}catch(Exception e) {
+				
 				result = "결제 실패";
 				return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
 			}
-			
-		}catch(Exception e) {
-			
-			result = "결제 실패";
+		}else {
+			result="잘못된 접근입니다.";
 			return new ResponseEntity(result, HttpStatus.FAILED_DEPENDENCY);
 		}
+		
 		
 	}
 	
