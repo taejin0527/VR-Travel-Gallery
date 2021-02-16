@@ -291,8 +291,17 @@ export default {
         return;
       }
       // 이거 id로 바꾼 후, 다시 프로필의 id를 받아와서 보안성 높이기.
+      axios
+        .get(`${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`)
+        .then(res => {
+          if (this.$store.state.Auth.authToken.id != this.res.data.id) {
+            alert("인증되지 않은 사용자 입니다.");
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       if (this.$store.state.Auth.authToken.username != this.author) {
-        console.log(this.$store.state.Auth);
         alert("인증되지 않은 사용자 입니다.");
       } else {
         this.fab = true;
