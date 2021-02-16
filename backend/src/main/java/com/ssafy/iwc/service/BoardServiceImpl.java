@@ -48,7 +48,7 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardRepository.findByLocation(location);
 	}
-
+	
 
 	@Transactional
 	public List<Board> getLocationIdxBoard(String location, int start, int idx) {
@@ -84,4 +84,14 @@ public class BoardServiceImpl implements BoardService{
 		boardRepository.setView(num+1,id);
 		
 	}
+
+
+	@Override
+	public List<Board> getUsernameBoard(String username, int start, int idx) {
+		// TODO Auto-generated method stub
+		return boardRepository.getUsernameIdxBoard(username,start,idx);
+	}
+
+
+	
 }
