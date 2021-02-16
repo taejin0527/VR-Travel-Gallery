@@ -30,7 +30,7 @@ public class PayInfoServiceImpl implements PayInfoService{
 		try {
 //			결제 진행
 			User user = userRepository.findByUsername(payInfoDto.getUsername()).get();
-			userRepository.upDateMoney(user.getMoney()-30,payInfoDto.getUsername());
+			userRepository.upDateMoney(user.getMoney()-3,payInfoDto.getUsername());
 //			결제정보 저장
 			payInfoRepository.save(payInfoDto.toEntity());
 		

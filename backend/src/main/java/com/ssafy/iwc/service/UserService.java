@@ -47,6 +47,8 @@ public interface UserService {
 
 	public boolean checkPw(String password, String username);
 
+	public boolean changePw(String password, String username,String currpassword);
+
 
 
 }

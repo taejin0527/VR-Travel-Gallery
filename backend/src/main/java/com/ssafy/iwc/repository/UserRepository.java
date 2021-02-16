@@ -26,4 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	int findUser(Long userid, String username);
 	@Query(value = "select password from users where username = ?",nativeQuery = true)
 	String findUserPw(String username);
+	
+	@Modifying
+	@Query(value = "UPDATE users set password=? where username = ?",nativeQuery = true)
+	void changePw(String encode, String username);
 }
