@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(value = "select count(id) from users where id = ? and username = ?",nativeQuery = true)
 	int findUser(Long userid, String username);
+	@Query(value = "select password from users where username = ?",nativeQuery = true)
+	String findUserPw(String username);
 }
