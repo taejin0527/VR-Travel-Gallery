@@ -66,7 +66,10 @@ export default {
         });
       this.$router.push({ name: "PhotoView" });
     },
-    gotoSearch: function(tag) {
+    gotoSearch: function (tag) {
+      if (window.innerWidth < 500 || window.innerHeight < 450) {
+        return
+      }
       if (tag[0] == "#") {
         tag = tag.substring(1, tag.length);
       }
