@@ -36,6 +36,16 @@
         mdi-view-carousel-outline
       </v-icon>
     </v-btn>
+    <!-- VR 페이지로 가는 버튼 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; bottom:43px; right:120px; color:white; z-index: 101;"
+      @click="clickGotoVR"
+    >
+      <span style="font-size:22px">VR</span>
+    </v-btn>
   </div>
 </template>
 
@@ -79,6 +89,9 @@ export default {
     },
     clickGotoBack: function() {
       this.$router.push({ name: "EachWaterfall" });
+    },
+    clickGotoVR: function () {
+      this.$router.push({ name: "Aframe" });
     }
   }
 };
