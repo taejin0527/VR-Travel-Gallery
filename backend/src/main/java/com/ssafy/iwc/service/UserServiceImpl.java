@@ -158,5 +158,21 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Transactional
+	public boolean changePw(String password, String username,String currpassword) {
+		// TODO Auto-generated method stub
+		if(!encoder.matches(currpassword, userRepository.findUserPw(username))){
+			return false;
+		}
+		try {
+			userRepository.changePw(encoder.encode(password),username);
+			return true;
+		}catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		
+	}
+
 
 }
