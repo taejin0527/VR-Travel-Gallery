@@ -39,7 +39,7 @@
         size="30px"
         :class="{
           'like-hover-event': true,
-          'select-like-transition': isSelectLike
+          'select-like-transition': isSelectLike,
         }"
         @click="likeThisArticle"
       >
@@ -144,7 +144,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   components: {
-    Flipbook
+    Flipbook,
   },
   data: function() {
     return {
@@ -158,48 +158,33 @@ export default {
       author: "",
       vfImages: [null, require("@/assets/photo/flipbookHelp.jpg")],
       zooms: [1],
-      isSelectLike: false // 좋아요는 손봐야 합니다.
+      isSelectLike: false, // 좋아요는 손봐야 합니다.
     };
   },
   mounted() {
     // username추가
     axios
-<<<<<<< HEAD
       .get(
         `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then(response => {
-        if (response.data[response.data.length - 1].like === "false") {
+      .then((response) => {
+        if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
           this.isSelectLike = true;
         }
-        this.author = response.data[0].author;
-        response.data.forEach(e => {
-          this.vfImages.push(e.filepath);
-        });
-=======
-      .get(`${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem('articleId')}&username=${this.$store.state.Auth.authToken.username}`)
-      .then((response) => {
-        if (response.data.like === "false") {
-          this.isSelectLike = false
-        }
-        else {
-          this.isSelectLike = true
-        }
-        this.author = response.data.board.author
-        this.vfImages.push(response.data.filePath)
+        this.author = response.data.board.author;
+        this.vfImages.push(response.data.filePath);
         for (let i = 0; i < response.data.subPath.length; i++) {
-          this.vfImages.push(response.data.subPath[i])
+          this.vfImages.push(response.data.subPath[i]);
         }
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
-    window.addEventListener("keydown", ev => {
+    window.addEventListener("keydown", (ev) => {
       const { flipbook } = this.$refs;
       if (!flipbook) {
         return;
@@ -258,14 +243,14 @@ export default {
             this.$store.state.Auth.authToken.username
           }`
         )
-        .then(response => {
+        .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -294,19 +279,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token
-              }
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -13,20 +13,12 @@
               right: 20px;
               z-index: 101;
             "
-            
     >
       <img
         src="@/assets/3DHelp3.png"
         alt=""
-<<<<<<< HEAD
-        width="120px"
-        :class="{ 'select-tips-transition': isSelectTips }"
-        @mouseover="isSelectTips = true"
-        @mouseleave="isSelectTips = false"
-=======
         @click="showTipsOverlay = true"
         width="90px"
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       />
     </div>
     <div
@@ -42,18 +34,6 @@
               z-index: 101;
             "
     >
-<<<<<<< HEAD
-      <v-icon
-        size="30px"
-        :class="{
-          'like-hover-event': true,
-          'select-like-transition': isSelectLike
-        }"
-        @click="likeThisArticle"
-      >
-        mdi-heart
-      </v-icon>
-=======
       <img
         src="@/assets/3DHelp3.png"
         alt=""
@@ -62,16 +42,12 @@
         @mouseover="isSelectTips = true"
         @mouseleave="isSelectTips = false"
       />
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     </div>
     <MobileView
       v-if="windowWidth < 500 || windowHeight < 450"
-      :vfImages = "vfImages"
+      :vfImages="vfImages"
     />
-    <div
-      class="container d-flex justify-center"
-      v-else
-    >
+    <div class="container d-flex justify-center" v-else>
       <!-- 좋아요 버튼 -->
       <div
         style="
@@ -88,7 +64,7 @@
           size="30px"
           :class="{
             'like-hover-event': true,
-            'select-like-transition': isSelectLike
+            'select-like-transition': isSelectLike,
           }"
           @click="likeThisArticle"
         >
@@ -192,58 +168,18 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-    <!-- 작성자 버튼 및 작성자 일때 삭제 버튼 추가 -->
-    <div style="position:fixed; left:40px; top:45%;">
-      <div class="profile d-flex justify-center">snapped by</div>
-      <span
-        class="user-hover-event-goto-profile d-flex justify-center"
-        style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
-        @click="gotoProfilePage"
-      >
-        {{ author }}
-      </span>
-      <br />
-=======
-    <v-overlay
-      :absolute="absolute"
-      :value="showTipsOverlay"
-      :opacity="0.8"
-    >
-      오른쪽 화면을 누르면 <br><br> 다음 사진으로 넘김니다.
-      <pre>
-
-      </pre>
-      왼쪽 화면을 누르면 <br><br> 이전 사진으로 돌아옵니다.
-      <pre>
-        
-      </pre>
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
-      <div
-        class="d-flex justify-center"
-      >
-<<<<<<< HEAD
-        <v-btn color="#DDA288" style="color:white; font-weight:bold;">
-          <v-progress-linear
-            v-if="fab"
-            indeterminate
-            color="red"
-            style="width: 70px"
-          ></v-progress-linear>
-          <div v-else>
-            게시글 삭제
-          </div>
-=======
-        <v-btn
-          color="#DDA288"
-          @click="showTipsOverlay = false"
-          
-        >
+    <v-overlay :absolute="absolute" :value="showTipsOverlay" :opacity="0.8">
+      오른쪽 화면을 누르면 <br /><br />
+      다음 사진으로 넘김니다.
+      <pre></pre>
+      왼쪽 화면을 누르면 <br /><br />
+      이전 사진으로 돌아옵니다.
+      <pre></pre>
+      <div class="d-flex justify-center">
+        <v-btn color="#DDA288" @click="showTipsOverlay = false">
           확인
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
         </v-btn>
       </div>
-      
     </v-overlay>
   </div>
 </template>
@@ -254,12 +190,11 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader
+  FluxPreloader,
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
-import MobileView from "@/components/mobile/View.vue"
-
+import MobileView from "@/components/mobile/View.vue";
 
 export default {
   components: {
@@ -268,31 +203,27 @@ export default {
     FluxIndex,
     FluxPagination,
     FluxPreloader,
-    MobileView
+    MobileView,
   },
   data: () => ({
     fab: false,
     vfOptions: {
-      autoplay: false
+      autoplay: false,
     },
     vfImages: [],
     author: "",
     vfTransitions: ["fade", "cube", "book", "wave", "camera"],
     isSelectTips: false,
-<<<<<<< HEAD
-    isSelectLike: false // 좋아요는 손봐야 합니다.
-=======
     isSelectLike: false,
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
-    absolute:true,
+    absolute: true,
     showTipsOverlay: false,
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
   }),
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    }
+    },
   },
   mounted() {
     axios
@@ -301,18 +232,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then(response => {
-<<<<<<< HEAD
-        if (response.data[response.data.length - 1].like === "false") {
-          this.isSelectLike = false;
-        } else {
-          this.isSelectLike = true;
-        }
-        this.author = response.data[0].author;
-        response.data.forEach(e => {
-          this.vfImages.push(e.filepath);
-        });
-=======
+      .then((response) => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -323,9 +243,8 @@ export default {
         for (let i = 0; i < response.data.subPath.length; i++) {
           this.vfImages.push(response.data.subPath[i]);
         }
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   },
@@ -336,13 +255,10 @@ export default {
     clickGoBack: function() {
       this.$router.push({ name: localStorage.getItem("page") });
     },
-<<<<<<< HEAD
-=======
     // 여기에 라우터 페이지 이동 하심 댐당
     clickGotoVR: function() {
       this.$router.push({ name: "Aframe" });
     },
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     gotoProfilePage: function() {
       localStorage.setItem("setUserforProfile", this.author);
       this.$router.push({ name: "Profile" });
@@ -357,24 +273,17 @@ export default {
             this.$store.state.Auth.authToken.username
           }`
         )
-        .then(response => {
+        .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
-<<<<<<< HEAD
-    // 여기에 라우터 페이지 이동 하심 댐당
-    clickGotoVR: function() {
-      this.$router.push({ name: "" });
-    },
-=======
->>>>>>> 80e730a617a70943bcc31f95d8720234991550ce
     // 게시글 삭제
     deleteArticle: function() {
       if (this.fab == true) {
@@ -395,19 +304,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token
-              }
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -9,11 +9,11 @@
       <v-row>
         <v-col md="4">
           <div class="content">
-            <v-icon>mdi-map-search</v-icon>
-            <h5>Worldmap</h5>
+            <v-icon>mdi-earth</v-icon>
+            <h5>Travel</h5>
             <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
+              여행 사진 공유 Lorem ipsum dolor sit amet, consectetur adipisicing
+              elit. Earum, natus recusandae!
             </p>
           </div>
         </v-col>

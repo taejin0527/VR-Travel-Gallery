@@ -1,95 +1,82 @@
 <template>
   <div class="services section bg-grey" id="services">
-    <div class="container">
+    <v-container>
       <div class="title-section">
         <p>SERVICES</p>
-        <h3>Choose what</h3>
-        <h3>you like our services</h3>
+        <h3>NUVO provides</h3>
+        <h3>awesome services</h3>
       </div>
-      <div class="row">
-        <div class="col-md-4">
+      <v-row>
+        <v-col md="4" v-for="(content, idx) in contents" :key="idx">
           <div class="content">
-            <i class="lni lni-wordpress-filled"></i>
-            <h5>WordPress</h5>
+            <v-icon>{{ content.icon }}</v-icon>
+            <h5>{{ content.subtitle }}</h5>
             <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
+              {{ content.text }}
             </p>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="content">
-            <i class="lni lni-vector"></i>
-            <h5>Logo Design</h5>
-            <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="content">
-            <i class="lni lni-keyword-research"></i>
-            <h5>Online Seo</h5>
-            <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="content">
-            <i class="lni lni-mobile"></i>
-            <h5>Mobile Apps</h5>
-            <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="content">
-            <i class="lni lni-list"></i>
-            <h5>Copywriting</h5>
-            <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="content">
-            <i class="lni lni-bulb"></i>
-            <h5>Brand Strategy</h5>
-            <p class="mb-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit Ea
-              laudantium empore nobis quisquam.
-            </p>
-          </div>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
       <div class="completed">
-        <div class="row">
-          <div class="col-md-4">
+        <v-row>
+          <v-col md="4">
             <h4>540</h4>
-            <span>Clients</span>
-          </div>
-          <div class="col-md-4">
+            <span>Pictures</span>
+          </v-col>
+          <v-col md="4">
             <h4>831</h4>
-            <span>Project</span>
-          </div>
-          <div class="col-md-4">
+            <span>Visitors</span>
+          </v-col>
+          <v-col md="4">
             <h4>65</h4>
-            <span>Branch</span>
-          </div>
-        </div>
+            <span>Members</span>
+          </v-col>
+        </v-row>
       </div>
-    </div>
+    </v-container>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      contents: [
+        {
+          icon: "mdi-map-search",
+          subtitle: "Worldmap",
+          text: "세계 지도를 따라 대륙별 탐색 기능",
+        },
+        {
+          icon: "mdi-lock-check",
+          subtitle: "Secured",
+          text:
+            "Spring Security, JWT를 통한 인증, 인가 MD5 Hash 알고리즘을 통한 이미지 데이터 보호",
+        },
+        {
+          icon: "mdi-comment-alert",
+          subtitle: "Tips",
+          text: "처음 방문하는 사용자를 위한 웹 사이트 사용 가이드 제공",
+        },
+        {
+          icon: "mdi-arrange-bring-to-front",
+          subtitle: "Animation",
+          text: "다양한 애니메이션 기능",
+        },
+        {
+          icon: "mdi-panorama",
+          subtitle: "Photo VR Viewer",
+          text: "파노라마 사진을 VR로 감상",
+        },
+        {
+          icon: "mdi-cash",
+          subtitle: "Easy Payment",
+          text: "카카오 Pay 연동",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>

@@ -9,6 +9,7 @@
     <Services />
     <Pricing />
     <Profolio />
+    <Impression />
   </v-container>
 </template>
 
@@ -20,6 +21,7 @@ import Goal from "@/components/about/Goal.vue";
 import Services from "@/components/about/Services.vue";
 import Pricing from "@/components/about/Pricing.vue";
 import Profolio from "@/components/about/Profolio.vue";
+import Impression from "@/components/about/Impression.vue";
 
 export default {
   components: {
@@ -29,8 +31,9 @@ export default {
     Goal,
     Services,
     Pricing,
-    Profolio
-  }
+    Profolio,
+    Impression,
+  },
 };
 </script>
 

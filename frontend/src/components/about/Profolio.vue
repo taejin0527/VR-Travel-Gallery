@@ -1,10 +1,10 @@
 <template>
   <div class="portfolio section" id="portfolio">
-    <div class="container">
+    <v-container>
       <div class="title-section">
         <p>PORTFOLIO</p>
-        <h3>See our <span>amazing</span></h3>
-        <h3><span>portfolio</span> collection</h3>
+        <h3>See our<span> amazing</span></h3>
+        <h3><span>NUVO Team</span> members!</h3>
       </div>
       <div class="box-content">
         <div class="portfolio-filter-menu">
@@ -13,13 +13,13 @@
               <span>Show All</span>
             </li>
             <li data-filter="1">
-              <span>Graphic</span>
+              <span>Frontend</span>
             </li>
             <li data-filter="2">
-              <span>Landing</span>
+              <span>Backend</span>
             </li>
             <li data-filter="3">
-              <span>Art Design</span>
+              <span>Specialist</span>
             </li>
           </ul>
         </div>
@@ -119,12 +119,37 @@
           </div>
         </div>
       </div>
-    </div>
+    </v-container>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  // mounted: {
+  //       // porfolio filterizr
+  //   $('.filtr-container').imagesLoaded( function() {
+  //       var filterizr = $('.filtr-container').filterizr();
+  //   });
+  //   // portfolio filter
+  //   $('.portfolio-filter-menu li').on('click', function() {
+  //       $('.portfolio-filter-menu li').removeClass('active');
+  //       $(this).addClass('active');
+  //   });
+  //   // portfolio magnific popup
+  //   $('.portfolio').each(function() { // the containers for all your galleries
+  //       $(this).magnificPopup({
+  //           delegate: '.portfolio-popup', // the selector for portfolio item
+  //           type: 'image',
+  //           gallery: {
+  //               enabled: true
+  //           }
+  //       });
+  //   });
+  // }
+};
 </script>
 
 <style scoped>
@@ -132,12 +157,10 @@ export default {};
 .section {
   padding: 90px 0 100px;
 }
-
 .title-section {
   text-align: center;
   margin-bottom: 50px;
 }
-
 .title-section p {
   color: #dda288;
   font-size: 2rem;
@@ -145,12 +168,16 @@ export default {};
   margin-bottom: 15px;
   display: block;
 }
-
 .title-section h3 {
   color: white;
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 6px;
+}
+.title-section h3 span {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #dda288;
 }
 
 /*portfolio*/
