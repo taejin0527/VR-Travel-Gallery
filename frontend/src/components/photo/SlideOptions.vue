@@ -1,5 +1,5 @@
 <template>
-  <v-dialog scrollable max-width="800px">
+  <v-dialog v-model="dialog" persistent scrollable max-width="800px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="#DDA288" dark v-bind="attrs" v-on="on">
         Slide Option
@@ -20,7 +20,12 @@
           Choose 2D animations (슬라이드쇼 효과)
         </h2>
 
-        <v-chip-group v-model="pick1" column multiple>
+        <v-chip-group
+          v-model="pick1"
+          active-class="pink pink--text"
+          column
+          multiple
+        >
           <v-chip
             v-for="(opt, idx) in transitions2D"
             :key="idx"
@@ -37,7 +42,12 @@
           Choose 3D animations (슬라이드쇼 효과)
         </h2>
 
-        <v-chip-group v-model="pick2" column multiple>
+        <v-chip-group
+          v-model="pick2"
+          active-class="indigo indigo--text"
+          column
+          multiple
+        >
           <v-chip
             v-for="(opt, idx) in transitions3D"
             :key="idx"
@@ -55,6 +65,7 @@
 <script>
 export default {
   data: () => ({
+    dialog: false,
     /**
       2D transitions
         Fade: fades from one image to next.
@@ -118,6 +129,7 @@ export default {
       }
 
       this.$emit("optionChanged", this.vfTransitions);
+      this.dialog = false;
     },
   },
 };
