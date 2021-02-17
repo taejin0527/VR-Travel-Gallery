@@ -10,11 +10,14 @@ export default {
       signup: "auth/signup",
       idCheck: "auth/idcheck",
       emailCheck: "auth/emailcheck",
-      emailValidate: "auth/emailvalidate"
+      emailValidate: "auth/emailvalidate",
+    },
+    board: {
+      getpost: "postgetusername",
     },
     files: {
       URL: "files/",
-      upload: "upload/multipleFiles"
-    }
-  }
+      upload: "upload/multipleFiles",
+    },
+  },
 };
