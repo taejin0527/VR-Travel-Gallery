@@ -4,21 +4,24 @@
   <v-container class="adjust-grid-container">
     <div style="width:100%; height: 20px;"></div>
     <div style="width:100%; height: 20px;"></div>
-    <div style="width:100%; height: 60px; font-size:30px; color:white;">
+    <div style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';">
       Europe
     </div>
-    <div style="width:100%; height: 20px;"></div>
+    <div style="width:100%; height: 10px;"></div>
+    <hr>
+    <div style="width:100%; height: 35px;"></div>
     <v-row>
       <v-col v-for="(image, idx) in images" :key="idx" cols="12" sm="6" md="4">
         <!-- 이미지 가져오는 코드 -->
-        <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-        <img
-          :src="`${image}`"
-          alt="image error"
-          class="adjust-grid-image opacity-event-for-waterfall"
-          style="cursor:pointer;"
-          @click="gotoSelectArticle(idx)"
-        />
+        <div class="d-flex justify-center">
+          <img
+            :src="`${image}`"
+            alt="image error"
+            class="adjust-grid-image opacity-event-for-waterfall"
+            style="cursor:pointer;"
+            @click="gotoSelectArticle(idx)"
+          />
+        </div>
         <br />
 
         <!-- 태그 보여주는 코드 -->
@@ -30,7 +33,7 @@
           <v-chip
             v-for="(item, i) in tags[idx]"
             :key="i"
-            style="background-color:#DD6288; color:white;"
+            style="background-color:grey; color:white;"
             class="tag-hover-event-class"
             @click="gotoSearch(item)"
           >
@@ -123,7 +126,7 @@ export default {
     padding: 80px 0px 0px 0px;
   }
   .adjust-grid-image {
-    width: 400px;
+    width: 380px;
   }
 }
 
