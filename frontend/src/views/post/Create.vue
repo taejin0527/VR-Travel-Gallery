@@ -2,7 +2,7 @@
   <v-container fluid ma-0 pa-0>
     <SideNavBar />
 
-    <v-container my-5 pa-0 style="background-color:#4f4544">
+    <v-container my-5 pa-0 style="background-color:#4f4544" class="adjust-scale-xl">
       <br /><br />
 
       <!-- 뒤로가기 버튼 -->
@@ -18,13 +18,13 @@
         </v-icon>
       </v-btn>
       <v-row>
-        <v-col offset-xl="2" xl="9" offset="1" cols="10">
+        <v-col offset-xl="1" xl="10" offset="1" cols="10">
           <h1 style="color:#eeeeee">메인 사진</h1>
           <hr />
         </v-col>
       </v-row>
       <v-row>
-        <v-col offset-xl="2" xl="4" offset="1" cols="5">
+        <v-col offset-xl="1" xl="5" offset="1" cols="5">
           <!-- 메인 사진 -->
           <div class="file-upload-wrapper">
             <div v-if="!main.length" class="file-upload-example-container">
@@ -182,7 +182,7 @@
       </v-row>
 
       <v-row>
-        <v-col offset-xl="2" xl="9" offset="1" cols="10">
+        <v-col offset-xl="1" xl="10" offset="1" cols="10">
           <h1 style="color:#eeeeee">추가 사진</h1>
           <hr />
           <!-- 서브 사진 -->
@@ -565,5 +565,11 @@ width: 100%; */
 .pay-hover-event-class:hover {
   background-color: white;
   transition: 0.5s;
+}
+
+@media (min-width:1904px) {
+  .adjust-scale-xl {
+    width:1400px;
+  }
 }
 </style>
