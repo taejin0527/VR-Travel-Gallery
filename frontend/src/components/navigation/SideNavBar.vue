@@ -68,31 +68,32 @@ import { mapActions, mapGetters } from "vuex";
 
 import Menu from "@/components/navigation/Menu.vue";
 
+const sound = new Audio(require("@/assets/audio/navSound.wav"));
+
 export default {
   components: {
-    Menu
+    Menu,
   },
   data: function() {
     return {
-      isMenuPageOpen: false
+      isMenuPageOpen: false,
     };
   },
   computed: {
-    ...mapGetters("Auth", ["isLoggedIn"])
+    ...mapGetters("Auth", ["isLoggedIn"]),
   },
   methods: {
     ...mapActions("Auth", ["signOut"]),
 
     // 메뉴 페이지 이동
     toggleNav: function() {
-      const sound = new Audio(require("@/assets/audio/navSound.wav"));
       sound.play();
       this.isMenuPageOpen = !this.isMenuPageOpen;
     },
     closeMenuPage: function() {
       this.isMenuPageOpen = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -18,7 +18,7 @@
         <v-icon
           :class="{
             'disappeared-north-airplane-icon': !isShowNorthIcon,
-            'show-north-airplane-icon': isShowNorthIcon
+            'show-north-airplane-icon': isShowNorthIcon,
           }"
         >
           mdi-airplane
@@ -27,7 +27,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-north-america-text': !isShowNorthIcon,
-            'show-north-america-text': isShowNorthIcon
+            'show-north-america-text': isShowNorthIcon,
           }"
           id="north_america-setting-location"
         >
@@ -48,7 +48,7 @@
         <v-icon
           :class="{
             'disappeared-south-airplane-icon': !isShowSouthIcon,
-            'show-south-airplane-icon': isShowSouthIcon
+            'show-south-airplane-icon': isShowSouthIcon,
           }"
         >
           mdi-airplane
@@ -57,7 +57,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-south-america-text': !isShowSouthIcon,
-            'show-south-america-text': isShowSouthIcon
+            'show-south-america-text': isShowSouthIcon,
           }"
           id="south_america-setting-location"
         >
@@ -78,7 +78,7 @@
         <v-icon
           :class="{
             'disappeared-europe-airplane-icon': !isShowEuropeIcon,
-            'show-europe-airplane-icon': isShowEuropeIcon
+            'show-europe-airplane-icon': isShowEuropeIcon,
           }"
         >
           mdi-airplane
@@ -87,7 +87,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-europe-text': !isShowEuropeIcon,
-            'show-europe-text': isShowEuropeIcon
+            'show-europe-text': isShowEuropeIcon,
           }"
           id="europe-setting-location"
         >
@@ -108,7 +108,7 @@
         <v-icon
           :class="{
             'disappeared-africa-airplane-icon': !isShowAfricaIcon,
-            'show-africa-airplane-icon': isShowAfricaIcon
+            'show-africa-airplane-icon': isShowAfricaIcon,
           }"
         >
           mdi-airplane
@@ -117,7 +117,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-africa-text': !isShowAfricaIcon,
-            'show-africa-text': isShowAfricaIcon
+            'show-africa-text': isShowAfricaIcon,
           }"
           id="africa-setting-location"
         >
@@ -138,7 +138,7 @@
         <v-icon
           :class="{
             'disappeared-asia-airplane-icon': !isShowAsiaIcon,
-            'show-asia-airplane-icon': isShowAsiaIcon
+            'show-asia-airplane-icon': isShowAsiaIcon,
           }"
         >
           mdi-airplane
@@ -147,7 +147,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-asia-text': !isShowAsiaIcon,
-            'show-asia-text': isShowAsiaIcon
+            'show-asia-text': isShowAsiaIcon,
           }"
           id="asia-setting-location"
         >
@@ -168,7 +168,7 @@
         <v-icon
           :class="{
             'disappeared-oceania-airplane-icon': !isShowOceaniaIcon,
-            'show-oceania-airplane-icon': isShowOceaniaIcon
+            'show-oceania-airplane-icon': isShowOceaniaIcon,
           }"
         >
           mdi-airplane
@@ -177,7 +177,7 @@
           :class="{
             'font-change-continent': true,
             'disappeared-oceania-text': !isShowOceaniaIcon,
-            'show-oceania-text': isShowOceaniaIcon
+            'show-oceania-text': isShowOceaniaIcon,
           }"
           id="oceania-setting-location"
         >
@@ -197,6 +197,8 @@
 </template>
 
 <script>
+const sound = new Audio(require("@/assets/audio/airplane.wav"));
+
 export default {
   name: "WorldMapDivision",
   data: function() {
@@ -206,7 +208,7 @@ export default {
       isShowEuropeIcon: false,
       isShowAfricaIcon: false,
       isShowAsiaIcon: false,
-      isShowOceaniaIcon: false
+      isShowOceaniaIcon: false,
     };
   },
   methods: {
@@ -238,47 +240,65 @@ export default {
     // 대륙별 아이콘 후버
     // 북미
     overNorthAmerica: function() {
+      sound.play();
       this.isShowNorthIcon = true;
     },
     leaveNorthAmerica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowNorthIcon = false;
     },
     // 남미
     overSouthAmerica: function() {
+      sound.play();
       this.isShowSouthIcon = true;
     },
     leaveSouthAmerica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowSouthIcon = false;
     },
     // 유럽
     overEurope: function() {
+      sound.play();
       this.isShowEuropeIcon = true;
     },
     leaveEurope: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowEuropeIcon = false;
     },
     // 아프리카
     overAfrica: function() {
+      sound.play();
       this.isShowAfricaIcon = true;
     },
     leaveAfrica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowAfricaIcon = false;
     },
     // 아시아
     overAsia: function() {
+      sound.play();
       this.isShowAsiaIcon = true;
     },
     leaveAsia: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowAsiaIcon = false;
     },
     // 오세아니아
     overOceania: function() {
+      sound.play();
       this.isShowOceaniaIcon = true;
     },
     leaveOceania: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowOceaniaIcon = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,7 +6,7 @@
     <v-btn
       elevation="6"
       fab
-      color="amber"
+      color="orange darken-3"
       style="position:fixed; right:20px; top:100px; color:white;"
       @click="goToWorldmap"
     >
