@@ -128,7 +128,7 @@
         <span
           class="user-hover-event-goto-profile d-flex justify-center"
           style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
-          @click="gotoProfilePage"
+          @click="gotoGetArticlesPage"
         >
           {{ author }}
         </span>
@@ -152,7 +152,7 @@
         </div>
       </div>
     </div>
-    <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
+    <v-overlay :fixed="true" :value="checkPayment" :opacity="0.8">
       <div class="d-flex justify-center" style="font-size: 24px;">
         해당 게시물의 VR을 보시려면
         <br /><br />
@@ -171,6 +171,11 @@
         </v-btn>
       </div>
     </v-overlay>
+    <GetUserArticles
+      :getArticles = "getArticles"
+      :author = "author"
+      @exitGetUserArticles = "exitGetUserArticles"
+    />
   </div>
 </template>
 
@@ -178,10 +183,12 @@
 import Flipbook from "flipbook-vue";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
+import GetUserArticles from "@/components/GetUserArticles.vue";
 
 export default {
   components: {
     Flipbook,
+    GetUserArticles,
   },
   data: function() {
     return {
@@ -198,6 +205,7 @@ export default {
       isSelectLike: false, // 좋아요는 손봐야 합니다.
       premium: false,
       checkPayment: false,
+      getArticles: false,
     };
   },
   mounted() {
@@ -243,6 +251,18 @@ export default {
     this.setPageFromHash();
   },
   methods: {
+    gotoGetArticlesPage: function () {
+      this.getArticles = true
+      // 자기꺼를 누르면 자기 프로필로 이동하게 만듬. 아니라면 해당 author의 게시물 출력.
+      if (this.author === this.$store.state.Auth.authToken.username) {
+        this.$router.push({name:"Profile"})
+      }
+    },
+    exitGetUserArticles: function (data) {
+      this.getArticles = data
+      // 프로필에서 들어가고 나올 땐, 이 함수 밑에 axios는 신경 안 써도 됩니당.
+      this.$router.push({name:"PhotoView"})
+    },
     clickGotoPhotoView() {
       this.$router.push({ name: "PhotoView" });
     },
@@ -268,10 +288,6 @@ export default {
     },
     clickGoBack: function() {
       this.$router.push({ name: localStorage.getItem("page") });
-    },
-    gotoProfilePage: function() {
-      localStorage.setItem("setUserforProfile", this.author);
-      this.$router.push({ name: "Profile" });
     },
     // 좋아요는 손볼게 많음. 서로 연동해야 되는 부분이 있어서
     likeThisArticle: function() {
