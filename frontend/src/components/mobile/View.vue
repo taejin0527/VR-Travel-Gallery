@@ -14,12 +14,12 @@
       style="position:fixed; right:0px; height:100%; width:50%;"
       @click="righttoImage"
     ></div>
-    <v-overlay :absolute="absolute" :value="firstOverlay">
+    <v-overlay :fixed="absolute" :value="firstOverlay">
       <v-btn color="#DDA288" @click="firstOverlay = false">
         첫번째 사진입니다
       </v-btn>
     </v-overlay>
-    <v-overlay :absolute="absolute" :value="lastOverlay">
+    <v-overlay :fixed="absolute" :value="lastOverlay">
       <v-btn color="#DDA288" @click="lastOverlay = false">
         마지막 사진입니다
       </v-btn>
@@ -64,7 +64,7 @@
     >
       <span style="font-size:22px">VR</span>
     </v-btn>
-    <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
+    <v-overlay :fixed="true" :value="checkPayment" :opacity="0.8">
       <div class="d-flex justify-center" style="font-size: 18px;">
         해당 게시물의 VR을 보시려면
         <br /><br />
