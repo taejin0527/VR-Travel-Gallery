@@ -66,37 +66,37 @@ export default {
           image: require("@/assets/images/aboutPage/member1.png"),
           name: "DongGeol Kim",
           role: "[Backend] Leader Developer",
-          desc: "Database, Springboot"
+          desc: "Database, Springboot",
         },
         {
           category: "1, 3",
           image: require("@/assets/images/aboutPage/member2.png"),
           name: "MinHo Jang",
           role: "[Frontend] [VR] Developer",
-          desc: ""
+          desc: "",
         },
         {
           category: "2",
           image: require("@/assets/images/aboutPage/member3.png"),
           name: "TaeJin Kim",
           role: "[Backend] Developer",
-          desc: ""
+          desc: "",
         },
         {
           category: "1",
           image: require("@/assets/images/aboutPage/member4.png"),
           name: "TaeWan Gu",
           role: "[Frontend] Developer",
-          desc: ""
+          desc: "",
         },
         {
           category: "3",
           image: require("@/assets/images/aboutPage/member5.png"),
           name: "SoJin Kwan",
           role: "Early member",
-          desc: ""
-        }
-      ]
+          desc: "",
+        },
+      ],
     };
   },
   mounted() {
@@ -108,7 +108,7 @@ export default {
       $(".portfolio-filter-menu li").removeClass("active");
       $(this).addClass("active");
     });
-  }
+  },
 };
 </script>
 
@@ -157,7 +157,7 @@ export default {
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
-  color: #444;
+  color: #fff;
   letter-spacing: 1px;
   transition: 0.4s ease-in-out;
   padding: 10px 20px;

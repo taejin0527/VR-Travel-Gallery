@@ -439,7 +439,7 @@ export default {
 
 .file-upload-wrapper {
   margin: 20px;
-  background-color: #5a4e4d;
+  background-color: #4f4544;
   min-height: 350px;
   font-size: 15px;
   display: flex;
