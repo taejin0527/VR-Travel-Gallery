@@ -23,7 +23,7 @@ public class PayInfoServiceImpl implements PayInfoService{
 	@Override
 	public int getPayRequest(String username, long no) {
 		// TODO Auto-generated method stub
-		return payInfoRepository.getgetPayRequest(username,no);
+		return payInfoRepository.getPayRequest(username,no);
 	}
 
 	@Transactional
@@ -39,7 +39,9 @@ public class PayInfoServiceImpl implements PayInfoService{
 			int cuser = userRepository.findByUsername(userName).get().getMoney();
 //			결제정보 저장
 			userRepository.upDateMoney(cuser+3,userName);
-		
+			payInfoDto.setCost(3);
+			payInfoRepository.save(payInfoDto.toEntity());
+			
 		}catch(Exception e) {
 			System.out.println(e);
 			return false;
@@ -47,7 +49,19 @@ public class PayInfoServiceImpl implements PayInfoService{
 		
 		return true;
 	}
+	@Transactional
+	public boolean createInfo(PayInfoDto payInfoDto) {
+		try {
 
+			payInfoDto.setCost(0);
+			payInfoRepository.save(payInfoDto.toEntity());
+		}catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		
+		return true;
+	}
 	
 
 }
