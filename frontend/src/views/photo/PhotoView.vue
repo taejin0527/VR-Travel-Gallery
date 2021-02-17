@@ -286,6 +286,7 @@ export default {
             }
           )
           .then((res) => {
+            console.log(res.data)
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
             } else {
