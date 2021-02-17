@@ -133,7 +133,7 @@ export default {
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
   .adjust-grid-container {
-    padding: 80px 0px 0px 130px;
+    padding: 80px 130px 0px 130px;
   }
   .adjust-grid-image {
     width: 450px;
