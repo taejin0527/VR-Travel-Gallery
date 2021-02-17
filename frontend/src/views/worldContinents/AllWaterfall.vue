@@ -122,10 +122,12 @@
     <v-container class="adjust-grid-container">
       <div style="width:100%; height: 20px;"></div>
       <div style="width:100%; height: 20px;"></div>
-      <div style="width:100%; height: 60px; font-size:30px; color:white;">
+      <div style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';">
         The World
       </div>
-      <div style="width:100%; height: 20px;"></div>
+      <div style="width:100%; height: 10px;"></div>
+      <hr>
+      <div style="width:100%; height: 35px;"></div>
       <v-row>
         <v-col
           v-for="(image, idx) in images"
@@ -135,17 +137,18 @@
           md="4"
         >
           <!-- 이미지 가져오는 코드 -->
-          <!-- Blob 처리로 URL을 가져와 이미지를 보여줄 예정 -->
-          <img
-            :src="`${image}`"
-            alt="image error"
-            :class="{
-              'adjust-grid-image': true,
-              'opacity-event-for-waterfall': true,
-            }"
-            style="cursor:pointer; height: 250px"
-            @click="gotoSelectArticle(idx)"
-          />
+          <div class="d-flex justify-center">
+            <img
+              :src="`${image}`"
+              alt="image error"
+              :class="{
+                'adjust-grid-image': true,
+                'opacity-event-for-waterfall': true,
+              }"
+              style="cursor:pointer;"
+              @click="gotoSelectArticle(idx)"
+            />
+          </div>
           <br />
           <!-- 태그 보여주는 코드 -->
           <v-chip-group
@@ -156,9 +159,9 @@
             <v-chip
               v-for="(item, i) in tags[idx]"
               :key="i"
-              style="background-color:#DD6288; color:white;"
+              style="background-color:grey; color:white;"
               class="tag-hover-event-class"
-              @click="gotoSearch(item)"
+              @click="gotoSearch(item.tag)"
             >
               {{ item.tag }}
             </v-chip>
@@ -380,6 +383,13 @@ export default {
   font-style: normal;
 }
 
+@font-face {
+    font-family: 'MapoFlowerIsland';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .change-font-more-articles {
   font-family: "TmoneyRoundWindRegular";
   font-size: 20px;
@@ -431,7 +441,7 @@ export default {
     padding: 80px 0px 0px 0px;
   }
   .adjust-grid-image {
-    width: 400px;
+    width: 380x;
   }
 }
 
@@ -441,7 +451,7 @@ export default {
     padding: 80px 0px 0px 130px;
   }
   .adjust-grid-image {
-    width: 450px;
+    width: 400px;
   }
 }
 
