@@ -392,6 +392,7 @@ public class BoardController {
 		String result= "";
 		long userId = Long.parseLong(userid);
 		boolean answer = userService.findUser(userId,username);
+		System.out.println(answer);
 //		해당사용자가 있음
 		if(answer) {
 			long no = Long.parseLong(id);
@@ -470,7 +471,7 @@ public class BoardController {
 			payInfoDto.setCost(0);
 			payInfoDto.setUsername(writer);
 			payInfoDto.setPostid(id);
-			payInfoService.saveInfo(payInfoDto);
+			payInfoService.createInfo(payInfoDto);
 			//메인 이미지 작성
 			String origname = main.getOriginalFilename();
 			String expend="";

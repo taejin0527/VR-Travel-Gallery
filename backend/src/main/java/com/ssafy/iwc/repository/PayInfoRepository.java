@@ -12,6 +12,6 @@ public interface PayInfoRepository extends JpaRepository<PayInfo, Long>{
 	
 	
 	@Query(value = "select count(id) from payinfo where username = ? and postid = ?",nativeQuery = true)
-	int getgetPayRequest(String username, long no);
+	int getPayRequest(String username, long no);
 
 }
