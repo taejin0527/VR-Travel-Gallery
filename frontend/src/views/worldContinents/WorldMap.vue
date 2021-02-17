@@ -6,29 +6,7 @@
       <MobileWorldMap class="adjust-grid-system" />
       <div class="adjust-grid-system-reverse">
         <SideNavBar />
-        <v-btn
-          elevation="3"
-          fab
-          color="#DDA288"
-          style="position:fixed; right:95px; top:20px; color:white;"
-          @click="clickGotoCreate"
-        >
-          <v-icon>
-            mdi-image-plus
-          </v-icon>
-        </v-btn>
-        <v-btn
-          elevation="3"
-          fab
-          color="#DDA288"
-          style="position:fixed; right:20px; top:20px; color:white;"
-          @click="clickChangeContinentViewButton"
-        >
-          <span v-if="popularExhibition"> ALL </span>
-          <v-icon v-else>
-            mdi-star
-          </v-icon>
-        </v-btn>
+
         <!-- 검색 버튼 및 입력창 -->
         <div
           v-if="isSelectSearch && windowWidth > 500"
@@ -77,6 +55,9 @@
           color="#DDA288"
           style="position:fixed; right:170px; top:20px; color:white; transition:0.5s; z-index: 2;"
           @click="isSelectSearch = true"
+          v-intro="`장소, 태그를 입력해서 검색`"
+          v-intro-position="'left'"
+          v-intro-step="3"
         >
           <v-icon>
             mdi-image-search
@@ -118,6 +99,39 @@
           </v-menu>
         </div>
 
+        <!-- 이미지 업로드 버튼 -->
+        <v-btn
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:95px; top:20px; color:white;"
+          @click="clickGotoCreate"
+          v-intro="`새 게시물 작성 (이미지 업로드)`"
+          v-intro-position="'left'"
+          v-intro-step="4"
+        >
+          <v-icon>
+            mdi-image-plus
+          </v-icon>
+        </v-btn>
+
+        <!-- 워터폴(ALL) 버튼 -->
+        <v-btn
+          elevation="3"
+          fab
+          color="#DDA288"
+          style="position:fixed; right:20px; top:20px; color:white;"
+          @click="clickChangeContinentViewButton"
+          v-intro="`Waterfall 방식으로 보기(전체 게시물)`"
+          v-intro-position="'bottom'"
+          v-intro-step="5"
+        >
+          <span v-if="popularExhibition"> ALL </span>
+          <v-icon v-else>
+            mdi-star
+          </v-icon>
+        </v-btn>
+
         <v-container>
           <v-row>
             <v-col cols="12">
@@ -126,6 +140,27 @@
             </v-col>
           </v-row>
         </v-container>
+
+        <!-- 가운데 하단 Tips 픽스 -->
+        <div
+          style="
+              position: fixed;
+              height: 10%;
+              top: 54%;
+              left: 30px;
+              z-index: 2;
+            "
+        >
+          <img
+            src="@/assets/3DHelp3.png"
+            alt=""
+            width="80px"
+            :class="{ 'select-tips-transition': isSelectTips }"
+            @mouseover="isSelectTips = true"
+            @mouseleave="isSelectTips = false"
+            @click="activeIntro"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -224,5 +259,13 @@ export default {
   .adjust-grid-system-reverse {
     display: unset;
   }
+}
+
+.select-tips-transition {
+  animation-duration: 0.8s;
+  animation-name: tipsbeat;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
 }
 </style>
