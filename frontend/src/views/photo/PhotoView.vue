@@ -48,6 +48,20 @@
         </v-icon>
       </v-btn>
 
+      <!-- 3D PhotoBook 페이지로 가는 버튼 -->
+      <v-btn
+        elevation="3"
+        fab
+        color="indigo"
+        dark
+        style="position:fixed; right:120px; top:120px; color:white; z-index: 101;"
+        @click="clickGoto3DBook"
+      >
+        <v-icon>
+          mdi-book-open-page-variant-outline
+        </v-icon>
+      </v-btn>
+
       <!-- VR 페이지로 가는 버튼 -->
       <v-badge
         avatar
@@ -260,7 +274,9 @@ export default {
       for (const t in payload) {
         this.vfTransitions.push(payload[t]);
       }
-      console.log(this.vfTransitions);
+    },
+    clickGoto3DBook: function() {
+      this.$router.push({ name: "Photobook3D" });
     },
     clickGotoFlipbook: function() {
       this.$router.push({ name: "Flipbook" });
@@ -286,7 +302,7 @@ export default {
             }
           )
           .then((res) => {
-            console.log(res.data)
+            console.log(res.data);
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
             } else {

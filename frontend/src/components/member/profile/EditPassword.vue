@@ -19,6 +19,28 @@
             <input
               @blur="blurPassword"
               class="card-input__input"
+              :value="formData.password"
+              autocomplete="off"
+            />
+            <button
+              class="card-input__eye"
+              title="Show/Hide card number"
+              tabindex="-1"
+              @click="toggleMask"
+            ></button>
+          </div>
+
+          <v-divider inset></v-divider>
+          <v-spacer></v-spacer>
+
+          <!-- 새 비밀번호  -->
+          <div class="card-input">
+            <label for="password" class="card-input__label">
+              새 비밀번호
+            </label>
+            <input
+              @blur="blurPassword"
+              class="card-input__input"
               :value="formData.pwd"
               autocomplete="off"
             />
@@ -29,10 +51,11 @@
               @click="toggleMask"
             ></button>
           </div>
-          <!-- 비밀번호 확인 -->
+
+          <!-- 새 비밀번호 확인 -->
           <div class="card-input">
             <label for="password" class="card-input__label">
-              비밀번호 확인
+              새 비밀번호 확인
             </label>
             <input
               @blur="blurPassword"
@@ -68,12 +91,13 @@ export default {
   data() {
     return {
       formData: {
+        password: "",
         pwd: "",
         pwdConfirm: "",
         pwdNotMask: "",
-        pwdConfirmNotMask: ""
+        pwdConfirmNotMask: "",
       },
-      isPasswordMasked: false
+      isPasswordMasked: false,
     };
   },
   methods: {
@@ -107,7 +131,7 @@ export default {
     },
     changeProfile() {
       console.log(this.formData);
-    }
-  }
+    },
+  },
 };
 </script>

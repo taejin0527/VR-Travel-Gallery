@@ -10,7 +10,13 @@
       <v-toolbar flat color="#DDA288" dark>
         <v-toolbar-title>Slide Options</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon @click="saveOption">
+
+        <v-btn color="error" elevation="10" @click="saveCancel">
+          <span> CANCEL </span>
+          <v-icon>mdi-close-box</v-icon>
+        </v-btn>
+        <v-btn color="secondary" elevation="10" @click="saveOption">
+          <span> SAVE </span>
           <v-icon>mdi-content-save</v-icon>
         </v-btn>
       </v-toolbar>
@@ -116,10 +122,20 @@ export default {
     ],
     pick1: [],
     pick2: [],
+    prePick1: [],
+    prePick2: [],
     vfTransitions: [],
   }),
   methods: {
+    saveCancel() {
+      this.pick1 = this.prePick1;
+      this.pick2 = this.prePick2;
+      this.dialog = false;
+    },
     saveOption() {
+      this.prePick1 = this.pick1;
+      this.prePick2 = this.pick2;
+
       this.vfTransitions = [];
       for (const i in this.pick1) {
         this.vfTransitions.push(this.transitions2D[this.pick1[i]]);
