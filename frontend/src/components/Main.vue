@@ -102,7 +102,7 @@
             :class="{ 'disappeared-VR-icon': isShowVRIcon }"
             @mouseover="disappearVRIcon"
             @mouseleave="showVRIcon"
-            @click="gotoVRContents"
+            @click="overlay = true"
           />
         </div>
       </v-col>
@@ -132,7 +132,31 @@
         @mouseleave="isSelectTips = false"
         @click="activeIntro"
       />
-    </div> -->
+    </div>
+    <!-- VR 오버레이 페이지 -->
+    <v-overlay :fixed="true" :opacity="0.9" :value="overlay">
+      <div style="text-align:center;">
+        <v-btn color="#DDA288" @click="gotoFirstExhibition" style="color:white">
+          첫 번째 전시관
+        </v-btn>
+      </div>
+      <br /><br /><br />
+      <div style="text-align:center;">
+        <v-btn
+          color="#DDA288"
+          @click="gotoSecondExhibition"
+          style="color:white"
+        >
+          두 번째 전시관
+        </v-btn>
+      </div>
+      <br /><br /><br />
+      <div style="text-align:center;">
+        <v-btn color="#DDA288" @click="overlay = false" style="color:white">
+          돌아가기
+        </v-btn>
+      </div>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -153,6 +177,7 @@ export default {
       isShowMapIcon: false,
       isShowVRIcon: false,
       isSelectTips: false,
+      overlay: false
     };
   },
   methods: {
@@ -161,9 +186,12 @@ export default {
       this.$router.push({ name: "WorldMap" });
     },
 
-    // VR로 가는 버튼 액션 / 아직 구현 못함
-    gotoVRContents: function() {
-      console.log("아직 구현 못 함");
+    // VR 전시관으로 감.
+    gotoFirstExhibition: function() {
+      window.location.href = "https://hubs.mozilla.com/scenes/VkhFoTD";
+    },
+    gotoSecondExhibition: function() {
+      window.location.href = "https://hubs.mozilla.com/scenes/hG7nZSY";
     },
 
     // 맵 아이콘 애니메이션
