@@ -2,7 +2,10 @@
   <div style="width:100%; height:100%;">
     <!-- 오른쪽 상단 Tips 픽스 -->
     <div class="tips">
-      <SlideOptions @optionChanged="vfOptionChanged" />
+      <SlideOptions
+        v-if="windowWidth > 500 && windowHeight > 450"
+        @optionChanged="vfOptionChanged"
+      />
     </div>
 
     <MobileView
@@ -139,7 +142,7 @@
         <span
           class="user-hover-event-goto-profile d-flex justify-center"
           style="color:#DDA288; text-align:center; font-size:35px; font-family:'SDSamliphopangche_Outline';"
-          @click="gotoProfilePage"
+          @click="gotoGetArticlesPage"
         >
           {{ author }}
         </span>
@@ -163,7 +166,7 @@
         </div>
       </div>
     </div>
-    <v-overlay :absolute="absolute" :value="showTipsOverlay" :opacity="0.8">
+    <v-overlay :fixed="absolute" :value="showTipsOverlay" :opacity="0.8">
       오른쪽 화면을 누르면 <br /><br />
       다음 사진으로 넘김니다.
       <pre></pre>
@@ -176,7 +179,7 @@
         </v-btn>
       </div>
     </v-overlay>
-    <v-overlay :absolute="absolute" :value="checkPayment" :opacity="0.8">
+    <v-overlay :fixed="absolute" :value="checkPayment" :opacity="0.8">
       <div class="d-flex justify-center" style="font-size: 24px;">
         해당 게시물의 VR을 보시려면
         <br /><br />
@@ -195,6 +198,11 @@
         </v-btn>
       </div>
     </v-overlay>
+    <GetUserArticles
+      :getArticles = "getArticles"
+      :author = "author"
+      @exitGetUserArticles = "exitGetUserArticles"
+    />
   </div>
 </template>
 
@@ -211,6 +219,7 @@ import SERVER from "@/apis/UrlMapper.ts";
 
 import MobileView from "@/components/mobile/View.vue";
 import SlideOptions from "@/components/photo/SlideOptions.vue";
+import GetUserArticles from "@/components/GetUserArticles.vue";
 
 export default {
   components: {
@@ -221,6 +230,7 @@ export default {
     FluxPreloader,
     MobileView,
     SlideOptions,
+    GetUserArticles,
   },
   data: () => ({
     fab: false,
@@ -238,6 +248,7 @@ export default {
     showTipsOverlay: false,
     premium: false,
     checkPayment: false,
+    getArticles: false,
   }),
   computed: {
     user() {
@@ -269,6 +280,40 @@ export default {
       });
   },
   methods: {
+    gotoGetArticlesPage: function () {
+      this.getArticles = true
+      // 자기꺼를 누르면 자기 프로필로 이동하게 만듬. 아니라면 해당 author의 게시물 출력.
+      if (this.author === this.$store.state.Auth.authToken.username) {
+        this.$router.push({name:"Profile"})
+      }
+    },
+    exitGetUserArticles: function (data) {
+      this.getArticles = data
+      // 프로필에서 들어가고 나올 땐, 이 함수 밑에 axios는 신경 안 써도 됩니당.
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
+            "articleId"
+          )}&username=${this.$store.state.Auth.authToken.username}`
+        )
+        .then((response) => {
+          if (response.data.like === "false") {
+            this.isSelectLike = false;
+          } else {
+            this.isSelectLike = true;
+          }
+          this.premium = response.data.board.premium;
+          this.author = response.data.board.author;
+          this.vfImages = []
+          this.vfImages.push(response.data.filePath);
+          for (let i = 0; i < response.data.subPath.length; i++) {
+            this.vfImages.push(response.data.subPath[i]);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     vfOptionChanged: function(payload) {
       this.vfTransitions = [];
       for (const t in payload) {
@@ -353,10 +398,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    },
-    gotoProfilePage: function() {
-      localStorage.setItem("setUserforProfile", this.author);
-      this.$router.push({ name: "Profile" });
     },
     // 좋아요
     likeThisArticle: function() {
@@ -469,7 +510,7 @@ export default {
   width: 90px;
   top: 20px;
   right: 80px;
-  z-index: 101;
+  z-index: 11;
 }
 
 .select-like-transition {
