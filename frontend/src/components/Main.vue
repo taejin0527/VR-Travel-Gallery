@@ -8,7 +8,7 @@
     :style="{
       'background-image':
         'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
-      'background-position': 'center'
+      'background-position': 'center',
     }"
   >
     <v-row align="center" justify="center">
@@ -20,7 +20,7 @@
             alt=""
             :class="{
               'disappeared-hidden-map-icon': !isShowMapIcon,
-              'show-hidden-map-icon': isShowMapIcon
+              'show-hidden-map-icon': isShowMapIcon,
             }"
             width="170px"
             height="150px"
@@ -28,7 +28,7 @@
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
-              'show-airplane-icon': isShowMapIcon
+              'show-airplane-icon': isShowMapIcon,
             }"
           >
             mdi-airplane
@@ -83,7 +83,7 @@
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
-              'show-hidden-VR-icon': isShowVRIcon
+              'show-hidden-VR-icon': isShowVRIcon,
             }"
           />
         </div>
@@ -111,7 +111,7 @@
       <v-col cols="2"> </v-col>
     </v-row>
     <!-- 오른쪽 상단 Tips 픽스 -->
-    <div
+    <!-- <div
       style="
               position: fixed;
               height: 10%;
@@ -170,7 +170,7 @@ export default {
   components: {
     NUVOExplanation,
     WorldMapExplanation,
-    VRExplanation
+    VRExplanation,
   },
   data: function() {
     return {
@@ -183,10 +183,6 @@ export default {
   methods: {
     // 월드 맵으로 가는 버튼 액션
     gotoWorldMap: function() {
-      const sound = new Audio(
-        require("@/assets/audio/fasten_your_seatbelt.mp3")
-      );
-      sound.play();
       this.$router.push({ name: "WorldMap" });
     },
 
@@ -200,8 +196,6 @@ export default {
 
     // 맵 아이콘 애니메이션
     disappearMapIcon: function() {
-      const sound = new Audio(require("@/assets/audio/navSound.wav"));
-      sound.play();
       this.isShowMapIcon = true;
     },
     showMapIcon: function() {
@@ -210,8 +204,6 @@ export default {
 
     // VR 아이콘 애니메이션
     disappearVRIcon: function() {
-      const sound = new Audio(require("@/assets/audio/navSound.wav"));
-      sound.play();
       this.isShowVRIcon = true;
     },
     showVRIcon: function() {
@@ -220,8 +212,8 @@ export default {
     activeIntro() {
       this.$intro().start(); // start the guide
       this.$intro().showHints(); // show hints
-    }
-  }
+    },
+  },
 };
 </script>
 
