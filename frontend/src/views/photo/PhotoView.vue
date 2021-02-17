@@ -1,48 +1,10 @@
 <template>
   <div style="width:100%; height:100%;">
     <!-- 오른쪽 상단 Tips 픽스 -->
-    <div
-      v-if="windowWidth < 500 || windowHeight < 450"
-      style="
-              position: fixed;
-              height: 10%;
-              margin: 0;
-              padding: 0;
-              width: 90px;
-              top: 20px;
-              right: 20px;
-              z-index: 101;
-            "
-    >
-      <img
-        src="@/assets/3DHelp3.png"
-        alt=""
-        @click="showTipsOverlay = true"
-        width="90px"
-      />
+    <div class="tips">
+      <SlideOptions @optionChanged="vfOptionChanged" />
     </div>
-    <div
-      v-else
-      style="
-              position: fixed;
-              height: 10%;
-              margin: 0;
-              padding: 0;
-              width: 100px;
-              top: 15px;
-              right: 50px;
-              z-index: 101;
-            "
-    >
-      <img
-        src="@/assets/3DHelp3.png"
-        alt=""
-        width="120px"
-        :class="{ 'select-tips-transition': isSelectTips }"
-        @mouseover="isSelectTips = true"
-        @mouseleave="isSelectTips = false"
-      />
-    </div>
+
     <MobileView
       v-if="windowWidth < 500 || windowHeight < 450"
       :vfImages="vfImages"
@@ -232,7 +194,9 @@ import {
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
+
 import MobileView from "@/components/mobile/View.vue";
+import SlideOptions from "@/components/photo/SlideOptions.vue";
 
 export default {
   components: {
@@ -242,6 +206,7 @@ export default {
     FluxPagination,
     FluxPreloader,
     MobileView,
+    SlideOptions,
   },
   data: () => ({
     fab: false,
@@ -250,7 +215,7 @@ export default {
     },
     vfImages: [],
     author: "",
-    vfTransitions: ["fade", "cube", "book", "wave", "camera"],
+    vfTransitions: ["Kenburn"],
     isSelectTips: false,
     isSelectLike: false,
     windowWidth: window.innerWidth,
@@ -290,6 +255,13 @@ export default {
       });
   },
   methods: {
+    vfOptionChanged: function(payload) {
+      this.vfTransitions = [];
+      for (const t in payload) {
+        this.vfTransitions.push(payload[t]);
+      }
+      console.log(this.vfTransitions);
+    },
     clickGotoFlipbook: function() {
       this.$router.push({ name: "Flipbook" });
     },
@@ -470,6 +442,17 @@ export default {
     transform: scale(1.3);
     color: #ff8288;
   }
+}
+
+.tips {
+  position: fixed;
+  height: 10%;
+  margin: 0;
+  padding: 0;
+  width: 90px;
+  top: 20px;
+  right: 80px;
+  z-index: 101;
 }
 
 .select-like-transition {
