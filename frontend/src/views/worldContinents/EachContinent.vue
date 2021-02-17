@@ -1,6 +1,35 @@
 <template>
   <v-main>
     <SideNavBar />
+
+    <!-- 월드맵 돌아가기 -->
+    <v-btn
+      elevation="6"
+      fab
+      color="amber"
+      style="position:fixed; right:20px; top:100px; color:white;"
+      @click="goToWorldmap"
+    >
+      <v-icon>
+        mdi-map-search
+      </v-icon>
+    </v-btn>
+
+    <!-- Waterfall 방식 / 대륙 지도 뷰어 -->
+    <v-btn
+      elevation="3"
+      fab
+      color="#DDA288"
+      style="position:fixed; right:20px; top:20px; color:white;"
+      @click="clickChangeContinentViewButton"
+    >
+      <span v-if="popularExhibition"> ALL </span>
+      <v-icon v-else>
+        mdi-star
+      </v-icon>
+    </v-btn>
+
+    <!-- 새 포스트 작성 -->
     <v-btn
       elevation="3"
       fab
@@ -9,7 +38,7 @@
       @click="clickGotoCreate"
     >
       <v-icon>
-        mdi-plus
+        mdi-image-plus
       </v-icon>
     </v-btn>
     <v-btn
@@ -192,7 +221,7 @@ export default {
         "Asia",
         "Africa",
         "Europe",
-        "Oceania"
+        "Oceania",
       ],
       selectContinent: "All",
       getContinentName: localStorage.getItem("continent"),
@@ -204,7 +233,7 @@ export default {
       indexs: [], // 게시물 id 리스트
       searchData: "",
       isSelectSearch: false,
-      pagingIndex: 0
+      pagingIndex: 0,
     };
   },
   // 대륙 이름 저장
@@ -219,9 +248,12 @@ export default {
     Asia,
     Africa,
     Europe,
-    SideNavBar
+    SideNavBar,
   },
   methods: {
+    goToWorldmap: function() {
+      this.$router.push({ name: "WorldMap" });
+    },
     // 각 대륙으로 이동
     clickChangeContinentViewButton: function() {
       this.popularExhibition = !this.popularExhibition;
@@ -239,8 +271,8 @@ export default {
         localStorage.setItem("searchData", this.searchData);
         this.$router.push({ name: "SearchWaterfall" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
