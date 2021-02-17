@@ -10,6 +10,7 @@
 
     <!-- 월드맵 돌아가기 -->
     <v-btn
+      v-if="windowWidth > 500 && windowHeight > 450"
       elevation="6"
       fab
       color="orange darken-3"
