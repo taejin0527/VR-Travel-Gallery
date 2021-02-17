@@ -1,5 +1,5 @@
 <template>
-  <v-container fulid class="home-intro" id="home">
+  <v-container fulid pa-0 my-10 class="home-intro" id="home">
     <v-container>
       <v-row>
         <v-col xs="12" sm="12" md="6" cols="12">
@@ -9,15 +9,14 @@
             <h2>Nouvueau</h2>
             <ul>
               <li>
-                <a href="" class="button">
-                  Android
-                  <v-icon>mdi-cellphone-android</v-icon>
-                </a>
+                <router-link to="/worldmap" class="button2">
+                  Get Start!
+                </router-link>
               </li>
               <li>
                 <a href="" class="button">
-                  iOS
-                  <v-icon>mdi-cellphone-iphone</v-icon>
+                  Android
+                  <v-icon>mdi-cellphone-android</v-icon>
                 </a>
               </li>
             </ul>
@@ -58,6 +57,7 @@ ul li {
   padding: 130px 0 150px !important;
   background-size: 58%;
   background-position: top right;
+  background-image: url("~@/assets/main/NUVOchangeColorShallow.png");
 }
 
 .home-intro .content-image {
@@ -69,7 +69,6 @@ ul li {
   max-width: 100%;
   display: inline-block;
   vertical-align: middle;
-  float: right;
   margin-top: 100px;
   border-radius: 40px;
   box-shadow: 0 12px 30px -15px #dda288;
@@ -123,6 +122,7 @@ ul li {
 
 /* button */
 .button {
+  text-decoration: none;
   background: #ffb005;
   padding: 12px 30px;
   font-weight: 500;
@@ -134,10 +134,29 @@ ul li {
   display: inline-block;
   border: 2px solid transparent;
 }
-
 .button:hover {
   border-color: #ffb005;
-  color: #222;
+  color: #ffb005;
+  background: transparent;
+  transition: 0.5s ease-out;
+}
+
+.button2 {
+  text-decoration: none;
+  background: #614cab;
+  padding: 12px 30px;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 5px;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-top: 22px;
+  display: inline-block;
+  border: 2px solid transparent;
+}
+.button2:hover {
+  border-color: #614cab;
+  color: #614cab;
   background: transparent;
   transition: 0.5s ease-out;
 }

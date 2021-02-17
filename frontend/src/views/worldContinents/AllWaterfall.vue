@@ -10,7 +10,7 @@
       @click="clickGotoCreate"
     >
       <v-icon>
-        mdi-plus
+        mdi-image-plus
       </v-icon>
     </v-btn>
 

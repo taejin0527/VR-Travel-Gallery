@@ -13,6 +13,7 @@
                       <v-card-title class="headline">My Profile</v-card-title>
 
                       <v-card-subtitle>
+                        <v-icon>mdi-shield-account</v-icon>
                         {{ authToken.username }}
                       </v-card-subtitle>
                       <v-card-actions>
@@ -36,30 +37,36 @@
 
             <v-row no-gutters>
               <v-col cols="12">
-                <v-card color="#8593ae" dark>
+                <v-card color="amber" dark>
                   <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
                       <v-card-title class="headline">My Credit</v-card-title>
 
-                      <v-card-subtitle>
-                        cardnumber
-                      </v-card-subtitle>
+                      <v-card-text>
+                        <v-icon>mdi-cash-multiple</v-icon>
+                        <span
+                          style="margin: 10px;background:#fff; color:#FFC107; font-size: 22px; border-radius: 10px"
+                        >
+                          {{ coinWallet }}
+                        </span>
+                        N-Coin
+                      </v-card-text>
                       <v-card-actions>
                         <v-btn
                           @click="goEditCard"
-                          class="ml-2 mt-5"
+                          class="ml-2"
                           outlined
                           rounded
                           small
                         >
-                          Edit card
+                          Charge Credit
                         </v-btn>
                       </v-card-actions>
                     </div>
                     <v-avatar class="ma-3" height="120" width="200" tile>
                       <v-img
                         :src="
-                          `https://www.shinhancard.com/pconts/images/contents/card/plate/cdCreditAXFBZE.png`
+                          `https://bankmeister.com/assets/images/card/693.png`
                         "
                       ></v-img>
                     </v-avatar>
@@ -127,58 +134,73 @@
 </template>
 
 <script>
+import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
 import { mapState } from "vuex";
 
 import EditPassword from "@/components/member/profile/EditPassword.vue";
 
 export default {
   components: {
-    EditPassword
+    EditPassword,
   },
   data() {
     return {
+      coinWallet: 0,
       cards: [
         {
           title: "나의 게시물",
           src: require("@/assets/images/unsplash/noiseporn-JNuKyKXLh8U-unsplash.jpg"),
-          flex: 12
+          flex: 12,
         },
         {
           title: "Follow",
           src: require("@/assets/images/unsplash/freestocks-Y9mWkERHYCU-unsplash.jpg"),
-          flex: 6
+          flex: 6,
         },
         {
           title: "Follwer",
           src: require("@/assets/images/unsplash/possessed-photography-ChiM2OuX5JQ-unsplash.jpg"),
-          flex: 6
-        }
+          flex: 6,
+        },
       ],
       items: [
         {
           color: "#1F7087",
           src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
           title: "Supermodel",
-          artist: "Foster the People"
+          artist: "Foster the People",
         },
         {
           color: "#952175",
           src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
           title: "Halcyon Days",
-          artist: "Ellie Goulding"
-        }
+          artist: "Ellie Goulding",
+        },
       ],
-      worldmapImg: require("@/assets/continents/worldmap.png")
+      worldmapImg: require("@/assets/continents/worldmap.png"),
     };
   },
+  created() {
+    axios
+      .get(
+        `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
+      )
+      .then((res) => {
+        this.coinWallet = res.data.money;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   computed: {
-    ...mapState("Auth", ["authToken"])
+    ...mapState("Auth", ["authToken"]),
   },
   methods: {
     goEditCard() {
-      this.$router.push({ name: "Paycard" });
-    }
-  }
+      this.$router.push({ name: "Pay" });
+    },
+  },
 };
 </script>
 
