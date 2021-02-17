@@ -13,4 +13,8 @@ public interface PayInfoService {
 
 	boolean saveInfo(PayInfoDto payInfoDto);
 
+
+
+	boolean createInfo(PayInfoDto payInfoDto);
+
 }
