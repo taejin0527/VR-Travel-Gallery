@@ -123,16 +123,20 @@
           ></v-text-field>
 
           <!-- tags는 리스트로 되어 있슴 -->
-
-          <v-select
-            v-model="tags"
-            :items="tags"
-            chips
-            dark
-            label="태그"
-            multiple
-            outlined
-          ></v-select>
+          <div class="text-center">
+            <v-chip
+              v-for="(tag, idx) in tags"
+              :key="idx"
+              class="ma-2"
+              close
+              @click:close="delTag(idx)"
+            >
+              <v-icon left>
+                mdi-label
+              </v-icon>
+              {{ tag }}
+            </v-chip>
+          </div>
 
           <v-row align="center" justify="center">
             <v-col cols="6">
@@ -140,7 +144,7 @@
                 dark
                 color="white"
                 label="#Tag입력"
-                v-model="tags[tagsIdx]"
+                v-model="tagInput"
               ></v-text-field>
             </v-col>
             <v-col cols="6">
@@ -152,10 +156,10 @@
               </v-btn>
             </v-col>
           </v-row>
-
-          <!-- submit 버튼 바꿈 -->
-          <div class="d-flex justify-end">
+          <v-row md="12">
+            <!-- submit 버튼 바꿈 -->
             <v-btn
+              block
               color="blue-grey"
               class="ma-2 white--text"
               @click="submitFile"
@@ -173,7 +177,7 @@
                 </v-icon>
               </div>
             </v-btn>
-          </div>
+          </v-row>
         </v-col>
       </v-row>
 
@@ -277,8 +281,8 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [], //보여줄 파일
       uploadImageIndex: 0, //이미지 업로드를 위한 변수
+      tagInput: "",
       tags: [], // 태그들
-      tagsIdx: 0, // 태그 번호
       nation: "", // 장소(국가)
       num: 0,
       mainImageData: null,
@@ -292,10 +296,12 @@ export default {
     clickGoBack: function() {
       this.$router.push({ name: localStorage.getItem("page") });
     },
-    addOneTagMore(e) {
-      this.tags.push("");
-      this.tagsIdx++;
-      console.log(this.tags);
+    addOneTagMore() {
+      this.tags.push(this.tagInput);
+      this.tagInput = "";
+    },
+    delTag(idx) {
+      this.tags.splice(idx, 1);
     },
     mainUpload() {
       this.main = [
