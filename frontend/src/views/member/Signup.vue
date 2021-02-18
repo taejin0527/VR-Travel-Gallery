@@ -5,7 +5,7 @@
       fab
       color="orange darken-3"
       style="position:fixed; right:25px; top:20px; color:white;"
-      @click="clickGotoWorldmap"
+      @click="clickGotoWorldMap"
     >
       <v-icon>
         mdi-map-search
@@ -108,6 +108,4 @@ export default {
 </script>
 
 <style scoped>
-.signup {
-}
 </style>

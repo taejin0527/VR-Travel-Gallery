@@ -27,7 +27,7 @@
         </v-col>
         <v-col xs="12" sm="12" md="6" cols="12" xl="5">
           <div class="content-image">
-            <img src="@/assets/main/NUVO.png" alt="" />
+            <img src="@/assets/NUVO.png" alt="" />
           </div>
         </v-col>
       </v-row>
@@ -60,7 +60,6 @@ ul li {
   padding: 130px 0 150px !important;
   background-size: 58%;
   background-position: top right;
-  background-image: url("~@/assets/main/NUVOchangeColorShallow.png");
 }
 
 .home-intro .content-image {
@@ -72,7 +71,6 @@ ul li {
   max-width: 100%;
   display: inline-block;
   vertical-align: middle;
-  margin-top: 100px;
   border-radius: 40px;
   box-shadow: 0 12px 30px -15px #dda288;
 }
