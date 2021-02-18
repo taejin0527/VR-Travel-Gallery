@@ -194,6 +194,14 @@ export default {
   border-radius: 15px;
 }
 
+@media (min-width: 1904px) {
+  .portfolio .content-image img {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+}
+}
+
 .portfolio .content-image img:visited {
   outline: none;
 }
