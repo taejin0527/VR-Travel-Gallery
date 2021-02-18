@@ -31,7 +31,7 @@
             @click="addMyList"
             :class="{
               'hover-event-goto-image-for-data': true,
-              'check-my-list': isCheckMyList
+              'check-my-list': isCheckMyList,
             }"
           >
             mdi-star
@@ -96,12 +96,12 @@ export default {
       like: [],
       ids: [],
       endPage: false,
-      isCheckMyList: false
+      isCheckMyList: false,
     };
   },
   props: {
     author: [String],
-    getArticles: [Boolean]
+    getArticles: [Boolean],
   },
   watch: {
     author() {
@@ -111,17 +111,17 @@ export default {
           `${SERVER.BASE_URL}auth/bookmarkcheck?targetname=${this.author}&username=${this.$store.state.Auth.authToken.username}`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-            }
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           this.isCheckMyList = !res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
-    }
+    },
   },
   methods: {
     getArticlesIncrease: function() {
@@ -131,19 +131,19 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}postgetusername?username=${this.author}&num=${this.indexPage}`
         )
-        .then(res => {
+        .then((res) => {
           this.images = [];
           this.locations = [];
           this.like = [];
           this.ids = [];
-          res.data.forEach(e => {
+          res.data.forEach((e) => {
             this.images.push(e.filePath);
             this.locations.push(e.board.location);
             this.like.push(e.board.good);
             this.ids.push(e.board.id);
           });
         })
-        .catch(err => {
+        .catch((err) => {
           alert("마지막 페이지 입니다.");
           this.endPage = true;
           console.error(err);
@@ -156,19 +156,19 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}postgetusername?username=${this.author}&num=${this.indexPage}`
         )
-        .then(res => {
+        .then((res) => {
           this.images = [];
           this.locations = [];
           this.like = [];
           this.ids = [];
-          res.data.forEach(e => {
+          res.data.forEach((e) => {
             this.images.push(e.filePath);
             this.locations.push(e.board.location);
             this.like.push(e.board.good);
             this.ids.push(e.board.id);
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.indexPage = this.indexPage + 1;
           console.error(err);
         });
@@ -185,7 +185,7 @@ export default {
               "articleId"
             )}`
           )
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
         this.$router.push({ name: "PhotoView" });
@@ -201,7 +201,7 @@ export default {
                 "articleId"
               )}`
             )
-            .catch(err => {
+            .catch((err) => {
               console.error(err);
             });
           this.indexPage = 0;
@@ -231,27 +231,28 @@ export default {
     // 추가하는 api 넣어야 함.
     addMyList: function() {
       const formData = new FormData();
-      this.isCheckMyList = !this.isCheckMyList;
+
       if (this.isCheckMyList) {
         formData.append("flag", "true");
       } else {
         formData.append("flag", "false");
       }
+      this.isCheckMyList = !this.isCheckMyList;
       formData.append("targetname", this.author);
       formData.append("username", this.$store.state.Auth.authToken.username);
 
       axios
         .post(`${SERVER.BASE_URL}auth/bookmark`, formData, {
           headers: {
-            Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-          }
+            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+          },
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           this.isCheckMyList = !this.isCheckMyList;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -13,10 +13,12 @@ export default {
       emailCheck: "auth/emailcheck",
       emailValidate: "auth/emailvalidate",
       changePwd: "auth/changepw",
+      getAllBookmarks: "auth/bookmarkall",
     },
     board: {
       delpost: "delpost",
       getpost: "postgetusername",
+      getpayment: "mypay",
     },
     files: {
       URL: "files/",

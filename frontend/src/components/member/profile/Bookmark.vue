@@ -4,46 +4,22 @@
       <!-- 전체 게시물(나의 게시물) -->
       <v-col v-for="(card, idx) in cards" :key="idx" cols="4">
         <v-card>
-          <v-img
-            :src="card.filePath"
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="200px"
-          >
-          </v-img>
           <v-card-title>
-            {{ card.board.location }}
+            {{ card }}
           </v-card-title>
 
           <v-card-subtitle>
-            <v-chip-group>
-              <v-chip
-                color="default text--default"
-                v-for="(obj, idx) in card.tags"
-                :key="idx"
-              >
-                {{ obj.tag }}
-              </v-chip>
-            </v-chip-group>
+            humm...
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn outlined rounded small>
+            <v-btn outlined rounded small @click="gotoGetArticlesPage(card)">
               View
-            </v-btn>
-            <v-btn color="error" outlined rounded small>
-              Delete
             </v-btn>
             <v-spacer></v-spacer>
 
             <v-btn icon>
               <v-icon>mdi-heart</v-icon>
-              {{ card.board.good }}
-            </v-btn>
-
-            <v-btn icon>
-              <v-icon>mdi-eye</v-icon>
-              {{ card.board.views }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -62,6 +38,12 @@
         @input="onPageChange"
       ></v-pagination>
     </v-row>
+
+    <GetUserArticles
+      :getArticles="getArticles"
+      :author="author"
+      @exitGetUserArticles="exitGetUserArticles"
+    />
   </v-container>
 </template>
 
@@ -69,36 +51,43 @@
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
 
+import GetUserArticles from "@/components/GetUserArticles.vue";
+
 export default {
+  components: {
+    GetUserArticles,
+  },
   data: () => ({
     cards: [],
     pageIdx: 1,
-    page: 100
+    page: 11,
+    author: "",
+    getArticles: false,
   }),
   props: ["user"],
   created() {
     axios
       .get(
-        `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=0&username=${this.user.username}`
+        `${SERVER.BASE_URL}${SERVER.ROUTES.auth.getAllBookmarks}?username=${this.user.username}`
       )
-      .then(res => {
+      .then((res) => {
         this.cards = res.data;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
     for (let i = 1; i < 10; i++) {
       axios
         .get(
-          `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=${i}&username=${this.user.username}`
+          `${SERVER.BASE_URL}${SERVER.ROUTES.auth.getAllBookmarks}?username=${this.user.username}`
         )
-        .then(res => {
+        .then((res) => {
           if (res.data == "End Page") {
             this.page = Math.min(this.page, i);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -111,14 +100,45 @@ export default {
             SERVER.ROUTES.board.getpost
           }?num=${newPage - 1}&username=${this.user.username}`
         )
-        .then(res => {
+        .then((res) => {
           this.cards = res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    }
-  }
+    },
+    gotoGetArticlesPage: function(targetname) {
+      this.getArticles = true;
+      this.author = targetname;
+    },
+    exitGetUserArticles: function(data) {
+      this.getArticles = data;
+      // 프로필에서 들어가고 나올 땐, 이 함수 밑에 axios는 신경 안 써도 됩니당.
+      axios
+        .get(
+          `${SERVER.BOARD_BASE_URL}getposts?id=${localStorage.getItem(
+            "articleId"
+          )}&username=${this.$store.state.Auth.authToken.username}`
+        )
+        .then((response) => {
+          if (response.data.like === "false") {
+            this.isSelectLike = false;
+          } else {
+            this.isSelectLike = true;
+          }
+          this.premium = response.data.board.premium;
+          this.author = response.data.board.author;
+          this.vfImages = [];
+          this.vfImages.push(response.data.filePath);
+          for (let i = 0; i < response.data.subPath.length; i++) {
+            this.vfImages.push(response.data.subPath[i]);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
 };
 </script>
 
