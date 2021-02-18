@@ -116,6 +116,18 @@ export default {
   watch: {
     author () {
       this.getArticlesIncrease()
+      axios
+        .get(`${SERVER.BASE_URL}auth/bookmarkcheck?targetname=${this.author}&username=${this.$store.state.Auth.authToken.username}`, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+          },
+        })
+        .then((res) => {
+          this.isCheckMyList = !res.data
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   },
   methods: {
@@ -227,8 +239,27 @@ export default {
     },
     // 추가하는 api 넣어야 함.
     addMyList: function () {
-      console.log(this.isCheckMyList)
+      const formData = new FormData();
       this.isCheckMyList = !this.isCheckMyList
+      if (this.isCheckMyList) {
+        formData.append("flag", "true");
+      }
+      else {
+        formData.append("flag", "false");
+      }
+      formData.append("targetname", this.author);
+      formData.append("username", this.$store.state.Auth.authToken.username);
+      
+      axios
+        .post(`${SERVER.BASE_URL}auth/bookmark`, formData, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+          },
+        })
+        .catch((err) => {
+          console.error(err);
+          this.isCheckMyList = !this.isCheckMyList
+        });
     }
   }
 }
