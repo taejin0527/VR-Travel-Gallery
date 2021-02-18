@@ -5,6 +5,29 @@
     class="mx-auto"
     style="background-color:#5a4e4d;"
   >
+  <v-overlay :fixed="true" :opacity="0.9" :value="overlay">
+    <div style="text-align:center;">
+      <v-btn color="#DDA288" @click="gotoFirstExhibition" style="color:white">
+        첫 번째 전시관
+      </v-btn>
+    </div>
+    <br /><br /><br />
+    <div style="text-align:center;">
+      <v-btn
+        color="#DDA288"
+        @click="gotoSecondExhibition"
+        style="color:white"
+      >
+        두 번째 전시관
+      </v-btn>
+    </div>
+    <br /><br /><br />
+    <div style="text-align:center;">
+      <v-btn color="#DDA288" @click="overlay = false" style="color:white">
+        돌아가기
+      </v-btn>
+    </div>
+  </v-overlay>
     <br /><br /><br /><br /><br /><br />
     <v-container v-if="windowWidth < windowHeight">
       <v-row dense>
@@ -150,15 +173,23 @@ export default {
   name: "MobileMain",
   data: () => ({
     windowWidth: window.innerWidth,
-    windowHeight: window.innerHeight
+    windowHeight: window.innerHeight,
+    overlay: false,
   }),
   methods: {
     gotoVR: function() {
-      console.log("VR URL 넣기");
+      this.overlay = true
     },
     gotoWorldmap: function() {
       this.$router.push({ name: "WorldMap" });
-    }
+    },
+        // VR 전시관으로 감.
+    gotoFirstExhibition: function() {
+      window.location.href = "https://hubs.mozilla.com/scenes/VkhFoTD";
+    },
+    gotoSecondExhibition: function() {
+      window.location.href = "https://hubs.mozilla.com/scenes/hG7nZSY";
+    },
   }
 };
 </script>

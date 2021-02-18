@@ -1,5 +1,16 @@
 <template>
   <v-container>
+    <v-btn
+      elevation="3"
+      fab
+      color="orange darken-3"
+      style="position:fixed; right:25px; top:20px; color:white;"
+      @click="clickGotoBack"
+    >
+      <v-icon>
+        mdi-arrow-left-bold-circle
+      </v-icon>
+    </v-btn>
     <v-row>
       <v-col cols="12">
         <div style="widht:100%; height:80px;"></div>
@@ -179,6 +190,9 @@ export default {
         .catch(function() {
           console.log("FAILURE");
         });
+    },
+    clickGotoBack() {
+      this.$router.push({name:"Profile"})
     }
   }
 };
