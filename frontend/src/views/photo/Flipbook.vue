@@ -161,11 +161,10 @@
         결제하시겠습니까?
         <br /><br />
       </div>
-      <div class="d-flex justify-center">
+      <div class="d-flex justify-space-around">
         <v-btn color="#DDA288" @click="checkWallet">
           결제
         </v-btn>
-        <pre></pre>
         <v-btn color="#DDA288" @click="checkPayment = false">
           아니오
         </v-btn>
