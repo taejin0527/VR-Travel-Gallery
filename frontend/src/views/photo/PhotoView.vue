@@ -30,7 +30,7 @@
           size="30px"
           :class="{
             'like-hover-event': true,
-            'select-like-transition': isSelectLike
+            'select-like-transition': isSelectLike,
           }"
           @click="likeThisArticle"
         >
@@ -52,7 +52,7 @@
       </v-btn>
 
       <!-- 3D PhotoBook 페이지로 가는 버튼 -->
-      <v-btn
+      <!-- <v-btn
         elevation="3"
         fab
         color="indigo"
@@ -63,7 +63,7 @@
         <v-icon>
           mdi-book-open-page-variant-outline
         </v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <!-- VR 페이지로 가는 버튼 -->
       <v-badge
@@ -211,7 +211,7 @@ import {
   FluxControls,
   FluxIndex,
   FluxPagination,
-  FluxPreloader
+  FluxPreloader,
 } from "vue-flux";
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
@@ -229,12 +229,12 @@ export default {
     FluxPreloader,
     MobileView,
     SlideOptions,
-    GetUserArticles
+    GetUserArticles,
   },
   data: () => ({
     fab: false,
     vfOptions: {
-      autoplay: false
+      autoplay: false,
     },
     vfImages: [],
     author: "",
@@ -247,12 +247,12 @@ export default {
     showTipsOverlay: false,
     premium: false,
     checkPayment: false,
-    getArticles: false
+    getArticles: false,
   }),
   computed: {
     user() {
       return this.$store.state.Auth.authToken;
-    }
+    },
   },
   mounted() {
     axios
@@ -261,7 +261,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then(response => {
+      .then((response) => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -274,7 +274,7 @@ export default {
           this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   },
@@ -295,7 +295,7 @@ export default {
             "articleId"
           )}&username=${this.$store.state.Auth.authToken.username}`
         )
-        .then(response => {
+        .then((response) => {
           if (response.data.like === "false") {
             this.isSelectLike = false;
           } else {
@@ -309,7 +309,7 @@ export default {
             this.vfImages.push(response.data.subPath[i]);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -341,11 +341,11 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token
-              }
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
             }
           )
-          .then(res => {
+          .then((res) => {
             console.log(res.data);
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
@@ -353,7 +353,7 @@ export default {
               this.checkPayment = true;
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       } else {
@@ -370,14 +370,14 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-            }
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
           }
         )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -386,7 +386,7 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then(res => {
+        .then((res) => {
           if (res.data.money > 2) {
             this.payCointoAuthor();
           } else {
@@ -394,7 +394,7 @@ export default {
             this.$router.push({ name: "Pay" });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -409,18 +409,18 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
-            }
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     },
@@ -435,12 +435,12 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then(res => {
+        .then((res) => {
           if (this.$store.state.Auth.authToken.id != res.data.id) {
             alert("인증되지 않은 사용자 입니다.");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
       if (this.$store.state.Auth.authToken.username != this.author) {
@@ -455,19 +455,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token
-              }
+                  "Bearer " + this.$store.state.Auth.authToken.token,
+              },
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
