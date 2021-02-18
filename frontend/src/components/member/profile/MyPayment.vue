@@ -31,15 +31,6 @@
             <v-btn outlined rounded small @click="gotoPhotoView(card.board.id)">
               View
             </v-btn>
-            <v-btn
-              color="error"
-              outlined
-              rounded
-              small
-              @click="delGallery(card.board.id)"
-            >
-              Delete
-            </v-btn>
             <v-spacer></v-spacer>
 
             <v-btn icon>
@@ -73,7 +64,6 @@
 
 <script>
 import axios from "axios";
-import swal from "sweetalert2";
 import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
@@ -86,7 +76,12 @@ export default {
   created() {
     axios
       .get(
-        `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=0&username=${this.user.username}`
+        `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpayment}?num=0&username=${this.user.username}`,
+        {
+          headers: {
+            Authorization: "Bearer " + this.user.token,
+          },
+        }
       )
       .then((res) => {
         this.cards = res.data;
@@ -98,7 +93,12 @@ export default {
     for (let i = 1; i < 10; i++) {
       axios
         .get(
-          `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=${i}&username=${this.user.username}`
+          `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpayment}?num=${i}&username=${this.user.username}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.user.token,
+            },
+          }
         )
         .then((res) => {
           if (res.data == "End Page") {
@@ -108,6 +108,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    }
+    if (this.page == 100) {
+      this.page = 0;
     }
   },
   methods: {
@@ -125,54 +128,10 @@ export default {
           console.log(err);
         });
     },
+
     gotoPhotoView(id) {
       localStorage.setItem("articleId", id);
       this.$router.push({ name: "PhotoView" });
-    },
-    delGallery(id) {
-      axios
-        .delete(
-          `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.delpost}?id=${id}`,
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            },
-          }
-        )
-        .then((res) => {
-          swal.fire({
-            text: "삭제완료!",
-            icon: "success",
-          });
-          axios
-            .get(
-              `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=0&username=${this.user.username}`
-            )
-            .then((res) => {
-              this.cards = res.data;
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-
-          for (let i = 1; i < 10; i++) {
-            axios
-              .get(
-                `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=${i}&username=${this.user.username}`
-              )
-              .then((res) => {
-                if (res.data == "End Page") {
-                  this.page = Math.min(this.page, i);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
   },
 };

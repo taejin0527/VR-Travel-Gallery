@@ -59,7 +59,9 @@
             <v-tab-item value="tab-2">
               <Bookmark :user="authToken" />
             </v-tab-item>
-            <v-tab-item value="tab-3"> </v-tab-item>
+            <v-tab-item value="tab-3">
+              <MyPayment :user="authToken" />
+            </v-tab-item>
           </v-tabs-items>
         </v-card>
       </v-container>
@@ -76,6 +78,7 @@ import MyChart from "@/components/member/profile/MyChart.vue";
 
 import Bookmark from "@/components/member/profile/Bookmark.vue";
 import MyPosts from "@/components/member/profile/MyPosts.vue";
+import MyPayment from "@/components/member/profile/MyPayment.vue";
 
 export default {
   components: {
@@ -83,16 +86,17 @@ export default {
     MyCredit,
     MyChart,
     Bookmark,
-    MyPosts
+    MyPosts,
+    MyPayment,
   },
   data() {
     return {
-      tab: null
+      tab: null,
     };
   },
   computed: {
-    ...mapState("Auth", ["authToken"])
-  }
+    ...mapState("Auth", ["authToken"]),
+  },
 };
 </script>
 

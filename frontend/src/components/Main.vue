@@ -8,7 +8,7 @@
     :style="{
       'background-image':
         'url(' + require('@/assets/main/NUVOchangeColorShallow.png') + ')',
-      'background-position': 'center'
+      'background-position': 'center',
     }"
   >
     <v-row align="center" justify="center">
@@ -20,7 +20,7 @@
             alt=""
             :class="{
               'disappeared-hidden-map-icon': !isShowMapIcon,
-              'show-hidden-map-icon': isShowMapIcon
+              'show-hidden-map-icon': isShowMapIcon,
             }"
             width="170px"
             height="150px"
@@ -28,7 +28,7 @@
           <v-icon
             :class="{
               'disappeared-airplane-icon': !isShowMapIcon,
-              'show-airplane-icon': isShowMapIcon
+              'show-airplane-icon': isShowMapIcon,
             }"
           >
             mdi-airplane
@@ -83,7 +83,7 @@
             :class="{
               'disappeared-hidden-VR-icon': !isShowVRIcon,
               'show-hidden-VR-icon-bg': isShowVRIcon,
-              'show-hidden-VR-icon': isShowVRIcon
+              'show-hidden-VR-icon': isShowVRIcon,
             }"
           />
         </div>
@@ -135,8 +135,6 @@
     </div>
 <<<<<<< HEAD
  VR 오버레이 페이지 -->
-    ======= VR 오버레이 페이지 --> >>>>>>>
-    91f573bc29e32517dbea284b32ed38608e6691d0
     <v-overlay :fixed="true" :opacity="0.9" :value="overlay">
       <div style="text-align:center;">
         <v-btn color="#DDA288" @click="gotoFirstExhibition" style="color:white">
@@ -173,14 +171,14 @@ export default {
   components: {
     NUVOExplanation,
     WorldMapExplanation,
-    VRExplanation
+    VRExplanation,
   },
   data: function() {
     return {
       isShowMapIcon: false,
       isShowVRIcon: false,
       isSelectTips: false,
-      overlay: false
+      overlay: false,
     };
   },
   methods: {
@@ -215,8 +213,8 @@ export default {
     activeIntro() {
       this.$intro().start(); // start the guide
       this.$intro().showHints(); // show hints
-    }
-  }
+    },
+  },
 };
 </script>
 
