@@ -17,7 +17,7 @@ public interface PayInfoRepository extends JpaRepository<PayInfo, Long>{
 	int getPayRequest(String username, long no);
 
 	
-	@Query(value = "select postid from payinfo where username = ? order by id desc limit ?,?",nativeQuery = true)
+	@Query(value = "select postid from payinfo where username = ? and cost > 0 order by id desc limit ?,?",nativeQuery = true)
 	List<Long> getPayPostId(String username, int start, int idx);
 
 	

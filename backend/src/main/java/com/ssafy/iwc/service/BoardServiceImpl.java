@@ -101,9 +101,14 @@ public class BoardServiceImpl implements BoardService{
 //		결제 목록 가져오기
 		List<Board> result = new LinkedList<>();
 		List<Long> posts = payRepository.getPayPostId(username,start,idx);
-		System.out.println(posts.size());
+		System.out.println(posts);
 		for(long num : posts) {
-			result.add(boardRepository.findById(num).get());
+			try {
+				result.add(boardRepository.findById(num).get());
+			}catch(Exception e) {
+				continue;
+			}
+			
 		}
 		return result;
 	}
