@@ -28,17 +28,6 @@
 
     <v-row style="height:30px"></v-row>
 
-    <!-- Paging 처리 -->
-    <v-row mt-5 pt-4 cols="12" justify="center">
-      <v-pagination
-        v-model="pageIdx"
-        :length="page"
-        prev-icon="mdi-menu-left"
-        next-icon="mdi-menu-right"
-        @input="onPageChange"
-      ></v-pagination>
-    </v-row>
-
     <GetUserArticles
       :getArticles="getArticles"
       :author="author"
@@ -76,21 +65,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    for (let i = 1; i < 10; i++) {
-      axios
-        .get(
-          `${SERVER.BASE_URL}${SERVER.ROUTES.auth.getAllBookmarks}?username=${this.user.username}`
-        )
-        .then((res) => {
-          if (res.data == "End Page") {
-            this.page = Math.min(this.page, i);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   },
   methods: {
     onPageChange(newPage) {
