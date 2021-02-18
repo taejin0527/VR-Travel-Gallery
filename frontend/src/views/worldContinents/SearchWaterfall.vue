@@ -185,7 +185,6 @@
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
-import NorthAmericaVue from '@/components/continents/NorthAmerica.vue';
 
 export default {
   name: "SearchWaterfall",
@@ -389,6 +388,7 @@ export default {
                   this.tags.push(tmp);
                 }
                 this.pageNum = this.pageNum + 1;
+                this.endPage = "";
               }
             })
             .catch(err => {
@@ -427,6 +427,7 @@ export default {
                   this.tags.push(tmp);
                 }
                 this.pageNum = this.pageNum + 1;
+                this.endPage = "";
               }
             })
             .catch(err => {
@@ -464,6 +465,8 @@ export default {
               this.tags.push(tmp);
             }
             this.pageNum = this.pageNum + 1;
+            this.endPage = "";
+            this.searchData = localStorage.getItem("searchData")
           }
         })
         .catch(err => {
