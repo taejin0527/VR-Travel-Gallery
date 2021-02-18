@@ -35,23 +35,23 @@ import SERVER from "@/apis/UrlMapper.ts";
 export default {
   props: ["user"],
   data: () => ({
-    coinWallet: 0,
+    coinWallet: 0
   }),
   created() {
     axios
       .get(`${SERVER.BASE_URL}auth/getuser?username=${this.user.username}`)
-      .then((res) => {
+      .then(res => {
         this.coinWallet = res.data.money;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
   methods: {
     goEditCard() {
       this.$router.push({ name: "Pay" });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -21,13 +21,48 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="6">
-            <Bookmark />
-          </v-col>
+          <v-col cols="6"> <MyChart /> </v-col>
         </v-row>
       </v-container>
 
-      <MyPosts :user="authToken" />
+      <v-container fluid ma-0 pa-0>
+        <v-card>
+          <v-tabs
+            v-model="tab"
+            background-color="#8593ae"
+            centered
+            dark
+            icons-and-text
+          >
+            <v-tabs-slider></v-tabs-slider>
+
+            <v-tab href="#tab-1">
+              My Galleries
+              <v-icon>mdi-image-multiple</v-icon>
+            </v-tab>
+
+            <v-tab href="#tab-2">
+              Bookmarks
+              <v-icon>mdi-bookmark-multiple</v-icon>
+            </v-tab>
+
+            <v-tab href="#tab-3">
+              My Account
+              <v-icon>mdi-cash-multiple</v-icon>
+            </v-tab>
+          </v-tabs>
+
+          <v-tabs-items v-model="tab">
+            <v-tab-item value="tab-1">
+              <MyPosts :user="authToken" />
+            </v-tab-item>
+            <v-tab-item value="tab-2">
+              <Bookmark :user="authToken" />
+            </v-tab-item>
+            <v-tab-item value="tab-3"> </v-tab-item>
+          </v-tabs-items>
+        </v-card>
+      </v-container>
     </v-card>
   </v-container>
 </template>
@@ -37,6 +72,8 @@ import { mapState } from "vuex";
 
 import MyProfile from "@/components/member/profile/MyProfile.vue";
 import MyCredit from "@/components/member/profile/MyCredit.vue";
+import MyChart from "@/components/member/profile/MyChart.vue";
+
 import Bookmark from "@/components/member/profile/Bookmark.vue";
 import MyPosts from "@/components/member/profile/MyPosts.vue";
 
@@ -44,15 +81,18 @@ export default {
   components: {
     MyProfile,
     MyCredit,
+    MyChart,
     Bookmark,
-    MyPosts,
+    MyPosts
   },
   data() {
-    return {};
+    return {
+      tab: null
+    };
   },
   computed: {
-    ...mapState("Auth", ["authToken"]),
-  },
+    ...mapState("Auth", ["authToken"])
+  }
 };
 </script>
 

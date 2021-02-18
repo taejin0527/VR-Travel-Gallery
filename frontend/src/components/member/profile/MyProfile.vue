@@ -23,8 +23,8 @@ import EditPassword from "@/components/member/profile/EditPassword.vue";
 export default {
   props: ["user"],
   components: {
-    EditPassword,
-  },
+    EditPassword
+  }
 };
 </script>
 

@@ -14,12 +14,12 @@
       style="position:fixed; right:0px; height:100%; width:50%;"
       @click="righttoImage"
     ></div>
-    <v-overlay :absolute="absolute" :value="firstOverlay">
+    <v-overlay :fixed="absolute" :value="firstOverlay">
       <v-btn color="#DDA288" @click="firstOverlay = false">
         첫번째 사진입니다
       </v-btn>
     </v-overlay>
-    <v-overlay :absolute="absolute" :value="lastOverlay">
+    <v-overlay :fixed="absolute" :value="lastOverlay">
       <v-btn color="#DDA288" @click="lastOverlay = false">
         마지막 사진입니다
       </v-btn>
@@ -64,7 +64,7 @@
     >
       <span style="font-size:22px">VR</span>
     </v-btn>
-    <v-overlay :absolute="true" :value="checkPayment" :opacity="0.8">
+    <v-overlay :fixed="true" :value="checkPayment" :opacity="0.8">
       <div class="d-flex justify-center" style="font-size: 18px;">
         해당 게시물의 VR을 보시려면
         <br /><br />
@@ -73,11 +73,10 @@
         결제하시겠습니까?
         <br /><br />
       </div>
-      <div class="d-flex justify-center">
+      <div class="d-flex justify-space-around">
         <v-btn color="#DDA288" @click="checkWallet">
           결제
         </v-btn>
-        <pre></pre>
         <v-btn color="#DDA288" @click="checkPayment = false">
           아니오
         </v-btn>
@@ -99,12 +98,12 @@ export default {
       firstOverlay: false,
       lastOverlay: false,
       show: true,
-      checkPayment: false,
+      checkPayment: false
     };
   },
   props: {
     vfImages: [Array],
-    premium: [Boolean, String],
+    premium: [Boolean, String]
   },
   methods: {
     righttoImage: function() {
@@ -145,18 +144,18 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
-          .then((res) => {
+          .then(res => {
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
             } else {
               this.checkPayment = true;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       } else {
@@ -173,14 +172,14 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            },
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
           }
         )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -189,7 +188,7 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((res) => {
+        .then(res => {
           if (res.data.money > 2) {
             this.payCointoAuthor();
           } else {
@@ -197,11 +196,11 @@ export default {
             this.$router.push({ name: "Pay" });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -227,13 +227,13 @@ public class BoardController {
 				return new ResponseEntity("End Page",  HttpStatus.OK);
 			}
 			for (Board a : board) {
-				System.out.println(a);
+				
 				LocationInfo data = new LocationInfo();
 //			data에 Board값 넣기
 				data.setBoard(a);
 //			메인 이미지 경로 가져와서 넣기
 				Optional<MainImage> d = mainImageService.findById(a.getId());
-				System.out.println("무엇이냐");
+				
 				data.setFilePath(FileMainSrc + d.get().getFilename());
 //			tag가져와서 넣기
 				data.setTags(tagService.findTagId(a.getId()));
@@ -252,7 +252,39 @@ public class BoardController {
 		
 		
 	}
-	
+	@ApiOperation(value="username과 페이지 번호를 통해 내가 결제한 게시물 보기")
+	@GetMapping("/mypay")
+	public ResponseEntity mypay(@RequestParam("username")String username,@RequestParam("num") String num) {
+		List<LocationInfo> result = new LinkedList<>();
+		int idx = 6;
+		int start = Integer.parseInt(num) * idx;
+		try {
+			List<Board> board = boardService.getPayBoard(username,start,idx);
+			if(board.size()==0) {
+				return new ResponseEntity("End Page",  HttpStatus.OK);
+			}
+			for (Board a : board) {
+				
+				LocationInfo data = new LocationInfo();
+//			data에 Board값 넣기
+				data.setBoard(a);
+//			메인 이미지 경로 가져와서 넣기
+				Optional<MainImage> d = mainImageService.findById(a.getId());
+				
+				data.setFilePath(FileMainSrc + d.get().getFilename());
+//			tag가져와서 넣기
+				data.setTags(tagService.findTagId(a.getId()));
+				
+
+				result.add(data);
+			}
+			return new ResponseEntity(result, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("에러");
+			return new ResponseEntity(e, HttpStatus.FAILED_DEPENDENCY);
+
+		}
+	}
 	@ApiOperation(value = "해당 지역에 있는 모든 게시물 조회", response = String.class)
 	@GetMapping("/allview")
 	public ResponseEntity<List<AllMainView>> allview(@RequestParam("location") String location) {

@@ -9,10 +9,13 @@ export default {
       login: "auth/signin",
       signup: "auth/signup",
       idCheck: "auth/idcheck",
+      pwdCheck: "auth/checkpw",
       emailCheck: "auth/emailcheck",
       emailValidate: "auth/emailvalidate",
+      changePwd: "auth/changepw",
     },
     board: {
+      delpost: "delpost",
       getpost: "postgetusername",
     },
     files: {
