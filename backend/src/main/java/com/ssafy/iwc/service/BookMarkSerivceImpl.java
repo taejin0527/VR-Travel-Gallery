@@ -1,5 +1,7 @@
 package com.ssafy.iwc.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,12 @@ public class BookMarkSerivceImpl implements BookMarkService{
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public List<String> getmarkAll(String username) {
+		// TODO Auto-generated method stub
+		return bookMarkRepository.getmarkAll(username);
 	}
 
 }

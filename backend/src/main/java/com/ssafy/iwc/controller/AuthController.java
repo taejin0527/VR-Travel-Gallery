@@ -1,6 +1,7 @@
 package com.ssafy.iwc.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -207,6 +208,17 @@ public class AuthController {
 				result = "등록 성공";
 			}else result = "등록 실패";
 		}
+		
+		
+		return new ResponseEntity(result,HttpStatus.OK);
+		
+	}
+	@ApiOperation(value="flag라는 String 변수로 true or false체크후 username과 targetname으로 북마커에 등록 or 삭제")
+	@PostMapping("/bookmarkall")
+	public ResponseEntity bookmarkall(@RequestParam("username")String username) {
+		List<String> result = bookMarkService.getmarkAll(username);
+		
+		
 		
 		
 		return new ResponseEntity(result,HttpStatus.OK);
