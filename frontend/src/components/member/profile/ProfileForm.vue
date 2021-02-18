@@ -2,30 +2,21 @@
   <v-container class="profileform">
     <!-- Basic profile -->
     <v-card>
-      <v-container fluid>
-        <v-row dense>
+      <v-container fluid ma-0 pa-0>
+        <v-row>
           <v-col cols="6" class="mt-3">
             <v-row no-gutters>
               <v-col cols="12">
                 <MyProfile :user="authToken" />
               </v-col>
             </v-row>
-
-            <v-spacer>
-              <br />
-            </v-spacer>
-
-            <v-row no-gutters>
-              <v-col cols="12">
-                <MyCredit :user="authToken" />
-              </v-col>
-            </v-row>
           </v-col>
-          <v-col cols="6"> <MyChart /> </v-col>
+          <v-col cols="6" class="mt-3"> <MyCredit :user="authToken" /> </v-col>
         </v-row>
       </v-container>
 
       <v-container fluid ma-0 pa-0>
+        <br>
         <v-card>
           <v-tabs
             v-model="tab"
@@ -74,7 +65,6 @@ import { mapState } from "vuex";
 
 import MyProfile from "@/components/member/profile/MyProfile.vue";
 import MyCredit from "@/components/member/profile/MyCredit.vue";
-import MyChart from "@/components/member/profile/MyChart.vue";
 
 import Bookmark from "@/components/member/profile/Bookmark.vue";
 import MyPosts from "@/components/member/profile/MyPosts.vue";
@@ -84,7 +74,6 @@ export default {
   components: {
     MyProfile,
     MyCredit,
-    MyChart,
     Bookmark,
     MyPosts,
     MyPayment,

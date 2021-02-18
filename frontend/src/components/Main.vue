@@ -187,12 +187,12 @@ export default {
       this.$router.push({ name: "WorldMap" });
     },
 
-    // VR 전시관으로 감.
+        // VR 전시관으로 감.
     gotoFirstExhibition: function() {
-      window.location.href = "https://hubs.mozilla.com/scenes/VkhFoTD";
+      open("https://hubs.mozilla.com/scenes/VkhFoTD");
     },
     gotoSecondExhibition: function() {
-      window.location.href = "https://hubs.mozilla.com/scenes/hG7nZSY";
+      open("https://hubs.mozilla.com/scenes/hG7nZSY");
     },
 
     // 맵 아이콘 애니메이션
