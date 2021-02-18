@@ -21,10 +21,10 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:280px; color:white;"
+      style="position:fixed; right:60px; top:60px; width:35px; height:35px; color:white; z-index:102;"
       @click="clickGoBack"
     >
-      <v-icon size="38px">
+      <v-icon size="25px">
         mdi-arrow-left-bold-circle
       </v-icon>
     </v-btn>
