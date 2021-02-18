@@ -21,7 +21,7 @@
       elevation="3"
       fab
       color="#DDA288"
-      style="position:fixed; right:60px; top:280px; color:white;"
+      style="position:fixed; right:60px; top:280px; color:white; z-index:102;"
       @click="clickGoBack"
     >
       <v-icon size="38px">
