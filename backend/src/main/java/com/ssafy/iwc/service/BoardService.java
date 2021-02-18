@@ -20,4 +20,5 @@ public interface BoardService {
 	public void increaseView(long id);
 	
 	public List<Board> getUsernameBoard(String username, int start, int idx);
+	public List<Board> getPayBoard(String username, int start, int idx);
 }

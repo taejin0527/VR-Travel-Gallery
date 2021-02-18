@@ -100,7 +100,10 @@ export default class Login extends Vue {
       if (!isValid) {
         console.log("validate 오류");
         this.loading = false;
-        alert("로그인 형식을 맞춰주세요.");
+        swal.fire({
+          text: "입력 형식에 맞춰주세요!",
+          icon: "warning"
+        });
         setTimeout(() => {
           this.active = !this.active;
         }, 1000);
@@ -109,15 +112,15 @@ export default class Login extends Vue {
 
       if (this.user.username && this.user.password) {
         this.login(this.user).then(
-          (data) => {
+          data => {
             console.log("success!");
             swal.fire({
               text: this.user.username + "님 반갑습니다!",
-              icon: "success",
+              icon: "success"
             });
             this.$router.push("/worldmap");
           },
-          (error) => {
+          error => {
             this.loading = false;
             setTimeout(() => {
               this.active = !this.active;
@@ -125,7 +128,7 @@ export default class Login extends Vue {
             this.message = error;
             swal.fire({
               text: "아이디 혹은 비밀번호가 틀렸습니다",
-              icon: "error",
+              icon: "error"
             });
           }
         );

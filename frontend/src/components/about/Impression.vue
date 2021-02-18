@@ -42,29 +42,29 @@ export default {
           icon: "mdi-comment-quote",
           text: "팀원들이 말을 안 들어서 힘들었습니다ㅠㅠ",
           name: "Donggeol Kim",
-          team: "Leader",
+          team: "Leader"
         },
         {
           icon: "mdi-comment-quote",
-          text: "여기 한마디씩 작성하시면 됩니다",
+          text: "나는 공유다.",
           name: "Minho Jang",
-          team: "Specialist",
+          team: "Specialist"
         },
         {
           icon: "mdi-comment-quote",
           text: "프로젝트하면서 즐겁고 재밌었습니다 ^^",
           name: "TaeJin Kim",
-          team: "Developer",
+          team: "Developer"
         },
         {
           icon: "mdi-comment-quote",
-          text: "모델링... 랜더링... 죽는줄 알았습니다...",
+          text: "FrontEnd에 대해서 많은 걸 알게된 프로젝트였습니다.",
           name: "TaeWan Gu",
-          team: "Developer",
-        },
-      ],
+          team: "Developer"
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

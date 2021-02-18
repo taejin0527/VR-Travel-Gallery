@@ -1,22 +1,8 @@
 <template>
-  <!-- chart -->
-  <v-container fluid>
+  <v-container fluid ma-0 pa-a style="background-color:#8593ae">
     <v-row dense>
-      <v-col cols="12">
-        <v-card>
-          <v-img
-            :src="titlebar.src"
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="100px"
-          >
-            <v-card-title v-text="titlebar.title"></v-card-title>
-          </v-img>
-        </v-card>
-      </v-col>
-
       <!-- 전체 게시물(나의 게시물) -->
-      <v-col v-for="card in cards" :key="card.title" cols="4">
+      <v-col v-for="(card, idx) in cards" :key="idx" cols="4">
         <v-card>
           <v-img
             :src="card.filePath"
@@ -33,8 +19,8 @@
             <v-chip-group>
               <v-chip
                 color="default text--default"
-                v-for="obj in card.tags"
-                :key="obj"
+                v-for="(obj, idx) in card.tags"
+                :key="idx"
               >
                 {{ obj.tag }}
               </v-chip>
@@ -42,10 +28,16 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn outlined rounded small>
+            <v-btn outlined rounded small @click="gotoPhotoView(card.board.id)">
               View
             </v-btn>
-            <v-btn color="error" outlined rounded small>
+            <v-btn
+              color="error"
+              outlined
+              rounded
+              small
+              @click="delGallery(card.board.id)"
+            >
               Delete
             </v-btn>
             <v-spacer></v-spacer>
@@ -81,17 +73,14 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert2";
 import SERVER from "@/apis/UrlMapper.ts";
 
 export default {
   data: () => ({
-    titlebar: {
-      title: "나의 게시물",
-      src: require("@/assets/images/unsplash/noiseporn-JNuKyKXLh8U-unsplash.jpg"),
-    },
     cards: [],
     pageIdx: 1,
-    page: 100,
+    page: 100
   }),
   props: ["user"],
   created() {
@@ -99,10 +88,10 @@ export default {
       .get(
         `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=0&username=${this.user.username}`
       )
-      .then((res) => {
+      .then(res => {
         this.cards = res.data;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
 
@@ -111,12 +100,12 @@ export default {
         .get(
           `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=${i}&username=${this.user.username}`
         )
-        .then((res) => {
+        .then(res => {
           if (res.data == "End Page") {
             this.page = Math.min(this.page, i);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -129,14 +118,63 @@ export default {
             SERVER.ROUTES.board.getpost
           }?num=${newPage - 1}&username=${this.user.username}`
         )
-        .then((res) => {
+        .then(res => {
           this.cards = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
-  },
+    gotoPhotoView(id) {
+      localStorage.setItem("articleId", id);
+      this.$router.push({ name: "PhotoView" });
+    },
+    delGallery(id) {
+      axios
+        .delete(
+          `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.delpost}?id=${id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
+          }
+        )
+        .then(res => {
+          swal.fire({
+            text: "삭제완료!",
+            icon: "success"
+          });
+          axios
+            .get(
+              `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=0&username=${this.user.username}`
+            )
+            .then(res => {
+              this.cards = res.data;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+
+          for (let i = 1; i < 10; i++) {
+            axios
+              .get(
+                `${SERVER.BOARD_BASE_URL}${SERVER.ROUTES.board.getpost}?num=${i}&username=${this.user.username}`
+              )
+              .then(res => {
+                if (res.data == "End Page") {
+                  this.page = Math.min(this.page, i);
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>
 

@@ -4,11 +4,13 @@
     <v-container class="adjust-grid-container">
       <div style="width:100%; height: 20px;"></div>
       <div style="width:100%; height: 20px;"></div>
-      <div style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';">
+      <div
+        style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';"
+      >
         "{{ searchData }}" 검색 결과
       </div>
       <div style="width:100%; height: 10px;"></div>
-      <hr>
+      <hr />
       <div style="width:100%; height: 35px;"></div>
       <v-row>
         <v-col
@@ -503,7 +505,7 @@ export default {
 /* 1904px 부터 css코드 */
 @media (min-width: 1904px) {
   .adjust-grid-container {
-    padding: 80px 0px 0px 130px;
+    padding: 80px 130px 0px 130px;
   }
   .adjust-grid-image {
     width: 450px;

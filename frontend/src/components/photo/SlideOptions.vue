@@ -108,7 +108,7 @@ export default {
       "blocks2",
       "concentric",
       "warp",
-      "camera",
+      "camera"
     ],
     transitions3D: [
       "cube",
@@ -118,13 +118,13 @@ export default {
       "blinds3d",
       "round1",
       "round2",
-      "explode",
+      "explode"
     ],
     pick1: [],
     pick2: [],
     prePick1: [],
     prePick2: [],
-    vfTransitions: [],
+    vfTransitions: []
   }),
   methods: {
     saveCancel() {
@@ -146,8 +146,8 @@ export default {
 
       this.$emit("optionChanged", this.vfTransitions);
       this.dialog = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

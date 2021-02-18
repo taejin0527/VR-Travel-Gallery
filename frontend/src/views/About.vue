@@ -32,8 +32,8 @@ export default {
     Services,
     Pricing,
     Profolio,
-    Impression,
-  },
+    Impression
+  }
 };
 </script>
 

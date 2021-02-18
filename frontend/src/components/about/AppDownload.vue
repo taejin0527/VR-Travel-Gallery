@@ -2,7 +2,7 @@
   <v-container fulid pa-0 my-10 class="home-intro" id="home">
     <v-container>
       <v-row>
-        <v-col xs="12" sm="12" md="6" cols="12">
+        <v-col xs="12" sm="12" md="6" cols="12" offset-xl="1" xl="5">
           <div class="content">
             <h3><span class="line"></span>WELCOME TO NUVO</h3>
             <h2>Art</h2>
@@ -14,7 +14,10 @@
                 </router-link>
               </li>
               <li>
-                <a href="" class="button">
+                <a
+                  href="https://docs.google.com/uc?export=download&id=1tNEB2cmkzfnNch0MBvOsdr1Bf6dOI8Ru"
+                  class="button"
+                >
                   Android
                   <v-icon>mdi-cellphone-android</v-icon>
                 </a>
@@ -22,7 +25,7 @@
             </ul>
           </div>
         </v-col>
-        <v-col xs="12" sm="12" md="6" cols="12">
+        <v-col xs="12" sm="12" md="6" cols="12" xl="5">
           <div class="content-image">
             <img src="@/assets/main/NUVO.png" alt="" />
           </div>

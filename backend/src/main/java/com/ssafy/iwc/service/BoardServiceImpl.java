@@ -1,5 +1,6 @@
 package com.ssafy.iwc.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.iwc.dto.BoardDto;
 import com.ssafy.iwc.model.Board;
 import com.ssafy.iwc.repository.BoardRepository;
+import com.ssafy.iwc.repository.PayInfoRepository;
 
 
 @Service
@@ -17,7 +19,8 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardRepository boardRepository;
 
-	
+	@Autowired
+	private PayInfoRepository payRepository;
 	
 	  
 	@Transactional 
@@ -90,6 +93,19 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> getUsernameBoard(String username, int start, int idx) {
 		// TODO Auto-generated method stub
 		return boardRepository.getUsernameIdxBoard(username,start,idx);
+	}
+
+
+	@Override
+	public List<Board> getPayBoard(String username, int start, int idx) {
+//		결제 목록 가져오기
+		List<Board> result = new LinkedList<>();
+		List<Long> posts = payRepository.getPayPostId(username,start,idx);
+		System.out.println(posts.size());
+		for(long num : posts) {
+			result.add(boardRepository.findById(num).get());
+		}
+		return result;
 	}
 
 

@@ -182,7 +182,7 @@ export default {
         "Asia",
         "Africa",
         "Europe",
-        "Oceania",
+        "Oceania"
       ],
       selectContinent: "All",
       popularExhibition: true,
@@ -190,13 +190,13 @@ export default {
       searchData: "",
       isSelectSearch: false,
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      windowHeight: window.innerHeight
     };
   },
   components: {
     WorldMapDivision,
     SideNavBar,
-    MobileWorldMap,
+    MobileWorldMap
   },
   created: function() {
     localStorage.setItem("page", "WorldMap");
@@ -221,8 +221,8 @@ export default {
         localStorage.setItem("selectContinentforSearch", this.selectContinent);
         this.$router.push({ name: "SearchWaterfall" });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

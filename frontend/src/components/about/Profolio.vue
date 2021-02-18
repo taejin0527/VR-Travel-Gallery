@@ -66,37 +66,37 @@ export default {
           image: require("@/assets/images/aboutPage/member1.png"),
           name: "DongGeol Kim",
           role: "[Backend] Leader Developer",
-          desc: "Database, Springboot",
+          desc: "Database, Springboot"
         },
         {
           category: "1, 3",
           image: require("@/assets/images/aboutPage/member2.png"),
           name: "MinHo Jang",
           role: "[Frontend] [VR] Developer",
-          desc: "",
+          desc: ""
         },
         {
           category: "2",
           image: require("@/assets/images/aboutPage/member3.png"),
           name: "TaeJin Kim",
           role: "[Backend] Developer",
-          desc: "",
+          desc: ""
         },
         {
           category: "1",
           image: require("@/assets/images/aboutPage/member4.png"),
           name: "TaeWan Gu",
           role: "[Frontend] Developer",
-          desc: "",
+          desc: ""
         },
         {
           category: "3",
           image: require("@/assets/images/aboutPage/member5.png"),
           name: "SoJin Kwan",
           role: "Early member",
-          desc: "",
-        },
-      ],
+          desc: ""
+        }
+      ]
     };
   },
   mounted() {
@@ -108,7 +108,7 @@ export default {
       $(".portfolio-filter-menu li").removeClass("active");
       $(this).addClass("active");
     });
-  },
+  }
 };
 </script>
 
@@ -192,6 +192,14 @@ export default {
   width: 100%;
   height: 270px;
   border-radius: 15px;
+}
+
+@media (min-width: 1904px) {
+  .portfolio .content-image img {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+  }
 }
 
 .portfolio .content-image img:visited {
