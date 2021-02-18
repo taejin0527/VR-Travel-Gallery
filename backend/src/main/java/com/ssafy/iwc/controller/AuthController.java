@@ -214,7 +214,7 @@ public class AuthController {
 		
 	}
 	@ApiOperation(value="flag라는 String 변수로 true or false체크후 username과 targetname으로 북마커에 등록 or 삭제")
-	@PostMapping("/bookmarkall")
+	@GetMapping("/bookmarkall")
 	public ResponseEntity bookmarkall(@RequestParam("username")String username) {
 		List<String> result = bookMarkService.getmarkAll(username);
 		
