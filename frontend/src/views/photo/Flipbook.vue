@@ -39,7 +39,7 @@
         size="30px"
         :class="{
           'like-hover-event': true,
-          'select-like-transition': isSelectLike,
+          'select-like-transition': isSelectLike
         }"
         @click="likeThisArticle"
       >
@@ -171,9 +171,9 @@
       </div>
     </v-overlay>
     <GetUserArticles
-      :getArticles = "getArticles"
-      :author = "author"
-      @exitGetUserArticles = "exitGetUserArticles"
+      :getArticles="getArticles"
+      :author="author"
+      @exitGetUserArticles="exitGetUserArticles"
     />
   </div>
 </template>
@@ -187,7 +187,7 @@ import GetUserArticles from "@/components/GetUserArticles.vue";
 export default {
   components: {
     Flipbook,
-    GetUserArticles,
+    GetUserArticles
   },
   data: function() {
     return {
@@ -204,7 +204,7 @@ export default {
       isSelectLike: false, // 좋아요는 손봐야 합니다.
       premium: false,
       checkPayment: false,
-      getArticles: false,
+      getArticles: false
     };
   },
   mounted() {
@@ -215,7 +215,7 @@ export default {
           "articleId"
         )}&username=${this.$store.state.Auth.authToken.username}`
       )
-      .then((response) => {
+      .then(response => {
         if (response.data.like === "false") {
           this.isSelectLike = false;
         } else {
@@ -228,10 +228,10 @@ export default {
           this.vfImages.push(response.data.subPath[i]);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
-    window.addEventListener("keydown", (ev) => {
+    window.addEventListener("keydown", ev => {
       const { flipbook } = this.$refs;
       if (!flipbook) {
         return;
@@ -250,17 +250,17 @@ export default {
     this.setPageFromHash();
   },
   methods: {
-    gotoGetArticlesPage: function () {
-      this.getArticles = true
+    gotoGetArticlesPage: function() {
+      this.getArticles = true;
       // 자기꺼를 누르면 자기 프로필로 이동하게 만듬. 아니라면 해당 author의 게시물 출력.
       if (this.author === this.$store.state.Auth.authToken.username) {
-        this.$router.push({name:"Profile"})
+        this.$router.push({ name: "Profile" });
       }
     },
-    exitGetUserArticles: function (data) {
-      this.getArticles = data
+    exitGetUserArticles: function(data) {
+      this.getArticles = data;
       // 프로필에서 들어가고 나올 땐, 이 함수 밑에 axios는 신경 안 써도 됩니당.
-      this.$router.push({name:"PhotoView"})
+      this.$router.push({ name: "PhotoView" });
     },
     clickGotoPhotoView() {
       this.$router.push({ name: "PhotoView" });
@@ -299,18 +299,18 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            },
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           if (response.data === "false" || response.data === false) {
             this.isSelectLike = false;
           } else {
             this.isSelectLike = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
@@ -327,18 +327,18 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
-          .then((res) => {
+          .then(res => {
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
             } else {
               this.checkPayment = true;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       } else {
@@ -355,14 +355,14 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            },
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
           }
         )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -371,7 +371,7 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((res) => {
+        .then(res => {
           if (res.data.money > 2) {
             this.payCointoAuthor();
           } else {
@@ -379,7 +379,7 @@ export default {
             this.$router.push({ name: "Pay" });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -394,12 +394,12 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((res) => {
+        .then(res => {
           if (this.$store.state.Auth.authToken.id != res.data.id) {
             alert("인증되지 않은 사용자 입니다.");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
       if (this.$store.state.Auth.authToken.username != this.author) {
@@ -414,19 +414,19 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
           .then(() => {
             this.$router.push({ name: localStorage.getItem("page") });
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -133,7 +133,8 @@
         @click="activeIntro"
       />
     </div>
-    VR 오버레이 페이지 -->
+<<<<<<< HEAD
+ VR 오버레이 페이지 -->
     <v-overlay :fixed="true" :opacity="0.9" :value="overlay">
       <div style="text-align:center;">
         <v-btn color="#DDA288" @click="gotoFirstExhibition" style="color:white">
@@ -177,7 +178,7 @@ export default {
       isShowMapIcon: false,
       isShowVRIcon: false,
       isSelectTips: false,
-      overlay: false
+      overlay: false,
     };
   },
   methods: {

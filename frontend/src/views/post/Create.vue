@@ -2,7 +2,12 @@
   <v-container fluid ma-0 pa-0>
     <SideNavBar />
 
-    <v-container my-5 pa-0 style="background-color:#4f4544" class="adjust-scale-xl">
+    <v-container
+      my-5
+      pa-0
+      style="background-color:#4f4544"
+      class="adjust-scale-xl"
+    >
       <br /><br />
 
       <!-- 뒤로가기 버튼 -->
@@ -80,7 +85,7 @@
                     line-height:35px; font-size: 18px; font-weight: bold;"
                 :class="{
                   'select-view-method': !selectViewMethodData,
-                  'pay-hover-event-class': true,
+                  'pay-hover-event-class': true
                 }"
                 @click="selectViewMethod"
               >
@@ -94,7 +99,7 @@
                     line-height:35px; font-size: 18px; font-weight: bold;"
                 :class="{
                   'select-view-method': selectViewMethodData,
-                  'pay-hover-event-class': true,
+                  'pay-hover-event-class': true
                 }"
                 @click="selectViewMethod2"
               >
@@ -262,7 +267,7 @@ import SideNavBar from "@/components/navigation/SideNavBar.vue";
 
 export default {
   components: {
-    SideNavBar,
+    SideNavBar
   },
   data() {
     return {
@@ -274,7 +279,7 @@ export default {
         "europe",
         "asia",
         "oceania",
-        "africa",
+        "africa"
       ],
       selectContinent: localStorage.getItem("continent"), // 선택된 대륙
       main: [],
@@ -285,7 +290,7 @@ export default {
       tags: [], // 태그들
       nation: "", // 장소(국가)
       num: 0,
-      mainImageData: null,
+      mainImageData: null
     };
   },
   created: function() {
@@ -309,8 +314,8 @@ export default {
         {
           file: this.$refs.mains.files[0],
           preview: URL.createObjectURL(this.$refs.mains.files[0]),
-          number: 0,
-        },
+          number: 0
+        }
       ];
     },
     imageUpload() {
@@ -326,8 +331,8 @@ export default {
             //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             //삭제 및 관리를 위한 number
-            number: i,
-          },
+            number: i
+          }
         ];
         num = i;
       }
@@ -345,8 +350,8 @@ export default {
             file: this.$refs.files.files[i],
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             // 삭제 및 관리를 위한 number
-            number: i + this.uploadImageIndex,
-          },
+            number: i + this.uploadImageIndex
+          }
         ];
         num = i;
       }
@@ -354,11 +359,11 @@ export default {
     },
     mainDeleteButton(e) {
       const name = e.target.getAttribute("name");
-      this.main = this.main.filter((data) => data.number !== Number(name));
+      this.main = this.main.filter(data => data.number !== Number(name));
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute("name");
-      this.files = this.files.filter((data) => data.number !== Number(name));
+      this.files = this.files.filter(data => data.number !== Number(name));
     },
     selectViewMethod: function() {
       this.selectViewMethodData = false;
@@ -413,18 +418,18 @@ export default {
         .post(`${SERVER.BOARD_BASE_URL}requestupload`, formData, {
           headers: {
             Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         })
-        .then((response) => {
+        .then(response => {
           localStorage.setItem("continent", this.selectContinent);
           this.$router.push({ name: "EachWaterfall" });
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -567,9 +572,9 @@ width: 100%; */
   transition: 0.5s;
 }
 
-@media (min-width:1904px) {
+@media (min-width: 1904px) {
   .adjust-scale-xl {
-    width:1400px;
+    width: 1400px;
   }
 }
 </style>

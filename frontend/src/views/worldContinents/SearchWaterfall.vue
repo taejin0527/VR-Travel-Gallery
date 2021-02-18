@@ -4,11 +4,13 @@
     <v-container class="adjust-grid-container">
       <div style="width:100%; height: 20px;"></div>
       <div style="width:100%; height: 20px;"></div>
-      <div style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';">
+      <div
+        style="width:100%; margin-left: 2%; height: 60px; font-size:33px; color:white; font-family:'MapoFlowerIsland';"
+      >
         "{{ searchData }}" 검색 결과
       </div>
       <div style="width:100%; height: 10px;"></div>
-      <hr>
+      <hr />
       <div style="width:100%; height: 35px;"></div>
       <v-row>
         <v-col

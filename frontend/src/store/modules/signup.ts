@@ -10,12 +10,12 @@ export default {
     signupData: {
       username: "",
       password: "",
-      email: ""
+      email: "",
     },
     page: Number(localStorage.getItem("page"))
       ? Number(localStorage.getItem("page"))
       : 1,
-    confirmCode2: ""
+    confirmCode2: "",
   },
   mutations: {
     SET_PAGE(state: any, page: any) {
@@ -27,7 +27,7 @@ export default {
     },
     SET_SIGNUPDATA(state: any, signupData: any) {
       state.signupData = signupData;
-    }
+    },
   },
   /************************** Action ***********************************/
   actions: {
@@ -40,7 +40,7 @@ export default {
     signup({ dispatch }: any, obj: any): void {
       const info = {
         data: obj,
-        route: SERVER.ROUTES.auth.signup
+        route: SERVER.ROUTES.auth.signup,
       };
       dispatch("postAuthData", info);
     },
@@ -48,19 +48,19 @@ export default {
       return axios
         .post(SERVER.BASE_URL + info.route, info.data, {
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         })
-        .then(res => {
+        .then((res) => {
           ROUTER.push({
-            name: "Login"
+            name: "Login",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           swal.fire({
             icon: "warning",
             title: "Error!",
-            text: "로그인 정보를 확인해주세요."
+            text: "로그인 정보를 확인해주세요.",
           });
         });
     },
@@ -71,50 +71,85 @@ export default {
       }
       return axios
         .get(SERVER.BASE_URL + SERVER.ROUTES.auth.idCheck + "/" + uid)
-        .then(res => {
+        .then((res) => {
           if (res.data === "success") {
             swal.fire({
               icon: "success",
               title: "Success!",
-              text: "사용 가능한 아이디입니다."
+              text: "사용 가능한 아이디입니다.",
             });
             return true;
           } else {
             swal.fire({
               icon: "error",
               title: "Opps...",
-              text: "이미 사용 중인 아이디입니다."
+              text: "이미 사용 중인 아이디입니다.",
             });
             return false;
           }
         })
-        .catch(err => console.log(err.response));
+        .catch((err) => console.log(err.response));
     },
     emailCheck(context: any, email: string) {
       return axios
         .post(SERVER.BASE_URL + SERVER.ROUTES.auth.emailCheck, {
-          userEmail: email
+          userEmail: email,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data === "success") {
             return true;
           } else {
             return false;
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
+    },
+    pwdCheck(obj: any, uinfo: any) {
+      if (uinfo.upwd === "" || uinfo.upwd === undefined) {
+        swal.fire({ icon: "error", text: "비밀번호를 입력하세요." });
+        return false;
+      }
+      return axios
+        .post(
+          SERVER.BASE_URL +
+            SERVER.ROUTES.auth.pwdCheck +
+            "?password=" +
+            uinfo.upwd +
+            "&username=" +
+            uinfo.uname
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data == true) {
+            swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "비밀번호 변경 가능",
+            });
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .catch((err) =>
+          swal.fire({
+            icon: "error",
+            title: "Opps...",
+            text: "비밀번호를 다시 확인해주세요",
+          })
+        );
     },
     getConfirmCode({ commit }: any, email: any) {
       return axios
         .post(SERVER.BASE_URL + SERVER.ROUTES.auth.emailValidate, {
-          userEmail: email
+          userEmail: email,
         })
         .then((confirmCode: any) => {
           if (confirmCode === "fail") {
             swal.fire({
               icon: "warning",
               title: "Error!",
-              text: "이메일을 확인해주세요."
+              text: "이메일을 확인해주세요.",
             });
             return "";
           } else {
@@ -122,9 +157,9 @@ export default {
             return confirmCode;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return err.response;
         });
-    }
-  }
+    },
+  },
 };
