@@ -3,12 +3,12 @@
     <v-btn
       elevation="3"
       fab
-      color="#DDA288"
-      style="position:fixed; right:95px; top:20px; color:white;"
+      color="orange darken-3"
+      style="position:fixed; right:25px; top:20px; color:white;"
       @click="clickGotoWorldmap"
     >
       <v-icon>
-        mdi-map-marker-radius
+        mdi-map-search
       </v-icon>
     </v-btn>
 
