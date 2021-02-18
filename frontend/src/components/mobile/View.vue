@@ -98,12 +98,12 @@ export default {
       firstOverlay: false,
       lastOverlay: false,
       show: true,
-      checkPayment: false,
+      checkPayment: false
     };
   },
   props: {
     vfImages: [Array],
-    premium: [Boolean, String],
+    premium: [Boolean, String]
   },
   methods: {
     righttoImage: function() {
@@ -144,18 +144,18 @@ export default {
             {
               headers: {
                 Authorization:
-                  "Bearer " + this.$store.state.Auth.authToken.token,
-              },
+                  "Bearer " + this.$store.state.Auth.authToken.token
+              }
             }
           )
-          .then((res) => {
+          .then(res => {
             if (res.data == true) {
               this.$router.push({ name: "Aframe" });
             } else {
               this.checkPayment = true;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       } else {
@@ -172,14 +172,14 @@ export default {
           }`,
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.Auth.authToken.token,
-            },
+              Authorization: "Bearer " + this.$store.state.Auth.authToken.token
+            }
           }
         )
         .then(() => {
           this.$router.push({ name: "Aframe" });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -188,7 +188,7 @@ export default {
         .get(
           `${SERVER.BASE_URL}auth/getuser?username=${this.$store.state.Auth.authToken.username}`
         )
-        .then((res) => {
+        .then(res => {
           if (res.data.money > 2) {
             this.payCointoAuthor();
           } else {
@@ -196,11 +196,11 @@ export default {
             this.$router.push({ name: "Pay" });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

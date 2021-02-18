@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import swal from "sweetalert2";
 import { mapActions } from "vuex";
 
 export default {

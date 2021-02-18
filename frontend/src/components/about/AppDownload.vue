@@ -14,7 +14,10 @@
                 </router-link>
               </li>
               <li>
-                <a href="https://docs.google.com/uc?export=download&id=1tNEB2cmkzfnNch0MBvOsdr1Bf6dOI8Ru" class="button">
+                <a
+                  href="https://docs.google.com/uc?export=download&id=1tNEB2cmkzfnNch0MBvOsdr1Bf6dOI8Ru"
+                  class="button"
+                >
                   Android
                   <v-icon>mdi-cellphone-android</v-icon>
                 </a>
