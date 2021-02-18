@@ -185,6 +185,7 @@
 import axios from "axios";
 import SERVER from "@/apis/UrlMapper.ts";
 import SideNavBar from "@/components/navigation/SideNavBar.vue";
+import NorthAmericaVue from '@/components/continents/NorthAmerica.vue';
 
 export default {
   name: "SearchWaterfall",
@@ -202,7 +203,7 @@ export default {
         "Europe",
         "Oceania"
       ],
-      selectContinent: "All",
+      selectContinent: localStorage.getItem("selectContinentforSearch"),
       loader: null,
       loading: false,
       endPage: "",
@@ -242,13 +243,21 @@ export default {
           console.error(err);
         });
     } else {
+      let tmpContinent = ''
+      if (this.selectContinent == 'N. America') {
+        tmpContinent = 'northAmerica'
+      }
+      else if (this.selectContinent == 'S. America') {
+        tmpContinent = 'southAmerica'
+      }
+      else {
+        tmpContinent = this.selectContinent
+      }
       axios
         .get(
           `${SERVER.BOARD_BASE_URL}eachsearch?searchData=${localStorage.getItem(
             "searchData"
-          )}&num=${this.pageNum}&location=${localStorage.getItem(
-            "selectContinentforSearch"
-          )}`
+          )}&num=${this.pageNum}&location=${tmpContinent}`
         )
         .then(res => {
           if (res.data == "End Page") {
@@ -307,13 +316,23 @@ export default {
             console.error(err);
           });
       } else {
+        let tmpContinent = ''
+        if (this.selectContinent == 'N. America') {
+          tmpContinent = 'northAmerica'
+        }
+        else if (this.selectContinent == 'S. America') {
+          tmpContinent = 'southAmerica'
+        }
+        else {
+          tmpContinent = this.selectContinent
+        }
         axios
           .get(
             `${
               SERVER.BOARD_BASE_URL
             }eachsearch?searchData=${localStorage.getItem("searchData")}&num=${
               this.pageNum
-            }&location=${this.selectContinent}`
+            }&location=${tmpContinent}`
           )
           .then(res => {
             if (res.data == "End Page") {
@@ -376,13 +395,23 @@ export default {
               console.error(err);
             });
         } else {
+          let tmpContinent = ''
+          if (this.selectContinent == 'N. America') {
+            tmpContinent = 'northAmerica'
+          }
+          else if (this.selectContinent == 'S. America') {
+            tmpContinent = 'southAmerica'
+          }
+          else {
+            tmpContinent = this.selectContinent
+          }
           axios
             .get(
               `${
                 SERVER.BOARD_BASE_URL
               }eachsearch?searchData=${localStorage.getItem(
                 "searchData"
-              )}&num=${this.pageNum}&location=${this.selectContinent}`
+              )}&num=${this.pageNum}&location=${tmpContinent}`
             )
             .then(res => {
               if (res.data == "End Page") {
