@@ -1,5 +1,9 @@
 <template>
-  <v-card class="mx-auto" flat max-width="350">
+  <v-card class="mx-auto" flat dark color="#5a4e4d" max-width="450">
+    <div style="margin: 40px">
+      <h1>이메일 인증</h1>
+      <p>인증번호가 발송됩니다</p>
+    </div>
     <v-text-field
       v-model="email"
       v-validate="'required|email'"
@@ -94,7 +98,10 @@ export default {
       this.getConfirmCode(email).then(code => {
         if (code.status === 200) {
           signupEmailComponent.overlay = !signupEmailComponent.overlay;
-          swal.fire("인증번호가 발송되었습니다.");
+          swal.fire({
+            text: "인증번호가 발송되었습니다.",
+            icon: "info"
+          });
           this.$emit("toEmailVerification", {
             confirmCode: code,
             userEmail: email
@@ -111,7 +118,11 @@ export default {
     emailCheck2(email) {
       this.emailCheck(email).then(res => {
         if (res === true) {
-          swal.fire("사용 가능한 이메일입니다.");
+          swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "사용 가능한 이메일입니다."
+          });
           this.emailChecked = true;
         } else {
           swal.fire({

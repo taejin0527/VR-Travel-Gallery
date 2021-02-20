@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="navi">
+    <div
+      class="navi"
+      v-intro="'메뉴바'"
+      v-intro-position="'right'"
+      v-intro-step="1"
+    >
       <div style="width=100%; text-align:center;">
         <div class="navi-button" @click="toggleNav">N U V O A to Z</div>
 
@@ -63,6 +68,8 @@ import { mapActions, mapGetters } from "vuex";
 
 import Menu from "@/components/navigation/Menu.vue";
 
+const sound = new Audio(require("@/assets/audio/navSound.wav"));
+
 export default {
   components: {
     Menu
@@ -80,7 +87,6 @@ export default {
 
     // 메뉴 페이지 이동
     toggleNav: function() {
-      const sound = new Audio(require("@/assets/audio/navSound.wav"));
       sound.play();
       this.isMenuPageOpen = !this.isMenuPageOpen;
     },
@@ -107,7 +113,7 @@ export default {
   display: inline-block;
   padding: 1.5em 1.5em;
   border-radius: 0;
-  color: #DDA288;
+  color: #dda288;
   margin-top: 0.51rem;
   cursor: pointer;
   font-weight: bold;
@@ -152,13 +158,13 @@ export default {
 .navi-button:not(:hover) {
   transition-delay: 0.2s;
   transition-duration: 0.4s;
-  color: #DDA288;
+  color: #dda288;
 }
 
 /* transition slide 효과 */
 .slide-leave-active,
 .slide-enter-active {
-  transition: 0.3s;
+  transition: 0.4s;
 }
 .slide-enter {
   transform: translateX(-100%);

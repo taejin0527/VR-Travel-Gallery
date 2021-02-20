@@ -1,5 +1,5 @@
 <template>
-  <v-containter>
+  <v-container>
     <v-row>
       <!-- 북미 -->
       <v-col cols="2">
@@ -11,6 +11,9 @@
           @click="gotoNorthAmericaContinent"
           :class="{ 'hoverevent-Continent': true, 'continent-opacity': true }"
           id="north_america-setting-location"
+          v-intro="'마커 클릭 시 해당 대륙으로 이동'"
+          v-intro-position="'top'"
+          v-intro-step="2"
         />
         <v-icon
           :class="{
@@ -190,10 +193,12 @@
         />
       </v-col>
     </v-row>
-  </v-containter>
+  </v-container>
 </template>
 
 <script>
+const sound = new Audio(require("@/assets/audio/airplane.wav"));
+
 export default {
   name: "WorldMapDivision",
   data: function() {
@@ -235,44 +240,62 @@ export default {
     // 대륙별 아이콘 후버
     // 북미
     overNorthAmerica: function() {
+      sound.play();
       this.isShowNorthIcon = true;
     },
     leaveNorthAmerica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowNorthIcon = false;
     },
     // 남미
     overSouthAmerica: function() {
+      sound.play();
       this.isShowSouthIcon = true;
     },
     leaveSouthAmerica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowSouthIcon = false;
     },
     // 유럽
     overEurope: function() {
+      sound.play();
       this.isShowEuropeIcon = true;
     },
     leaveEurope: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowEuropeIcon = false;
     },
     // 아프리카
     overAfrica: function() {
+      sound.play();
       this.isShowAfricaIcon = true;
     },
     leaveAfrica: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowAfricaIcon = false;
     },
     // 아시아
     overAsia: function() {
+      sound.play();
       this.isShowAsiaIcon = true;
     },
     leaveAsia: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowAsiaIcon = false;
     },
     // 오세아니아
     overOceania: function() {
+      sound.play();
       this.isShowOceaniaIcon = true;
     },
     leaveOceania: function() {
+      sound.pause();
+      sound.currentTime = 0;
       this.isShowOceaniaIcon = false;
     }
   }

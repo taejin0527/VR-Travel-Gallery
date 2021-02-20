@@ -2,7 +2,9 @@ package com.ssafy.iwc.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 
 import lombok.Data;
 
@@ -13,8 +15,10 @@ public class MultiId implements Serializable {
 	* 
 	*/
 	private static final long serialVersionUID = 1L;
-	private String userid;
+	@Column(nullable=false)
+	private String username;
 
-	long postsid;
+	@Column(nullable=false)
+	private long postsid;
 
 }

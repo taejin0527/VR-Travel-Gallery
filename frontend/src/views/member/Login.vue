@@ -1,5 +1,17 @@
 <template>
   <div class="wrapper">
+    <v-btn
+      elevation="3"
+      fab
+      color="orange darken-3"
+      style="position:fixed; right:25px; top:20px; color:white;"
+      @click="clickGotoWorldmap"
+    >
+      <v-icon>
+        mdi-map-search
+      </v-icon>
+    </v-btn>
+
     <transition name="slide">
       <form v-if="active" @submit.prevent="logInSubmit" class="ticket">
         <p class="title">Welcome to NUVO</p>
@@ -48,8 +60,10 @@
 </template>
 
 <script lang="ts">
+import swal from "sweetalert2";
 import { Component, Vue } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+
 const Auth = namespace("Auth");
 
 @Component
@@ -71,6 +85,9 @@ export default class Login extends Vue {
     }
   }
 
+  clickGotoWorldmap() {
+    this.$router.push({ name: "WorldMap" });
+  }
   signUpPage() {
     this.$router.push("/signup");
   }
@@ -83,6 +100,10 @@ export default class Login extends Vue {
       if (!isValid) {
         console.log("validate 오류");
         this.loading = false;
+        swal.fire({
+          text: "입력 형식에 맞춰주세요!",
+          icon: "warning"
+        });
         setTimeout(() => {
           this.active = !this.active;
         }, 1000);
@@ -93,6 +114,10 @@ export default class Login extends Vue {
         this.login(this.user).then(
           data => {
             console.log("success!");
+            swal.fire({
+              text: this.user.username + "님 반갑습니다!",
+              icon: "success"
+            });
             this.$router.push("/worldmap");
           },
           error => {
@@ -101,6 +126,10 @@ export default class Login extends Vue {
               this.active = !this.active;
             }, 1000);
             this.message = error;
+            swal.fire({
+              text: "아이디 혹은 비밀번호가 틀렸습니다",
+              icon: "error"
+            });
           }
         );
       }
@@ -123,7 +152,7 @@ export default class Login extends Vue {
 
 .ticket {
   position: relative;
-  width: 25%;
+  width: 100%;
   height: 500px;
   box-sizing: border-box;
   margin: 10px auto 0;
@@ -131,6 +160,19 @@ export default class Login extends Vue {
   border-radius: 10px;
   background: #fbfbfb;
   box-shadow: 2px 2px 15px 0px #ab9b0d;
+}
+@media (min-width: 500px) {
+  .ticket {
+    position: relative;
+    width: 25%;
+    height: 500px;
+    box-sizing: border-box;
+    margin: 10px auto 0;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fbfbfb;
+    box-shadow: 2px 2px 15px 0px #ab9b0d;
+  }
 }
 .ticket:before,
 .ticket:after {

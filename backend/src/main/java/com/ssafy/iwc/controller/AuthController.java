@@ -1,7 +1,9 @@
 package com.ssafy.iwc.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -20,15 +22,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.iwc.model.User;
 import com.ssafy.iwc.model.request.LoginRequest;
 import com.ssafy.iwc.model.request.SignupRequest;
 import com.ssafy.iwc.model.response.JwtResponse;
-import com.ssafy.iwc.model.response.MessageResponse;
+
 import com.ssafy.iwc.security.jwt.JwtUtils;
 import com.ssafy.iwc.security.services.UserDetailsImpl;
+import com.ssafy.iwc.service.BookMarkService;
 import com.ssafy.iwc.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +50,8 @@ public class AuthController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private BookMarkService bookMarkService;
 	/**
 	 * @author	김태진
 	 * @desc 	회원가입
@@ -102,7 +108,7 @@ public class AuthController {
 	@ApiOperation(value="(이메일, 비밀번호)로 로그인, 성공시 jwt와 기본 정보 반환")
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+		System.out.println(loginRequest);
 		// 요청으로 받은 아이디와 비밀번호를 통해 인증용 객체 생성
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -130,11 +136,95 @@ public class AuthController {
 	 * @author	김동걸
 	 * @desc 	소셜 로그인(구글, 카카오)
 	 */
-	
-	
+	/*
+	 * @author	김동걸
+	 * @desc 	유저정보조회
+	 * 
+	 */
+	@ApiOperation(value="유저명을 통해 유저정보를 가져옴")
+	@GetMapping("/getuser")
+	public ResponseEntity getuser(@RequestParam("username")String username) {
+		try {
+			User user = userService.getUserInfo(username);
+			return new ResponseEntity(user,HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+		
+		
+		
+		
+	}
 	/**
 	 * @author	김동걸
-	 * @desc 	로그아웃
+	 * @desc 	비밀번호 변경
 	 */
+	@ApiOperation(value="userid, pw입력시 기존의 pw와 비교 후 true or false 리턴")
+	@PostMapping("/checkpw")
+	public ResponseEntity checkpw(@RequestParam("password") String password,@RequestParam("username") String username) {
+		if(userService.checkPw(password,username)) {
+			System.out.println("성공");
+			return new ResponseEntity("true",HttpStatus.OK);
+		}else {
+			System.out.println("실패");
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+	}
+	@ApiOperation(value="해당 유저의 pw변경")
+	@PostMapping("/changepw")
+	public ResponseEntity changepw(@RequestParam("password") String password,@RequestParam("username")String username,@RequestParam("currpassword")String currpassword) {
+		if(userService.changePw(password,username,currpassword)) {
+			System.out.println("성공");
+			return new ResponseEntity("true",HttpStatus.OK);
+		}else {
+			System.out.println("실패");
+			return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+		}
+	}
+	@ApiOperation(value="username과 targetname으로 북마커에 등록여부 확인")
+	@GetMapping("/bookmarkcheck")
+	public String bookmarkcheck(@RequestParam("username")String username,@RequestParam("targetname")String targetname) {
+		String result = "false";
+		if(bookMarkService.findCheck(username,targetname)>0) {
+			result ="true";
+		}
+		
+		
+		return result;
+	}
+	
+	@ApiOperation(value="flag라는 String 변수로 true or false체크후 username과 targetname으로 북마커에 등록 or 삭제")
+	@PostMapping("/bookmark")
+	public ResponseEntity bookmark(@RequestParam("username")String username,@RequestParam("targetname")String targetname,@RequestParam("flag")String flag) {
+		String result = "성공";
+		if("true".equals(flag)) {
+//			북마커 삭제
+			if(bookMarkService.delete(username,targetname)) {
+				result = "삭제 성공";
+			}else result = "삭제 실패";
+		}else {
+//			북마커 등록
+			if(bookMarkService.add(username,targetname)) {
+				result = "등록 성공";
+			}else result = "등록 실패";
+		}
+		
+		
+		return new ResponseEntity(result,HttpStatus.OK);
+		
+	}
+	@ApiOperation(value="flag라는 String 변수로 true or false체크후 username과 targetname으로 북마커에 등록 or 삭제")
+	@GetMapping("/bookmarkall")
+	public ResponseEntity bookmarkall(@RequestParam("username")String username) {
+		List<String> result = bookMarkService.getmarkAll(username);
+		
+		
+		
+		
+		return new ResponseEntity(result,HttpStatus.OK);
+		
+	}
+	
+	
 }
 	
