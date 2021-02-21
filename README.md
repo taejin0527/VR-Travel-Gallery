@@ -12,7 +12,7 @@
 
 <div style="display:flex; justify-content: center;">
     <p align="center">
-    <img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="250" height="80">
+    <img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="800px">
     </p>
 </div>
 <div style="display:flex; justify-content: center;">
@@ -159,7 +159,7 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
 - mysql 도메인과 포트번호 작성(예, localhost:3306)
 - mysql 사용자 이름/비번 = 마음대로 쓰시면 됩니다
-- jps 관련 설정(그대로 사용)
+- JPA 관련 설정(그대로 사용)
 - multipart = 파일 업로드 관련 설정(그대로 사용)
 - 이메일 인증을 위한 구글 SMTP 설정
 - JWT 토큰을 위한 비밀번호, 만료시간 설정
@@ -262,18 +262,16 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 1. AWS EC2 인스턴스 생성 (ubuntu)
 2. docker 설치
 3. 필요한 이미지를 docker hub를 통해 설치
-   3-1. Jenkins
-   3-2. MySQL
-
+   1. Jenkins
+   2. MySQL
 4. Jenkins와 Gitlab repository 연동
 5. MySQL 컨테이너에 `yacht` DB 스키마 생성
-
 6. Nginx 설정 (frontend/nginx 폴더의 homepage.conf)
 7. frontend, backend 폴더 안에 dockerfile 작성
 8. 프로젝트 root 위치에 Jenkins 파일 작성
-   6-1. Build and Test 과정
-   6-2. Build (frontend, backend)
-   6-3. Run (컨테이너 실행)
+   1. Build and Test 과정
+   2. Build (frontend, backend)
+   3. Run (컨테이너 실행)
 9. `docker ps` 를 통해 frontend, backend 컨테이너가 실행되는 것을 확인
 
 <br />
