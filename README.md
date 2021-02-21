@@ -39,7 +39,7 @@
   </p>
 </p>
 
-# NUVO : VR 여행 사진 전시 플랫폼
+# :honey_pot: NUVO : VR 여행 사진 전시 플랫폼 :bee:
 
 ## 목차
 
@@ -143,7 +143,7 @@ yarn serve
 
 ### 로고
 
-![adaptive-icon](README.assets/adaptive-icon.png)
+<img src="README.assets/adaptive-icon.png" alt="adaptive-icon" width="180" height="180">
 
 ### PPT
 
