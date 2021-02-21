@@ -18,6 +18,8 @@ spring:
       max-request-size: 50MB
         
         
+      
+        
 #  mvc:
 #    static-path-pattern: ../../../bulid/src/main/resources/static/**
   # email 인증
@@ -49,5 +51,10 @@ yacht:
   app:
     jwtSecret: yachtSecretKey
     jwtExpirationMs: 86400000
+    FileSubSrc : https://i4d110.p.ssafy.io/subImg/
+    FileMainSrc : https://i4d110.p.ssafy.io/mainImg/
+    paycode : 654e054049757a0cceb1fa50dffd3026
  # jwtExpirationMs 만료시간
  # jwtSecret : 비번
+ 
+ 

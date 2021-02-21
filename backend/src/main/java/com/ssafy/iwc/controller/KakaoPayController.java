@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -41,7 +42,8 @@ public class KakaoPayController {
 	private static final String HOST = "https://kapi.kakao.com";
 	private KakaoPay kakaoPay;
 	private KakaoPayApproval kakaoPayApproval;
-	
+	@Value("${yacht.app.paycode}")
+	private String paycode;
 	@Autowired
 	private UserService userService;
 	
@@ -111,7 +113,7 @@ public class KakaoPayController {
 		
 //		서버로 요청할 header
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK "+"654e054049757a0cceb1fa50dffd3026");
+		headers.add("Authorization", "KakaoAK "+paycode);
 		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 //		서버요청 바디
