@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,8 +69,10 @@ public class BoardController {
 	private UserService userService;
 	
 //	이부분 처리
-	private String FileMainSrc = "https://i4d110.p.ssafy.io/mainImg/";
-	private String FileSubSrc = "https://i4d110.p.ssafy.io/subImg/";
+	@Value("${yacht.app.FileMainSrc}")
+	private String FileMainSrc;
+	@Value("${yacht.app.FileSubSrc}")
+	private String FileSubSrc;
 	
 	
 	@ApiOperation(value = "조회수 증가시키기 게시물 id값을 get방식으로 넘김", response = String.class)
