@@ -26,12 +26,8 @@
         <br />
         <br />
         <a href="./docs/README.md">View Demo</a>
-        ·
-        <a href="http://i4d110.p.ssafy.io/">Go to webpage</a>
     </p>
 </div>
-
-
 
 <br />
 
@@ -99,7 +95,7 @@
 
 ### 🗃 DB 설계
 
-* ERD
+- ERD
 
 ![KakaoTalk_20210221_171849338](README.assets/KakaoTalk_20210221_171849338.png)
 
@@ -132,6 +128,8 @@
 <br />
 
 ### 📚 준비하기
+
+> DB 생성하고 설정 파일 application.yml(백엔드), UrlMapper.ts(프론트엔드) 파일 생성 및 추가하시면 됩니다
 
 1. Git clone 받기
 
@@ -207,12 +205,49 @@ yacht:
   app:
     jwtSecret: yachtSecretKey
     jwtExpirationMs: 86400000
+    domain: {도메인주소}
     FileSubSrc : {도메인주소}/subImg/
     FileMainSrc : {도메인주소}/mainImg/
     paycode : {카카오페이 Access Token 값}
 ```
 
-4. [Frontend] 패키지 다운로드
+4. [Frontend] URL_Mapper 작성
+
+- apis 폴더 아래에 UrlMapper.ts 파일 생성 및 아래 내용 작성
+
+```
+// 백엔드 api와 연동(swagger-ui.html 참고)
+export default {
+  BASE_URL: "{도메인 url}/api/",
+  BOARD_BASE_URL: "{도메인 url}/apis/board/",
+  PAY_BASE_URL: "{도메인 url}/apis/",
+  ROUTES: {
+    auth: {
+      URL: "auth/",
+      login: "auth/signin",
+      signup: "auth/signup",
+      idCheck: "auth/idcheck",
+      pwdCheck: "auth/checkpw",
+      emailCheck: "auth/emailcheck",
+      emailValidate: "auth/emailvalidate",
+      changePwd: "auth/changepw",
+      getAllBookmarks: "auth/bookmarkall",
+    },
+    board: {
+      delpost: "delpost",
+      getpost: "postgetusername",
+      getpayment: "mypay",
+    },
+    files: {
+      URL: "files/",
+      upload: "upload/multipleFiles",
+    },
+  },
+};
+
+```
+
+5. [Frontend] 패키지 다운로드
 
 ```
 # frontend 폴더로 이동해서 다운
@@ -220,7 +255,7 @@ cd frontend/
 yarn install
 ```
 
-5. [Backend] (Option) Spring boot를 build(war 파일 생성)
+6. [Backend] (Option) Spring boot를 build(war 파일 생성)
 
 ```
 # backend 폴더로 이동해서
@@ -277,6 +312,7 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 <br />
 
 ## 👥 팀 구성 및 소개
+
 주말에는 쉬면서 개발하려다 주말에 빡 개발한 우리팀 ㅎㅎ
 
 <br />
@@ -293,11 +329,11 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 
 **구태완 개발자** [Frontend 개발]
 
-
-
-![팀원소개](README.assets/%ED%8C%80%EC%9B%90%EC%86%8C%EA%B0%9C-1613895981844.gif)
-
-
+<div style="display:flex; justify-content: center;">
+    <p align="center">
+    <img src="README.assets/%ED%8C%80%EC%9B%90%EC%86%8C%EA%B0%9C-1613895981844.gif" alt="team" >
+    </p>
+</div>
 
 <br />
 
