@@ -232,15 +232,25 @@ Nginx (front-end, back-end 경로 설정)
 
 ### 로고
 
-<img src="README.assets/adaptive-icon.png" alt="adaptive-icon" width="180" height="180">
+- 아이콘 로고
+
+<img src="README.assets/adaptive-icon.png" width="512px" />
+
+- 가로 로고
+
+<img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="800">
 
 ### PPT
 
+- <a href="./docs/NUVO 중간 기획.pdf">중간 기획 PDF</a>
+- <a href="./docs/NUVO 최종 발표.pdf">최종 발표 PDF</a>
+
 ### 동영상
 
-- 팀 소개 영상:
-- UCC 광고 영상:
-- 시연 영상:
+- <a href="https://youtu.be/IcBUw3QvmY8">팀 소개 영상 바로가기</a>
+- <a href="https://youtu.be/l8EDliCau-E">UCC 영상 바로가기</a>
+- <a href="https://youtu.be/8f37NpMiJFU">시연 영상 바로가기</a>
+- <a href="https://youtu.be/VROylxUa4Ks">종합 영상 바로가기</a>
 
 <!-- ACKNOWLEDGEMENTS -->
 
