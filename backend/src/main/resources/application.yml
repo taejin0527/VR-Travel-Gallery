@@ -1,4 +1,4 @@
-spring:      
+spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://i4d110.p.ssafy.io:3307/yacht?characterEncoding=UTF-8&serverTimezone=UTC
@@ -11,17 +11,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        
+
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-        
-        
-      
-        
-#  mvc:
-#    static-path-pattern: ../../../bulid/src/main/resources/static/**
+
+  #  mvc:
+  #    static-path-pattern: ../../../bulid/src/main/resources/static/**
   # email 인증
   mail:
     host: smtp.gmail.com
@@ -34,8 +31,8 @@ spring:
           auth: true
           timeout: 5000
           starttls:
-            enable: true       
-   # 소셜 로그인(google)
+            enable: true
+    # 소셜 로그인(google)
   security:
     oauth2:
       client:
@@ -45,16 +42,14 @@ spring:
             client-secret: 3LeJfOF-5YwUXODhEvN86s0U
             scope: profile, email
 
-
 # JWT 속성
 yacht:
   app:
     jwtSecret: yachtSecretKey
     jwtExpirationMs: 86400000
-    FileSubSrc : https://i4d110.p.ssafy.io/subImg/
-    FileMainSrc : https://i4d110.p.ssafy.io/mainImg/
-    paycode : 654e054049757a0cceb1fa50dffd3026
- # jwtExpirationMs 만료시간
- # jwtSecret : 비번
- 
- 
+    domain: https://i4d110.p.ssafy.io
+    FileSubSrc: https://i4d110.p.ssafy.io/subImg/
+    FileMainSrc: https://i4d110.p.ssafy.io/mainImg/
+    paycode: 654e054049757a0cceb1fa50dffd3026
+  # jwtExpirationMs 만료시간
+  # jwtSecret : 비번

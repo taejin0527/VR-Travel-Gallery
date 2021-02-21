@@ -44,6 +44,9 @@ public class KakaoPayController {
 	private KakaoPayApproval kakaoPayApproval;
 	@Value("${yacht.app.paycode}")
 	private String paycode;
+	@Value("${yacht.app.domain}")
+	private String Address; //접속주소
+
 	@Autowired
 	private UserService userService;
 	
@@ -77,9 +80,9 @@ public class KakaoPayController {
 		params.add("quantity", "1");
 //		금액
 		params.add("total_amount", cost);
-		params.add("approval_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccess");
-        params.add("cancel_url", "https://i4d110.p.ssafy.io/apis/kakaoPayCancel");
-        params.add("fail_url", "https://i4d110.p.ssafy.io/apis/kakaoPaySuccessFail");
+		params.add("approval_url", Address + "/apis/kakaoPaySuccess");
+        params.add("cancel_url", Address + "/apis/kakaoPayCancel");
+        params.add("fail_url", Address + "/apis/kakaoPaySuccessFail");
 		String response="";
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         System.out.println(body);
