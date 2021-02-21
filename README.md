@@ -145,7 +145,7 @@ yarn serve
 
 * 아이콘 로고
 
-<img src="README.assets/adaptive-icon.png" width="512px" />
+<img src="README.assets/adaptive-icon.png" width="512px" style="text-align:center;" />
 
 
 
