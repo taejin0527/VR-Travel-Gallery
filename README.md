@@ -28,7 +28,7 @@
 
 </p>
 
-[toc]
+{:toc}
 
 # :framed_picture: NUVO : VR 여행 사진 전시 플랫폼 :framed_picture:
 
