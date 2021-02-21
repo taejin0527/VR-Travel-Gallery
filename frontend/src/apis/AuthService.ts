@@ -1,5 +1,5 @@
 import axios from "axios";
-import SERVER from "UrlMapper.ts";
+import SERVER from "@/apis/UrlMapper.ts";
 
 const API_URL = SERVER.BASE_URL + "auth/";
 
