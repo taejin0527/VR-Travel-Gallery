@@ -162,6 +162,8 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 - multipart = 파일 업로드 관련 설정(그대로 사용)
 - 이메일 인증을 위한 구글 SMTP 설정
 - JWT 토큰을 위한 비밀번호, 만료시간 설정
+- FileSubSrc, FileMainSrc 파일이 저장하고 불러올 실제경로
+- paycode 카카오 openAPI 토큰값을 발급받아서 적어줌
 
 ```
 spring:
@@ -204,6 +206,9 @@ yacht:
   app:
     jwtSecret: yachtSecretKey
     jwtExpirationMs: 86400000
+    FileSubSrc : {도메인주소}/subImg/
+    FileMainSrc : {도메인주소}/mainImg/
+    paycode : {카카오페이 Access Token 값}
 ```
 
 4. [Frontend] 패키지 다운로드
