@@ -25,7 +25,6 @@
     ·
     <a href="http://i4d110.p.ssafy.io/">Go to webpage</a>
   </p>
-
 </p>
 
 ## 목차
@@ -76,6 +75,7 @@
   </ol>
 </details>
 
+
 # 🖼 NUVO : VR 여행 사진 전시 플랫폼 ✈️
 
 ## NUVO란?
@@ -86,17 +86,35 @@
 
 #### 시대의 새로운 예술, 그것이 우리 'NUVO'의 철학입니다.
 
+
+
 ### 🌉 기획 배경
 
 처음엔 여행을 직접 가지 못하는 사람들을 위해, 지금까지 갔었던 추억 속의 여행장소를 공유하는 서비스를 만들려고 했습니다. 하지만 추억 속의 장소를 공유하는 것은 다른 관점에서 보면 전시의 느낌을 받았고, "여행 사진을 통해 전시회를 열면 어떨까?"라는 의견이 나왔습니다.
 
 하지만 사진만 보여주는 디지털 전시회는 일반 사진을 보여주는 사이트와 차별점이 없었고, 저희 팀만의 특별한 차별점을 주고 싶었습니다. 그렇게 현실의 전시회를 간듯한 느낌을 주기 위해 VR을 이용하기로 했고, VR 여행 사진 전시 플랫폼을 기획하게 되었습니다.
 
+
+
 ### 🏙 기술 스택
+
+
+
+### 🗃 DB 설계
+
+* ERD
+
+![KakaoTalk_20210221_171849338](README.assets/KakaoTalk_20210221_171849338.png)
+
+![KakaoTalk_20210221_171944895](README.assets/KakaoTalk_20210221_171944895.png)
 
 ### 🌁 VR 3D 전시관 설계
 
+
+
 ### 📝 흐름 설계
+
+![image-20210221173251472](README.assets/image-20210221173251472.png)
 
 ## 시작 방법
 
@@ -109,6 +127,8 @@
 - vue
 - yarn
 - mysql
+
+
 
 ### 📚 준비하기
 
@@ -207,6 +227,8 @@ cd backend/
 gradlew -DskipTests=true build
 ```
 
+
+
 ### 🏁 실행하기
 
 1. 백엔드 실행
@@ -228,6 +250,8 @@ gradle bootRun
 ```
 yarn serve
 ```
+
+
 
 ### 🖥 배포하기
 
@@ -251,11 +275,12 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
    6-3. Run (컨테이너 실행)
 9. `docker ps` 를 통해 frontend, backend 컨테이너가 실행되는 것을 확인
 
+
+
 ## 👥 팀 구성 및 소개
+주말에는 쉬면서 개발하려다 주말에 빡 개발한 우리팀 ㅎㅎ
 
-주말에는 쉬면서 개발합니다 ㅎㅎ
 
-<img src="README.assets/Untitled%201.png" alt="adaptive-icon" width="600" height="280">
 
 ### 팀장
 
@@ -263,13 +288,19 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 
 ### 팀원
 
-**장민호 개발자** [Frontend 개발]
+**장민호 개발자** [Frontend & VR 개발]
 
-**김태진 개발자** [Backend 개발]
+**김태진 개발자** [Backend & FrontEnd 개발]
 
 **구태완 개발자** [Frontend 개발]
 
-**권소진 개발자** [UI/UX design]
+
+
+![팀원소개](README.assets/%ED%8C%80%EC%9B%90%EC%86%8C%EA%B0%9C-1613895981844.gif)
+
+
+
+
 
 ---
 
@@ -290,12 +321,16 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 - <a href="./docs/NUVO 중간 기획.pdf">중간 기획 PDF</a>
 - <a href="./docs/NUVO 최종 발표.pdf">최종 발표 PDF</a>
 
+
+
 ### 동영상
 
 - <a href="https://youtu.be/IcBUw3QvmY8">팀 소개 영상 바로가기</a>
 - <a href="https://youtu.be/l8EDliCau-E">UCC 영상 바로가기</a>
 - <a href="https://youtu.be/8f37NpMiJFU">시연 영상 바로가기</a>
 - <a href="https://youtu.be/VROylxUa4Ks">종합 영상 바로가기</a>
+
+
 
 <!-- ACKNOWLEDGEMENTS -->
 
