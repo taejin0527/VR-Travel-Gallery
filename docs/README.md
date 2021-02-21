@@ -45,3 +45,35 @@
 ## Signup 화면
 
 ![login](../README.assets/demo/sr_signup.gif)
+
+## Photo Viewer
+
+> 기본 뷰어, Filpbook 뷰어, VR 뷰어
+
+- 여러 슬라이드 효과를 옵션으로 제공
+
+![photo viewer](../README.assets/demo/sr_photoview1.gif)
+
+- 마우스 드래그를 통해 직접 책을 넘기며 감상하는 느낌을 주는 기능
+
+![photo viewer](../README.assets/demo/sr_photoview2.gif)
+
+- 파노라마 사진을 VR로 볼 수 있는 기능(일반 2D 사진도 가능)
+
+![photo viewer](../README.assets/demo/sr_photoview3.gif)
+
+## VR 전시관
+
+- 전시관 1
+
+![vr viewer](../README.assets/demo/sr_vr1.gif)
+
+- 전시관 2
+
+![vr viewer](../README.assets/demo/sr_vr2.gif)
+
+## Kakaopay
+
+- 카카오페이
+
+![kakao pay](../README.assets/demo/sr_pay.gif)
