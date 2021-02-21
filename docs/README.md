@@ -43,3 +43,5 @@
 ![login](../README.assets/demo/sr_login.gif)
 
 ## Signup 화면
+
+![login](../README.assets/demo/sr_signup.gif)
