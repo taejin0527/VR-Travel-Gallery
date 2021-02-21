@@ -1,51 +1,45 @@
-# MySQL
+# Demo
 
-## 계정, 스키마
-- root
-- yacht
+## Home 화면
 
+- 각 버튼에 mouse hover에 따른 애니메이션 적용
 
-## User 관련 테이블
+![메인 화면](../README.assets/demo/sr_main.gif)
 
-### users 테이블
+## Navbar 애니메이션
 
-```
-+----------+--------------+------+-----+---------+----------------+
-| Field    | Type         | Null | Key | Default | Extra          |
-+----------+--------------+------+-----+---------+----------------+
-| id       | bigint(20)   | NO   | PRI | NULL    | auto_increment |
-| email    | varchar(50)  | YES  | UNI | NULL    |                |
-| password | varchar(120) | YES  |     | NULL    |                |
-| username | varchar(20)  | YES  | UNI | NULL    |                |
-+----------+--------------+------+-----+---------+----------------+
+- 사운드 효과와 백그라운드 애니메이션 적용
 
-```
+![navbar](../README.assets/demo/sr_navbar.gif)
 
-### roles 테이블
+## Main 화면
 
-```
-+-------+-------------+------+-----+---------+----------------+
-| Field | Type        | Null | Key | Default | Extra          |
-+-------+-------------+------+-----+---------+----------------+
-| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
-| name  | varchar(20) | YES  |     | NULL    |                |
-+-------+-------------+------+-----+---------+----------------+
-```
+> 사용자에게 새로운 재미와 세계 지도를 따라 여행 다니는 느낌을 주기 위한 worldmap view 화면과 검색을 통해 빠르게 원하는 결과를 보여주기 위한 list view 화면
 
-### user_roles 테이블
+### Worldmap view
 
-```
-+---------+------------+------+-----+---------+-------+
-| Field   | Type       | Null | Key | Default | Extra |
-+---------+------------+------+-----+---------+-------+
-| user_id | bigint(20) | NO   | PRI | NULL    |       |
-| role_id | int(11)    | NO   | PRI | NULL    |       |
-+---------+------------+------+-----+---------+-------+
-```
+- 대륙 marker에 마우스 hover시 비행기가 날아오는 애니메이션 적용
 
-| 여기에 role 3개 추가
-```
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-```
+![airplane animation](../README.assets/demo/sr_worldmap1.gif)
+
+- 처음 방문하는 사용자의 편의를 위한 Tips 기능
+
+![tips](../README.assets/demo/sr_worldmap2.gif)
+
+### List view
+
+- 검색어 필터링
+
+![list search](../README.assets/demo/sr_list1.gif)
+
+- 태그 필터링
+
+![tag search](../README.assets/demo/sr_list2.gif)
+
+## Login 화면
+
+- 표를 끊고 입장하는 듯한 느낌을 주기 위해 티켓 느낌의 UI와 애니메이션 적용
+
+![login](../README.assets/demo/sr_login.gif)
+
+## Signup 화면

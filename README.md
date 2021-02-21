@@ -5,8 +5,6 @@
 *** Thanks again! Now go create something AMAZING! :D
 -->
 
-
-
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -15,189 +13,165 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="logo.png" alt="Logo" width="80" height="80">
+    <img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="250" height="80">
 
-
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">VR Travel Gallery Project</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Virtual Reality + Travel Photo Gallery
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="./docs/README.md">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Tech Stacks</a>
   </p>
 </p>
 
+# NUVO : VR 여행 사진 전시 플랫폼
 
+## 목차
 
-<!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#NUVO란?">NUVO란?</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#기획-배경"> 기획 배경 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#기술-스택"> 기술 스택 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#DB-설계"> DB 설계 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#VR-3D-전시관-설계"> VR 3D 전시관 설계 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#흐름-설계"> 흐름 설계 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#플랫폼-설계"> 플랫폼 설계 </a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#시작-방법">시작 방법</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#사전-설치">사전 설치</a></li>
+        <li><a href="#실행">실행</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#플랫폼-사용방법">플랫폼 사용방법</a></li>
+    <li><a href="#팀-구성-및-소개">팀 구성 및 소개</a></li>
+    <li><a href="#그-밖에...">그 밖에...</a>
+      <ul>
+        <li><a href="#로고"> 로고 </a></li>
+      </ul>
+      <ul>
+        <li><a href="#PPT"> PPT </a></li>
+      </ul>
+      <ul>
+        <li><a href="#동영상"> 동영상 </a></li>
+      </ul>
+    </li>
   </ol>
 </details>
 
+## NUVO란?
 
+![graphicNUVO](README.assets/graphicNUVO.png)
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+20세기 초, 유럽의 일부 예술가들은 전통적인 고전주의적 미술 양식에서 탈피해 새로운 방식의 미술을 탐구했습니다. '새로운 예술(Art Nouvueau)'이라고 불리는 이러한 예술 양식은 대중들에게 신선한 충격을 주었으나 20세기의 거대한 산업혁명 물결에 금방 매몰되고 말았습니다. 우리는 이들의 정신을 계승하여, 포스트 모더니즘 시대에 사람들이 예술을 접하는 방식을 혁신합니다.
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+#### 시대의 새로운 예술, 그것이 우리 'NUVO'의 철학입니다.
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+### 기획 배경
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
+처음엔 여행을 직접 가지 못하는 사람들을 위해, 지금까지 갔었던 추억 속의 여행장소를 공유하는 서비스를 만들려고 했습니다. 하지만 추억 속의 장소를 공유하는 것은 다른 관점에서 보면 전시의 느낌을 받았고, "여행 사진을 통해 전시회를 열면 어떨까?"라는 의견이 나왔습니다.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
+하지만 사진만 보여주는 디지털 전시회는 일반 사진을 보여주는 사이트와 차별점이 없었고, 저희 팀만의 특별한 차별점을 주고 싶었습니다. 그렇게 현실의 전시회를 간듯한 느낌을 주기 위해 VR을 이용하기로 했고, VR 여행 사진 전시 플랫폼을 기획하게 되었습니다.
 
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+### 기술 스택
 
-### Built With
+### DB 설계
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+### VR 3D 전시관 설계
 
+### 흐름 설계
 
+### 플랫폼 설계
 
-<!-- GETTING STARTED -->
-## Getting Started
+## 시작 방법
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+### 사전 설치
 
-### Prerequisites
+- node.js
+- java
+- vue
+- yarn
+- mysql
+  - 데이터베이스 생성 (JPA로 테이블 자동 생성되기 때문에 테이블 생성은 필요 X)
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+### 실행
 
-### Installation
+```cmd
+cd backend
+gradle bootRun
+cd ../frontend
+yarn install
+yarn serve
+```
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
+## 플랫폼 사용방법
 
+## 팀 구성 및 소개
 
+## 그 밖에...
 
-<!-- USAGE EXAMPLES -->
-## Usage
+### 로고
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+![adaptive-icon](README.assets/adaptive-icon.png)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### PPT
 
+### 동영상
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-
+- 팀 소개 영상:
+- UCC 광고 영상:
+- 시연 영상:
 
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
 
-
-
-
+- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+- [Img Shields](https://shields.io)
+- [Choose an Open Source License](https://choosealicense.com)
+- [GitHub Pages](https://pages.github.com)
+- [Animate.css](https://daneden.github.io/animate.css)
+- [Loaders.css](https://connoratherton.com/loaders)
+- [Slick Carousel](https://kenwheeler.github.io/slick)
+- [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
+- [Sticky Kit](http://leafo.net/sticky-kit)
+- [JVectorMap](http://jvectormap.com)
+- [Font Awesome](https://fontawesome.com)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
@@ -210,4 +184,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: ./docs/imgs/sc_main.png
