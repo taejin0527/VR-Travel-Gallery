@@ -10,22 +10,30 @@
 <!-- PROJECT LOGO -->
 <br />
 
-<p align="center">
+<div style="display:flex; justify-content: center;">
+    <p align="center">
     <img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="250" height="80">
+    </p>
+</div>
+<div style="display:flex; justify-content: center;">
+    <h3 align="center">VR Travel Gallery Project</h3>
+</div>
+<div style="display:flex; justify-content: center;">
+    <p align="center">
+        Virtual Reality + Travel Photo Gallery
+        <br />
+        <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+        <br />
+        <br />
+        <a href="./docs/README.md">View Demo</a>
+        ·
+        <a href="http://i4d110.p.ssafy.io/">Go to webpage</a>
+    </p>
+</div>
 
-  <h3 align="center">VR Travel Gallery Project</h3>
 
-  <p align="center">
-    Virtual Reality + Travel Photo Gallery
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="./docs/README.md">View Demo</a>
-    ·
-    <a href="http://i4d110.p.ssafy.io/">Go to webpage</a>
-  </p>
-</p>
+
+<br />
 
 ## 목차
 
@@ -36,17 +44,9 @@
       <a href="#NUVO란?">NUVO란?</a>
       <ul>
         <li><a href="#기획-배경"> 기획 배경 </a></li>
-      </ul>
-      <ul>
         <li><a href="#기술-스택"> 기술 스택 </a></li>
-      </ul>
-      <ul>
         <li><a href="#DB-설계"> DB 설계 </a></li>
-      </ul>
-      <ul>
         <li><a href="#VR-3D-전시관-설계"> VR 3D 전시관 설계 </a></li>
-      </ul>
-      <ul>
         <li><a href="#흐름-설계"> 흐름 설계 </a></li>
       </ul>
     </li>
@@ -64,17 +64,14 @@
     <li><a href="#그-밖에...">그 밖에...</a>
       <ul>
         <li><a href="#로고"> 로고 </a></li>
-      </ul>
-      <ul>
         <li><a href="#PPT"> PPT </a></li>
-      </ul>
-      <ul>
         <li><a href="#동영상"> 동영상 </a></li>
       </ul>
     </li>
   </ol>
 </details>
 
+<br />
 
 # 🖼 NUVO : VR 여행 사진 전시 플랫폼 ✈️
 
@@ -86,7 +83,7 @@
 
 #### 시대의 새로운 예술, 그것이 우리 'NUVO'의 철학입니다.
 
-
+<br />
 
 ### 🌉 기획 배경
 
@@ -94,11 +91,11 @@
 
 하지만 사진만 보여주는 디지털 전시회는 일반 사진을 보여주는 사이트와 차별점이 없었고, 저희 팀만의 특별한 차별점을 주고 싶었습니다. 그렇게 현실의 전시회를 간듯한 느낌을 주기 위해 VR을 이용하기로 했고, VR 여행 사진 전시 플랫폼을 기획하게 되었습니다.
 
-
+<br />
 
 ### 🏙 기술 스택
 
-
+<br />
 
 ### 🗃 DB 설계
 
@@ -108,13 +105,17 @@
 
 ![KakaoTalk_20210221_171944895](README.assets/KakaoTalk_20210221_171944895.png)
 
+<br />
+
 ### 🌁 VR 3D 전시관 설계
 
-
+<br />
 
 ### 📝 흐름 설계
 
 ![image-20210221173251472](README.assets/image-20210221173251472.png)
+
+<br />
 
 ## 시작 방법
 
@@ -128,7 +129,7 @@
 - yarn
 - mysql
 
-
+<br />
 
 ### 📚 준비하기
 
@@ -222,7 +223,7 @@ cd backend/
 gradlew -DskipTests=true build
 ```
 
-
+<br />
 
 ### 🏁 실행하기
 
@@ -246,7 +247,7 @@ gradle bootRun
 yarn serve
 ```
 
-
+<br />
 
 ### 🖥 배포하기
 
@@ -270,12 +271,12 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
    6-3. Run (컨테이너 실행)
 9. `docker ps` 를 통해 frontend, backend 컨테이너가 실행되는 것을 확인
 
-
+<br />
 
 ## 👥 팀 구성 및 소개
 주말에는 쉬면서 개발하려다 주말에 빡 개발한 우리팀 ㅎㅎ
 
-
+<br />
 
 ### 팀장
 
@@ -295,7 +296,7 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 
 
 
-
+<br />
 
 ---
 
@@ -311,12 +312,14 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 
 <img src="./docs/imgs/NUVOchangeColor.png" alt="Logo" width="800">
 
+<br />
+
 ### PPT
 
 - <a href="./docs/NUVO 중간 기획.pdf">중간 기획 PDF</a>
 - <a href="./docs/NUVO 최종 발표.pdf">최종 발표 PDF</a>
 
-
+<br />
 
 ### 동영상
 
@@ -325,7 +328,7 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 - <a href="https://youtu.be/8f37NpMiJFU">시연 영상 바로가기</a>
 - <a href="https://youtu.be/VROylxUa4Ks">종합 영상 바로가기</a>
 
-
+<br />
 
 <!-- ACKNOWLEDGEMENTS -->
 
