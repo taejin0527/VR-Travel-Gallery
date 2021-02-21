@@ -91,6 +91,8 @@
 
 ### 🏙 기술 스택
 
+![기술스택](README.assets/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D.png)
+
 <br />
 
 ### 🗃 DB 설계
