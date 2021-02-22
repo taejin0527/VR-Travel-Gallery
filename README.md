@@ -107,6 +107,8 @@
 
 ### 🌁 VR 3D 전시관 설계
 
+![vr-making-process](README.assets/vrMakingProcess.jpg)
+
 <br />
 
 ### 📝 흐름 설계
