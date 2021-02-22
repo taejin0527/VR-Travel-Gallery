@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import org.hibernate.cfg.CreateKeySecondPass;
 
 import com.jcraft.jsch.Channel;
@@ -15,7 +17,9 @@ import com.jcraft.jsch.SftpException;
 
 public class SFTPsender {
 	private static final String SESSION_CONFIG_STRICT_HOST_KEY_CHECKING = "StrictHostKeyChecking";
-	private String Address = "i4d110.p.ssafy.io"; //접속주소
+	
+	@Value("${yacht.app.domain}")
+	private String Address; //접속주소
 	private int Port = 22; 
 	private String Username = "root" ; //아이디
 	private String Password = "tntjd0206"; //비밀번호

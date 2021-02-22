@@ -1,6 +1,7 @@
 import axios from "axios";
+import SERVER from "@/apis/UrlMapper.ts";
 
-const API_URL = "https://i4d110.p.ssafy.io/apis/api/auth/";
+const API_URL = SERVER.BASE_URL + "auth/";
 
 class AuthService {
   login(email: string, password: string) {

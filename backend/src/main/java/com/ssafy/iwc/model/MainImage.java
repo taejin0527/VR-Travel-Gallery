@@ -24,6 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainImage {
 
+	
+	
 	@Id
 	private long id;
 	
